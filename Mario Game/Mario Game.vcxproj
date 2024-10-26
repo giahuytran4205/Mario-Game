@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ae95d28b-9d89-46d5-8836-525fd3b603d1}</ProjectGuid>
+    <ProjectGuid>{CC087E22-B756-4EF7-BF05-752347BAF161}</ProjectGuid>
     <RootNamespace>SFMLtest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Mario Game</ProjectName>
