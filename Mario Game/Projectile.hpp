@@ -1,4 +1,5 @@
-#include "ECS.hpp"
+#pragma once
+#include "Common.hpp"
 #include "Object.hpp"
 
 class Projectile : public Object {
@@ -16,5 +17,5 @@ public:
 	float getMaxDistance();
 	void setMaxDistance(float maxDistance);
 	int getAge();
-	void Update() override;
+	void update() override;
 };

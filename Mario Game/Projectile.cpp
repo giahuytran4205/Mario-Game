@@ -1,4 +1,6 @@
 #include "Projectile.hpp"
+#include "ECS.hpp"
+#include "Object.hpp"
 
 Projectile::Projectile(int damage, int maxDistance) {
 	m_damage = damage;
@@ -30,6 +32,6 @@ int Projectile::getAge() {
 	return m_age;
 }
 
-void Projectile::Update() {
+void Projectile::update() {
 	m_age++;
 }

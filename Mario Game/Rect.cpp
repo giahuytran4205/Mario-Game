@@ -1,4 +1,5 @@
 #include "Rect.hpp"
+#include "SFML/Graphics.hpp"
 
 namespace gr {
 	Rect::Rect() {

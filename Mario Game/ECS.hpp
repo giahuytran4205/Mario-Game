@@ -3,11 +3,11 @@
 #include <array>
 #include <vector>
 #include <memory>
+#include "Common.hpp"
 using namespace std;
 
 class Entity;
 class Component;
-class Collision;
 
 using ComponentID = std::size_t;
 
@@ -48,7 +48,7 @@ private:
 public:
 	virtual ~Entity() {}
 
-	void update() {
+	void _update() {
 		for (auto& c : m_components)
 			c->update();
 
@@ -59,13 +59,13 @@ public:
 			c->render();
 	}
 
-	virtual void Update() {}
-
-	virtual void onCollisionEnter(Collision& col) {}
+	virtual void update() {}
 
 	virtual void render() {
 
 	}
+
+	virtual void onCollisionEnter(Collision& col) {}
 
 	template<typename T>
 	bool isType() const {
@@ -109,10 +109,10 @@ private:
 public:
 	void update() {
 		for (auto& e : m_entities)
-			e->Update();
+			e->update();
 				
 		for (auto& e : m_entities)
-			e->update();
+			e->_update();
 
 		for (auto& e : m_entities)
 			e->render();

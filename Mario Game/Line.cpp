@@ -1,5 +1,8 @@
 #include "Line.hpp"
+#include "SFML/Graphics.hpp"
+#include "Rect.hpp"
 #include <iostream>
+using namespace sf;
 
 Line::Line() {
 

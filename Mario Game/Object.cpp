@@ -1,10 +1,14 @@
 #pragma once
 #include "Object.hpp"
 #include "GameManager.hpp"
+#include "ECS.hpp"
+#include "Transform2D.hpp"
+#include "SpriteRenderer.hpp"
+#include "SFML/Graphics.hpp"
+using namespace sf;
 
-Object::Object(Object* parent) {
+Object::Object(Object* parent) : m_transform(addComponent<Transform2D>()), m_sprite(addComponent<SpriteRenderer>()), m_parent(parent) {
 	EntitiesManager::addEntity(this);
-	m_parent = parent;
 	m_active = true;
 	m_renderLayer = 0;
 }
@@ -34,17 +38,17 @@ void Object::setRenderLayer(int layer) {
 }
 
 void Object::setTexture(Texture& texture) {
-	m_texture = texture;
+	//m_texture = texture;
 	m_sprite.setTexture(texture);
 }
 
 void Object::loadTexture(string filename) {
-	m_texture.loadFromFile(filename);
-	m_sprite.setTexture(m_texture);
+	//m_texture.loadFromFile(filename);
+	//m_sprite.setTexture(m_texture);
 }
 
 void Object::render() {
-	GameManager::getInstance()->getRenderWindow().draw(m_sprite);
+	
 }
 
 void Object::destroy() {

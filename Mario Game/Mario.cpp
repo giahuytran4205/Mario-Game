@@ -1,16 +1,23 @@
 #include "Mario.hpp"
+#include "SFML/Graphics.hpp"
+#include "ECS.hpp"
 #include "Block.hpp"
 #include "GameManager.hpp"
-#include "SFML/Graphics.hpp"
 #include "Line.hpp"
+#include "Rect.hpp"
+#include "Object.hpp"
+#include "Physics2D.hpp"
+#include "Transform2D.hpp"
+#include "Collision.hpp"
+#include "Character.hpp"
 #include <iostream>
+using namespace sf;
 
 Mario::Mario() {
 	m_speed = 1.0f;
 
 	Texture* texture = new Texture();
 	texture->loadFromFile("Goomba.png");
-	m_texture.loadFromFile("Goomba.png");
 	m_sprite.setTexture(*texture);
 
 	m_physics2D = &addComponent<Physics2D>();
@@ -59,11 +66,8 @@ void Mario::onCollisionEnter(Collision& col) {
 	}
 }
 
-void Mario::Update() {
+void Mario::update() {
 	//m_physics2D->setBaseVelocityX(m_transform.getRotation().x * m_speed);
-
-	m_sprite.setPosition(m_transform.getPosition());
-
 	m_transform.setRotation({ 0, 0 });
 	m_physics2D->setBaseVelocityX(0);
 

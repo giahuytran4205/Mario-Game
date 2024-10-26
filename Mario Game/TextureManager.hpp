@@ -1,6 +1,7 @@
 #pragma once
-#include "SFML/Graphics.hpp"
 #include "Enum.hpp"
+#include "Common.hpp"
+#include "SFML/Graphics.hpp"
 using namespace sf;
 
 class TextureManager {

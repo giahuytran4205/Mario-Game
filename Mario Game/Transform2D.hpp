@@ -1,10 +1,8 @@
 #pragma once
-#include "ECS.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Graphics.hpp"
 #include "Rect.hpp"
+#include "Common.hpp"
+#include "SFML/Graphics.hpp"
 using namespace sf;
-
 const float PI = acos(-1);
 
 class Transform2D : public Component {

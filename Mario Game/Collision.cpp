@@ -1,7 +1,10 @@
 #include "Collision.hpp"
 #include "Transform2D.hpp"
-#include "Mario.hpp"
+#include "ECS.hpp"
+#include "SFML/Graphics.hpp"
+#include <vector>
 #include <iostream>
+using namespace sf;
 
 vector<Collision*> Collision::m_colliders;
 

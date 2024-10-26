@@ -1,7 +1,6 @@
 #pragma once
-#include "ECS.hpp"
-#include "Transform2D.hpp"
-#include "SFML/System.hpp"
+#include "Common.hpp"
+#include "SFML/Graphics.hpp"
 using namespace sf;
 
 class Physics2D : public Component {

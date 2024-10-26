@@ -146,7 +146,9 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="ECS.cpp" />
+    <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -155,17 +157,22 @@
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Toggle.cpp" />
     <ClCompile Include="Transform2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="Collision.hpp" />
+    <ClInclude Include="Common.hpp" />
     <ClInclude Include="Controller.hpp" />
     <ClInclude Include="ECS.hpp" />
     <ClInclude Include="Enum.hpp" />
+    <ClInclude Include="EventSystem.hpp" />
     <ClInclude Include="GameManager.hpp" />
+    <ClInclude Include="GUI.hpp" />
     <ClInclude Include="Line.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />
@@ -173,7 +180,9 @@
     <ClInclude Include="Physics2D.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Rect.hpp" />
+    <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="TextureManager.hpp" />
+    <ClInclude Include="Toggle.hpp" />
     <ClInclude Include="Transform2D.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

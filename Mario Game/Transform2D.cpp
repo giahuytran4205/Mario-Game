@@ -1,6 +1,11 @@
 #include "Transform2D.hpp"
 #include "Rect.hpp"
+#include "ECS.hpp"
+#include "SFML/Graphics.hpp"
+#include "Object.hpp"
+#include "Transform2D.hpp"
 #include <cmath>
+using namespace sf;
 
 Vector2f Transform2D::getPosition() {
 	return { m_x, m_y };

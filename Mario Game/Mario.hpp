@@ -1,11 +1,8 @@
 #pragma once
-#include "SFML/System.hpp"
-#include "SFML/Graphics.hpp"
+#include "Common.hpp"
 #include "Character.hpp"
-#include "Collision.hpp"
-#include "Physics2D.hpp"
+#include "SFML/Graphics.hpp"
 using namespace sf;
-using namespace std;
 
 class Mario : public Character {
 private:
@@ -19,5 +16,5 @@ public:
 
 	//void init();
 	void onCollisionEnter(Collision& col) override;
-	void Update() override;
+	void update() override;
 };

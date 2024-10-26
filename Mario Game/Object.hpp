@@ -1,16 +1,17 @@
 #pragma once
+#include "Common.hpp"
 #include "ECS.hpp"
-#include "Transform2D.hpp"
-using namespace std;
+#include "SpriteRenderer.hpp"
+#include "SFML/Graphics.hpp"
+using namespace sf;
 
 class Object : public Entity {
 protected:
 	Object* m_parent;
 	bool m_active;
 	int m_renderLayer;
-	Transform2D& m_transform = addComponent<Transform2D>();
-	Sprite m_sprite;
-	Texture m_texture;
+	Transform2D& m_transform;
+	SpriteRenderer& m_sprite;
 
 public:
 	Object(Object* parent = nullptr);

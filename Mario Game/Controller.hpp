@@ -1,10 +1,13 @@
 #pragma once
-#include "ECS.hpp"
+#include "Common.hpp"
 
-class Controller : Component {
+class Controller : public Component {
 private:
 
 public:
+	Controller();
+	~Controller();
+
 	void init() override;
 	void update() override;
 	void lateUpdate() override;

@@ -1,4 +1,5 @@
 #include "Character.hpp"
+#include "Object.hpp"
 
 Character::Character() {
 
@@ -24,7 +25,7 @@ void Character::setHealth(int health) {
 	m_health = health;
 }
 
-void Character::setTexture(const Texture& texture) {
+void Character::setTexture(Texture& texture) {
 	m_sprite.setTexture(texture);
 }
 

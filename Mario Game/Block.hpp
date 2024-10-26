@@ -1,10 +1,7 @@
 #pragma once
-#include "ECS.hpp"
+#include "Common.hpp"
 #include "Object.hpp"
-#include "SFML/System.hpp"
 #include "SFML/Graphics.hpp"
-#include "Collision.hpp"
-#include "Physics2D.hpp"
 using namespace sf;
 
 class Block : public Object {
@@ -16,5 +13,5 @@ public:
 	Block(int id);
 	~Block();
 
-	void Update() override;
+	void update() override;
 };

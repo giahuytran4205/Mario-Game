@@ -1,4 +1,6 @@
 #include "TextureManager.hpp"
+#include "SFML/Graphics.hpp"
+using namespace sf;
 
 TextureManager* TextureManager::m_instance = nullptr;
 
@@ -18,5 +20,5 @@ void TextureManager::loadBackground() {
 }
 
 void TextureManager::loadTilesets() {
-	m_tilesets[TileSetType::Block_Type ].loadFromFile("Resources/blocks.png");
+	m_tilesets[TileSetType::Block_Type].loadFromFile("Resources/blocks.png");
 }

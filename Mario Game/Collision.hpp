@@ -1,6 +1,7 @@
 #pragma once
+#include "Common.hpp"
 #include "SFML/Graphics.hpp"
-#include "ECS.hpp"
+#include <vector>
 using namespace sf;
 using namespace std;
 

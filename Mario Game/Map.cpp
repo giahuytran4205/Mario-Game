@@ -1,10 +1,15 @@
 #include "Map.hpp"
+#include "SFML/Graphics.hpp"
+#include "ECS.hpp"
+#include "Object.hpp"
 #include "GameManager.hpp"
 #include "Block.hpp"
+#include "Transform2D.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 using namespace std;
+using namespace sf;
 
 Map::Map() {
 

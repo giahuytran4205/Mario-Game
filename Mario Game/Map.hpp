@@ -1,9 +1,8 @@
+#pragma once
+#include "Common.hpp"
 #include "SFML/Graphics.hpp"
 #include "Block.hpp"
-#include <string>
-#include <vector>
 using namespace sf;
-using namespace std;
 
 class Map : public Object {
 private:

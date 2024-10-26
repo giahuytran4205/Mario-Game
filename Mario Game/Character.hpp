@@ -1,8 +1,7 @@
 #pragma once
-#include "Object.hpp"
 #include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "Collision.hpp"
+#include "Common.hpp"
+#include "Object.hpp"
 using namespace sf;
 
 class Character : public Object {
@@ -20,7 +19,7 @@ public:
 	void setMaxHealth(int maxHealth);
 	int getHealth();
 	void setHealth(int health);
-	void setTexture(const Texture& texture);
+	void setTexture(Texture& texture);
 	bool isOnGround();
 
 	//virtual void onCollisionEnter(Collision& col);

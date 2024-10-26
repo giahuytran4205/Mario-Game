@@ -1,4 +1,8 @@
 #include "Physics2D.hpp"
+#include "ECS.hpp"
+#include "Object.hpp"
+#include "SFML/Graphics.hpp"
+#include "Transform2D.hpp"
 
 void Physics2D::init() {
 	m_static = false;
