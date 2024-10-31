@@ -7,7 +7,7 @@ Button::Button(sf::RenderWindow& window, const sf::Texture& defaultTexture, cons
 	m_hoveredTexture = hoveredTexture;
 	m_pressedTexture = pressedTexture;
 	m_text = text;
-	m_text.setColor(sf::Color::Cyan);
+	m_text.setFillColor(sf::Color::Cyan);
 	m_font = font;
 	m_action = action;
 	m_parent = parent;
@@ -46,7 +46,7 @@ void Button::onHovered()
 {
 	if (m_isHovered)
 	{
-		m_text.setColor(sf::Color::White);
+		m_text.setFillColor(sf::Color::White);
 		m_background.setTexture(m_hoveredTexture);
 	}
 }
@@ -55,7 +55,7 @@ void Button::onPressed()
 {
 	if (m_isPressed)
 	{
-		m_text.setColor(sf::Color::Cyan);
+		m_text.setFillColor(sf::Color::Cyan);
 		m_background.setTexture(m_pressedTexture);
 		m_background.getSprite().setScale(0.95f, 0.95f);
 	}
@@ -65,7 +65,7 @@ void Button::onClick()
 {
 	if (m_isPressed)
 	{
-		m_text.setColor(sf::Color::Cyan);
+		m_text.setFillColor(sf::Color::Cyan);
 		m_background.setTexture(m_defaultTexture);
 		m_background.getSprite().setScale(1.0f, 1.0f);
 		if (m_action)
