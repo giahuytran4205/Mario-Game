@@ -14,7 +14,10 @@ Button::Button(sf::RenderWindow& window, const sf::Texture& defaultTexture, cons
 
 Button::Button(sf::RenderWindow& window, const sf::Texture& texture, const sf::Text text, const sf::Font font, void(*action)(), Object* parent) : Button(window, texture, texture, texture, text, font, action, parent) {}
 
-Button::~Button() {}
+Button::~Button()
+{
+	delete m_text;
+}
 
 void Button::setDefaultTexture(const Texture& defaultTexture)
 {
