@@ -160,6 +160,7 @@
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TextView.cpp" />
     <ClCompile Include="Toggle.cpp" />
     <ClCompile Include="Transform2D.cpp" />
   </ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="Rect.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="TextureManager.hpp" />
+    <ClInclude Include="TextView.hpp" />
     <ClInclude Include="Toggle.hpp" />
     <ClInclude Include="Transform2D.hpp" />
   </ItemGroup>

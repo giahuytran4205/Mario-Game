@@ -2,6 +2,7 @@
 
 #include "Common.hpp"
 #include "GUI.hpp"
+#include "TextView.hpp"
 #include "SFML/Graphics.hpp"
 
 /*
@@ -24,13 +25,14 @@ private:
 	sf::Texture m_defaultTexture;
 	sf::Texture m_hoveredTexture;
 	sf::Texture m_pressedTexture;
-	sf::Text m_text;
-	sf::Font m_font;
+	TextView* m_text;
 	void (*m_action) ();
 
 public:
 	Button(sf::RenderWindow& window,const sf::Texture& defaultTexture, const sf::Texture& hoveredTexture, const sf::Texture& pressedTexture, const sf::Text text, const sf::Font font, void (*action) () = nullptr, Object* parent = nullptr);
+	// Ex: Button button(window, defaultTexture, hoveredTexture, pressedTexture, text, allFonts["Arial"], action, parent);
 	Button(sf::RenderWindow& window, const sf::Texture& texture, const sf::Text text, const sf::Font font, void (*action) () = nullptr, Object* parent = nullptr); // defaultTexture == hoveredTexture == pressedTexture
+	// Ex: Button button(window, texture, text, allFonts["Arial"], action, parent);
 	~Button();
 
 	void setDefaultTexture(const Texture& defaultTexture);
