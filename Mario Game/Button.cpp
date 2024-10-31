@@ -7,6 +7,7 @@ Button::Button(sf::RenderWindow& window, const sf::Texture& defaultTexture, cons
 	m_hoveredTexture = hoveredTexture;
 	m_pressedTexture = pressedTexture;
 	m_text = new TextView(&m_background, text, font);
+	m_text->setFillColor(sf::Color::Cyan);
 	m_action = action;
 	m_parent = parent;
 }
@@ -53,7 +54,7 @@ void Button::onPressed()
 {
 	if (m_isPressed)
 	{
-		m_text->setFillColor(sf::Color::Cyan);
+		m_text->setFillColor(sf::Color::Black);
 		m_background.setTexture(m_pressedTexture);
 		m_background.getSprite().setScale(0.95f, 0.95f);
 	}

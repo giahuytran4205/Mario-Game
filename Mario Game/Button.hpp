@@ -13,7 +13,7 @@ When button is hovered (call onHovered()):
 	- Color of text is white
 	- Texture is m_hoveredTexture
 When button is pressed (call onPressed()): 
-	- Color of text is a color != white
+	- Color of text is a color != white & color != default color
 	- Texture is m_pressedTexture
 	- Scale background's sprite to 0.95 (Reduce very small to just for User know)
 When button is released (call onClicked()) == When button is not hovered (set Default)
