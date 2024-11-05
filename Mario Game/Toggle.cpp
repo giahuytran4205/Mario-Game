@@ -8,12 +8,13 @@
 using namespace sf;
 
 Toggle::Toggle(RenderWindow& window, Texture& onTexture, Texture& offTexture, void (*action) (bool isOn), Object* parent)
-	: m_onTexture(onTexture), m_offTexture(offTexture), m_action(action)
+	: m_onTexture(onTexture), m_offTexture(offTexture)
 {
 	m_window = &window;
 	m_isOn = false;
 	m_parent = parent;
 	m_background.setTexture(m_offTexture);
+	if (action) m_listeners.push_back(action);
 }
 
 Toggle::~Toggle() {
@@ -39,11 +40,19 @@ void Toggle::onTrigger() {
 	else
 		m_sprite.setTexture(m_offTexture);
 
-	if (m_action) m_action(m_isOn);
+	for (auto& listener : m_listeners) {
+		listener(m_isOn);
+	}
 }
 
-void Toggle::setAction(void (*func) (bool isOn)) {
-	m_action = func;
+void Toggle::addListener(void (*func) (bool isOn)) {
+	if (func) m_listeners.push_back(func);
+}
+
+void Toggle::removeListener(void (*func) (bool isOn)) {
+	auto it = find(m_listeners.begin(), m_listeners.end(), func);
+	if (it != m_listeners.end())
+		m_listeners.erase(it);
 }
 
 void Toggle::setState(bool isOn) {
