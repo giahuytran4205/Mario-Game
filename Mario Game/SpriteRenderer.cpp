@@ -15,7 +15,8 @@ SpriteRenderer::~SpriteRenderer() {
 
 void SpriteRenderer::update() {
 	if (m_entity->hasComponent<Transform2D>()) {
-		m_sprite.setPosition(m_entity->getComponent<Transform2D>().getRect().getPosition());
+		Transform2D& transform = m_entity->getComponent<Transform2D>();
+		m_sprite.setPosition(transform.getRect().getPosition());
 	}
 }
 
