@@ -4,16 +4,29 @@
 #include "TextureManager.hpp"
 #include "Mario.hpp"
 #include "EventSystem.hpp"
+#include "Collision.hpp"
+#include "Toggle.hpp"
+#include "Slider.hpp"
 using namespace sf;
+
+#define deltaTime GameManager::getDeltaTime()
 
 class GameManager : IEventListener {
 private:
 	static GameManager* m_instance;
 	EntitiesManager m_entitiesManager;
 	TextureManager m_textureManager;
-	Mario* m_player = nullptr;
-	RenderWindow m_window;
+	CollisionManager m_collisionManager;
 	EventSystem m_eventSystem;
+	RenderWindow m_window;
+	View m_view;
+	Clock m_clock;
+	static Time m_deltaTime;
+
+	Mario* m_player = nullptr;
+	//Toggle m_toggle;
+	//Slider m_slider;
+	//Object* m_test = nullptr;
 
 public:
 	GameManager();
@@ -26,5 +39,6 @@ public:
 	void destroy();
 	void handleEvent(const Event& event) override;
 	static GameManager* getInstance();
+	static Time& getDeltaTime();
 	RenderWindow& getRenderWindow();
 };

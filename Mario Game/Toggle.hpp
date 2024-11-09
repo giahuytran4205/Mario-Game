@@ -12,6 +12,7 @@ private:
 	vector<void (*)(bool isOn)> m_listeners;
 
 public:
+	Toggle();
 	Toggle(RenderWindow& window, Texture& onTexture, Texture& offTexture, void (*action) (bool isOn) = nullptr, Object* parent = nullptr);
 	~Toggle();
 

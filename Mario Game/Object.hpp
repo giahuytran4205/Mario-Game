@@ -7,8 +7,7 @@ using namespace sf;
 
 class Object : public Entity {
 protected:
-	Object* m_parent;
-	bool m_active;
+	Object* m_parent = nullptr;
 	int m_renderLayer;
 	Transform2D& m_transform;
 	SpriteRenderer& m_sprite;
@@ -24,6 +23,7 @@ public:
 	void setRenderLayer(int layer);
 	void setTexture(Texture& texture);
 	void loadTexture(string filename);
+	void update() override;
 	void destroy();
 	void render() override;
 };

@@ -6,8 +6,8 @@ using namespace sf;
 
 class Mario : public Character {
 private:
-	Physics2D* m_physics2D;
-	Collision* m_collision;
+	Physics2D& m_physics2D;
+	Collision& m_collision;
 	float m_speed;
 
 public:
@@ -17,4 +17,6 @@ public:
 	//void init();
 	void onCollisionEnter(Collision& col) override;
 	void update() override;
+	void handleMovement();
+	void jump(const float& velY = -3.0f);
 };

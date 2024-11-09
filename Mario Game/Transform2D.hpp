@@ -9,6 +9,7 @@ class Transform2D : public Component {
 private:
 	Vector2f m_pos;
 	Vector2f m_lastPos;
+	Vector2f m_tempPos;
 	Vector2f m_rotation;
 	Vector2f m_anchor;
 	gr::Rect m_rect;
@@ -34,8 +35,8 @@ public:
 	void move(float dx, float dy);
 	void move(const Vector2f& d);
 	void adjustPosition(const Vector2f& pos);
-	void update() override;
 	void setParent(Object* parent);
+	void update() override;
 };
 
 Vector2f normalize(const Vector2f& v);

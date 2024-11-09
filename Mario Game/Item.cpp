@@ -9,6 +9,10 @@ Item::Item(ItemType type, Object* parent) : m_type(type), m_isPlayAnim(true) {
 	m_parent = parent;
 	m_elapsedTime = 0;
 	m_index = 0;
+	m_collision = &addComponent<Collision>();
+
+	m_transform.getRect().width = 16;
+	m_transform.getRect().height = 16;
 }
 
 Item::Item(const Item& item) {

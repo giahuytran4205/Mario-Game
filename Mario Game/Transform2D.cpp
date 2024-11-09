@@ -23,6 +23,9 @@ void Transform2D::setPosition(float x, float y) {
 }
 
 void Transform2D::setPosition(const Vector2f& position) {
+	//if (m_pos == position) return;
+	//m_lastPos = m_pos;
+	//m_tempPos = position
 	m_lastPos = m_pos;
 	m_pos = position;
 	m_rect.setPosition(getWorldPosition());
@@ -58,16 +61,16 @@ void Transform2D::move(float dx, float dy) {
 void Transform2D::move(const Vector2f& d) {
 	m_lastPos = m_pos;
 	m_pos += d;
-	m_rect.setPosition(getWorldPosition());
-}
+	m_rect.setPosition(getWorldPosition());}
 
 gr::Rect& Transform2D::getRect() {
 	return m_rect;
 }
 
 void Transform2D::adjustPosition(const Vector2f& pos) {
+	//m_pos = m_lastPos;
 	m_pos = pos;
-	m_rect.setPosition(m_pos);
+	m_rect.setPosition(getWorldPosition());
 }
 
 Vector2f Transform2D::transformPoint(const Vector2f& point) {

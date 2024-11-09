@@ -7,6 +7,8 @@
 #include <iostream>
 using namespace sf;
 
+Toggle::Toggle() {}
+
 Toggle::Toggle(RenderWindow& window, Texture& onTexture, Texture& offTexture, void (*action) (bool isOn), Object* parent)
 	: m_onTexture(onTexture), m_offTexture(offTexture)
 {

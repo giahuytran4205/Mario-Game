@@ -33,6 +33,10 @@ bool Character::isOnGround() {
 	return m_onGround;
 }
 
+bool Character::isOnWall() {
+	return m_onWall;
+}
+
 //virtual void Character::onCollisionEnter(Collision& col) {}
 
 /*void Character::render(RenderWindow &window) {

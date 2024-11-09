@@ -1,4 +1,3 @@
-#pragma once
 #include "Object.hpp"
 #include "GameManager.hpp"
 #include "ECS.hpp"
@@ -38,13 +37,16 @@ void Object::setRenderLayer(int layer) {
 }
 
 void Object::setTexture(Texture& texture) {
-	//m_texture = texture;
 	m_sprite.setTexture(texture);
 }
 
 void Object::loadTexture(string filename) {
 	//m_texture.loadFromFile(filename);
 	//m_sprite.setTexture(m_texture);
+}
+
+void Object::update() {
+	
 }
 
 void Object::render() {

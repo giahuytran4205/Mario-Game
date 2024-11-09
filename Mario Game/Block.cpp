@@ -11,20 +11,38 @@
 #include <iostream>
 using namespace sf;
 
-Block::Block(int id) {
-	m_id = id;
+Block::Block() {
+	m_id = 0;
+}
 
-	Texture& texture = TextureManager::m_instance->m_tilesets[TileSetType::Block_Type];
-	m_sprite.setTexture(texture, { int(m_id % (texture.getSize().x / 16) * 16), int(m_id / (texture.getSize().x / 16) * 16), 16, 16 });
+Block::Block(Texture& texture, int x, int y) {
+	m_sprite.setTexture(texture);
 
 	m_physics2D = &addComponent<Physics2D>();
-	m_collision = &addComponent<Collision>();
+	//m_collision = &addComponent<Collision>();
 
 	m_physics2D->setStatic(true);
 	m_physics2D->setFriction(1.0f);
 
 	m_transform.getRect().width = 16;
 	m_transform.getRect().height = 16;
+
+	m_transform.setPosition(x, y);
+}
+
+Block::Block(Texture& texture, const Vector2f& pos, bool addCollision) {
+	m_sprite.setTexture(texture);
+
+	m_physics2D = &addComponent<Physics2D>();
+	if (addCollision) m_collision = &addComponent<Collision>();
+
+	m_physics2D->setStatic(true);
+	m_physics2D->setFriction(1.0f);
+
+	m_transform.getRect().width = 16;
+	m_transform.getRect().height = 16;
+
+	m_transform.setPosition(pos);
 }
 
 Block::~Block() {

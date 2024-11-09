@@ -24,7 +24,7 @@ public:
 	void setThickness(float thickness);
 };
 
-template <typename T>
+template<typename T>
 class Slider : public GUI {
 private:
 	T m_value;
@@ -35,12 +35,12 @@ private:
 	RectangleShape m_fillArea;
 
 public:
-	Slider(Object* parent = nullptr) : m_value(0), m_minVal(0), m_maxVal(1), m_handle(*m_window, this) {
-		m_handle.m_transform.setPosition(m_transform.getPosition());
+	Slider(Object* parent = nullptr) : m_value(0), m_minVal(0), m_maxVal(1) {
+		m_handle.getComponent<Transform2D>().setPosition(m_transform.getPosition());
 		m_parent = parent;
 	}
 
-	Slider(RenderWindow& window, const T& minVal, const T& maxVal, const T& val = 0, const Vector2f& pos = {0, 0}, Object* parent = nullptr) : m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(window, this) {
+	Slider(RenderWindow& window, const T& minVal, const T& maxVal, const T& val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(window, this) {
 		m_window = &window;
 		m_parent = parent;
 		m_transform.setPosition(pos);
@@ -52,8 +52,11 @@ public:
 		m_background.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_background.getSize().y / 2));
 		m_fillArea.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_fillArea.getSize().y / 2));
 
-		m_background.setOutlineColor(Color::White);
-		m_fillArea.setFillColor(Color::Blue);
+		m_background.setOutlineThickness(2);
+		m_background.setOutlineColor(Color(150, 150, 150));
+
+		m_background.setFillColor(Color(150, 150, 150));
+		m_fillArea.setFillColor(Color(50, 50, 50));
 	}
 
 	Slider(const Slider& slider) {
@@ -69,8 +72,8 @@ public:
 		if (dragPos.x < m_transform.getRect().left) dragPos.x = m_transform.getRect().left;
 		if (dragPos.x > m_transform.getRect().right) dragPos.x = m_transform.getRect().right;
 		m_value = dragPos.x - m_transform.getRect().left;
-		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.getRect().left, m_handle.getComponent<Transform2D>().getPosition().y});
-		m_fillArea.setScale({ m_value / m_transform.getRect().width, 1});
+		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.getRect().left, m_handle.getComponent<Transform2D>().getPosition().y });
+		m_fillArea.setScale({ m_value / m_transform.getRect().width, 1 });
 
 		m_window->draw(m_background);
 		m_window->draw(m_fillArea);
@@ -99,11 +102,11 @@ public:
 	void setFillAreaThickness(float thickness) {
 		m_fillArea.setOutlineThickness(thickness);
 	}
-	
+
 	void setHandleColor(const Color& color) {
 		m_handle.setColor(color);
 	}
-	
+
 	void setHandleOutlineColor(const Color& color) {
 		m_handle.setOutlineColor(color);
 	}

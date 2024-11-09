@@ -6,12 +6,14 @@ Handle::Handle() {
 
 }
 
-Handle::Handle(RenderWindow& window, Object* parent) : m_handleShape(7, 500) {
+Handle::Handle(RenderWindow& window, Object* parent) : m_handleShape(5, 500) {
 	m_window = &window;
 	m_parent = parent;
 	m_transform.setParent(parent);
 	m_transform.getRect() = { 0, 0, 20, 20 };
-	m_handleShape.setFillColor(Color::Red);
+	m_handleShape.setFillColor(Color(150, 150, 150));
+	m_handleShape.setOutlineThickness(3);
+	m_handleShape.setOutlineColor(Color(70, 70, 70));
 }
 
 Handle::~Handle() {
@@ -20,6 +22,14 @@ Handle::~Handle() {
 
 void Handle::update() {
 	m_handleShape.setPosition(m_transform.getWorldPosition() - Vector2f(m_handleShape.getRadius(), m_handleShape.getRadius()));
+	if (isOnDrag()) {
+		m_handleShape.setFillColor(Color(100, 100, 100));
+		m_handleShape.setOutlineColor(Color(20, 20, 20));
+	}
+	else {
+		m_handleShape.setFillColor(Color(150, 150, 150));
+		m_handleShape.setOutlineColor(Color(70, 70, 70));
+	}
 }
 
 void Handle::render() {

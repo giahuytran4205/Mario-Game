@@ -14,6 +14,7 @@ protected:
 	bool m_isSelected;
 	bool m_isPressed;
 	bool m_isHovered;
+	bool m_isOnDrag;
 	bool m_isInteractable;
 
 public:
@@ -30,9 +31,11 @@ public:
 	virtual void onPressed();
 	virtual void onHovered();
 	virtual void onClick();
+	virtual void onDrag(const Vector2f& mousePos);
 	bool isSelected();
 	bool isPressed();
 	bool isHovered();
+	bool isOnDrag();
 	bool isInteractable();
 	void setSelect(bool isSelect);
 	void setInteractable(bool isInteractable);
