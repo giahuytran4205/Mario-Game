@@ -43,9 +43,13 @@ private:
 	vector<unique_ptr<Component>> m_components;
 	ComponentArray m_componentArray;
 	ComponentBitSet m_componentBitSet;
+
+protected:
 	bool m_active;
+	int m_renderOrder = 0;
 
 public:
+	Entity() : m_renderOrder(0), m_active(true) {}
 	virtual ~Entity() {}
 
 	void _update() {
@@ -100,13 +104,25 @@ public:
 	bool isActive() {
 		return m_active;
 	}
+
+	int getRenderOrder() {
+		return m_renderOrder;
+	}
+
+	Object* toObject() {
+		return (Object*)this;
+	}
 };
 
 class EntitiesManager {
 private:
 	static vector<unique_ptr<Entity>> m_entities;
+	vector<vector<Entity*>> m_renderQueue;
 
 public:
+	EntitiesManager() { }
+	~EntitiesManager() { }
+
 	void update() {
 		for (auto& e : m_entities)
 			e->update();
@@ -114,8 +130,17 @@ public:
 		for (auto& e : m_entities)
 			e->_update();
 
-		for (auto& e : m_entities)
-			e->render();
+		m_renderQueue.assign(100, {});
+		for (auto& e : m_entities) {
+			m_renderQueue[e->getRenderOrder()].push_back(e.get());
+		}
+
+		for (auto& v : m_renderQueue) {
+			for (auto& e : v)
+				e->render();
+		}
+
+		refresh();
 	}
 
 	void refresh() {
