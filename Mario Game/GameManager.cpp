@@ -47,7 +47,7 @@ void GameManager::init() {
 
 	m_view.reset(FloatRect(0, 0, 1200, 480));
 
-	m_view.setViewport(FloatRect(0, 0, 1, 1));
+	m_view.setViewport(FloatRect(-0.5, 0, 2, 2));
 	m_window.setView(m_view);
 
 }

@@ -21,9 +21,6 @@ Block::Block(Texture& texture, int x, int y) {
 	m_physics2D = &addComponent<Physics2D>();
 	//m_collision = &addComponent<Collision>();
 
-	m_physics2D->setStatic(true);
-	m_physics2D->setFriction(1.0f);
-
 	m_transform.getRect().width = 16;
 	m_transform.getRect().height = 16;
 
@@ -35,9 +32,6 @@ Block::Block(Texture& texture, const Vector2f& pos, bool addCollision) {
 
 	m_physics2D = &addComponent<Physics2D>();
 	if (addCollision) m_collision = &addComponent<Collision>();
-
-	m_physics2D->setStatic(true);
-	m_physics2D->setFriction(1.0f);
 
 	m_transform.getRect().width = 16;
 	m_transform.getRect().height = 16;
@@ -51,4 +45,8 @@ Block::~Block() {
 
 void Block::update() {
 	
+}
+
+void Block::onHit(bool isDestroy) {
+	m_physics2D->bounce(-0.7f);
 }

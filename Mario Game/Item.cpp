@@ -43,7 +43,7 @@ void Item::update() {
 	if (m_isPlayAnim) {
 		if (m_elapsedTime <= 0) {
 			m_elapsedTime = m_anim[m_index].duration;
-			m_sprite.setTexture(*m_anim[m_index].frame);
+			m_sprite.setTexture(*m_anim[m_index].texture);
 			m_index++;
 			m_index %= m_anim.size();
 		}

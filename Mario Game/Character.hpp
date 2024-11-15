@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Common.hpp"
 #include "Object.hpp"
+#include "Animation.hpp"
 using namespace sf;
 
 class Character : public Object {

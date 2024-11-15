@@ -17,4 +17,5 @@ public:
 	~Block();
 
 	void update() override;
+	void onHit(bool isDestroy);
 };

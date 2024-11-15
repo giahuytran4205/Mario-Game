@@ -5,34 +5,42 @@ using namespace sf;
 
 class Physics2D : public Component {
 private:
-	float m_mass;
 	Vector2f m_baseVelo;
 	Vector2f m_velocity;
 	Vector2f m_acceleration;
+	Vector2f m_startPos;
+	float m_mass;
 	float m_gravity;
 	float m_friction;
 	bool m_static;
+	bool m_isBounce;
+	Transform2D* m_transform;
 	
 public:
+	Physics2D();
+	Physics2D(float gravity, bool isStatic);
+	~Physics2D();
+
 	void init() override;
 	void update() override;
 	void lateUpdate() override;
 	void render();
 	float getMass();
 	void setMass(float mass);
-	const Vector2f& getVelocity();
+	Vector2f getVelocity();
 	void setVelocity(const Vector2f& velocity);
-	const Vector2f& getBaseVelocity();
+	Vector2f getBaseVelocity();
 	void setBaseVelocity(const Vector2f& v0);
-	void setBaseVelocityX(const float& v0x);
-	void setBaseVelocityY(const float& v0y);
-	void setVelocityX(const float& velX);
-	void setVelocityY(const float& velY);
+	void setBaseVelocityX(float v0x);
+	void setBaseVelocityY(float v0y);
+	void setVelocityX(float velX);
+	void setVelocityY(float velY);
 	void addVelocity(const Vector2f& v0);
-	const Vector2f& getAcceleration();
+	Vector2f getAcceleration();
 	void setAcceleration(const Vector2f& acceleration);
-	void setGravity(const float& gravity);
-	void setStatic(const bool& isStatic);
-	const float& getFriction();
-	void setFriction(const float& friction);
+	void setGravity(float gravity);
+	void setStatic(bool isStatic);
+	float getFriction();
+	void setFriction(float friction);
+	void bounce(float velY);
 };

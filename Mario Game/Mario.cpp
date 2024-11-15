@@ -26,7 +26,16 @@ Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponen
 
 	m_transform.getRect().width = texture->getSize().x;
 	m_transform.getRect().height = texture->getSize().y;
-	m_transform.setPosition({ 1000, 300 });
+	m_transform.setPosition({ 150, 0 });
+
+	m_onJump = false;
+
+	m_anim = &addComponent<Animation>(m_sprite);
+	m_anim->loadFromJsonFile("D:/GHuy/OOP/Tile/Mario&Luigi.json");
+	
+	m_state = State::Normal;
+
+	m_renderOrder = 1;
 }
 
 Mario::~Mario() {
@@ -53,10 +62,12 @@ void Mario::onCollisionEnter(Collision& col) {
 		}
 		else if (side == 1) {				// Above block
 			m_onGround = true;
+			m_onJump = false;
 			m_physics2D.setBaseVelocityY(0);
 		}
 		else {								// Below block
-			m_physics2D.setBaseVelocityY(1.0f);
+			m_physics2D.setBaseVelocityY(0.1f);
+			col.m_entity->convertTo<Block>()->onHit(false);
 		}
 	}
 
@@ -66,31 +77,46 @@ void Mario::onCollisionEnter(Collision& col) {
 }
 
 void Mario::update() {
+	m_onGround = m_physics2D.getVelocity().y == 0.05f && !m_onJump;
 	if (isOnGround()) {
 		m_physics2D.setVelocityY(0);
 		m_physics2D.setBaseVelocityY(0);
 	}
+
 	m_physics2D.setBaseVelocityX(0);
 	m_physics2D.setVelocityX(0);
 
 	handleMovement();
+
+	m_anim->play(m_state);
 	
-	m_onGround = false;
 	m_onWall = false;
+
+	cout << m_onGround << " " << m_onWall << "\n";
 }
 
 void Mario::handleMovement() {
+	m_state = State::Normal;
+
 	if (Keyboard::isKeyPressed(Keyboard::A) && (isOnGround() || !isOnWall())) {
 		if (isOnGround()) {
 			m_physics2D.setBaseVelocityX(-2.0f);
 		}
 		else m_physics2D.setBaseVelocityX(-1.0f);
+
+		m_sprite.getSprite().setScale({ -1, 1 });
+
+		m_state = State::Walk;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D) && (isOnGround() || !isOnWall())) {
 		if (isOnGround()) {
 			m_physics2D.setBaseVelocityX(2.0f);
 		}
 		else m_physics2D.setBaseVelocityX(1.0f);
+
+		m_sprite.getSprite().setScale({ 1.0f, 1.0f });
+
+		m_state = State::Walk;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::W)) {
 		jump();
@@ -98,10 +124,14 @@ void Mario::handleMovement() {
 	if (Keyboard::isKeyPressed(Keyboard::S)) {
 		m_physics2D.setBaseVelocityY(1.0f);
 	}
+
+	if (m_onJump) m_state = State::Jump;
 }
 
-void Mario::jump(const float& velY) {
+void Mario::jump(float velY) {
 	if (!isOnGround()) return;
 	m_onGround = false;
+	m_onJump = true;
 	m_physics2D.setBaseVelocityY(velY);
+	m_state = State::Jump;
 }

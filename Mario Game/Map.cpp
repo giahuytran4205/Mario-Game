@@ -46,23 +46,28 @@ void Map::loadFromJsonFile(string filename) {
 
 	for (auto& item : parsed["layers"].as_array()) {
 		auto& layer = item.as_object();
-		if (layer["name"] != "Graphics Layer") continue;
-
-
-		for (int i = 0; i < layer["data"].as_array().size(); i++) {
-			int id = layer["data"].as_array()[i].as_int64() - 1;
-			if (id == -1 || id >= TextureManager::m_instance->m_tilesets[0].m_tiles.size()) continue;
-			Tile& tile = TextureManager::m_instance->m_tilesets[0][id];
-			int col = TextureManager::m_instance->m_tilesets[0].m_col;
-			if (tile.type == "Coin") {
-				Item* item = new Item(ItemType::Coin);
-				item->setAnim(tile.anim);
-				item->getComponent<Transform2D>().setPosition({ i % 216 * 16.0f + 8, i / 216 * 16.0f + 8 });
+		if (layer["name"] == "Graphics Layer") {
+			for (int i = 0; i < layer["data"].as_array().size(); i++) {
+				int id = layer["data"].as_array()[i].as_int64() - 1;
+				if (id == -1 || id >= TextureManager::m_instance->m_tilesets[0].m_tiles.size()) continue;
+				Tile& tile = TextureManager::m_instance->m_tilesets[0][id];
+				int col = TextureManager::m_instance->m_tilesets[0].m_col;
+				if (tile.type == "Coin") {
+					Item* item = new Item(ItemType::Coin);
+					item->setAnim(tile.anim);
+					item->getComponent<Transform2D>().setPosition({ i % 216 * 16.0f + 8, i / 216 * 16.0f + 8 });
+				}
+				else {
+					bool isAddCollision = tile.type == "Ground" || tile.type == "Pipe" || tile.type == "StairBlock" || tile.type == "QuestionBlock" || tile.type == "EmptyBlock" || tile.type == "Brick";
+					Block* block = new Block(tile.texture, { i % 216 * 16.0f + 8, i / 216 * 16.0f + 8 }, isAddCollision);
+					m_blocks.push_back(block);
+				}
 			}
-			else {
-				bool isAddCollision = tile.type == "Ground" || tile.type == "Pipe" || tile.type == "StairBlock" || tile.type == "QuestionBlock" || tile.type == "EmptyBlock" || tile.type == "Brick";
-				Block* block = new Block(tile.texture, { i % 216 * 16.0f + 8, i / 216 * 16.0f + 8 }, isAddCollision);
-				m_blocks.push_back(block);
+		}
+
+		if (layer["name"] == "Teleportation Gate") {
+			for (int i = 0; i < layer["objects"].as_array().size(); i++) {
+
 			}
 		}
 	}
