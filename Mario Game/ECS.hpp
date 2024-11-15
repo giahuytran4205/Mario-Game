@@ -63,6 +63,11 @@ public:
 			c->render();
 	}
 
+	void _render() {
+		for (auto& component : m_components)
+			component->render();
+	}
+
 	virtual void update() {}
 
 	virtual void render() {
@@ -112,6 +117,11 @@ public:
 	Object* toObject() {
 		return (Object*)this;
 	}
+
+	template<typename T>
+	T* convertTo() {
+		return (T*)this;
+	}
 };
 
 class EntitiesManager {
@@ -137,7 +147,7 @@ public:
 
 		for (auto& v : m_renderQueue) {
 			for (auto& e : v)
-				e->render();
+				e->_render();
 		}
 
 		refresh();
