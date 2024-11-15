@@ -6,7 +6,7 @@
 using namespace sf;
 
 SpriteRenderer::SpriteRenderer() {
-	
+	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 }
 
 SpriteRenderer::~SpriteRenderer() {
@@ -16,7 +16,7 @@ SpriteRenderer::~SpriteRenderer() {
 void SpriteRenderer::update() {
 	if (m_entity->hasComponent<Transform2D>()) {
 		Transform2D& transform = m_entity->getComponent<Transform2D>();
-		m_sprite.setPosition(transform.getRect().getPosition());
+		m_sprite.setPosition(transform.getPosition());
 	}
 }
 
@@ -30,9 +30,11 @@ Sprite& SpriteRenderer::getSprite() {
 
 void SpriteRenderer::setTexture(Texture& texture) {
 	m_sprite.setTexture(texture);
+	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 }
 
 void SpriteRenderer::setTexture(Texture& texture, const IntRect& rectangle) {
 	m_sprite.setTexture(texture, true);
 	m_sprite.setTextureRect(rectangle);
+	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 }
