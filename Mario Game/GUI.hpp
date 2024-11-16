@@ -30,6 +30,7 @@ public:
 	virtual void onDeselect();
 	virtual void onPressed();
 	virtual void onHovered();
+	virtual void onUnhovered();
 	virtual void onClick();
 	virtual void onDrag(const Vector2f& mousePos);
 	bool isSelected();

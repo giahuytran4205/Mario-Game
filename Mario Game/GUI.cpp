@@ -47,6 +47,7 @@ void GUI::onSelected() {}
 void GUI::onDeselect() {}
 void GUI::onPressed() {}
 void GUI::onHovered() {}
+void GUI::onUnhovered() {}
 void GUI::onClick() {}
 void GUI::onDrag(const Vector2f& mousePos) {}
 
@@ -77,8 +78,10 @@ void GUI::handleEvent(const Event& event) {
 				onClick();
 			}
 		}
-		else
+		else {
+			if (isHovered()) onUnhovered();
 			m_isHovered = false;
+		}
 		
 		if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
 			m_isOnDrag = false;
