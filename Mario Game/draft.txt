@@ -1,0 +1,135 @@
+#include "Item.hpp"
+#include <iostream>
+
+// GreenMushroom implementation
+GreenMushroom::GreenMushroom() {
+    speed = 0.1f; // Movement speed
+    if (!texture.loadFromFile("green_mushroom.png")) {
+        std::cerr << "Failed to load green_mushroom texture\n";
+    }
+    sprite.setTexture(texture);
+}
+
+void GreenMushroom::update(int deltaTime) {
+    // Move horizontally
+    sprite.move(speed * deltaTime, 0);
+}
+
+void GreenMushroom::onCollision() {
+    // Reverse direction on collision
+    speed = -speed;
+}
+
+// OrangeMushroom implementation
+OrangeMushroom::OrangeMushroom() {
+    speed = 0.1f; // Movement speed
+    if (!texture.loadFromFile("orange_mushroom.png")) {
+        std::cerr << "Failed to load orange_mushroom texture\n";
+    }
+    sprite.setTexture(texture);
+}
+
+void OrangeMushroom::update(int deltaTime) {
+    // Move horizontally
+    sprite.move(speed * deltaTime, 0);
+}
+
+void OrangeMushroom::onCollision() {
+    // Reverse direction on collision
+    speed = -speed;
+}
+
+// TurtleShell implementation
+TurtleShell::TurtleShell() {
+    speed = 0; // Start stationary
+    if (!texture.loadFromFile("turtle_shell.png")) {
+        std::cerr << "Failed to load turtle_shell texture\n";
+    }
+    sprite.setTexture(texture);
+}
+
+void TurtleShell::update(int deltaTime) {
+    // Move only if kicked
+    if (isMoving) {
+        sprite.move(speed * deltaTime, 0);
+    }
+}
+
+void TurtleShell::onKick(float kickSpeed) {
+    // Start moving when kicked
+    speed = kickSpeed;
+    isMoving = true;
+}
+
+void TurtleShell::onCollision() {
+    // Reverse direction on collision
+    speed = -speed;
+}
+
+// Flower implementation
+Flower::Flower(float startY, float endY) : hiddenPosition(startY), finalPosition(endY) {
+    if (!texture.loadFromFile("flower.png")) {
+        std::cerr << "Failed to load flower texture\n";
+    }
+    sprite.setTexture(texture);
+    sprite.setPosition(sprite.getPosition().x, hiddenPosition);
+}
+
+void Flower::update(int deltaTime) {
+    // Rise up until reaching the final position
+    if (hiddenPosition > finalPosition) {
+        float riseSpeed = 0.05f * deltaTime;
+        sprite.move(0, -riseSpeed);
+        hiddenPosition -= riseSpeed;
+    }
+}
+
+void Flower::onCollision() {
+    // No specific collision logic for now
+}
+
+// Axe implementation
+Axe::Axe() {
+    if (!texture.loadFromFile("axe.png")) {
+        std::cerr << "Failed to load axe texture\n";
+    }
+    sprite.setTexture(texture);
+}
+
+void Axe::update(int deltaTime) {
+    // Stationary logic for now
+}
+
+void Axe::onCollision() {
+    // No specific collision logic for now
+}
+
+// Star implementation
+Star::Star() {
+    speed = 0.2f; // Movement speed
+    if (!texture.loadFromFile("star.png")) {
+        std::cerr << "Failed to load star texture\n";
+    }
+    sprite.setTexture(texture);
+}
+
+void Star::update(int deltaTime) {
+    // Move in the opposite direction of Mario
+    float bounceSpeed = 0.2f; // Adjust for bouncing movement
+    if (isBouncing) {
+        sprite.move(speed * deltaTime, bounceSpeed);
+        isBouncing = false; // Reset bouncing
+    } else {
+        sprite.move(-speed * deltaTime, 0);
+    }
+}
+
+void Star::onBounce() {
+    // Trigger bouncing logic
+    isBouncing = true;
+}
+
+void Star::onCollision() {
+    // Reverse horizontal movement on collision
+    speed = -speed;
+}
