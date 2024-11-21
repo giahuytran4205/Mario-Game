@@ -1,9 +1,12 @@
 #include "Item.hpp"
+#include "Physics2D.hpp" 
+#include "Collision.hpp"
 #include <iostream>
 
 // GreenMushroom implementation
 GreenMushroom::GreenMushroom() {
     speed = 0.1f; // Movement speed
+    physics.setVelocity({ speed, 0 });
     if (!texture.loadFromFile("green_mushroom.png")) {
         std::cerr << "Failed to load green_mushroom texture\n";
     }
@@ -11,18 +14,21 @@ GreenMushroom::GreenMushroom() {
 }
 
 void GreenMushroom::update(int deltaTime) {
-    // Move horizontally
-    sprite.move(speed * deltaTime, 0);
+    // Update physics
+    physics.update();
+    sprite.setPosition(physics.getVelocity().x * deltaTime, physics.getVelocity().y * deltaTime);
 }
 
 void GreenMushroom::onCollision() {
-    // Reverse direction on collision
-    speed = -speed;
+    // Reverse direction upon collision
+    float currentSpeed = physics.getVelocity().x;
+    physics.setVelocity({ -currentSpeed, 0 });
 }
 
 // OrangeMushroom implementation
 OrangeMushroom::OrangeMushroom() {
     speed = 0.1f; // Movement speed
+    physics.setVelocity({ speed, 0 });
     if (!texture.loadFromFile("orange_mushroom.png")) {
         std::cerr << "Failed to load orange_mushroom texture\n";
     }
@@ -30,18 +36,21 @@ OrangeMushroom::OrangeMushroom() {
 }
 
 void OrangeMushroom::update(int deltaTime) {
-    // Move horizontally
-    sprite.move(speed * deltaTime, 0);
+    // Update physics
+    physics.update();
+    sprite.setPosition(physics.getVelocity().x * deltaTime, physics.getVelocity().y * deltaTime);
 }
 
 void OrangeMushroom::onCollision() {
-    // Reverse direction on collision
-    speed = -speed;
+    // Reverse direction upon collision
+    float currentSpeed = physics.getVelocity().x;
+    physics.setVelocity({ -currentSpeed, 0 });
 }
 
 // TurtleShell implementation
 TurtleShell::TurtleShell() {
-    speed = 0; // Start stationary
+    speed = 0; // Initially stationary
+    isMoving = false;
     if (!texture.loadFromFile("turtle_shell.png")) {
         std::cerr << "Failed to load turtle_shell texture\n";
     }
@@ -49,21 +58,22 @@ TurtleShell::TurtleShell() {
 }
 
 void TurtleShell::update(int deltaTime) {
-    // Move only if kicked
+    // Only move if kicked
     if (isMoving) {
-        sprite.move(speed * deltaTime, 0);
+        physics.update();
+        sprite.setPosition(physics.getVelocity().x * deltaTime, physics.getVelocity().y * deltaTime);
     }
 }
 
 void TurtleShell::onKick(float kickSpeed) {
-    // Start moving when kicked
-    speed = kickSpeed;
     isMoving = true;
+    physics.setVelocity({ kickSpeed, 0 });
 }
 
 void TurtleShell::onCollision() {
     // Reverse direction on collision
-    speed = -speed;
+    float currentSpeed = physics.getVelocity().x;
+    physics.setVelocity({ -currentSpeed, 0 });
 }
 
 // Flower implementation
@@ -76,16 +86,16 @@ Flower::Flower(float startY, float endY) : hiddenPosition(startY), finalPosition
 }
 
 void Flower::update(int deltaTime) {
-    // Rise up until reaching the final position
+    // Move upward until fully revealed
     if (hiddenPosition > finalPosition) {
         float riseSpeed = 0.05f * deltaTime;
-        sprite.move(0, -riseSpeed);
         hiddenPosition -= riseSpeed;
+        sprite.setPosition(sprite.getPosition().x, hiddenPosition);
     }
 }
 
 void Flower::onCollision() {
-    // No specific collision logic for now
+    // No specific collision behavior
 }
 
 // Axe implementation
@@ -97,16 +107,17 @@ Axe::Axe() {
 }
 
 void Axe::update(int deltaTime) {
-    // Stationary logic for now
+    // Stationary logic
 }
 
 void Axe::onCollision() {
-    // No specific collision logic for now
+    // No specific collision behavior
 }
 
 // Star implementation
 Star::Star() {
     speed = 0.2f; // Movement speed
+    physics.setVelocity({ speed, 0 });
     if (!texture.loadFromFile("star.png")) {
         std::cerr << "Failed to load star texture\n";
     }
@@ -114,22 +125,18 @@ Star::Star() {
 }
 
 void Star::update(int deltaTime) {
-    // Move in the opposite direction of Mario
-    float bounceSpeed = 0.2f; // Adjust for bouncing movement
-    if (isBouncing) {
-        sprite.move(speed * deltaTime, bounceSpeed);
-        isBouncing = false; // Reset bouncing
-    } else {
-        sprite.move(-speed * deltaTime, 0);
-    }
+    // Simulate bouncing or reverse direction upon collision
+    physics.update();
+    sprite.setPosition(physics.getVelocity().x * deltaTime, physics.getVelocity().y * deltaTime);
 }
 
 void Star::onBounce() {
-    // Trigger bouncing logic
-    isBouncing = true;
+    // Add upward velocity for bouncing effect
+    physics.bounce(-0.5f);
 }
 
 void Star::onCollision() {
-    // Reverse horizontal movement on collision
-    speed = -speed;
+    // Reverse horizontal direction
+    float currentSpeed = physics.getVelocity().x;
+    physics.setVelocity({ -currentSpeed, 0 });
 }
