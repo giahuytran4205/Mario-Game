@@ -11,6 +11,7 @@
 #include "SpriteRenderer.hpp"
 #include "EventSystem.hpp"
 #include "Collision.hpp"
+#include "Jumper.hpp"
 #include <iostream>
 using namespace sf;
 using namespace std;
@@ -34,22 +35,31 @@ GameManager::~GameManager() {
 }
 
 void GameManager::init() {
-	m_window.create(VideoMode(1200, 480), "Super Mario Bros. (1985)", Style::Default);
+	m_window.create(VideoMode(1200, 600), "Super Mario Bros. (1985)", Style::Default);
 	m_window.setFramerateLimit(120);
 
 	m_eventSystem.addListener(this);
 
 	m_player = new Mario();
-	Map* map = new Map();
-	map->loadFromJsonFile("D:/GHuy/OOP/Tile/Worlds-1-1.json");
+	m_map = new Map();
+	m_map->loadFromJsonFile("Resources/Map/Worlds-1-1.json");
 
-	m_collisionManager = { map->getSize(), 16};
+	Texture* texture = new Texture();
+	texture->loadFromFile("Resources/Background/Worlds-1-1.png");
 
-	m_view.reset(FloatRect(0, 0, 1200, 480));
+	m_map->setBackground(*texture);
 
-	m_view.setViewport(FloatRect(-0.5, 0, 2, 2));
+	m_collisionManager = { m_map->getSize(), 16};
+
+	m_view.reset(FloatRect(0, 0, getAspectRatio() * 208, 208));
+
+	m_view.setViewport(FloatRect(0, 0, 1, 1));
+
+	m_view.setCenter(0, m_view.getSize().y / 2 + 16);
+	
 	m_window.setView(m_view);
 
+	Jumper* jumper = new Jumper(Vector2f(100, 208));
 }
 
 void GameManager::start() {
@@ -68,7 +78,7 @@ void GameManager::start() {
 
 		m_collisionManager.update();
 
-		m_view.setCenter({ m_player->getComponent<Transform2D>().getPosition().x, m_view.getCenter().y });
+		m_view.setCenter(m_player->getComponent<Transform2D>().getPosition().x, m_view.getCenter().y);
 
 		m_window.display();
 	}
@@ -86,6 +96,10 @@ void GameManager::handleEvent(const Event& event) {
 	if (event.type == Event::Closed) {
 		m_window.close();
 	}
+
+	if (event.type == Event::Resized) {
+		m_view.setSize(208.0f * event.size.width / event.size.height, 208);
+	}
 }
 
 GameManager* GameManager::getInstance() {
@@ -98,4 +112,12 @@ Time& GameManager::getDeltaTime() {
 
 RenderWindow& GameManager::getRenderWindow() {
 	return m_window;
+}
+
+View& GameManager::getView() {
+	return m_view;
+}
+
+float GameManager::getAspectRatio() {
+	return (float)m_window.getSize().x / m_window.getSize().y;
 }
