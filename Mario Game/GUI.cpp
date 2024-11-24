@@ -19,7 +19,7 @@ GUI::GUI() : m_background(m_sprite), m_window(&GameManager::getInstance()->getRe
 	EventSystem::m_instance->addListener(this);
 }
 
-GUI::GUI(const gr::Rect& rect, RenderWindow* window, Object* parent) : m_background(m_sprite), m_window(window) {
+GUI::GUI(const FRect& rect, RenderWindow* window, Object* parent) : m_background(m_sprite), m_window(window) {
 	m_parent = parent;
 	m_isSelected = false;
 	m_isPressed = false;
@@ -49,6 +49,7 @@ void GUI::onPressed() {}
 void GUI::onHovered() {}
 void GUI::onUnhovered() {}
 void GUI::onClick() {}
+void GUI::onKeyPressed(const Keyboard::Key& key) {}
 void GUI::onDrag(const Vector2f& mousePos) {}
 
 void GUI::update() {
@@ -59,8 +60,9 @@ void GUI::update() {
 
 
 void GUI::handleEvent(const Event& event) {
-	Vector2f dist = m_window->getView().getCenter() - m_window->getDefaultView().getCenter();
 	if (isInteractable()) {
+		Vector2f dist = m_window->getView().getCenter() - m_window->getDefaultView().getCenter();
+
 		if (m_transform.getRect().contains((Vector2f)Mouse::getPosition(*m_window) + dist)) {
 			m_isHovered = true;
 			onHovered();
@@ -86,6 +88,10 @@ void GUI::handleEvent(const Event& event) {
 		
 		if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
 			m_isOnDrag = false;
+
+		if (event.type == Event::KeyPressed) {
+			onKeyPressed(event.key.code);
+		}
 
 		if (isOnDrag() && event.type == Event::MouseMoved) {
 			onDrag((Vector2f)Mouse::getPosition(*m_window) + dist);

@@ -19,7 +19,7 @@ protected:
 
 public:
 	GUI();
-	GUI(const gr::Rect& rect, RenderWindow* window, Object* parent = nullptr);
+	GUI(const FRect& rect, RenderWindow* window, Object* parent = nullptr);
 	GUI(float left, float top, float width, float height, RenderWindow* window, Object* parent = nullptr);
 	~GUI();
 
@@ -32,6 +32,7 @@ public:
 	virtual void onHovered();
 	virtual void onUnhovered();
 	virtual void onClick();
+	virtual void onKeyPressed(const Keyboard::Key& key);
 	virtual void onDrag(const Vector2f& mousePos);
 	bool isSelected();
 	bool isPressed();
