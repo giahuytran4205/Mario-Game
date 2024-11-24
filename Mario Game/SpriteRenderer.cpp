@@ -6,7 +6,7 @@
 using namespace sf;
 
 SpriteRenderer::SpriteRenderer() {
-	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
+	
 }
 
 SpriteRenderer::~SpriteRenderer() {
@@ -15,6 +15,8 @@ SpriteRenderer::~SpriteRenderer() {
 
 void SpriteRenderer::update() {
 	if (m_entity->hasComponent<Transform2D>()) {
+		Vector2f anchor = m_entity->getComponent<Transform2D>().getRect().getAnchor();
+		m_sprite.setOrigin(m_sprite.getLocalBounds().width * anchor.x, m_sprite.getLocalBounds().height * anchor.y);
 		Transform2D& transform = m_entity->getComponent<Transform2D>();
 		m_sprite.setPosition(transform.getPosition());
 	}

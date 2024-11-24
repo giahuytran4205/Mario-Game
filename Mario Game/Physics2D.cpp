@@ -3,6 +3,7 @@
 #include "Object.hpp"
 #include "SFML/Graphics.hpp"
 #include "Transform2D.hpp"
+#include "GameManager.hpp"
 #include <iostream>
 
 Physics2D::Physics2D() {}
@@ -25,7 +26,7 @@ void Physics2D::update() {
 	if (m_static) return;
 	Vector2f pos = m_transform->getPosition();
 	Vector2f direction = m_transform->getRotation();
-	pos += m_baseVelo + m_velocity;
+	pos += (m_baseVelo + m_velocity) * (float)deltaTime.asMilliseconds();
 	m_velocity += m_acceleration;
 	m_velocity.y += m_gravity;
 
@@ -121,6 +122,6 @@ void Physics2D::setFriction(float friction) {
 void Physics2D::bounce(float velY) {
 	m_startPos = m_transform->getPosition();
 	m_baseVelo.y = velY;
-	m_gravity = 0.05f;
+	m_gravity = 0.00625f;
 	m_isBounce = true;
 }

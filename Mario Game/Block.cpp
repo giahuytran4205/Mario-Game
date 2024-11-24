@@ -11,32 +11,25 @@
 #include <iostream>
 using namespace sf;
 
-Block::Block() {
-	m_id = 0;
+Block::Block() : m_physics2D(addComponent<Physics2D>()) {
+	m_renderOrder = 2;
+	m_type = BlockType::EMPTY_BLOCK;
 }
 
-Block::Block(Texture& texture, int x, int y) {
-	m_sprite.setTexture(texture);
+Block::Block(const Vector2f& pos, BlockType type) : Block() {
+	if (type == BlockType::BRICK || type == BlockType::QUESTION_BLOCK || type == BlockType::TERRAIN)
+		m_collision = &addComponent<Collision>();
 
-	m_physics2D = &addComponent<Physics2D>();
-	//m_collision = &addComponent<Collision>();
-
-	m_transform.getRect().width = 16;
-	m_transform.getRect().height = 16;
-
-	m_transform.setPosition(x, y);
-}
-
-Block::Block(Texture& texture, const Vector2f& pos, bool addCollision) {
-	m_sprite.setTexture(texture);
-
-	m_physics2D = &addComponent<Physics2D>();
-	if (addCollision) m_collision = &addComponent<Collision>();
+	m_type = type;
 
 	m_transform.getRect().width = 16;
 	m_transform.getRect().height = 16;
 
 	m_transform.setPosition(pos);
+}
+
+Block::Block(Texture& texture, const Vector2f& pos, BlockType type) : Block(pos, type) {
+	m_sprite.setTexture(texture);
 }
 
 Block::~Block() {
@@ -48,5 +41,9 @@ void Block::update() {
 }
 
 void Block::onHit(bool isDestroy) {
-	m_physics2D->bounce(-0.7f);
+	m_physics2D.bounce(-0.09f);
+}
+
+Block::BlockType Block::getType() {
+	return m_type;
 }

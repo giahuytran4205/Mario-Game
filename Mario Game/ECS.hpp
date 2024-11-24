@@ -70,9 +70,7 @@ public:
 
 	virtual void update() {}
 
-	virtual void render() {
-
-	}
+	virtual void render() {}
 
 	virtual void onCollisionEnter(Collision& col) {}
 
@@ -126,7 +124,7 @@ public:
 
 class EntitiesManager {
 private:
-	static vector<unique_ptr<Entity>> m_entities;
+	static vector<Entity*> m_entities;
 	vector<vector<Entity*>> m_renderQueue;
 
 public:
@@ -134,6 +132,8 @@ public:
 	~EntitiesManager() { }
 
 	void update() {
+		refresh();
+
 		for (auto& e : m_entities)
 			e->update();
 				
@@ -142,21 +142,20 @@ public:
 
 		m_renderQueue.assign(100, {});
 		for (auto& e : m_entities) {
-			m_renderQueue[e->getRenderOrder()].push_back(e.get());
+			m_renderQueue[e->getRenderOrder()].push_back(e);
 		}
 
 		for (auto& v : m_renderQueue) {
 			for (auto& e : v)
 				e->_render();
 		}
-
-		refresh();
 	}
 
 	void refresh() {
 		m_entities.erase(remove_if(begin(m_entities), end(m_entities),
-			[](const unique_ptr<Entity>& entity)
+			[](Entity* entity)
 			{
+				if (!entity) return true;
 				return !entity->isActive();
 			}),
 			end(m_entities));
@@ -164,13 +163,16 @@ public:
 
 	Entity& addEntity() {
 		Entity* e = new Entity();
-		unique_ptr<Entity> uPtr{ e };
-		m_entities.emplace_back(move(uPtr));
+		m_entities.emplace_back(e);
 		return *e;
 	}
 
 	static void addEntity(Entity* entity) {
-		unique_ptr<Entity> uPtr{ entity };
-		m_entities.emplace_back(move(uPtr));
+		m_entities.emplace_back(entity);
+	}
+
+	static void removeEntity(Entity* entity) {
+		m_entities.erase(remove_if(m_entities.begin(), m_entities.end(), [&entity](Entity* e) { return e == entity; }),
+			m_entities.end());
 	}
 };

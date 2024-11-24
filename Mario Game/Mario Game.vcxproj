@@ -150,6 +150,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationFactory.cpp" />
+    <ClCompile Include="AnimationType.cpp" />
+    <ClCompile Include="AnimationType.hpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -160,15 +163,18 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Physics2D.cpp" />
+    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Slider.cpp" />
+    <ClCompile Include="SoundBufferManager.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -178,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp" />
+    <ClInclude Include="AnimationFactory.hpp" />
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="Collision.hpp" />
@@ -189,14 +196,17 @@
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="GUI.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="Jumper.hpp" />
     <ClInclude Include="Line.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Physics2D.hpp" />
+    <ClInclude Include="Portal.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Rect.hpp" />
     <ClInclude Include="Slider.hpp" />
+    <ClInclude Include="SoundBufferManager.hpp" />
     <ClInclude Include="SoundComponent.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="TextureManager.hpp" />

@@ -1,6 +1,7 @@
 const int NUM_STATE = 100;
 
 enum TileSetType {
-	Block_Type,
+	BLOCK,
+	ITEM,
 	NUM_TILESET_TYPE
 };

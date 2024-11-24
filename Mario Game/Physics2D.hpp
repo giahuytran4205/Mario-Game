@@ -13,6 +13,7 @@ private:
 	float m_gravity;
 	float m_friction;
 	bool m_static;
+	bool m_onGround;
 	bool m_isBounce;
 	Transform2D* m_transform;
 	

@@ -1,19 +1,23 @@
 #pragma once
 #include "Common.hpp"
 #include "SFML/Graphics.hpp"
+#include "Rect.hpp"
 #include <vector>
 using namespace sf;
 using namespace std;
 
 class Collision : public Component {
 public:
-	Rect<float>* m_collider;
+	FRect* m_collider;
 
 public:
+	Collision();
+	~Collision();
+
 	void init() override;
 	void update() override;
 	void lateUpdate() override;
-	Rect<float> getCollider();
+	FRect getCollider();
 	void onCollisionEnter(Collision& col);
 };
 

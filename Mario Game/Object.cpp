@@ -9,11 +9,21 @@ using namespace sf;
 Object::Object(Object* parent) : m_transform(addComponent<Transform2D>()), m_sprite(addComponent<SpriteRenderer>()), m_parent(parent) {
 	EntitiesManager::addEntity(this);
 	m_active = true;
-	m_renderLayer = 0;
+	m_transform.getRect().setAnchor({ 0.5f, 0.5f });
+}
+
+Object::Object(const Object& obj) : Object() {
+	m_parent = obj.m_parent;
+	m_renderOrder = obj.m_renderOrder;
+	m_transform = obj.m_transform;
 }
 
 Object::~Object() {
+	EntitiesManager::removeEntity(this);
+}
 
+Object* Object::clone() {
+	return new Object(*this);
 }
 
 bool Object::isActive() {
@@ -32,8 +42,8 @@ Transform2D& Object::getTransform2D() {
 	return m_transform;
 }
 
-void Object::setRenderLayer(int layer) {
-	m_renderLayer = layer;
+void Object::setRenderOrder(int order) {
+	m_renderOrder = order;
 }
 
 void Object::setTexture(Texture& texture) {

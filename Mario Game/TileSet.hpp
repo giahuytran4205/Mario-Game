@@ -6,7 +6,7 @@ using namespace sf;
 namespace json = boost::json;
 
 struct Frame {
-	Texture* texture;
+	Texture texture;
 	int duration;
 };
 

@@ -86,7 +86,7 @@ void TileSet::loadFromJsonFile(string filename) {
 				int duration = frameObj["duration"].as_int64();
 				int tileID = frameObj["tileid"].as_int64();
 
-				m_tiles[id].anim.push_back({ &m_tiles[tileID].texture, duration });
+				m_tiles[id].anim.push_back({ m_tiles[tileID].texture, duration });
 			}
 		}
 	}

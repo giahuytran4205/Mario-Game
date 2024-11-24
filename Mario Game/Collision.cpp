@@ -6,6 +6,10 @@
 #include <iostream>
 using namespace sf;
 
+Collision::Collision() {}
+
+Collision::~Collision() {}
+
 void Collision::init() {
 	if (!m_entity->hasComponent<Transform2D>()) {
 		m_entity->addComponent<Transform2D>();
@@ -23,7 +27,7 @@ void Collision::lateUpdate() {
 	
 }
 
-Rect<float> Collision::getCollider() {
+FRect Collision::getCollider() {
 	return *m_collider;
 }
 
@@ -56,7 +60,7 @@ void CollisionManager::update() {
 	}
 	
 	for (Collision* col : m_colliders) {
-		FloatRect rect = col->getCollider();
+		FRect rect = col->getCollider();
 		int right = rect.left + rect.width;
 		int bottom = rect.top + rect.height;
 
@@ -70,7 +74,7 @@ void CollisionManager::update() {
 	}
 
 	for (Collision* col : m_colliders) {
-		FloatRect rect = col->getCollider();
+		FRect rect = col->getCollider();
 		int right = rect.left + rect.width;
 		int bottom = rect.top + rect.height;
 
