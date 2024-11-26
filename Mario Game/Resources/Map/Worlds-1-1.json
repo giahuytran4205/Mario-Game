@@ -1332,15 +1332,15 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/..\/Tile\/Mario\/Mario\/Tileset-1.tsx"
+         "source":"Resources/Tilesets/Tileset-1.tsx"
         }, 
         {
          "firstgid":925,
-         "source":"..\/..\/..\/..\/Tile\/Mario\/Mario\/Tileset 3.tsx"
+         "source":"Resources/Tilesets//Tileset 3.tsx"
         }, 
         {
          "firstgid":2899,
-         "source":"..\/..\/..\/..\/Tile\/Mario\/Mario\/Tileset-2.tsx"
+         "source":"Resources/Tilesets//Tileset-2.tsx"
         }],
  "tilewidth":16,
  "type":"map",
