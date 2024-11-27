@@ -51,6 +51,10 @@ void Physics2D::render() {
 
 }
 
+bool Physics2D::isStatic() const {
+	return m_static;
+}
+
 float Physics2D::getMass() {
 	return m_mass;
 }

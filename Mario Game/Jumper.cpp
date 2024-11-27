@@ -40,15 +40,15 @@ void Jumper::update() {
 	}
 
 	if (idx == 0)
-		m_transform.getRect().setSize({ 32.0f, 32.0f });
+		m_transform.getRect().setSize({ 16.0f, 32.0f });
 	if (idx == 1)
-		m_transform.getRect().setSize({ 32.0f, 24.0f });
+		m_transform.getRect().setSize({ 16.0f, 24.0f });
 	if (idx == 2)
-		m_transform.getRect().setSize({ 32.0f, 16.0f });
+		m_transform.getRect().setSize({ 16.0f, 16.0f });
 	if (idx == 3)
-		m_transform.getRect().setSize({ 32.0f, 24.0f });
+		m_transform.getRect().setSize({ 16.0f, 24.0f });
 	if (idx == 4)
-		m_transform.getRect().setSize({ 32.0f, 32.0f });	
+		m_transform.getRect().setSize({ 16.0f, 32.0f });	
 
 }
 

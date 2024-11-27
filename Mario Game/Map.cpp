@@ -86,6 +86,10 @@ void Map::loadFromJsonFile(string filename) {
 			}
 		}
 
+		if (layer["name"] == "Background Layer") {
+			
+		}
+
 		if (layer["name"] == "Teleportation Gate") {
 			for (auto& i : layer["objects"].as_array()) {
 				auto& portal = i.as_object();
@@ -119,6 +123,10 @@ void Map::loadFromJsonFile(string filename) {
 
 				m_portals.push_back(new Portal(Vector2f{ posX + 8, posY + 8 }, Vector2f{ destX, destY }, inDir, outDir, destDepth));
 			}
+		}
+
+		if (layer["name"] == "Flagpole") {
+
 		}
 	}
 }

@@ -26,6 +26,7 @@ public:
 	void update() override;
 	void lateUpdate() override;
 	void render();
+	bool isStatic() const;
 	float getMass();
 	void setMass(float mass);
 	Vector2f getVelocity();

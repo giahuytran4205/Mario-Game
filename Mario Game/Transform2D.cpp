@@ -8,7 +8,7 @@
 using namespace sf;
 
 Transform2D::Transform2D() {
-	if (m_entity->toObject()) m_parent = m_entity->toObject()->getParent();
+	if (m_entity) m_parent = m_entity->toObject()->getParent();
 	else m_parent = nullptr;
 }
 
@@ -23,6 +23,10 @@ void Transform2D::setPosition(float x, float y) {
 }
 
 void Transform2D::setPosition(const Vector2f& position) {
+	if (m_lastPos == m_pos && m_pos == Vector2f(0, 0)) {
+		m_lastPos = m_pos = position;
+		m_rect.setPosition(getWorldPosition());
+	}
 	if (m_pos != position) m_lastPos = m_pos;
 	m_pos = position;
 	m_rect.setPosition(getWorldPosition());
@@ -49,6 +53,10 @@ void Transform2D::setRotation(const Vector2f& rotation) {
 
 void Transform2D::setRotation(float angle) {
 	m_rotation = { cos(angle * PI / 180), -sin(angle * PI / 180) };
+}
+
+void Transform2D::setAnchor(const Vector2f& anchor) {
+	m_rect.setAnchor(anchor);
 }
 
 void Transform2D::move(float dx, float dy) {

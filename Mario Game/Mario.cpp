@@ -17,7 +17,7 @@
 using namespace sf;
 
 Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponent<Collision>()), m_sound(addComponent<SoundComponent>()) {
-	m_speed = 0.125f;
+	m_speed = 0.1f;
 	m_jumpSpeed = -0.4f;
 
 	Texture* texture = new Texture();
@@ -54,42 +54,27 @@ void Mario::onCollisionEnter(Collision& col) {
 	if (isOnTeleport())
 		return;
 
+	int side = m_transform.getRect().tangentSide(col.getCollider());
+
+	m_physics2D.setVelocityY(0);
+	m_physics2D.setBaseVelocityY(0);
+
 	if (col.m_entity->isType<Block>()) {
-		Line line(m_transform.getLastPosition(), m_transform.getPosition());
-		FRect rect = col.m_entity->getComponent<Transform2D>().getRect();
-		FRect bodyRect = getComponent<Transform2D>().getRect();
+		m_onJump = false;
+		m_state = State::Normal;
 
-		rect = { rect.left - bodyRect.width / 2, rect.top - bodyRect.height / 2, rect.width + bodyRect.width, rect.height + bodyRect.height};
-		int side;
-		Vector2f pos = line.raycast(rect, side);
-
-		m_transform.adjustPosition(pos);
-		m_physics2D.setVelocityY(0);
-		m_physics2D.setBaseVelocityY(0);
-
-		if (side == 0 || side == 2) {		// On left side or right side of block 
+		if (side == 0 || side == 2) {
 			m_physics2D.setBaseVelocityY(m_speed);
 			m_onWall = true;
-			m_sound.pause();
 		}
-		else if (side == 1) {				// Above block
-			//m_onGround = true;
-			m_onJump = false;
-			m_physics2D.setBaseVelocityY(0);
-			m_physics2D.setVelocityY(0);
-		}
-		else {								// Below block
-			Block::BlockType blockType = col.m_entity->convertTo<Block>()->getType();
-
-			if (blockType == Block::BRICK || blockType == Block::QUESTION_BLOCK) {
-				m_physics2D.setBaseVelocityY(m_speed / 10);
-				col.m_entity->convertTo<Block>()->onHit(false);
-			}
+		if (side == 3) {
+			m_physics2D.setBaseVelocityY(m_speed / 10);
 		}
 	}
 
 	if (col.m_entity->isType<Jumper>()) {
 		m_onJumper = true;
+		m_onJump = false;
 		m_state = State::Normal;
 
 		Jumper* jumper = col.m_entity->convertTo<Jumper>();
@@ -97,29 +82,17 @@ void Mario::onCollisionEnter(Collision& col) {
 		FRect bodyRect = m_transform.getRect();
 		FRect jumperRect = jumper->getComponent<Transform2D>().getRect();
 
-		Line line(m_transform.getLastPosition(), m_transform.getPosition());
-		FRect rect = { jumperRect.left - bodyRect.width / 2, jumperRect.top - bodyRect.height / 2, jumperRect.width + bodyRect.width, jumperRect.height + bodyRect.height };
-		int side;
-		Vector2f pos = line.raycast(rect, side);
-
-		m_physics2D.setBaseVelocityY(0);
-		m_physics2D.setVelocityY(0);
-
 		if (side == 1) {
-			m_onJump = false;
-			m_transform.setPosition(m_transform.getPosition().x, jumperRect.top - 8);
 			jumper->launch();
+			m_onJump = false;
 			m_jumpSpeed = jumper->getLauchVelocity();
 		}
-		else if (side == 3) {
-			m_transform.adjustPosition(pos);
-			m_physics2D.setBaseVelocityY(m_speed / 10);
-		}
-		else {
-			m_transform.adjustPosition(pos);
+		if (side == 0 || side == 2) {
 			m_physics2D.setBaseVelocityY(m_speed);
 			m_onWall = true;
-			m_sound.pause();
+		}
+		if (side == 3) {
+			m_physics2D.setBaseVelocityY(m_speed / 10);
 		}
 	}
 
@@ -129,7 +102,7 @@ void Mario::onCollisionEnter(Collision& col) {
 	}
 
 	if (col.m_entity->isType<Portal>()) {
-		if (col.m_collider->contains(m_transform.getPosition() + Vector2f(8, 0))) {
+		if (col.getCollider().contains(m_transform.getPosition() + Vector2f(8, 0))) {
 			Portal* portal = col.m_entity->convertTo<Portal>();
 
 			if (Keyboard::isKeyPressed(portal->getEnterKey())) {

@@ -9,6 +9,7 @@ using namespace std;
 class Collision : public Component {
 public:
 	FRect* m_collider;
+	void resolveCollide(Collision& col);
 
 public:
 	Collision();
@@ -19,6 +20,7 @@ public:
 	void lateUpdate() override;
 	FRect getCollider();
 	void onCollisionEnter(Collision& col);
+	Vector2f getTangentPoint(const Collision& col, int& side) const;
 };
 
 class CollisionManager {
