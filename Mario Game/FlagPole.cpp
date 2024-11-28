@@ -3,16 +3,20 @@
 #include "GameManager.hpp"
 #include <iostream>
 
-FlagPole::FlagPole() : Object(nullptr) {
+FlagPole::FlagPole() {
 	addComponent<Collision>(true);
 	
 	m_transform.setPosition(0, 0);
-	m_transform.getRect().setAnchor({ 0, 0 });
-	m_transform.getRect().setSize(Vector2f(16, 160));
+	m_transform.setAnchor(0, 0);
+	m_transform.setSize(16, 160);
 
 	Texture* texture = new Texture();
 	texture->loadFromFile("Resources/Animations/Items&Objects.png", IntRect(128, 16, 16, 16));
 	m_flag.setTexture(*texture);
+
+	Texture* texture2 = new Texture();
+	texture2->loadFromFile("D:/GHuy/OOP/Tile/Mario/Mario/Worlds-1-1.png", IntRect(3168, 32, 16, 160));
+	m_pole.setTexture(*texture2);
 
 	m_onLoweringFlag = false;
 	m_isLoweredFlag = false;
@@ -24,9 +28,11 @@ FlagPole::FlagPole(const Vector2f& pos, const Vector2f& size) : FlagPole(pos.x, 
 
 FlagPole::FlagPole(float x, float y, float width, float height) : FlagPole() {
 	m_transform.setPosition(x, y);
-	m_transform.getRect().setSize(Vector2f(width, height));
+	//m_transform.setAnchor(0.5, 0);
+	m_transform.setSize(width, height);
 
-	m_flag.setPosition(x, m_transform.getRect().top + 24);
+	m_flag.setPosition(x - 8, m_transform.top + 16);
+	m_pole.setPosition(m_transform.left, m_transform.top);
 }
 
 FlagPole::~FlagPole() {}
@@ -38,8 +44,8 @@ void FlagPole::update() {
 		Vector2f pos = m_flag.getPosition();
 		pos.y += m_flagSpeed * deltaTime.asMilliseconds();
 
-		if (pos.y >= m_transform.getRect().bottom - 8) {
-			pos.y = m_transform.getRect().bottom - 8;
+		if (pos.y >= m_transform.bottom - 8) {
+			pos.y = m_transform.bottom - 8;
 			m_onLoweringFlag = false;
 		}
 
@@ -48,6 +54,7 @@ void FlagPole::update() {
 }
 
 void FlagPole::render() {
+	GameManager::getInstance()->getRenderWindow().draw(m_pole);
 	GameManager::getInstance()->getRenderWindow().draw(m_flag);
 }
 

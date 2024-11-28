@@ -119,10 +119,14 @@ void Mario::onCollisionEnter(Collision& col) {
 			flagPole->loweringFlag();
 
 			Vector2f dest(flagPole->getComponent<Transform2D>().getRect().left, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
+			Vector2f dest1(flagPole->getComponent<Transform2D>().getRect().left, m_transform.getPosition().y);
 
-			m_autoControl.addControl(dest, 1000, { 0, 0 });
-			m_autoControl.addControl(dest + Vector2f(16, 0), 0, { 0, 0 });
-			m_autoControl.addControl(dest + Vector2f(64, 16), 1000, { 0, 0.0001 });
+			m_autoControl.addMoveByPoint(dest1, 100, { 0, 0 });
+			m_autoControl.addMoveByPoint(dest, 1000, { 0, 0 });
+			m_autoControl.addWaitForMiliseconds(1000);
+			m_autoControl.addMoveByPoint(dest + Vector2f(16, 0), 0, { 0, 0 });
+			m_autoControl.addMoveByPoint(dest + Vector2f(64, 24), 200, { 0, m_physics2D.getGravity() });
+			m_autoControl.addMoveByDistance({ 128, 0 }, 1000, { 0, 0 }, [&](int time) { m_state = State::WALK; });
 		}
 	}
 }

@@ -5,6 +5,7 @@
 class FlagPole : public Object {
 private:
 	Sprite m_flag;
+	Sprite m_pole;
 	bool m_onLoweringFlag;
 	bool m_isLoweredFlag;
 	float m_flagSpeed;

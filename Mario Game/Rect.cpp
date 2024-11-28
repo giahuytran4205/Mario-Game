@@ -56,8 +56,12 @@ int FRect::tangentSide(const FRect& rect) const {
 }
 
 void FRect::setPosition(const sf::Vector2f& pos) {
-	left = pos.x - m_anchor.x * width;
-	top = pos.y - m_anchor.y * height;
+	setPosition(pos.x, pos.y);
+}
+
+void FRect::setPosition(float x, float y) {
+	left = x - m_anchor.x * width;
+	top = y - m_anchor.y * height;
 	right = left + width;
 	bottom = top + height;
 	m_center = { left + width / 2, top + height / 2 };
@@ -71,13 +75,25 @@ void FRect::setCenter(const sf::Vector2f& center) {
 	bottom = right + height;
 }
 
+void FRect::setCenter(float x, float y) {
+	setCenter({ x, y });
+}
+
 void FRect::setAnchor(const sf::Vector2f& anchor) {
 	m_anchor = anchor;
 }
 
+void FRect::setAnchor(float anchorX, float anchorY) {
+	setAnchor({ anchorX, anchorY });
+}
+
 void FRect::setSize(const sf::Vector2f& size) {
+	setSize(size.x, size.y);
+}
+
+void FRect::setSize(float width, float height) {
 	sf::Vector2f pos = getPosition();
-	width = size.x;
-	height = size.y;
+	this->width = width;
+	this->height = height;
 	setPosition(pos);
 }
