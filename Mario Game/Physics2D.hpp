@@ -15,6 +15,7 @@ private:
 	bool m_static;
 	bool m_onGround;
 	bool m_isBounce;
+	bool m_enableGravity;
 	Transform2D* m_transform;
 	
 public:
@@ -41,6 +42,9 @@ public:
 	Vector2f getAcceleration();
 	void setAcceleration(const Vector2f& acceleration);
 	void setGravity(float gravity);
+	float getGravity();
+	void setEnableGravity(bool enable);
+	bool isEnableGravity();
 	void setStatic(bool isStatic);
 	float getFriction();
 	void setFriction(float friction);

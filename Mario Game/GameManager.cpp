@@ -12,6 +12,7 @@
 #include "EventSystem.hpp"
 #include "Collision.hpp"
 #include "Jumper.hpp"
+#include "FlagPole.hpp"
 #include <iostream>
 using namespace sf;
 using namespace std;
@@ -60,6 +61,8 @@ void GameManager::init() {
 	m_window.setView(m_view);
 
 	Jumper* jumper = new Jumper(Vector2f(100, 208));
+
+	m_flagPole = new FlagPole(170, 32, 16, 160);
 }
 
 void GameManager::start() {

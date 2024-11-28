@@ -126,7 +126,7 @@ void Map::loadFromJsonFile(string filename) {
 		}
 
 		if (layer["name"] == "Flagpole") {
-
+			
 		}
 	}
 }

@@ -13,10 +13,13 @@
 #include "Item.hpp"
 #include "Portal.hpp"
 #include "Jumper.hpp"
+#include "FlagPole.hpp"
 #include <iostream>
 using namespace sf;
 
-Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponent<Collision>()), m_sound(addComponent<SoundComponent>()) {
+Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponent<Collision>()),
+				 m_sound(addComponent<SoundComponent>()), m_autoControl(addComponent<AutoControl>())
+{
 	m_speed = 0.1f;
 	m_jumpSpeed = -0.4f;
 
@@ -34,7 +37,7 @@ Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponen
 	m_anim = &addComponent<Animation>(m_sprite);
 	m_anim->loadFromJsonFile("Resources/Animations/Mario&Luigi.json");
 	
-	m_state = State::Normal;
+	m_state = State::NORMAL;
 
 	m_renderOrder = 3;
 
@@ -42,6 +45,7 @@ Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponen
 	m_onTeleport = false;
 	m_onJump = false;
 	m_onJumper = false;
+	m_onGrabFlagPole = false;
 
 	m_teleportTime = 0;
 }
@@ -56,26 +60,23 @@ void Mario::onCollisionEnter(Collision& col) {
 
 	int side = m_transform.getRect().tangentSide(col.getCollider());
 
-	m_physics2D.setVelocityY(0);
-	m_physics2D.setBaseVelocityY(0);
-
 	if (col.m_entity->isType<Block>()) {
 		m_onJump = false;
-		m_state = State::Normal;
+		m_state = State::NORMAL;
 
+		if (side == 1) {
+			m_physics2D.setBaseVelocityY(m_speed / 10);
+		}
 		if (side == 0 || side == 2) {
 			m_physics2D.setBaseVelocityY(m_speed);
 			m_onWall = true;
-		}
-		if (side == 3) {
-			m_physics2D.setBaseVelocityY(m_speed / 10);
 		}
 	}
 
 	if (col.m_entity->isType<Jumper>()) {
 		m_onJumper = true;
 		m_onJump = false;
-		m_state = State::Normal;
+		m_state = State::NORMAL;
 
 		Jumper* jumper = col.m_entity->convertTo<Jumper>();
 
@@ -83,16 +84,16 @@ void Mario::onCollisionEnter(Collision& col) {
 		FRect jumperRect = jumper->getComponent<Transform2D>().getRect();
 
 		if (side == 1) {
-			jumper->launch();
-			m_onJump = false;
-			m_jumpSpeed = jumper->getLauchVelocity();
+			m_physics2D.setBaseVelocityY(m_speed / 10);
 		}
 		if (side == 0 || side == 2) {
 			m_physics2D.setBaseVelocityY(m_speed);
 			m_onWall = true;
 		}
 		if (side == 3) {
-			m_physics2D.setBaseVelocityY(m_speed / 10);
+			jumper->launch();
+			m_onJump = false;
+			m_jumpSpeed = jumper->getLauchVelocity();
 		}
 	}
 
@@ -110,11 +111,28 @@ void Mario::onCollisionEnter(Collision& col) {
 			}
 		}
 	}
+
+	if (col.m_entity->isType<FlagPole>()) {
+		FlagPole* flagPole = col.m_entity->convertTo<FlagPole>();
+		
+		if (!flagPole->isLoweredFlag()) {
+			flagPole->loweringFlag();
+
+			Vector2f dest(flagPole->getComponent<Transform2D>().getRect().left, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
+
+			m_autoControl.addControl(dest, 1000, { 0, 0 });
+			m_autoControl.addControl(dest + Vector2f(16, 0), 0, { 0, 0 });
+			m_autoControl.addControl(dest + Vector2f(128, 16), 1000, { 0, m_physics2D.getGravity() });
+		}
+	}
 }
 
 void Mario::update() {
 	if (isOnTeleport())
 		onTeleport();
+
+	if (isOnGrabFlagPole())
+		onGrabFlagPole();
 
 	handleMovement();
 
@@ -128,6 +146,12 @@ void Mario::handleMovement() {
 	if (isOnTeleport())
 		return;
 
+	if (isOnGrabFlagPole())
+		return;
+
+	if (m_autoControl.isControlled())
+		return;
+
 	if (isOnGround()) {
 		m_physics2D.setVelocityY(0);
 		m_physics2D.setBaseVelocityY(0);
@@ -136,7 +160,7 @@ void Mario::handleMovement() {
 	m_physics2D.setBaseVelocityX(0);
 	m_physics2D.setVelocityX(0);
 
-	m_state = State::Normal;
+	m_state = State::NORMAL;
 
 	if (Keyboard::isKeyPressed(Keyboard::A) && (isOnGround() || !isOnWall())) {
 		if (isOnGround()) {
@@ -146,7 +170,7 @@ void Mario::handleMovement() {
 
 		m_sprite.getSprite().setScale({ -1, 1 });
 
-		m_state = State::Walk;
+		m_state = State::WALK;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D) && (isOnGround() || !isOnWall())) {
 		if (isOnGround()) {
@@ -156,7 +180,7 @@ void Mario::handleMovement() {
 
 		m_sprite.getSprite().setScale({ 1, 1 });
 
-		m_state = State::Walk;
+		m_state = State::WALK;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::W)) {
 		jump();
@@ -165,7 +189,7 @@ void Mario::handleMovement() {
 		m_physics2D.setBaseVelocityY(m_speed);
 	}
 
-	if (m_onJump) m_state = State::Jump;
+	if (m_onJump) m_state = State::JUMP;
 }
 
 void Mario::onTeleport() {
@@ -206,7 +230,7 @@ void Mario::jump(float velY) {
 	}
 	else m_physics2D.setBaseVelocityY(velY);
 
-	m_state = State::Jump;
+	m_state = State::JUMP;
 	m_sound.play(SoundTrack::BIGJUMP, 100);
 }
 
@@ -228,10 +252,18 @@ void Mario::teleport(const Portal& portal) {
 	m_sound.play(SoundTrack::WARP);
 }
 
+void Mario::onGrabFlagPole() {
+
+}
+
 bool Mario::isOnGround() {
 	return m_physics2D.getVelocity().y + m_physics2D.getBaseVelocity().y == 0 && !m_onJump;
 }
 
 bool Mario::isOnTeleport() {
 	return m_onTeleport;
+}
+
+bool Mario::isOnGrabFlagPole() {
+	return m_onGrabFlagPole;
 }

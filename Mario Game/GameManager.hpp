@@ -9,6 +9,7 @@
 #include "Toggle.hpp"
 #include "Slider.hpp"
 #include "Map.hpp"
+#include "FlagPole.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
@@ -28,6 +29,7 @@ private:
 
 	Mario* m_player = nullptr;
 	Map* m_map = nullptr;
+	FlagPole* m_flagPole = nullptr;
 	//Toggle m_toggle;
 	//Slider m_slider;
 	//Object* m_test = nullptr;

@@ -64,6 +64,7 @@ public:
 	}
 
 	void _render() {
+		render();
 		for (auto& component : m_components)
 			component->render();
 	}

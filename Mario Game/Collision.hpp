@@ -7,19 +7,22 @@ using namespace sf;
 using namespace std;
 
 class Collision : public Component {
-public:
+private:
 	FRect* m_collider;
-	void resolveCollide(Collision& col);
+	bool m_isTrigger;
 
 public:
-	Collision();
+	Collision(bool isTrigger = false);
 	~Collision();
 
 	void init() override;
 	void update() override;
 	void lateUpdate() override;
-	FRect getCollider();
+	void resolveCollide(Collision& col);
 	void onCollisionEnter(Collision& col);
+	void setTrigger(bool isTrigger);
+	bool isTrigger();
+	FRect getCollider();
 	Vector2f getTangentPoint(const Collision& col, int& side) const;
 };
 

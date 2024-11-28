@@ -160,8 +160,10 @@
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="EventSystem.cpp" />
+    <ClCompile Include="FlagPole.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="AutoControl.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Line.cpp" />
@@ -193,8 +195,10 @@
     <ClInclude Include="ECS.hpp" />
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />
+    <ClInclude Include="FlagPole.hpp" />
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="GUI.hpp" />
+    <ClInclude Include="AutoControl.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Jumper.hpp" />
     <ClInclude Include="Line.hpp" />

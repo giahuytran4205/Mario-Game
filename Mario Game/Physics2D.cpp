@@ -6,7 +6,9 @@
 #include "GameManager.hpp"
 #include <iostream>
 
-Physics2D::Physics2D() {}
+Physics2D::Physics2D() {
+	m_static = false;
+}
 
 Physics2D::Physics2D(float gravity, bool isStatic) {
 	m_gravity = gravity;
@@ -16,10 +18,10 @@ Physics2D::Physics2D(float gravity, bool isStatic) {
 Physics2D::~Physics2D() {}
 
 void Physics2D::init() {
-	m_static = false;
 	m_gravity = 0;
 	m_acceleration = { 0, 0 };
 	m_transform = &m_entity->getComponent<Transform2D>();
+	m_enableGravity = true;
 }
 
 void Physics2D::update() {
@@ -28,7 +30,9 @@ void Physics2D::update() {
 	Vector2f direction = m_transform->getRotation();
 	pos += (m_baseVelo + m_velocity) * (float)deltaTime.asMilliseconds();
 	m_velocity += m_acceleration;
-	m_velocity.y += m_gravity;
+
+	if (isEnableGravity())
+		m_velocity.y += m_gravity;
 
 	if (m_isBounce) {
 		if (pos.y > m_startPos.y) {
@@ -109,6 +113,18 @@ void Physics2D::setAcceleration(const Vector2f& acceleration) {
 
 void Physics2D::setGravity(float gravity) {
 	m_gravity = gravity;
+}
+
+float Physics2D::getGravity() {
+	return m_gravity;
+}
+
+void Physics2D::setEnableGravity(bool enable) {
+	m_enableGravity = enable;
+}
+
+bool Physics2D::isEnableGravity() {
+	return m_enableGravity;
 }
 
 void Physics2D::setStatic(bool isStatic) {

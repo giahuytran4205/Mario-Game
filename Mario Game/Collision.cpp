@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace sf;
 
-Collision::Collision() {}
+Collision::Collision(bool isTrigger) : m_isTrigger(isTrigger) {}
 
 Collision::~Collision() {}
 
@@ -54,6 +54,14 @@ FRect Collision::getCollider() {
 void Collision::onCollisionEnter(Collision& col) {
 	m_entity->onCollisionEnter(col);
 	col.m_entity->onCollisionEnter(*this);
+}
+
+void Collision::setTrigger(bool isTrigger) {
+	m_isTrigger = isTrigger;
+}
+
+bool Collision::isTrigger() {
+	return m_isTrigger;
 }
 
 Vector2f Collision::getTangentPoint(const Collision& col, int& side) const {
@@ -121,10 +129,24 @@ void CollisionManager::update() {
 						if (tf1.getLastPosition() == tf1.getPosition() && tf2.getLastPosition() == tf2.getPosition())
 							continue;
 
-						if (tf1.getLastPosition() == tf1.getPosition()) {
-							item->resolveCollide(*col);
+						if (!col->isTrigger() && !item->isTrigger()) {
+							if (tf1.getLastPosition() == tf1.getPosition()) {
+								item->resolveCollide(*col);
+							}
+							else col->resolveCollide(*item);
+
+							if (col->m_entity->hasComponent<Physics2D>()) {
+								Physics2D& physics = col->m_entity->getComponent<Physics2D>();
+								physics.setBaseVelocityY(0);
+								physics.setVelocityY(0);
+							}
+
+							if (item->m_entity->hasComponent<Physics2D>()) {
+								Physics2D& physics = item->m_entity->getComponent<Physics2D>();
+								physics.setBaseVelocityY(0);
+								physics.setVelocityY(0);
+							}
 						}
-						else col->resolveCollide(*item);
 
 						col->onCollisionEnter(*item);
 						item->onCollisionEnter(*col);
