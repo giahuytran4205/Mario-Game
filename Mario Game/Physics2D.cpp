@@ -29,10 +29,10 @@ void Physics2D::update() {
 	Vector2f pos = m_transform->getPosition();
 	Vector2f direction = m_transform->getRotation();
 	pos += (m_baseVelo + m_velocity) * (float)deltaTime.asMilliseconds();
-	m_velocity += m_acceleration;
+	m_velocity += m_acceleration * (float)deltaTime.asMilliseconds();
 
 	if (isEnableGravity())
-		m_velocity.y += m_gravity;
+		m_velocity.y += m_gravity * (float)deltaTime.asMilliseconds();
 
 	if (m_isBounce) {
 		if (pos.y > m_startPos.y) {

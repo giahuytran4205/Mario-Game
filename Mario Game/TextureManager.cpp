@@ -23,6 +23,6 @@ void TextureManager::loadBackground() {
 }
 
 void TextureManager::loadTilesets() {
-	m_tilesets[TileSetType::BLOCK].loadFromJsonFile("D:/GHuy/OOP/Tile/Tileset-1.json");
+	m_tilesets[TileSetType::BLOCK].loadFromJsonFile("Resources/Map/Tileset-1.json");
 	//m_tilesets[TileSetType::ITEM].loadFromJsonFile("Resources/TileSets/");
 }

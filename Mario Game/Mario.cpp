@@ -28,7 +28,7 @@ Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponen
 	m_sprite.setTexture(*texture);
 
 	m_physics2D.setVelocity({ 0, 0 });
-	m_physics2D.setGravity(0.00625f);
+	m_physics2D.setGravity(0.00625f / 8);
 
 	m_transform.getRect().width = texture->getSize().x;
 	m_transform.getRect().height = texture->getSize().y;
@@ -122,7 +122,7 @@ void Mario::onCollisionEnter(Collision& col) {
 
 			m_autoControl.addControl(dest, 1000, { 0, 0 });
 			m_autoControl.addControl(dest + Vector2f(16, 0), 0, { 0, 0 });
-			m_autoControl.addControl(dest + Vector2f(128, 16), 1000, { 0, m_physics2D.getGravity() });
+			m_autoControl.addControl(dest + Vector2f(64, 16), 1000, { 0, 0.0001 });
 		}
 	}
 }

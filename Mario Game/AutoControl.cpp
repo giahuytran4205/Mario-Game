@@ -33,17 +33,21 @@ void AutoControl::update() {
 		}
 		else {
 			m_countdown = info.duration;
-			m_countdown -= deltaTime.asMilliseconds();
 
 			Vector2f dist = info.pos - m_transform->getPosition();
-			Vector2f vel = dist / (float)info.duration + info.acceleration * (float)info.duration / 2.0f;
+			Vector2f vel = dist / (float)info.duration - info.acceleration * (float)info.duration / 2.0f;
+
+			cout << vel.x << " " << vel.y << '\n';
 
 			m_physics->setBaseVelocity(vel);
 			m_physics->setAcceleration(info.acceleration);
 		}
 	}
 	else {
-		m_isControlled = false;
+		if (m_isControlled) {
+			m_isControlled = false;
+			m_physics->setAcceleration({ 0, 0 });
+		}
 	}
 }
 
