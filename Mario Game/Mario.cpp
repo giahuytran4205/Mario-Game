@@ -23,6 +23,11 @@ Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponen
 	m_speed = 0.1f;
 	m_jumpSpeed = -0.4f;
 
+	m_transform.setAnchor(0.5, 0.5);
+
+	m_sprite.setParent(this);
+	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
+
 	Texture* texture = new Texture();
 	texture->loadFromFile("Goomba.png");
 	m_sprite.setTexture(*texture);
@@ -30,9 +35,9 @@ Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponen
 	m_physics2D.setVelocity({ 0, 0 });
 	m_physics2D.setGravity(0.00625f / 8);
 
-	m_transform.getRect().width = texture->getSize().x;
-	m_transform.getRect().height = texture->getSize().y;
-	m_transform.setPosition({ 150, 0 });
+	m_transform.width = texture->getSize().x;
+	m_transform.height = texture->getSize().y;
+	m_transform.setPosition(150, 0);
 
 	m_anim = &addComponent<Animation>(m_sprite);
 	m_anim->loadFromJsonFile("Resources/Animations/Mario&Luigi.json");
@@ -118,11 +123,9 @@ void Mario::onCollisionEnter(Collision& col) {
 		if (!flagPole->isLoweredFlag()) {
 			flagPole->loweringFlag();
 
-			Vector2f dest(flagPole->getComponent<Transform2D>().getRect().left, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
-			Vector2f dest1(flagPole->getComponent<Transform2D>().getRect().left, m_transform.getPosition().y);
+			Vector2f dest(m_transform.getPosition().x, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
 
-			m_autoControl.addMoveByPoint(dest1, 100, { 0, 0 });
-			m_autoControl.addMoveByPoint(dest, 1000, { 0, 0 });
+			m_autoControl.addMoveByPoint(dest, 1000, { 0, 0 }, [&](int time) { m_state = State::GRAB_FLAGPOLE; });
 			m_autoControl.addWaitForMiliseconds(1000);
 			m_autoControl.addMoveByPoint(dest + Vector2f(16, 0), 0, { 0, 0 });
 			m_autoControl.addMoveByPoint(dest + Vector2f(64, 24), 200, { 0, m_physics2D.getGravity() });

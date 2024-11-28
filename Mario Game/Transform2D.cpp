@@ -99,7 +99,7 @@ Vector2f Transform2D::reverseTransformPoint(float x, float y) {
 }
 
 void Transform2D::update() {
-	
+	m_parent = m_entity->toObject()->getParent();
 }
 
 void Transform2D::setParent(Object* parent) {

@@ -1,6 +1,7 @@
 #pragma once
 #include "Block.hpp"
 #include "TileSet.hpp"
+#include "SpriteRenderer.hpp"
 #include <vector>
 using namespace std;
 
@@ -16,6 +17,7 @@ enum ItemType {
 
 class Item : public Block {
 private:
+	SpriteRenderer m_sprite;
 	ItemType m_type;
 	bool m_isPlayAnim;
 	float m_elapsedTime;

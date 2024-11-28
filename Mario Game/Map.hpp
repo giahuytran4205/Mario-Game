@@ -9,7 +9,7 @@ namespace json = boost::json;
 
 class Map : public Object {
 private:
-	Sprite& m_background;
+	SpriteRenderer m_background;
 	int m_row;
 	int m_col;
 	int m_width;

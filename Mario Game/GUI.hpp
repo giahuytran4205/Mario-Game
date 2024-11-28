@@ -9,7 +9,7 @@ using namespace sf;
 
 class GUI : public Object, public IEventListener {
 protected:
-	SpriteRenderer& m_background;
+	SpriteRenderer m_background;
 	RenderWindow* m_window;
 	bool m_isSelected;
 	bool m_isPressed;

@@ -13,9 +13,10 @@
 using namespace std;
 using namespace sf;
 
-Map::Map() : m_background(m_sprite.getSprite()) {
+Map::Map() {
 	m_width = m_height = 0;
 	m_curDepth = 0;
+	m_background.setParent(this);
 	m_background.setPosition(0, 0);
 	m_transform.getRect().setAnchor({ 0, 0 });
 	m_renderOrder = 0;
@@ -64,7 +65,7 @@ void Map::loadFromJsonFile(string filename) {
 				if (tile.type == "Coin") {
 					Item* item = new Item(ItemType::Coin);
 					item->setAnim(tile.anim);
-					item->getComponent<Transform2D>().setPosition({ i % 211 * 16.0f + 8, i / 211 * 16.0f + 8 });
+					item->getComponent<Transform2D>().setPosition({ i % 211 * 16.0f + 8, i / 211 * 16.0f + 8});
 				}
 				else {
 					Block::BlockType type = Block::EMPTY_BLOCK;

@@ -2,7 +2,7 @@
 #include "GameManager.hpp"
 
 Item::Item(Object* parent) {
-
+	m_sprite.setParent(this);
 }
 
 Item::Item(ItemType type, Object* parent) : m_type(type), m_isPlayAnim(true) {

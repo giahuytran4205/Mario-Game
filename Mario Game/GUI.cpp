@@ -9,17 +9,18 @@
 #include <iostream>
 using namespace sf;
 
-GUI::GUI() : m_background(m_sprite), m_window(&GameManager::getInstance()->getRenderWindow()) {
+GUI::GUI() : m_window(&GameManager::getInstance()->getRenderWindow()) {
 	m_parent = nullptr;
 	m_isSelected = false;
 	m_isPressed = false;
 	m_isHovered = false;
 	m_isOnDrag = false;
 	m_isInteractable = true;
+	m_background.setParent(this);
 	EventSystem::m_instance->addListener(this);
 }
 
-GUI::GUI(const FRect& rect, RenderWindow* window, Object* parent) : m_background(m_sprite), m_window(window) {
+GUI::GUI(const FRect& rect, RenderWindow* window, Object* parent) : m_background(parent), m_window(window) {
 	m_parent = parent;
 	m_isSelected = false;
 	m_isPressed = false;
@@ -29,7 +30,7 @@ GUI::GUI(const FRect& rect, RenderWindow* window, Object* parent) : m_background
 	m_transform.getRect() = rect;
 }
 
-GUI::GUI(float left, float top, float width, float height, RenderWindow* window, Object* parent) : m_background(m_sprite), m_window(window) {
+GUI::GUI(float left, float top, float width, float height, RenderWindow* window, Object* parent) : m_background(parent), m_window(window) {
 	m_parent = parent;
 	m_isSelected = false;
 	m_isPressed = false;
@@ -53,7 +54,7 @@ void GUI::onKeyPressed(const Keyboard::Key& key) {}
 void GUI::onDrag(const Vector2f& mousePos) {}
 
 void GUI::update() {
-	Sprite& sprite = m_sprite.getSprite();
+	Sprite& sprite = m_background;
 	if (sprite.getTexture() && sprite.getTexture()->getSize().x != 0 && sprite.getTexture()->getSize().y != 0)
 		sprite.setScale({ m_transform.getRect().width / sprite.getTexture()->getSize().x, m_transform.getRect().height / sprite.getTexture()->getSize().y });
 }

@@ -14,6 +14,13 @@ using namespace sf;
 Block::Block() : m_physics2D(addComponent<Physics2D>()) {
 	m_renderOrder = 2;
 	m_type = BlockType::EMPTY_BLOCK;
+
+	m_transform.setAnchor(0.5, 0.5);
+
+	m_sprite.setParent(this);
+	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
+
+	m_collision = nullptr;
 }
 
 Block::Block(const Vector2f& pos, BlockType type) : Block() {

@@ -7,6 +7,7 @@ using namespace sf;
 
 class Character : public Object {
 protected:
+	SpriteRenderer m_sprite;
 	int m_maxHealth;
 	int m_health;
 	bool m_onGround;

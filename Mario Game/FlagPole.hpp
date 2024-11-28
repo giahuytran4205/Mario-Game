@@ -1,11 +1,13 @@
 #pragma once
 #include "Object.hpp"
 #include "ECS.hpp"
+#include "SpriteRenderer.hpp"
 
 class FlagPole : public Object {
 private:
-	Sprite m_flag;
-	Sprite m_pole;
+	SpriteRenderer m_flag;
+	SpriteRenderer m_pole;
+	SpriteRenderer m_pole1;
 	bool m_onLoweringFlag;
 	bool m_isLoweredFlag;
 	float m_flagSpeed;

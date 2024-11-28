@@ -6,6 +6,7 @@
 
 class Jumper : public Object {
 private:
+	SpriteRenderer m_sprite;
 	Collision& m_collision;
 	Animation& m_anim;
 	int m_launchTime;

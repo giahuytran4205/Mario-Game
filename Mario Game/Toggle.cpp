@@ -38,9 +38,9 @@ void Toggle::setOffTexture(Texture& texture) {
 
 void Toggle::onTrigger() {
 	if (m_isOn)
-		m_sprite.setTexture(m_onTexture);
+		m_background.setTexture(m_onTexture);
 	else
-		m_sprite.setTexture(m_offTexture);
+		m_background.setTexture(m_offTexture);
 
 	for (auto& listener : m_listeners) {
 		listener(m_isOn);

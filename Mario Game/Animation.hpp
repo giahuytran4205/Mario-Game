@@ -17,8 +17,7 @@ private:
 	int m_currentIndex;
 
 public:
-	Animation();
-	Animation(string filename);
+	Animation(Sprite& sprite, string filename);
 	Animation(Sprite& sprite, const vector<vector<Frame>>& anim = {});
 	Animation(SpriteRenderer& spriteRenderer, const vector<vector<Frame>>& anim = {});
 	Animation(Sprite& sprite, int numTrack);

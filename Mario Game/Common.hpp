@@ -9,6 +9,7 @@ class TextureManager;
 class Physics2D;
 class Collision;
 class GUI;
+class SpriteRenderer;
 class Toggle;
 
 boost::json::object readJsonFile(string filename);

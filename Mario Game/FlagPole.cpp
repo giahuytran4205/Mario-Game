@@ -7,16 +7,25 @@ FlagPole::FlagPole() {
 	addComponent<Collision>(true);
 	
 	m_transform.setPosition(0, 0);
-	m_transform.setAnchor(0, 0);
+	m_transform.setAnchor(0.5, 0);
 	m_transform.setSize(16, 160);
 
 	Texture* texture = new Texture();
 	texture->loadFromFile("Resources/Animations/Items&Objects.png", IntRect(128, 16, 16, 16));
 	m_flag.setTexture(*texture);
+	m_flag.getComponent<Transform2D>().setAnchor(1, 0);
 
 	Texture* texture2 = new Texture();
-	texture2->loadFromFile("D:/GHuy/OOP/Tile/Mario/Mario/Worlds-1-1.png", IntRect(3168, 32, 16, 160));
+	texture2->loadFromFile("D:/GHuy/OOP/Tile/Mario/Mario/Worlds-1-1.png", IntRect(3168, 32, 16, 16));
 	m_pole.setTexture(*texture2);
+	m_pole.getComponent<Transform2D>().setAnchor(0.5, 0);
+
+	Texture* texture3 = new Texture();
+	texture3->loadFromFile("Resources/Tilesets/Tileset-1.png", { 256, 144, 16, 16 });
+	texture3->setRepeated(true);
+	m_pole1.setTexture(*texture3);
+	m_pole1.setTextureRect(IntRect(0, 0, 16, 160));
+	m_pole1.getComponent<Transform2D>().setAnchor(0.5, 0);
 
 	m_onLoweringFlag = false;
 	m_isLoweredFlag = false;
@@ -28,11 +37,12 @@ FlagPole::FlagPole(const Vector2f& pos, const Vector2f& size) : FlagPole(pos.x, 
 
 FlagPole::FlagPole(float x, float y, float width, float height) : FlagPole() {
 	m_transform.setPosition(x, y);
-	//m_transform.setAnchor(0.5, 0);
 	m_transform.setSize(width, height);
 
-	m_flag.setPosition(x - 8, m_transform.top + 16);
-	m_pole.setPosition(m_transform.left, m_transform.top);
+	m_flag.getComponent<Transform2D>().setPosition(x, y + 16);
+	m_pole.getComponent<Transform2D>().setPosition(x, y);
+	
+	m_pole1.getComponent<Transform2D>().setPosition(x, y + 16);
 }
 
 FlagPole::~FlagPole() {}
@@ -49,7 +59,7 @@ void FlagPole::update() {
 			m_onLoweringFlag = false;
 		}
 
-		m_flag.setPosition(pos);
+		m_flag.getComponent<Transform2D>().setPosition(pos);
 	}
 }
 
