@@ -14,15 +14,17 @@ GUI::GUI() : m_background(m_sprite), m_window(&GameManager::getInstance()->getRe
 	m_isSelected = false;
 	m_isPressed = false;
 	m_isHovered = false;
+	m_isOnDrag = false;
 	m_isInteractable = true;
 	EventSystem::m_instance->addListener(this);
 }
 
-GUI::GUI(const gr::Rect& rect, RenderWindow* window, Object* parent) : m_background(m_sprite), m_window(window) {
+GUI::GUI(const FRect& rect, RenderWindow* window, Object* parent) : m_background(m_sprite), m_window(window) {
 	m_parent = parent;
 	m_isSelected = false;
 	m_isPressed = false;
 	m_isHovered = false;
+	m_isOnDrag = false;
 	m_isInteractable = true;
 	m_transform.getRect() = rect;
 }
@@ -32,6 +34,7 @@ GUI::GUI(float left, float top, float width, float height, RenderWindow* window,
 	m_isSelected = false;
 	m_isPressed = false;
 	m_isHovered = false;
+	m_isOnDrag = false;
 	m_isInteractable = true;
 	m_transform.getRect() = {left, top, width, height};
 }
@@ -44,36 +47,55 @@ void GUI::onSelected() {}
 void GUI::onDeselect() {}
 void GUI::onPressed() {}
 void GUI::onHovered() {}
+void GUI::onUnhovered() {}
 void GUI::onClick() {}
+void GUI::onKeyPressed(const Keyboard::Key& key) {}
+void GUI::onDrag(const Vector2f& mousePos) {}
 
 void GUI::update() {
 	Sprite& sprite = m_sprite.getSprite();
-	sprite.setScale({ m_transform.getRect().width / sprite.getTexture()->getSize().x, m_transform.getRect().height / sprite.getTexture()->getSize().y });
+	if (sprite.getTexture() && sprite.getTexture()->getSize().x != 0 && sprite.getTexture()->getSize().y != 0)
+		sprite.setScale({ m_transform.getRect().width / sprite.getTexture()->getSize().x, m_transform.getRect().height / sprite.getTexture()->getSize().y });
 }
+
 
 void GUI::handleEvent(const Event& event) {
 	if (isInteractable()) {
-		if (m_transform.getRect().contains((Vector2f)Mouse::getPosition(*m_window))) {
+		Vector2f dist = m_window->getView().getCenter() - m_window->getDefaultView().getCenter();
+
+		if (m_transform.getRect().contains((Vector2f)Mouse::getPosition(*m_window) + dist)) {
 			m_isHovered = true;
 			onHovered();
 
-			if (event.type == sf::Event::Closed) {
-				m_window->close();
-			}
-
 			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
 				m_isPressed = true;
+				m_isOnDrag = true;
 				onPressed();
 			}
 
 			if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
 				m_isPressed = false;
-				m_isSelected = !m_isSelected;
+				m_isOnDrag = false;
+				m_isSelected = true;
 				onClick();
 			}
 		}
-		else
+		else {
+			if (isHovered()) onUnhovered();
 			m_isHovered = false;
+			m_isSelected = false;
+		}
+		
+		if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
+			m_isOnDrag = false;
+
+		if (event.type == Event::KeyPressed) {
+			onKeyPressed(event.key.code);
+		}
+
+		if (isOnDrag() && event.type == Event::MouseMoved) {
+			onDrag((Vector2f)Mouse::getPosition(*m_window) + dist);
+		}
 
 		if (isSelected())
 			onSelected();
@@ -96,6 +118,10 @@ bool GUI::isPressed() {
 
 bool GUI::isHovered() {
 	return m_isHovered;
+}
+
+bool GUI::isOnDrag() {
+	return m_isOnDrag;
 }
 
 bool GUI::isInteractable() {

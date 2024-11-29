@@ -3,29 +3,40 @@
 #include "Common.hpp"
 #include "SFML/Graphics.hpp"
 using namespace sf;
+
 const float PI = acos(-1);
 
 class Transform2D : public Component {
 private:
-	float m_x;
-	float m_y;
-	float m_lastX;
-	float m_lastY;
+	Vector2f m_pos;
+	Vector2f m_lastPos;
+	Vector2f m_tempPos;
 	Vector2f m_rotation;
 	Vector2f m_anchor;
-	gr::Rect m_rect;
+	FRect m_rect;
+	Object* m_parent;
 
 public:
-	Vector2f getPosition();
+	Transform2D();
+	~Transform2D();
+
+	const Vector2f& getPosition();
+	const Vector2f& getLastPosition();
+	const Vector2f& getRotation();
+	Vector2f getWorldPosition();
+	Vector2f transformPoint(const Vector2f& point);
+	Vector2f transformPoint(float x, float y);
+	Vector2f reverseTransformPoint(const Vector2f& point);
+	Vector2f reverseTransformPoint(float x, float y);
+	FRect& getRect();
 	void setPosition(float x, float y);
 	void setPosition(const Vector2f& position);
-	Vector2f getLastPosition();
-	Vector2f getRotation();
 	void setRotation(const Vector2f& rotation);
-	void setRotation(const float& angle);
+	void setRotation(float angle);
+	void setAnchor(const Vector2f& anchor);
 	void move(float dx, float dy);
-	gr::Rect& getRect();
-	void move(Vector2f d);
+	void move(const Vector2f& d);
+	void adjustPosition(const Vector2f& pos);
+	void setParent(Object* parent);
+	void update() override;
 };
-
-Vector2f normalize(const Vector2f& v);

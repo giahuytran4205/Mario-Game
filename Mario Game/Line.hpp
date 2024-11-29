@@ -15,7 +15,11 @@ public:
 	void createLine(const Vector2f& point1, const Vector2f& point2);
 	float getX(const float& y);
 	float getY(const float& x);
-	Vector2f raycast(const gr::Rect& rect, int& side);
+	Vector2f raycast(const FRect& rect, int& side);
 };
 
 float distance(const Vector2f& point1, const Vector2f& point2);
+
+float cross(const Vector2f& a, const Vector2f& b);
+
+Vector2f normalize(const Vector2f& v);

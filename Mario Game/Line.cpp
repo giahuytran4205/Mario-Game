@@ -38,22 +38,22 @@ float Line::getY(const float& x) {
 	return -c / b - a / b * x;
 }
 
-Vector2f Line::raycast(const gr::Rect& rect, int& side) {
+Vector2f Line::raycast(const FRect& rect, int& side) {
 	if (a == 0 && b == 0) {
 		side = 0;
 		return startPoint;
 	}
 
 	if (a == 0) {
-		if (startPoint.x <= rect.left) side = 0;
+		if (abs(startPoint.x - rect.left) < abs(startPoint.x - rect.right)) side = 0;
 		else side = 2;
-		return { startPoint.x <= rect.left ? rect.left : rect.right, -c / b };
+		return { side == 0 ? rect.left : rect.right, -c / b };
 	}
 
 	if (b == 0) {
-		if (startPoint.y <= rect.top) side = 1;
+		if (abs(startPoint.y - rect.top) < abs(startPoint.y - rect.bottom)) side = 1;
 		else side = 3;
-		return { -c / a, startPoint.y <= rect.top ? rect.top : rect.bottom };
+		return { -c / a, side == 1 ? rect.top : rect.bottom };
 	}
 
 	Vector2f points[4];
@@ -63,9 +63,16 @@ Vector2f Line::raycast(const gr::Rect& rect, int& side) {
 	points[3] = { getX(rect.bottom), rect.bottom };
 
 	float mn = 1e9;
+	side = -1;
+
 	for (int i = 0; i < 4; i++) {
 		if (!rect.pointOverlap(points[i])) continue;
-		if (distance(startPoint, points[i]) < mn) {
+		if (rect.pointOverlap(startPoint)) {
+			if (distance(startPoint, points[i]) <= distance(points[i], endPoint)) {
+				side = i;
+			}
+		}
+		else if (side == -1 || distance(endPoint, points[i]) < mn) {
 			mn = distance(startPoint, points[i]);
 			side = i;
 		}
@@ -75,4 +82,16 @@ Vector2f Line::raycast(const gr::Rect& rect, int& side) {
 
 float distance(const Vector2f& point1, const Vector2f& point2) {
 	return sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y));
+}
+
+float cross(const Vector2f& a, const Vector2f& b) {
+	return a.x * b.y - a.y * b.x;
+}
+
+Vector2f normalize(const Vector2f& v) {
+	if (v.x == 0 && v.y == 0)
+		return v;
+
+	float magnitude = sqrt(v.x * v.x + v.y * v.y);
+	return { v.x / magnitude, v.y / magnitude };
 }

@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Common.hpp"
 #include "Object.hpp"
+#include "Animation.hpp"
 using namespace sf;
 
 class Character : public Object {
@@ -9,6 +10,7 @@ protected:
 	int m_maxHealth;
 	int m_health;
 	bool m_onGround;
+	bool m_onWall;
 	Collision* m_collision;
 
 public:
@@ -21,6 +23,7 @@ public:
 	void setHealth(int health);
 	void setTexture(Texture& texture);
 	bool isOnGround();
+	bool isOnWall();
 
 	//virtual void onCollisionEnter(Collision& col);
 	//void render(RenderWindow &window);

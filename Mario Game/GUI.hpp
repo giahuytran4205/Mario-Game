@@ -14,11 +14,12 @@ protected:
 	bool m_isSelected;
 	bool m_isPressed;
 	bool m_isHovered;
+	bool m_isOnDrag;
 	bool m_isInteractable;
 
 public:
 	GUI();
-	GUI(const gr::Rect& rect, RenderWindow* window, Object* parent = nullptr);
+	GUI(const FRect& rect, RenderWindow* window, Object* parent = nullptr);
 	GUI(float left, float top, float width, float height, RenderWindow* window, Object* parent = nullptr);
 	~GUI();
 
@@ -29,10 +30,14 @@ public:
 	virtual void onDeselect();
 	virtual void onPressed();
 	virtual void onHovered();
+	virtual void onUnhovered();
 	virtual void onClick();
+	virtual void onKeyPressed(const Keyboard::Key& key);
+	virtual void onDrag(const Vector2f& mousePos);
 	bool isSelected();
 	bool isPressed();
 	bool isHovered();
+	bool isOnDrag();
 	bool isInteractable();
 	void setSelect(bool isSelect);
 	void setInteractable(bool isInteractable);

@@ -1,5 +1,8 @@
 #include "TextureManager.hpp"
 #include "SFML/Graphics.hpp"
+#include <fstream>
+#include <iostream>
+using namespace std;
 using namespace sf;
 
 TextureManager* TextureManager::m_instance = nullptr;
@@ -20,5 +23,6 @@ void TextureManager::loadBackground() {
 }
 
 void TextureManager::loadTilesets() {
-	m_tilesets[TileSetType::Block_Type].loadFromFile("Resources/blocks.png");
+	m_tilesets[TileSetType::BLOCK].loadFromJsonFile("Resources/Map/Tileset-1.json");
+	//m_tilesets[TileSetType::ITEM].loadFromJsonFile("Resources/TileSets/");
 }

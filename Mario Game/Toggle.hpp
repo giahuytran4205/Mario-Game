@@ -9,9 +9,10 @@ private:
 	Texture m_onTexture;
 	Texture m_offTexture;
 	bool m_isOn;
-	void (*m_action) (bool isOn);
+	vector<void (*)(bool isOn)> m_listeners;
 
 public:
+	Toggle();
 	Toggle(RenderWindow& window, Texture& onTexture, Texture& offTexture, void (*action) (bool isOn) = nullptr, Object* parent = nullptr);
 	~Toggle();
 
@@ -19,7 +20,8 @@ public:
 	void setOnTexture(Texture& texture);
 	void setOffTexture(Texture& texture);
 	void onTrigger();
-	void setAction(void (*func) (bool isOn));
+	void addListener(void (*func) (bool isOn));
+	void removeListener(void (*func) (bool isOn));
 	void setState(bool isOn);
 	bool getState();
 };

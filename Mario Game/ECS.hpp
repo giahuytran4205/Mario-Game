@@ -43,9 +43,13 @@ private:
 	vector<unique_ptr<Component>> m_components;
 	ComponentArray m_componentArray;
 	ComponentBitSet m_componentBitSet;
+
+protected:
 	bool m_active;
+	int m_renderOrder = 0;
 
 public:
+	Entity() : m_renderOrder(0), m_active(true) {}
 	virtual ~Entity() {}
 
 	void _update() {
@@ -59,11 +63,15 @@ public:
 			c->render();
 	}
 
+	void _render() {
+		render();
+		for (auto& component : m_components)
+			component->render();
+	}
+
 	virtual void update() {}
 
-	virtual void render() {
-
-	}
+	virtual void render() {}
 
 	virtual void onCollisionEnter(Collision& col) {}
 
@@ -100,28 +108,55 @@ public:
 	bool isActive() {
 		return m_active;
 	}
+
+	int getRenderOrder() {
+		return m_renderOrder;
+	}
+
+	Object* toObject() {
+		return (Object*)this;
+	}
+
+	template<typename T>
+	T* convertTo() {
+		return (T*)this;
+	}
 };
 
 class EntitiesManager {
 private:
-	static vector<unique_ptr<Entity>> m_entities;
+	static vector<Entity*> m_entities;
+	vector<vector<Entity*>> m_renderQueue;
 
 public:
+	EntitiesManager() { }
+	~EntitiesManager() { }
+
 	void update() {
+		refresh();
+
 		for (auto& e : m_entities)
 			e->update();
 				
 		for (auto& e : m_entities)
 			e->_update();
 
-		for (auto& e : m_entities)
-			e->render();
+		m_renderQueue.assign(100, {});
+		for (auto& e : m_entities) {
+			m_renderQueue[e->getRenderOrder()].push_back(e);
+		}
+
+		for (auto& v : m_renderQueue) {
+			for (auto& e : v)
+				e->_render();
+		}
 	}
 
 	void refresh() {
 		m_entities.erase(remove_if(begin(m_entities), end(m_entities),
-			[](const unique_ptr<Entity>& entity)
+			[](Entity* entity)
 			{
+				if (!entity) return true;
 				return !entity->isActive();
 			}),
 			end(m_entities));
@@ -129,13 +164,16 @@ public:
 
 	Entity& addEntity() {
 		Entity* e = new Entity();
-		unique_ptr<Entity> uPtr{ e };
-		m_entities.emplace_back(move(uPtr));
+		m_entities.emplace_back(e);
 		return *e;
 	}
 
 	static void addEntity(Entity* entity) {
-		unique_ptr<Entity> uPtr{ entity };
-		m_entities.emplace_back(move(uPtr));
+		m_entities.emplace_back(entity);
+	}
+
+	static void removeEntity(Entity* entity) {
+		m_entities.erase(remove_if(m_entities.begin(), m_entities.end(), [&entity](Entity* e) { return e == entity; }),
+			m_entities.end());
 	}
 };

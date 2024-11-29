@@ -15,7 +15,10 @@ SpriteRenderer::~SpriteRenderer() {
 
 void SpriteRenderer::update() {
 	if (m_entity->hasComponent<Transform2D>()) {
-		m_sprite.setPosition(m_entity->getComponent<Transform2D>().getRect().getPosition());
+		Vector2f anchor = m_entity->getComponent<Transform2D>().getRect().getAnchor();
+		m_sprite.setOrigin(m_sprite.getLocalBounds().width * anchor.x, m_sprite.getLocalBounds().height * anchor.y);
+		Transform2D& transform = m_entity->getComponent<Transform2D>();
+		m_sprite.setPosition(transform.getPosition());
 	}
 }
 
@@ -29,9 +32,11 @@ Sprite& SpriteRenderer::getSprite() {
 
 void SpriteRenderer::setTexture(Texture& texture) {
 	m_sprite.setTexture(texture);
+	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 }
 
 void SpriteRenderer::setTexture(Texture& texture, const IntRect& rectangle) {
 	m_sprite.setTexture(texture, true);
 	m_sprite.setTextureRect(rectangle);
+	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 }
