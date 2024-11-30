@@ -1,6 +1,6 @@
 #include "InputField.hpp"
 
-//InputField* InputField::currentlySelectedField = nullptr;
+InputField* InputField::currentlySelectedField = nullptr;
 
 FRect InputField::getRectOfShape()
 {
@@ -57,125 +57,28 @@ InputField::InputField(sf::RenderWindow& window, const float& x, const float& y,
     m_cursorBlinkClock.restart();
 }
 
-//void InputField::onSelected(const Event& event)
-//{
-//    if (event.type == Event::TextEntered)
-//    {
-//        if (event.text.unicode == 8)
-//        {
-//            if (!m_content.empty())
-//            {
-//                m_content.pop_back();
-//                m_text.setString(m_content);
-//            }
-//        }
-//        else if (event.text.unicode >= 32 && event.text.unicode < 127)
-//        {
-//            m_content += static_cast<char>(event.text.unicode);
-//            m_text.setString(m_content);
-//        }
-//    }
-//}
-//
-//void InputField::onDeselect(const Event& event) {}
-//
-//void InputField::onPressed(const Event& event)
-//{
-//    m_box.setFillColor(sf::Color::Red);
-//}
-//
-//void InputField::onHovered(const Event& event) {}
-//
-//void InputField::onUnhovered(const Event& event) {}
-//
-//void InputField::onClick(const Event& event)
-//{
-//    m_box.setFillColor(sf::Color::White);
-//}
-//
-//void InputField::onDrag(const Vector2f& mousePos, const Event& event) {}
-//
-//void InputField::handleEvent(const Event& event) {
-//    Vector2f dist = m_window->getView().getCenter() - m_window->getDefaultView().getCenter();
-//    if (isInteractable()) {
-//        if (m_transform.getRect().contains((Vector2f)Mouse::getPosition(*m_window) + dist)) {
-//            m_isHovered = true;
-//            onHovered(event);
-//
-//            if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
-//                m_isPressed = true;
-//                m_isOnDrag = true;
-//                onPressed(event);
-//            }
-//
-//            if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
-//                m_isPressed = false;
-//                m_isOnDrag = false;
-//
-//                if (currentlySelectedField != this) {
-//                    // Deselect the previously selected InputField
-//                    if (currentlySelectedField != nullptr) {
-//                        currentlySelectedField->m_isSelected = false;
-//                    }
-//                    // Set the current InputField as selected
-//                    currentlySelectedField = this;
-//                    m_isSelected = true;
-//                }
-//
-//                onClick(event);
-//            }
-//        }
-//        else
-//        {
-//            if (isHovered()) onUnhovered(event);
-//            m_isHovered = false;
-//        }
-//
-//        if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
-//            m_isOnDrag = false;
-//
-//        if (isOnDrag() && event.type == Event::MouseMoved) {
-//            onDrag((Vector2f)Mouse::getPosition(*m_window) + dist, event);
-//        }
-//
-//        if (isSelected())
-//        {
-//            onSelected(event);
-//        }
-//        else
-//        {
-//            onDeselect(event);
-//        }
-//    }
-//}
-
-void InputField::onPressed()
-{
-    m_box.setFillColor(sf::Color::White);
-}
-
 void InputField::onClick()
 {
-    m_box.setFillColor(sf::Color::White);
+    currentlySelectedField = this;
 }
 
 void InputField::onKeyPressed(const sf::Event::TextEvent& textEvent)
 {
-    std::cout << textEvent.unicode << std::endl;
-    if (textEvent.unicode == 8)
+    if (currentlySelectedField == this)
     {
-        if (!m_content.empty())
+        if (textEvent.unicode == 8)
         {
-            m_content.pop_back();
+            if (!m_content.empty())
+            {
+                m_content.pop_back();
+                m_text.setString(m_content);
+            }
+        }
+        else if (textEvent.unicode >= 32 && textEvent.unicode < 127)
+        {
+            m_content += static_cast<char>(textEvent.unicode);
             m_text.setString(m_content);
         }
-    }
-    else if (textEvent.unicode >= 32 && textEvent.unicode < 127)
-    {
-        m_content += static_cast<char>(textEvent.unicode);
-        std::cout << m_content << std::endl;
-        m_text.setString(m_content);
-        std::cout << m_text.getString().toAnsiString() << std::endl;
     }
 }
 
@@ -222,22 +125,22 @@ void InputField::draw(sf::RenderWindow& target)
     m_text.setString(m_content);
     target.draw(m_text);
 
-    //if (m_isSelected)
-    //{
-    //    if (m_cursorBlinkClock.getElapsedTime().asSeconds() >= 0.5f)
-    //    {
-    //        m_cursorVisible = !m_cursorVisible;
-    //        m_cursorBlinkClock.restart();
-    //    }
+    if (m_isSelected)
+    {
+        if (m_cursorBlinkClock.getElapsedTime().asSeconds() >= 0.5f)
+        {
+            m_cursorVisible = !m_cursorVisible;
+            m_cursorBlinkClock.restart();
+        }
 
-    //    if (m_cursorVisible)
-    //    {
-    //        sf::FloatRect textBounds = m_text.getLocalBounds();
+        if (m_cursorVisible)
+        {
+            sf::FloatRect textBounds = m_text.getLocalBounds();
 
-    //        float cursorX = m_text.getPosition().x + textBounds.width + 1.f;
-    //        float cursorY = m_text.getPosition().y;
-    //        m_cursor.setPosition(cursorX, cursorY);
-    //        target.draw(m_cursor);
-    //    }
-    //}
+            float cursorX = m_text.getPosition().x + textBounds.width + 1.f;
+            float cursorY = m_text.getPosition().y;
+            m_cursor.setPosition(cursorX, cursorY);
+            target.draw(m_cursor);
+        }
+    }
 }

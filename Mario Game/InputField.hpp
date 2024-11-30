@@ -27,20 +27,10 @@ private:
 	sf::Clock m_cursorBlinkClock;
 
 public:
-	//static InputField* currentlySelectedField;
+	static InputField* currentlySelectedField;
 
 	InputField(sf::RenderWindow& window, const float& x, const float& y, const float& width, const float& height, sf::Font& font);
 
-	//void onSelected(const Event& event);
-	//void onDeselect(const Event& event);
-	//void onPressed(const Event& event);
-	//void onHovered(const Event& event);
-	//void onUnhovered(const Event& event);
-	//void onClick(const Event& event);
-	//void onDrag(const Vector2f& mousePos, const Event& event);
-	//void handleEvent(const sf::Event& event) override;
-
-	void onPressed() override;
 	void onClick() override;
 	void onKeyPressed(const sf::Event::TextEvent& textEvent) override;
 
