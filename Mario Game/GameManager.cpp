@@ -13,6 +13,7 @@
 #include "Collision.hpp"
 #include "Jumper.hpp"
 #include "FlagPole.hpp"
+#include "Beanstalk.hpp"
 #include <iostream>
 using namespace sf;
 using namespace std;
@@ -63,6 +64,8 @@ void GameManager::init() {
 	Jumper* jumper = new Jumper(Vector2f(100, 208));
 
 	m_flagPole = new FlagPole(170, 32, 2, 160);
+
+	Beanstalk* beanstalk = new Beanstalk({ 200, 160, 2, 32 });
 }
 
 void GameManager::start() {
@@ -82,6 +85,13 @@ void GameManager::start() {
 		m_collisionManager.update();
 
 		m_view.setCenter(m_player->getComponent<Transform2D>().getPosition().x, m_view.getCenter().y);
+
+#if DEBUG
+
+		m_window.draw(Transform2D::rectangles);
+		Transform2D::rectangles.clear();
+
+#endif // DEBUG
 
 		m_window.display();
 	}
