@@ -90,7 +90,7 @@ void GUI::handleEvent(const Event& event) {
 		if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
 			m_isOnDrag = false;
 
-		if (event.type == Event::KeyPressed) {
+		if (event.type == Event::TextEntered) {
 			onKeyPressed(event);
 		}
 

@@ -34,5 +34,5 @@ public:
 	void onClick() override;
 	void setAction(void (*func) ());
 
-	void draw(sf::RenderTarget& target);
+	void draw(sf::RenderWindow& target);
 };

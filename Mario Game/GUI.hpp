@@ -25,7 +25,7 @@ public:
 
 	void update() override;
 	void render() override;
-	void handleEvent(const Event& event) override;
+	void handleEvent(const sf::Event& event) override;
 	virtual void onSelected();
 	virtual void onDeselect();
 	virtual void onPressed();

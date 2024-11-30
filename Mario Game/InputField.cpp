@@ -149,6 +149,16 @@ InputField::InputField(sf::RenderWindow& window, const float& x, const float& y,
 //    }
 //}
 
+void InputField::onPressed()
+{
+    m_box.setFillColor(sf::Color::White);
+}
+
+void InputField::onClick()
+{
+    m_box.setFillColor(sf::Color::White);
+}
+
 void InputField::onKeyPressed(const sf::Event& event)
 {
     if (event.type == Event::TextEntered)
@@ -206,7 +216,7 @@ void InputField::clearContent()
     m_text.setString(m_content);
 }
 
-void InputField::draw(sf::RenderTarget& target)
+void InputField::draw(sf::RenderWindow& target)
 {
     target.draw(m_box);
     m_text.setString(m_content);

@@ -90,7 +90,7 @@ void Button::setAction(void(*func)())
 {
 	m_action = func;
 }
-void Button::draw(sf::RenderTarget& target)
+void Button::draw(sf::RenderWindow& target)
 {
 	target.draw(m_shape);
 	target.draw(m_label.getText());

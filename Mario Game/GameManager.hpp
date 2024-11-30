@@ -10,6 +10,8 @@
 #include "Slider.hpp"
 #include "Map.hpp"
 #include "FlagPole.hpp"
+#include "StateManager.hpp"
+#include "LoginState.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
@@ -21,11 +23,13 @@ private:
 	TextureManager m_textureManager;
 	SoundBufferManager m_soundBufferManager;
 	CollisionManager m_collisionManager;
+	StateManager m_stateManager;
 	EventSystem m_eventSystem;
 	RenderWindow m_window;
 	View m_view;
 	Clock m_clock;
 	static Time m_deltaTime;
+	static constexpr float dT = 1.0f / 60.0f;
 
 	Mario* m_player = nullptr;
 	Map* m_map = nullptr;

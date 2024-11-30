@@ -7,22 +7,23 @@ using namespace sf;
 
 TextureManager* TextureManager::m_instance = nullptr;
 
-TextureManager::TextureManager() {
-	if (!m_instance) {
-		m_instance = this;
-	}
-	loadTilesets();
-}
-
-TextureManager::~TextureManager() {
-
-}
-
 void TextureManager::loadBackground() {
-	m_background[0].loadFromFile("");
+	m_background[BackgroundType::LOGINSTATE_BACKGROUND].loadFromFile("Resources/Background/860645.png");
 }
 
 void TextureManager::loadTilesets() {
 	m_tilesets[TileSetType::BLOCK].loadFromJsonFile("Resources/Map/Tileset-1.json");
 	//m_tilesets[TileSetType::ITEM].loadFromJsonFile("Resources/TileSets/");
+}
+
+TextureManager::TextureManager() {
+	if (!m_instance) {
+		m_instance = this;
+	}
+	loadBackground();
+	loadTilesets();
+}
+
+TextureManager::~TextureManager() {
+
 }

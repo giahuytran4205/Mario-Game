@@ -40,6 +40,8 @@ public:
 	//void onDrag(const Vector2f& mousePos, const Event& event);
 	//void handleEvent(const sf::Event& event) override;
 
+	void onPressed() override;
+	void onClick() override;
 	void onKeyPressed(const sf::Event& event) override;
 
 	void setPosition(float x, float y);
@@ -49,5 +51,5 @@ public:
 	std::string getContent();
 	void clearContent();
 
-	void draw(sf::RenderTarget& target);
+	void draw(sf::RenderWindow& target);
 };
