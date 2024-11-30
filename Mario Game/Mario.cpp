@@ -61,7 +61,7 @@ Mario::~Mario() {
 
 void Mario::onCollisionEnter(Collision& col) {
 	int side = m_transform.getRect().tangentSide(col.getCollider());
-	cout << side << '\n';
+
 	if (m_autoControl.isControlled())
 		return;
 

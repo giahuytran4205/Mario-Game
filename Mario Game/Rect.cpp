@@ -33,24 +33,20 @@ sf::Vector2f FRect::getAnchor() const {
 }
 
 bool FRect::pointOverlap(const sf::Vector2f& point) const {
-	int right = left + width;
-	int bottom = top + height;
+	float right = left + width;
+	float bottom = top + height;
 	return (point.x >= left && point.x <= right && point.y >= top && point.y <= bottom);
 }
 
 bool FRect::contains(const sf::Vector2f& point) const {
-	int right = left + width;
-	int bottom = top + height;
+	float right = left + width;
+	float bottom = top + height;
 	return left < point.x && top < point.y && right > point.x && bottom > point.y;
 }
 
-bool FRect::intersects(const FRect& rect) const {
-	return Rect::intersects(rect) && left != rect.right && top != rect.bottom && right != rect.left && bottom != rect.top;
-}
-
 int FRect::tangentSide(const FRect& rect) const {
-	int right = left + width;
-	int bottom = top + height;
+	float right = left + width;
+	float bottom = top + height;
 
 	if (rect.left == right)
 		return 0;
