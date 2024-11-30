@@ -2,6 +2,7 @@
 #include "Object.hpp"
 #include "ECS.hpp"
 #include "SpriteRenderer.hpp"
+#include "SoundComponent.hpp"
 
 class FlagPole : public Object {
 private:
@@ -11,6 +12,7 @@ private:
 	bool m_onLoweringFlag;
 	bool m_isLoweredFlag;
 	float m_flagSpeed;
+	SoundComponent& m_sound;
 
 public:
 	FlagPole();
@@ -21,5 +23,6 @@ public:
 	void update() override;
 	void render() override;
 	void loweringFlag();
+	bool isOnLoweringFlag();
 	bool isLoweredFlag();
 };

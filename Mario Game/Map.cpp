@@ -65,7 +65,7 @@ void Map::loadFromJsonFile(string filename) {
 				if (tile.type == "Coin") {
 					Item* item = new Item(ItemType::Coin);
 					item->setAnim(tile.anim);
-					item->getComponent<Transform2D>().setPosition({ i % 211 * 16.0f + 8, i / 211 * 16.0f + 8});
+					item->getComponent<Transform2D>().setPosition({ i % 211 * 16.0f, i / 211 * 16.0f });
 				}
 				else {
 					Block::BlockType type = Block::EMPTY_BLOCK;
@@ -122,7 +122,7 @@ void Map::loadFromJsonFile(string filename) {
 						destDepth = prop["value"].as_int64();
 				}
 
-				m_portals.push_back(new Portal(Vector2f{ posX + 8, posY + 8 }, Vector2f{ destX, destY }, inDir, outDir, destDepth));
+				m_portals.push_back(new Portal(Vector2f{ posX, posY }, Vector2f{ destX, destY }, inDir, outDir, destDepth));
 			}
 		}
 

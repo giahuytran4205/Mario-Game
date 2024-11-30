@@ -7,6 +7,7 @@ AutoControl::AutoControl() {
 	m_transform = nullptr;
 	m_isControlled = false;
 	m_countdown = 0;
+	m_elapsedTime = 0;
 }
 
 AutoControl::~AutoControl() {}
@@ -19,40 +20,51 @@ void AutoControl::init() {
 void AutoControl::update() {
 	m_physics->setEnableGravity(!m_isControlled);
 
-	if (m_countdown > 0) {
-		m_countdown -= deltaTime.asMilliseconds();
+	m_elapsedTime += deltaTime.asMilliseconds();
 
-		int elapsedTime = m_currentControl.duration - m_countdown;
+	if (!m_currentControl.condition || m_currentControl.condition(m_elapsedTime)) {
+		if (m_countdown > 0) {
+			m_countdown -= deltaTime.asMilliseconds();
 		
-		if (m_currentControl.action)
-			m_currentControl.action(elapsedTime);
-	}
-	else if (!m_controlQueue.empty()) {
-		ControlInfo info = m_controlQueue.front();
-		m_controlQueue.pop();
-
-		m_currentControl = info;
-
-		m_physics->setVelocity({ 0, 0 });
-
-		if (info.duration == 0) {
-			m_transform->setPosition(info.pos);
+			if (m_currentControl.action)
+				m_currentControl.action(m_elapsedTime);
 		}
-		else {
+		else if (!m_controlQueue.empty()) {
+			ControlInfo info = m_controlQueue.front();
+			m_controlQueue.pop();
+
+			m_currentControl = info;
 			m_countdown = info.duration;
 
-			Vector2f dist = info.pos - m_transform->getPosition();
-			Vector2f vel = dist / (float)info.duration - info.acceleration * (float)info.duration / 2.0f;
+			m_physics->setVelocity({ 0, 0 });
 
-			m_physics->setBaseVelocity(vel);
-			m_physics->setAcceleration(info.acceleration);
+			m_elapsedTime = 0;
+		
+			if (!info.condition) {
+				if (info.duration == 0) {
+					m_transform->setPosition(info.pos);
+
+					if (m_currentControl.action)
+						m_currentControl.action(m_elapsedTime);
+				}
+				else {
+					Vector2f dist = info.pos - m_transform->getPosition();
+					Vector2f vel = dist / (float)info.duration - info.acceleration * (float)info.duration / 2.0f;
+
+					m_physics->setBaseVelocity(vel);
+					m_physics->setAcceleration(info.acceleration);
+				}
+			}
+		}
+		else {
+			if (m_isControlled) {
+				m_isControlled = false;
+				m_physics->setAcceleration({ 0, 0 });
+			}
 		}
 	}
 	else {
-		if (m_isControlled) {
-			m_isControlled = false;
-			m_physics->setAcceleration({ 0, 0 });
-		}
+		m_transform->setPosition(m_currentControl.pos);
 	}
 }
 
@@ -63,14 +75,38 @@ void AutoControl::addMoveByPoint(const Vector2f& dest, int duration, const Vecto
 
 void AutoControl::addMoveByDistance(const Vector2f& distance, int duration, const Vector2f& acceleration, function<void(int)> action) {
 	m_isControlled = true;
-	ControlInfo last = m_controlQueue.back();
-	m_controlQueue.push({ last.pos + distance, duration, acceleration, action });
+
+	Vector2f pos;
+	if (m_controlQueue.empty()) {
+		pos = m_entity->getComponent<Transform2D>().getPosition();
+	}
+	else pos = m_controlQueue.back().pos;
+
+	m_controlQueue.push({ pos + distance, duration, acceleration, action });
 }
 
 void AutoControl::addWaitForMiliseconds(int duration, function<void(int)> action) {
 	m_isControlled = true;
-	ControlInfo last = m_controlQueue.back();
-	m_controlQueue.push({ last.pos, duration, { 0, 0 }, action });
+
+	Vector2f pos;
+	if (m_controlQueue.empty()) {
+		pos = m_entity->getComponent<Transform2D>().getPosition();
+	}
+	else pos = m_controlQueue.back().pos;
+
+	m_controlQueue.push({ pos, duration, { 0, 0 }, action });
+}
+
+void AutoControl::addWaitUntil(function<bool(int)> condition) {
+	m_isControlled = true;
+	
+	Vector2f pos;
+	if (m_controlQueue.empty()) {
+		pos = m_entity->getComponent<Transform2D>().getPosition();
+	}
+	else pos = m_controlQueue.back().pos;
+
+	m_controlQueue.push({ pos, 0, {0, 0}, nullptr, condition });
 }
 
 bool AutoControl::isControlled() {

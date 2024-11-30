@@ -4,12 +4,40 @@
 #include "SFML/Graphics.hpp"
 #include "Object.hpp"
 #include "Transform2D.hpp"
+#include "GameManager.hpp"
 #include <cmath>
 using namespace sf;
+
+#if DEBUG
+
+VertexArray Transform2D::rectangles(Lines);
+
+void Transform2D::render() {
+	rectangles.append(Vertex(Vector2f(left, top), Color::Red));
+	rectangles.append(Vertex(Vector2f(right, top), Color::Red));
+
+	rectangles.append(Vertex(Vector2f(right, top), Color::Red));
+	rectangles.append(Vertex(Vector2f(right, bottom), Color::Red));
+
+	rectangles.append(Vertex(Vector2f(right, bottom), Color::Red));
+	rectangles.append(Vertex(Vector2f(left, bottom), Color::Red));
+
+	rectangles.append(Vertex(Vector2f(left, bottom), Color::Red));
+	rectangles.append(Vertex(Vector2f(left, top), Color::Red));
+}
+
+#endif // DEBUG
 
 Transform2D::Transform2D() {
 	if (m_entity) m_parent = m_entity->toObject()->getParent();
 	else m_parent = nullptr;
+
+#if DEBUG
+	m_shape.setOutlineThickness(0.5);
+	m_shape.setFillColor(Color::Transparent);
+	m_shape.setOutlineColor(Color::Red);
+#endif // DEBUG
+
 }
 
 Transform2D::~Transform2D() {}

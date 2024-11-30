@@ -3,7 +3,7 @@
 #include "GameManager.hpp"
 #include <iostream>
 
-FlagPole::FlagPole() {
+FlagPole::FlagPole() : m_sound(addComponent<SoundComponent>()) {
 	addComponent<Collision>(true);
 	
 	m_transform.setPosition(0, 0);
@@ -24,7 +24,7 @@ FlagPole::FlagPole() {
 	texture3->loadFromFile("Resources/Tilesets/Tileset-1.png", { 256, 144, 16, 16 });
 	texture3->setRepeated(true);
 	m_pole1.setTexture(*texture3);
-	m_pole1.setTextureRect(IntRect(0, 0, 16, 160));
+	m_pole1.setTextureRect(IntRect(0, 0, 16, 144));
 	m_pole1.getComponent<Transform2D>().setAnchor(0.5, 0);
 
 	m_onLoweringFlag = false;
@@ -48,15 +48,14 @@ FlagPole::FlagPole(float x, float y, float width, float height) : FlagPole() {
 FlagPole::~FlagPole() {}
 
 void FlagPole::update() {
-	
-	//std::cout << m_onLoweringFlag << '\n';
 	if (m_onLoweringFlag) {
 		Vector2f pos = m_flag.getPosition();
 		pos.y += m_flagSpeed * deltaTime.asMilliseconds();
 
-		if (pos.y >= m_transform.bottom - 8) {
-			pos.y = m_transform.bottom - 8;
+		if (pos.y >= m_transform.bottom - 16) {
+			pos.y = m_transform.bottom - 16;
 			m_onLoweringFlag = false;
+			m_isLoweredFlag = true;
 		}
 
 		m_flag.getComponent<Transform2D>().setPosition(pos);
@@ -70,7 +69,11 @@ void FlagPole::render() {
 
 void FlagPole::loweringFlag() {
 	m_onLoweringFlag = true;
-	m_isLoweredFlag = true;
+	m_sound.play(SoundTrack::FLAGPOLE);
+}
+
+bool FlagPole::isOnLoweringFlag() {
+	return m_onLoweringFlag;
 }
 
 bool FlagPole::isLoweredFlag() {

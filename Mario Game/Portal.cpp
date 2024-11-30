@@ -1,6 +1,6 @@
 #include "Portal.hpp"
 
-Portal::Portal() : m_collision(addComponent<Collision>()) {
+Portal::Portal() : m_collision(addComponent<Collision>(true)) {
 	m_transform.setPosition(0, 0);
 	m_destination = { 0, 0 };
 	m_inDirection = 0;
@@ -14,8 +14,7 @@ Portal::Portal(const Vector2f& position, const Vector2f& destination, int inDir,
 	m_inDirection = inDir;
 	m_outDirection = outDir;
 	m_destDepth = destDepth;
-	m_transform.getRect().width = 16;
-	m_transform.getRect().height = 16;
+	m_transform.setSize(16, 16);
 }
 
 Portal::Portal(const Portal& portal) : Portal() {

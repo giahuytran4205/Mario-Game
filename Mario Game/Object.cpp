@@ -25,7 +25,7 @@ Object* Object::clone() {
 }
 
 bool Object::isActive() {
-	return m_active;
+	return (!m_parent || m_parent->isActive()) && m_active;
 }
 
 Object* Object::getParent() {

@@ -35,8 +35,7 @@ Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponen
 	m_physics2D.setVelocity({ 0, 0 });
 	m_physics2D.setGravity(0.00625f / 8);
 
-	m_transform.width = texture->getSize().x;
-	m_transform.height = texture->getSize().y;
+	m_transform.setSize(16, 16);
 	m_transform.setPosition(150, 0);
 
 	m_anim = &addComponent<Animation>(m_sprite);
@@ -60,10 +59,10 @@ Mario::~Mario() {
 }
 
 void Mario::onCollisionEnter(Collision& col) {
-	if (isOnTeleport())
-		return;
-
 	int side = m_transform.getRect().tangentSide(col.getCollider());
+
+	if (m_autoControl.isControlled())
+		return;
 
 	if (col.m_entity->isType<Block>()) {
 		m_onJump = false;
@@ -108,7 +107,7 @@ void Mario::onCollisionEnter(Collision& col) {
 	}
 
 	if (col.m_entity->isType<Portal>()) {
-		if (col.getCollider().contains(m_transform.getPosition() + Vector2f(8, 0))) {
+		if (col.getCollider().contains(m_transform.getPosition())) {
 			Portal* portal = col.m_entity->convertTo<Portal>();
 
 			if (Keyboard::isKeyPressed(portal->getEnterKey())) {
@@ -120,28 +119,36 @@ void Mario::onCollisionEnter(Collision& col) {
 	if (col.m_entity->isType<FlagPole>()) {
 		FlagPole* flagPole = col.m_entity->convertTo<FlagPole>();
 		
-		if (!flagPole->isLoweredFlag()) {
+		if (!flagPole->isOnLoweringFlag() && !flagPole->isLoweredFlag()) {
 			flagPole->loweringFlag();
 
 			Vector2f dest(m_transform.getPosition().x, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
 
 			m_autoControl.addMoveByPoint(dest, 1000, { 0, 0 }, [&](int time) { m_state = State::GRAB_FLAGPOLE; });
-			m_autoControl.addWaitForMiliseconds(1000);
+			m_autoControl.addWaitUntil([flagPole](int time) { return flagPole->isLoweredFlag(); });
+			m_autoControl.addMoveByDistance(Vector2f(16, 0), 0, { 0, 0 }, [&](int time) { m_direction = Direction::LEFT; });
+			m_autoControl.addWaitForMiliseconds(500, [&](int time) { m_anim->stop(); });
 			m_autoControl.addMoveByPoint(dest + Vector2f(16, 0), 0, { 0, 0 });
 			m_autoControl.addMoveByPoint(dest + Vector2f(64, 24), 200, { 0, m_physics2D.getGravity() });
-			m_autoControl.addMoveByDistance({ 128, 0 }, 1000, { 0, 0 }, [&](int time) { m_state = State::WALK; });
+			m_autoControl.addMoveByDistance({ 128, 0 }, 1000, { 0, 0 },
+				[&](int time) {
+					m_direction = Direction::RIGHT;
+					m_state = State::WALK; 
+				});
 		}
 	}
+
 }
 
 void Mario::update() {
-	if (isOnTeleport())
-		onTeleport();
-
-	if (isOnGrabFlagPole())
-		onGrabFlagPole();
-
 	handleMovement();
+
+	if (m_direction == Direction::LEFT) {
+		m_sprite.setScale(-1, 1);
+	}
+	else {
+		m_sprite.setScale(1, 1);
+	}
 
 	m_anim->play(m_state);
 	
@@ -149,13 +156,11 @@ void Mario::update() {
 	m_onJumper = false;
 }
 
+void Mario::render() {
+
+}
+
 void Mario::handleMovement() {
-	if (isOnTeleport())
-		return;
-
-	if (isOnGrabFlagPole())
-		return;
-
 	if (m_autoControl.isControlled())
 		return;
 
@@ -175,8 +180,7 @@ void Mario::handleMovement() {
 		}
 		else m_physics2D.setBaseVelocityX(-m_speed);
 
-		m_sprite.getSprite().setScale({ -1, 1 });
-
+		m_direction = Direction::LEFT;
 		m_state = State::WALK;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D) && (isOnGround() || !isOnWall())) {
@@ -185,8 +189,7 @@ void Mario::handleMovement() {
 		}
 		else m_physics2D.setBaseVelocityX(m_speed);
 
-		m_sprite.getSprite().setScale({ 1, 1 });
-
+		m_direction = Direction::RIGHT;
 		m_state = State::WALK;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::W)) {
@@ -199,37 +202,8 @@ void Mario::handleMovement() {
 	if (m_onJump) m_state = State::JUMP;
 }
 
-void Mario::onTeleport() {
-	if (m_teleportTime > 0) {
-		m_teleportTime -= deltaTime.asMilliseconds();
-		m_renderOrder = 1;
-	}
-
-	if (m_teleportTime <= 1000 && m_onEnterPortal) {
-		m_onEnterPortal = false;
-		m_transform.setPosition(m_enteredPortal.getDestination());
-
-		m_physics2D.setBaseVelocity(m_enteredPortal.getOutDirection() * (17.0f / m_teleportTime));
-		Vector2f dir = m_enteredPortal.getOutDirection();
-		if (m_enteredPortal.getOutDirection() == Vector2f{0, 1}) {
-			m_teleportTime = 0;
-		}
-
-		GameManager::getInstance()->getView().setCenter(m_transform.getPosition().x, m_enteredPortal.getDestDepth() * 240 + 120);
-	}
-
-	if (m_teleportTime <= 0) {
-		m_onTeleport = false;
-		m_physics2D.setGravity(0.00625f);
-		m_physics2D.setBaseVelocity({ 0, 0 });
-		m_renderOrder = 3;
-
-	}
-}
-
 void Mario::jump(float velY) {
 	if (!isOnGround() || isOnWall()) return;
-
 	m_onJump = true;
 
 	if (m_onJumper) {
@@ -242,19 +216,32 @@ void Mario::jump(float velY) {
 }
 
 void Mario::teleport(const Portal& portal) {
+	if (m_onTeleport) return;
+
 	m_enteredPortal = portal;
 	m_onTeleport = true;
 	m_onEnterPortal = true;
 	m_teleportTime = 2000;
 
-	m_physics2D.setGravity(0);
+	m_physics2D.setEnableGravity(false);
 	m_physics2D.setVelocity({ 0, 0 });
 
-	Vector2f dist = m_enteredPortal.getComponent<Transform2D>().getPosition() - m_transform.getPosition() + Vector2f{16, 16};
-	Vector2f vel = m_enteredPortal.getInDirection() * 0.001f;
-	vel.x *= dist.x;
-	vel.y *= dist.y;
-	m_physics2D.setBaseVelocity(vel);
+	m_collision.setTrigger(true);
+	m_renderOrder = 1;
+
+	Vector2f dist = m_enteredPortal.getComponent<Transform2D>().getCenter() - m_transform.getPosition() + Vector2f(16, 16);
+	dist.x *= m_enteredPortal.getInDirection().x;
+	dist.y *= m_enteredPortal.getInDirection().y;
+
+	m_autoControl.addMoveByDistance(dist, 1000, {0, 0});
+	m_autoControl.addMoveByPoint(m_enteredPortal.getDestination(), 0, { 0, 0 },
+		[&](int time) {
+			m_collision.setTrigger(false);
+			m_physics2D.setEnableGravity(true);
+			m_renderOrder = 3;
+			GameManager::getInstance()->getView().setCenter(m_transform.getPosition().x, m_enteredPortal.getDestDepth() * 240 + 120);
+			m_onTeleport = false;
+		});
 
 	m_sound.play(SoundTrack::WARP);
 }

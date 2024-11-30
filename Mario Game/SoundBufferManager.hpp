@@ -11,6 +11,7 @@ enum class SoundTrack {
 	HITBLOCK,
 	ITEM,
 	COIN,
+	FLAGPOLE,
 	WARP,
 	NUM_TRACK
 };
@@ -23,6 +24,7 @@ private:
 		{ SoundTrack::HITBLOCK,		"" },
 		{ SoundTrack::ITEM,			"Resources/Sounds/Item.wav" },
 		{ SoundTrack::COIN,			"Resources/Sounds/Coin.wav" },
+		{ SoundTrack::FLAGPOLE,		"Resources/Sounds/Flagpole.wav" },
 		{ SoundTrack::WARP,			"Resources/Sounds/Warp.wav" }
 	};
 

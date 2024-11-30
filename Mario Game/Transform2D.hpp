@@ -37,4 +37,15 @@ public:
 	void move(const Vector2f& d);
 	void adjustPosition(const Vector2f& pos);
 	void setParent(Object* parent);
+
+#if DEBUG
+
+private:
+	RectangleShape m_shape;
+public:
+	static VertexArray rectangles;
+	void render() override;
+
+#endif // DEBUG
+
 };

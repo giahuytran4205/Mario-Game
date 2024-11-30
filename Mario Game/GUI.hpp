@@ -32,7 +32,7 @@ public:
 	virtual void onHovered();
 	virtual void onUnhovered();
 	virtual void onClick();
-	virtual void onKeyPressed(const Keyboard::Key& key);
+	virtual void onKeyPressed(const Event& event);
 	virtual void onDrag(const Vector2f& mousePos);
 	bool isSelected();
 	bool isPressed();

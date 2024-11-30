@@ -42,6 +42,7 @@ public:
 	//void init();
 	void onCollisionEnter(Collision& col) override;
 	void update() override;
+	void render() override;
 	void onTeleport();
 	void handleMovement();
 	void jump(float velY = -0.35f);

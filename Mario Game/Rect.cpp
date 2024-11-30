@@ -5,7 +5,6 @@
 FRect::FRect() {
 	left = top = right = bottom = 0;
 	width = height = 0;
-	m_center = { 0, 0 };
 }
 
 FRect::FRect(float left, float top, float width, float height) {
@@ -15,7 +14,6 @@ FRect::FRect(float left, float top, float width, float height) {
 	this->height = height;
 	right = left + width;
 	bottom = top + height;
-	m_center = { left + width / 2, top + height / 2 };
 }
 
 FRect::~FRect() {
@@ -23,7 +21,7 @@ FRect::~FRect() {
 }
 
 sf::Vector2f FRect::getCenter() const {
-	return m_center;
+	return { left + width / 2, top + height / 2 };
 }
 
 sf::Vector2f FRect::getPosition() const {
@@ -35,14 +33,21 @@ sf::Vector2f FRect::getAnchor() const {
 }
 
 bool FRect::pointOverlap(const sf::Vector2f& point) const {
+	int right = left + width;
+	int bottom = top + height;
 	return (point.x >= left && point.x <= right && point.y >= top && point.y <= bottom);
 }
 
 bool FRect::contains(const sf::Vector2f& point) const {
+	int right = left + width;
+	int bottom = top + height;
 	return left < point.x && top < point.y && right > point.x && bottom > point.y;
 }
 
 int FRect::tangentSide(const FRect& rect) const {
+	int right = left + width;
+	int bottom = top + height;
+
 	if (rect.left == right)
 		return 0;
 	if (rect.bottom == top)

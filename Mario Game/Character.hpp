@@ -7,12 +7,17 @@ using namespace sf;
 
 class Character : public Object {
 protected:
+	enum Direction {
+		LEFT,
+		RIGHT
+	};
+
 	SpriteRenderer m_sprite;
 	int m_maxHealth;
 	int m_health;
+	Direction m_direction;
 	bool m_onGround;
 	bool m_onWall;
-	Collision* m_collision;
 
 public:
 	Character();

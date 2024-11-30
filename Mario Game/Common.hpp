@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+#define DEBUG true
+
 class Object;
 class Transform2D;
 class TextureManager;

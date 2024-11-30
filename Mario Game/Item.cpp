@@ -1,18 +1,21 @@
 #include "Item.hpp"
+#include "Object.hpp"
 #include "GameManager.hpp"
 
 Item::Item(Object* parent) {
 	m_sprite.setParent(this);
-}
-
-Item::Item(ItemType type, Object* parent) : m_type(type), m_isPlayAnim(true) {
-	m_parent = parent;
+	m_transform.setAnchor(0, 0);
+	m_collision = &addComponent<Collision>(true);
 	m_elapsedTime = 0;
 	m_index = 0;
-	m_collision = &addComponent<Collision>();
+	m_isPlayAnim = true;
+	m_renderOrder = 1;
+}
 
-	m_transform.getRect().width = 16;
-	m_transform.getRect().height = 16;
+Item::Item(ItemType type, Object* parent) : Item(parent){
+	m_type = type;
+
+	m_transform.setSize(16, 16);
 }
 
 Item::Item(const Item& item) {
@@ -49,4 +52,8 @@ void Item::update() {
 		}
 		else m_elapsedTime -= deltaTime.asMilliseconds();
 	}
+}
+
+void Item::render() {
+	
 }
