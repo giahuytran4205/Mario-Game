@@ -12,18 +12,17 @@
 #include "FlagPole.hpp"
 #include "StateManager.hpp"
 #include "LoginState.hpp"
+#include "FontManager.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
-
-class FontManager;
 
 class GameManager : IEventListener {
 private:
 	static GameManager* m_instance;
 	EntitiesManager m_entitiesManager;
 	TextureManager m_textureManager;
-	FontManager* m_fontManager;
+	FontManager m_fontManager;
 	SoundBufferManager m_soundBufferManager;
 	CollisionManager m_collisionManager;
 	StateManager m_stateManager;
