@@ -66,7 +66,7 @@ void GameManager::init() {
 
 	//m_flagPole = new FlagPole(170, 32, 2, 160);
 
-	m_window.create(VideoMode(1200, 480), "Super Mario Bros. (1985)", Style::Default);
+	m_window.create(VideoMode(1200, 600), "Super Mario Bros. (1985)", Style::Default);
 	m_window.setFramerateLimit(120);
 
 	m_eventSystem.addListener(this);
@@ -77,7 +77,7 @@ void GameManager::init() {
 
 	m_collisionManager = { map->getSize(), 16 };
 
-	m_view.reset(FloatRect(0, 0, 1200, 480));
+	m_view.reset(FloatRect(0, 0, 1200, 600));
 
 	m_view.setViewport(FloatRect(0, 0, 1, 1));
 	m_window.setView(m_view);
