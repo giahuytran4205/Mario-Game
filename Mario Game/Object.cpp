@@ -52,6 +52,11 @@ void Object::render() {
 	
 }
 
+void Object::setEnable(bool enable) {
+	m_active = enable;
+}
+
 void Object::destroy() {
 	m_active = false;
+	m_destroyed = true;
 }

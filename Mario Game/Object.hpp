@@ -22,5 +22,6 @@ public:
 	void setRenderOrder(int order);
 	void update() override;
 	void render() override;
+	void setEnable(bool enable);
 	void destroy();
 };

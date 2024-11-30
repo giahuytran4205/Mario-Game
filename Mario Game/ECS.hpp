@@ -46,10 +46,11 @@ private:
 
 protected:
 	bool m_active;
+	bool m_destroyed;
 	int m_renderOrder = 0;
 
 public:
-	Entity() : m_renderOrder(0), m_active(true) {}
+	Entity() : m_renderOrder(0), m_active(true), m_destroyed(false) {}
 	virtual ~Entity() {}
 
 	void _update() {
@@ -109,6 +110,10 @@ public:
 		return m_active;
 	}
 
+	bool isDestroyed() {
+		return m_destroyed;
+	}
+
 	int getRenderOrder() {
 		return m_renderOrder;
 	}
@@ -136,14 +141,17 @@ public:
 		refresh();
 
 		for (auto& e : m_entities)
-			e->update();
+			if (e->isActive())
+				e->update();
 				
 		for (auto& e : m_entities)
-			e->_update();
+			if (e->isActive())
+				e->_update();
 
 		m_renderQueue.assign(100, {});
 		for (auto& e : m_entities) {
-			m_renderQueue[e->getRenderOrder()].push_back(e);
+			if (e->isActive())
+				m_renderQueue[e->getRenderOrder()].push_back(e);
 		}
 
 		for (auto& v : m_renderQueue) {
@@ -157,7 +165,7 @@ public:
 			[](Entity* entity)
 			{
 				if (!entity) return true;
-				return !entity->isActive();
+				return !entity->isDestroyed();
 			}),
 			end(m_entities));
 	}
