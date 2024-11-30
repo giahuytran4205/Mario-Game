@@ -82,9 +82,13 @@ void GUI::handleEvent(const Event& event) {
 			}
 		}
 		else {
-			if (isHovered()) onUnhovered();
+			if (isHovered())
+				onUnhovered();
+
+			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
+				m_isSelected = false;
+			
 			m_isHovered = false;
-			m_isSelected = false;
 		}
 		
 		if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
