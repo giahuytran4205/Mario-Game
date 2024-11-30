@@ -161,9 +161,11 @@
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="FlagPole.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="AutoControl.cpp" />
+    <ClCompile Include="InputField.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Line.cpp" />
@@ -180,6 +182,7 @@
     <ClCompile Include="SoundComponent.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TextView.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="Toggle.cpp" />
     <ClCompile Include="Transform2D.cpp" />
@@ -196,9 +199,11 @@
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />
     <ClInclude Include="FlagPole.hpp" />
+    <ClInclude Include="FontManager.hpp" />
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="GUI.hpp" />
     <ClInclude Include="AutoControl.hpp" />
+    <ClInclude Include="InputField.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Jumper.hpp" />
     <ClInclude Include="Line.hpp" />
@@ -214,6 +219,7 @@
     <ClInclude Include="SoundComponent.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="TextureManager.hpp" />
+    <ClInclude Include="TextView.hpp" />
     <ClInclude Include="TileSet.hpp" />
     <ClInclude Include="Toggle.hpp" />
     <ClInclude Include="Transform2D.hpp" />

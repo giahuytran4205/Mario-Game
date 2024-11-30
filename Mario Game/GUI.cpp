@@ -50,7 +50,7 @@ void GUI::onPressed() {}
 void GUI::onHovered() {}
 void GUI::onUnhovered() {}
 void GUI::onClick() {}
-void GUI::onKeyPressed(const Keyboard::Key& key) {}
+void GUI::onKeyPressed(const sf::Event& event) {}
 void GUI::onDrag(const Vector2f& mousePos) {}
 
 void GUI::update() {
@@ -91,7 +91,7 @@ void GUI::handleEvent(const Event& event) {
 			m_isOnDrag = false;
 
 		if (event.type == Event::KeyPressed) {
-			onKeyPressed(event.key.code);
+			onKeyPressed(event);
 		}
 
 		if (isOnDrag() && event.type == Event::MouseMoved) {
