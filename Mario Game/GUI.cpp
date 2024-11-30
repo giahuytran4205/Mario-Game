@@ -50,7 +50,7 @@ void GUI::onPressed() {}
 void GUI::onHovered() {}
 void GUI::onUnhovered() {}
 void GUI::onClick() {}
-void GUI::onKeyPressed(const sf::Event& event) {}
+void GUI::onKeyPressed(const sf::Event::TextEvent& textEvent) {}
 void GUI::onDrag(const Vector2f& mousePos) {}
 
 void GUI::update() {
@@ -82,16 +82,20 @@ void GUI::handleEvent(const Event& event) {
 			}
 		}
 		else {
-			if (isHovered()) onUnhovered();
+			if (isHovered())
+				onUnhovered();
+
+			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
+				m_isSelected = false;
+
 			m_isHovered = false;
-			m_isSelected = false;
 		}
-		
+
 		if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
 			m_isOnDrag = false;
 
 		if (event.type == Event::TextEntered) {
-			onKeyPressed(event);
+			onKeyPressed(event.text);
 		}
 
 		if (isOnDrag() && event.type == Event::MouseMoved) {
@@ -104,6 +108,49 @@ void GUI::handleEvent(const Event& event) {
 			onDeselect();
 	}
 }
+
+// Old HandleEvent
+//void GUI::handleEvent(const Event& event) {
+//	Vector2f dist = m_window->getView().getCenter() - m_window->getDefaultView().getCenter();
+//	if (isInteractable()) {
+//		if (m_transform.getRect().contains((Vector2f)Mouse::getPosition(*m_window) + dist)) {
+//			m_isHovered = true;
+//			onHovered();
+//
+//			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
+//				m_isPressed = true;
+//				m_isOnDrag = true;
+//				onPressed();
+//			}
+//
+//			if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
+//				m_isPressed = false;
+//				m_isOnDrag = false;
+//				m_isSelected = !m_isSelected;
+//				onClick();
+//			}
+//		}
+//		else
+//		{
+//			if (isHovered()) onUnhovered();
+//			m_isHovered = false;
+//		}
+//
+//		if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
+//			m_isOnDrag = false;
+//
+//		if (isOnDrag() && event.type == Event::MouseMoved) {
+//			onDrag((Vector2f)Mouse::getPosition(*m_window) + dist);
+//		}
+//
+//		if (isSelected())
+//		{
+//			onSelected();
+//		}
+//		else
+//			onDeselect();
+//	}
+//}
 
 void GUI::render() {
 

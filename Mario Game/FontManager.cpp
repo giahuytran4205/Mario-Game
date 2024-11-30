@@ -17,10 +17,10 @@ FontManager::~FontManager()
 
 void FontManager::loadFonts()
 {
-	if (!m_font[FontType::ARIAL].loadFromFile("Resources/Fonts/ARIALBD 1.TTF")) {
-		throw std::runtime_error("Failed to load ARIAL font.");
+	if (m_font[FontType::ARIAL].loadFromFile("Resources/Fonts/ARIALBD 1.TTF")) {
+		std::cout << "Load Arial Font Successfully" << std::endl;
 	}
-	if (!m_font[FontType::SUPERMARIO256].loadFromFile("Resources/Fonts/SuperMario256.ttf")) {
-		throw std::runtime_error("Failed to load SuperMario256 font.");
+	if (m_font[FontType::SUPERMARIO256].loadFromFile("Resources/Fonts/SuperMario256.ttf")) {
+		std::cout << "Load SuperMario256 Font Successfully" << std::endl;
 	}
 }

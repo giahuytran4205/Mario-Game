@@ -133,8 +133,6 @@ void LoginState::init()
 		sf::Color::Black,
 		[this]()
 		{
-			//std::cout << "Username: " << m_username->getContent() << std::endl;
-			//std::cout << "Password: " << m_password->getContent() << std::endl;
 			if (m_username->getContent() == "a" && m_password->getContent() == "1")
 			{
 				std::cout << "Login Success" << std::endl;
@@ -188,8 +186,6 @@ void LoginState::init()
 		sf::Color::Black,
 		static_cast<unsigned int>(titleSize.y / 2)
 	);
-
-	std::cout << "Init Object for Login State Successfully!" << std::endl;
 }
 
 void LoginState::handleEvents()
@@ -209,7 +205,6 @@ void LoginState::handleEvents()
 
 void LoginState::update(float dT)
 {
-	std::cout << "Update Login State Successfully" << std::endl;
 }
 
 void LoginState::render(float dT)
@@ -217,12 +212,6 @@ void LoginState::render(float dT)
 	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
 	window.clear();
 
-	//m_renderTexture->clear();
-	//m_renderTexture->draw(m_backgroundSprite);
-	//m_renderTexture->display();
-
-	//sf::Sprite renderTextureSprite(m_renderTexture->getTexture());
-	//window.draw(renderTextureSprite);
 	window.draw(m_backgroundSprite);
 
 	m_username->draw(window);
@@ -233,6 +222,4 @@ void LoginState::render(float dT)
 	window.draw(m_titleTextView->getText());
 
 	window.display();
-
-	std::cout << "Draw LoginState Successfully" << std::endl;
 }

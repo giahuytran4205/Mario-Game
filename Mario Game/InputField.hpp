@@ -42,7 +42,7 @@ public:
 
 	void onPressed() override;
 	void onClick() override;
-	void onKeyPressed(const sf::Event& event) override;
+	void onKeyPressed(const sf::Event::TextEvent& textEvent) override;
 
 	void setPosition(float x, float y);
 	void setSize(float width, float height);

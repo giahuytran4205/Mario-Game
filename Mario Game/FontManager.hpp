@@ -2,6 +2,7 @@
 #include "Enum.hpp"
 #include "Common.hpp"
 #include "SFML/Graphics.hpp"
+#include <iostream>
 
 class FontManager
 {
