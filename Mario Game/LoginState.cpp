@@ -182,7 +182,7 @@ void LoginState::init()
 	m_titleTextView = new TextView(
 		{ titlePosition.x, titlePosition.y, titleSize.x, titleSize.y },
 		"SUPER MARIO BROS",
-		FontManager::m_instance->m_font[FontType::ARIAL],
+		FontManager::m_instance->m_font[FontType::SUPERMARIO256],
 		sf::Color::Black,
 		static_cast<unsigned int>(titleSize.y / 2)
 	);

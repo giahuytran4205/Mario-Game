@@ -8,9 +8,6 @@ using namespace sf;
 namespace json = boost::json;
 
 class TextureManager {
-private:
-	void loadBackground();
-	void loadTilesets();
 public:
 	static TextureManager* m_instance;
 	Texture m_background[BackgroundType::NUM_BACKGROUND_TYPE];
@@ -18,4 +15,7 @@ public:
 
 	TextureManager();
 	~TextureManager();
+
+	void loadBackground();
+	void loadTilesets();
 };
