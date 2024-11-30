@@ -36,7 +36,7 @@ private:
 	Portal m_enteredPortal;
 
 public:
-	Mario();
+	Mario(Object* parent = nullptr);
 	~Mario();
 
 	//void init();

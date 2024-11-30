@@ -17,9 +17,10 @@
 #include <iostream>
 using namespace sf;
 
-Mario::Mario() : m_physics2D(addComponent<Physics2D>()), m_collision(addComponent<Collision>()),
+Mario::Mario(Object* parent) : m_physics2D(addComponent<Physics2D>()), m_collision(addComponent<Collision>()),
 				 m_sound(addComponent<SoundComponent>()), m_autoControl(addComponent<AutoControl>())
 {
+	setParent(parent);
 	m_speed = 0.1f;
 	m_jumpSpeed = -0.4f;
 
@@ -60,7 +61,7 @@ Mario::~Mario() {
 
 void Mario::onCollisionEnter(Collision& col) {
 	int side = m_transform.getRect().tangentSide(col.getCollider());
-
+	cout << side << '\n';
 	if (m_autoControl.isControlled())
 		return;
 

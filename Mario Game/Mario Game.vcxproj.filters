@@ -120,6 +120,12 @@
     <ClCompile Include="Beanstalk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ECS.hpp">
@@ -219,6 +225,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Beanstalk.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,8 +13,8 @@ private:
 	int m_cooldown;
 
 public:
-	Jumper();
-	Jumper(const Vector2f pos);
+	Jumper(Object* parent = nullptr);
+	Jumper(const Vector2f pos, Object* parent = nullptr);
 	Jumper(const Jumper& jumper);
 	~Jumper();
 

@@ -18,6 +18,7 @@ public:
 	sf::Vector2f getAnchor() const;
 	bool pointOverlap(const sf::Vector2f& point) const;
 	bool contains(const sf::Vector2f& point) const;
+	bool intersects(const FRect& rect) const;
 	int tangentSide(const FRect& rect) const;
 	void setPosition(const sf::Vector2f& pos);
 	void setPosition(float x, float y);

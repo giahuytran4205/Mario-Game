@@ -11,9 +11,9 @@ private:
 	bool m_isOnGrowUp;
 
 public:
-	Beanstalk();
-	Beanstalk(const Vector2f& pos, const Vector2f& size);
-	Beanstalk(const FRect& rect);
+	Beanstalk(Object* parent = nullptr);
+	Beanstalk(const Vector2f& pos, const Vector2f& size, Object* parent = nullptr);
+	Beanstalk(const FRect& rect, Object* parent = nullptr);
 	~Beanstalk();
 
 	void update() override;

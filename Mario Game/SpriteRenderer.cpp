@@ -3,6 +3,7 @@
 #include "GameManager.hpp"
 #include "SFML/Graphics.hpp"
 #include "Object.hpp"
+#include "SpriteRenderer.hpp"
 using namespace sf;
 
 SpriteRenderer::SpriteRenderer(Object* parent) : Object(parent) {

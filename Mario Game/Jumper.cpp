@@ -5,7 +5,8 @@
 #include "GameManager.hpp"
 #include <iostream>
 
-Jumper::Jumper() : m_collision(addComponent<Collision>()), m_anim(addComponent<Animation>(m_sprite)) {
+Jumper::Jumper(Object* parent) : m_collision(addComponent<Collision>()), m_anim(addComponent<Animation>(m_sprite)) {
+	setParent(parent);
 	m_transform.setAnchor(0.5, 1);
 	FRect rect = m_transform.getRect();
 	m_transform.setSize({ 16, 32 });
@@ -18,7 +19,7 @@ Jumper::Jumper() : m_collision(addComponent<Collision>()), m_anim(addComponent<A
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 1);
 }
 
-Jumper::Jumper(const Vector2f pos) : Jumper() {
+Jumper::Jumper(const Vector2f pos, Object* parent) : Jumper(parent) {
 	m_transform.setPosition(pos);
 }
 

@@ -106,11 +106,11 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
-	bool isActive() {
+	virtual bool isActive() {
 		return m_active;
 	}
 
-	bool isDestroyed() {
+	virtual bool isDestroyed() {
 		return m_destroyed;
 	}
 
@@ -165,7 +165,7 @@ public:
 			[](Entity* entity)
 			{
 				if (!entity) return true;
-				return !entity->isDestroyed();
+				return entity->isDestroyed();
 			}),
 			end(m_entities));
 	}

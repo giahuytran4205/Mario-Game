@@ -1,19 +1,7 @@
 #include "GameManager.hpp"
 #include "SFML/Graphics.hpp"
 #include "ECS.hpp"
-#include "Object.hpp"
-#include "Mario.hpp"
-#include "Block.hpp"
-#include "Transform2D.hpp"
-#include "TextureManager.hpp"
-#include "Map.hpp"
-#include "Toggle.hpp"
-#include "SpriteRenderer.hpp"
-#include "EventSystem.hpp"
-#include "Collision.hpp"
-#include "Jumper.hpp"
-#include "FlagPole.hpp"
-#include "Beanstalk.hpp"
+#include "GameScene.hpp"
 #include <iostream>
 using namespace sf;
 using namespace std;
@@ -42,16 +30,7 @@ void GameManager::init() {
 
 	m_eventSystem.addListener(this);
 
-	m_player = new Mario();
-	m_map = new Map();
-	m_map->loadFromJsonFile("Resources/Map/Worlds-1-1.json");
-
-	Texture* texture = new Texture();
-	texture->loadFromFile("Resources/Background/Worlds-1-1.png");
-
-	m_map->setBackground(*texture);
-
-	m_collisionManager = { m_map->getSize(), 16};
+	m_collisionManager = { Vector2i(3376, 480), 16};
 
 	m_view.reset(FloatRect(0, 0, getAspectRatio() * 208, 208));
 
@@ -61,11 +40,7 @@ void GameManager::init() {
 	
 	m_window.setView(m_view);
 
-	Jumper* jumper = new Jumper(Vector2f(100, 208));
-
-	m_flagPole = new FlagPole(170, 32, 2, 160);
-
-	Beanstalk* beanstalk = new Beanstalk({ 200, 160, 2, 32 });
+	m_sceneManager.setCurrentScene<GameScene>();
 }
 
 void GameManager::start() {
@@ -83,8 +58,6 @@ void GameManager::start() {
 		m_entitiesManager.update();
 
 		m_collisionManager.update();
-
-		m_view.setCenter(m_player->getComponent<Transform2D>().getPosition().x, m_view.getCenter().y);
 
 #if DEBUG
 

@@ -15,9 +15,9 @@ private:
 	SoundComponent& m_sound;
 
 public:
-	FlagPole();
-	FlagPole(const Vector2f& pos, const Vector2f& size = {16, 160});
-	FlagPole(float x, float y, float width = 16, float height = 160);
+	FlagPole(Object* parent = nullptr);
+	FlagPole(const Vector2f& pos, const Vector2f& size = {16, 160}, Object* parent = nullptr);
+	FlagPole(float x, float y, float width = 16, float height = 160, Object* parent = nullptr);
 	~FlagPole();
 
 	void update() override;

@@ -163,6 +163,7 @@
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="FlagPole.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="AutoControl.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SoundBufferManager.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
@@ -199,6 +201,7 @@
     <ClInclude Include="EventSystem.hpp" />
     <ClInclude Include="FlagPole.hpp" />
     <ClInclude Include="GameManager.hpp" />
+    <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="GUI.hpp" />
     <ClInclude Include="AutoControl.hpp" />
     <ClInclude Include="Item.hpp" />
@@ -211,6 +214,8 @@
     <ClInclude Include="Portal.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="Rect.hpp" />
+    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="SceneManager.hpp" />
     <ClInclude Include="Slider.hpp" />
     <ClInclude Include="SoundBufferManager.hpp" />
     <ClInclude Include="SoundComponent.hpp" />

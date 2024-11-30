@@ -3,8 +3,9 @@
 #include "GameManager.hpp"
 #include <iostream>
 
-FlagPole::FlagPole() : m_sound(addComponent<SoundComponent>()) {
+FlagPole::FlagPole(Object* parent) : m_sound(addComponent<SoundComponent>()) {
 	addComponent<Collision>(true);
+	setParent(parent);
 	
 	m_transform.setPosition(0, 0);
 	m_transform.setAnchor(0.5, 0);
@@ -33,9 +34,9 @@ FlagPole::FlagPole() : m_sound(addComponent<SoundComponent>()) {
 	m_renderOrder = 2;
 }
 
-FlagPole::FlagPole(const Vector2f& pos, const Vector2f& size) : FlagPole(pos.x, pos.y, size.x, size.y) {}
+FlagPole::FlagPole(const Vector2f& pos, const Vector2f& size, Object* parent) : FlagPole(pos.x, pos.y, size.x, size.y, parent) {}
 
-FlagPole::FlagPole(float x, float y, float width, float height) : FlagPole() {
+FlagPole::FlagPole(float x, float y, float width, float height, Object* parent) : FlagPole(parent) {
 	m_transform.setPosition(x, y);
 	m_transform.setSize(width, height);
 

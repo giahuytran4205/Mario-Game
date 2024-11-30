@@ -2,8 +2,9 @@
 #include "Mario.hpp"
 #include "GameManager.hpp"
 
-Beanstalk::Beanstalk() {
+Beanstalk::Beanstalk(Object* parent) {
 	addComponent<Collision>(true);
+	setParent(parent);
 
 	m_renderOrder = 2;
 	m_growRate = 0.005f;
@@ -25,7 +26,7 @@ Beanstalk::Beanstalk() {
 	m_stalk.setPosition(0, 16);
 }
 
-Beanstalk::Beanstalk(const Vector2f& pos, const Vector2f& size) : Beanstalk() {
+Beanstalk::Beanstalk(const Vector2f& pos, const Vector2f& size, Object* parent) : Beanstalk(parent) {
 	m_transform.setPosition(pos);
 	m_transform.setAnchor(0.5, 1);
 	m_transform.setSize(size);
@@ -37,7 +38,7 @@ Beanstalk::Beanstalk(const Vector2f& pos, const Vector2f& size) : Beanstalk() {
 	m_stalk.setPosition(0, 0);
 }
 
-Beanstalk::Beanstalk(const FRect& rect) : Beanstalk({ rect.left, rect.top }, { rect.width, rect.height }) {}
+Beanstalk::Beanstalk(const FRect& rect, Object* parent) : Beanstalk({ rect.left, rect.top }, { rect.width, rect.height }, parent) {}
 
 Beanstalk::~Beanstalk() {}
 

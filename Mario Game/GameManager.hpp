@@ -3,13 +3,9 @@
 #include "SFML/Graphics.hpp"
 #include "TextureManager.hpp"
 #include "SoundBufferManager.hpp"
-#include "Mario.hpp"
 #include "EventSystem.hpp"
 #include "Collision.hpp"
-#include "Toggle.hpp"
-#include "Slider.hpp"
-#include "Map.hpp"
-#include "FlagPole.hpp"
+#include "SceneManager.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
@@ -21,18 +17,12 @@ private:
 	TextureManager m_textureManager;
 	SoundBufferManager m_soundBufferManager;
 	CollisionManager m_collisionManager;
+	SceneManager m_sceneManager;
 	EventSystem m_eventSystem;
 	RenderWindow m_window;
 	View m_view;
 	Clock m_clock;
 	static Time m_deltaTime;
-
-	Mario* m_player = nullptr;
-	Map* m_map = nullptr;
-	FlagPole* m_flagPole = nullptr;
-	//Toggle m_toggle;
-	//Slider m_slider;
-	//Object* m_test = nullptr;
 
 public:
 	GameManager();
