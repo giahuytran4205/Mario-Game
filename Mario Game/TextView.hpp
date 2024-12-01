@@ -12,7 +12,7 @@
 
 constexpr unsigned int TEXT_SIZE_MIN = 15.0f;
 
-class TextView {
+class TextView : public Object {
 private:
     void m_wrapText();
 
