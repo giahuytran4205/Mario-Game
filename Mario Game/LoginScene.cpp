@@ -146,6 +146,7 @@ LoginScene::LoginScene()
 
 			if (isPasswordCorrect)
 			{
+				this->destroy();
 				sceneManager->setCurrentScene<GameScene>();
 			}
 		}
