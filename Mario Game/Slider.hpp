@@ -3,7 +3,9 @@
 #include "GUI.hpp"
 #include "Transform2D.hpp"
 #include "Line.hpp"
+#include <vector>
 #include <iostream>
+using namespace std;
 
 class Handle : public GUI {
 private:
@@ -33,6 +35,7 @@ private:
 	Handle m_handle;
 	RectangleShape m_background;
 	RectangleShape m_fillArea;
+	vector<void (*)(T)> m_listeners;
 
 public:
 	Slider(Object* parent = nullptr) : m_value(0), m_minVal(0), m_maxVal(1) {
@@ -59,10 +62,6 @@ public:
 		m_fillArea.setFillColor(Color(50, 50, 50));
 	}
 
-	Slider(const Slider& slider) {
-
-	}
-
 	~Slider() {
 
 	}
@@ -71,12 +70,40 @@ public:
 		Vector2f dragPos = m_handle.getDragPos();
 		if (dragPos.x < m_transform.getRect().left) dragPos.x = m_transform.getRect().left;
 		if (dragPos.x > m_transform.getRect().right) dragPos.x = m_transform.getRect().right;
-		m_value = dragPos.x - m_transform.getRect().left;
+
+		T tempVal = dragPos.x - m_transform.getRect().left;
+
+		if (tempVal != m_value) {
+			m_value = tempVal;
+			for (auto& i : m_listeners)
+				i(m_value);
+		}
+
 		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.getRect().left, m_handle.getComponent<Transform2D>().getPosition().y });
 		m_fillArea.setScale({ m_value / m_transform.getRect().width, 1 });
 
 		m_window->draw(m_background);
 		m_window->draw(m_fillArea);
+	}
+
+	T getValue() {
+		return m_value;
+	}
+
+	void addListener(void (*listener)(T)) {
+		m_listeners.push_back(listener);
+	}
+
+	void removeListener(void (*listener)(T)) {
+		m_listeners.erase(remove_if(m_listeners.begin(), m_listeners.end(),
+			[](const void (*&item)(T)) {
+				return item == listener;
+			}),
+			m_listeners.end());
+	}
+
+	void removeAllListeners() {
+		m_listeners.clear();
 	}
 
 	void setBackgroundColor(const Color& color) {

@@ -9,11 +9,13 @@ private:
 	SpriteRenderer m_stalk;
 	float m_growRate;
 	bool m_isOnGrowUp;
+	bool m_isMature;
+	float m_height;
 	Vector2f m_destination;
 
 public:
 	Beanstalk(Object* parent = nullptr);
-	Beanstalk(const Vector2f& pos, const Vector2f& size, const Vector2f& destination, Object* parent = nullptr);
+	Beanstalk(const Vector2f& pos, float height, const Vector2f& destination, Object* parent = nullptr);
 	Beanstalk(const FRect& rect, const Vector2f& destination, Object* parent = nullptr);
 	~Beanstalk();
 

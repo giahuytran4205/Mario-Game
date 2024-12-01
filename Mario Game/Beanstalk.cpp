@@ -7,8 +7,10 @@ Beanstalk::Beanstalk(Object* parent) {
 	setParent(parent);
 
 	m_renderOrder = 2;
-	m_growRate = 0.005f;
+	m_growRate = 0.05f;
+	m_height = 0;
 	m_isOnGrowUp = false;
+	m_isMature = false;
 	m_stalk.setParent(this);
 	m_treetop.setParent(this);
 
@@ -26,10 +28,12 @@ Beanstalk::Beanstalk(Object* parent) {
 	m_stalk.setPosition(0, 16);
 }
 
-Beanstalk::Beanstalk(const Vector2f& pos, const Vector2f& size, const Vector2f& destination, Object* parent) : Beanstalk(parent) {
+Beanstalk::Beanstalk(const Vector2f& pos, float height, const Vector2f& destination, Object* parent) : Beanstalk(parent) {
+	m_height = height;
+
 	m_transform.setPosition(pos);
 	m_transform.setAnchor(0.5, 1);
-	m_transform.setSize(size);
+	m_transform.setSize(16, 32);
 
 	m_treetop.setAnchor(0.5, 1);
 	m_stalk.setAnchor(0.5, 1);
@@ -38,7 +42,7 @@ Beanstalk::Beanstalk(const Vector2f& pos, const Vector2f& size, const Vector2f& 
 	m_stalk.setPosition(0, 0);
 }
 
-Beanstalk::Beanstalk(const FRect& rect, const Vector2f& destination, Object* parent) : Beanstalk({ rect.left, rect.top }, { rect.width, rect.height }, destination, parent) {}
+Beanstalk::Beanstalk(const FRect& rect, const Vector2f& destination, Object* parent) : Beanstalk({ rect.left, rect.top }, 0, destination, parent) {}
 
 Beanstalk::~Beanstalk() {}
 
@@ -46,12 +50,14 @@ void Beanstalk::update() {
 	if (m_isOnGrowUp) {
 		Transform2D& stalkTF = m_stalk.getComponent<Transform2D>();
 
-		stalkTF.setHeight(stalkTF.height + m_growRate * deltaTime.asMilliseconds());
+		m_transform.setHeight(m_transform.height + m_growRate * deltaTime.asMilliseconds());
 		m_stalk.setTextureRect(IntRect(0, 0, 16, m_transform.height - 16));
 		m_treetop.setPosition(0, -m_stalk.getTextureRect().height);
 
-		if (m_treetop.getComponent<Transform2D>().top >= m_transform.top) {
+		cout << m_stalk.getTextureRect().height << "\n";
+		if (m_stalk.getTextureRect().height >= m_height) {
 			m_isOnGrowUp = false;
+			m_isMature = true;
 		}
 	}
 }
@@ -63,15 +69,21 @@ void Beanstalk::onCollisionEnter(Collision& col) {
 
 		growUp();
 
-		autoControl.addMoveByDistance(Vector2f(0, m_destination.y - mario->getComponent<Transform2D>().getPosition().y), 3000, Vector2f(0, 0),
+		mario->getComponent<Collision>().setTrigger(true);
+
+		autoControl.addMoveByDistance(Vector2f(0, -100), 3000, Vector2f(0, 0),
 			[](int time) {
 
 			});
-		autoControl.addWaitForMiliseconds(1000);
-		autoControl.addAction([&]() { mario->getComponent<Physics2D>().setBaseVelocity({ 0.005, -0.005 }); });
+		autoControl.addWaitForMiliseconds(100);
+		autoControl.addAction([mario]() { mario->getComponent<Collision>().setTrigger(false); mario->getComponent<Physics2D>().setBaseVelocity({ 0.05, -0.001 }); });
+		
 	}
 }
 
 void Beanstalk::growUp() {
+	if (m_isMature)
+		return;
+
 	m_isOnGrowUp = true;
 }

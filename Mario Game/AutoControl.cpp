@@ -110,7 +110,7 @@ void AutoControl::addWaitUntil(function<bool(int)> condition) {
 }
 
 void AutoControl::addAction(function<void()> action) {
-	addWaitForMiliseconds(0, [&action](int) { action(); });
+	addWaitForMiliseconds(0, [action](int) { action(); });
 }
 
 bool AutoControl::isControlled() {
