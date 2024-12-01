@@ -205,6 +205,10 @@ LoginScene::~LoginScene()
 
 void LoginScene::update()
 {
+	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+	sf::View& view = GameManager::getInstance()->getView();
+	view.setSize(window.getSize().x, window.getSize().y);
+	window.setView(view);
 }
 
 void LoginScene::render()
@@ -213,4 +217,9 @@ void LoginScene::render()
 
 void LoginScene::handleEvent(const sf::Event& event)
 {
+	if (event.type == Event::Resized) {
+		// ... Finish Later
+		// Idea 1: Destroy "this" and add new LoginScene when Resize
+		// Idea 2: Reset position & size of all objects in Window
+	}
 }
