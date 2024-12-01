@@ -10,7 +10,7 @@
 #include "FontManager.hpp"
 #include "SoundBufferManager.hpp"
 #include "SoundComponent.hpp"
-#include "MusicSlider.hpp"
+#include "VolumeSlider.hpp"
 #include "Toggle.hpp"
 #include "SFML/Graphics.hpp"
 
@@ -23,7 +23,7 @@ class MusicSlider;
 class OptionScene : public Scene
 {
 private:
-	MusicSlider<SoundTrack::BACKGROUND>* m_themeMusicSlider;
+	VolumeSlider<SoundTrack::BACKGROUND>* m_themeMusicSlider;
 
 public:
 	OptionScene();

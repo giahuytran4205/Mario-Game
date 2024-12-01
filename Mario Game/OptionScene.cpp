@@ -11,7 +11,7 @@ OptionScene::OptionScene()
 	window.setView(view);
 
 	// SLIDER
-	m_themeMusicSlider = new MusicSlider<SoundTrack::BACKGROUND>(
+	m_themeMusicSlider = new VolumeSlider<SoundTrack::BACKGROUND>(
 		window,
 		0.0f, 200.0f,
 		0.0f,
