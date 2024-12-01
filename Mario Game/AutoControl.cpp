@@ -109,6 +109,10 @@ void AutoControl::addWaitUntil(function<bool(int)> condition) {
 	m_controlQueue.push({ pos, 0, {0, 0}, nullptr, condition });
 }
 
+void AutoControl::addAction(function<void()> action) {
+	addWaitForMiliseconds(0, [&action](int) { action(); });
+}
+
 bool AutoControl::isControlled() {
 	return m_isControlled;
 }

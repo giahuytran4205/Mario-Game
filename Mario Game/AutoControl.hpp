@@ -32,5 +32,6 @@ public:
 	void addMoveByDistance(const Vector2f& distance, int duration, const Vector2f& acceleration, function<void(int)> action = nullptr);
 	void addWaitForMiliseconds(int duration, function<void(int)> action = nullptr);
 	void addWaitUntil(function<bool(int)> condition);
+	void addAction(function<void()> action);
 	bool isControlled();
 };

@@ -4,6 +4,7 @@
 #include "Map.hpp"
 #include "Jumper.hpp"
 #include "FlagPole.hpp"
+#include "Beanstalk.hpp"
 
 class GameScene : public Scene {
 private:

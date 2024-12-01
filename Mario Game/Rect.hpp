@@ -27,4 +27,6 @@ public:
 	void setAnchor(float anchorX, float anchorY);
 	void setSize(const sf::Vector2f& size);
 	void setSize(float width, float height);
+	void setWidth(float width);
+	void setHeight(float height);
 };
