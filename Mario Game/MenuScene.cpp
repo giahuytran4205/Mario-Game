@@ -4,13 +4,13 @@
 
 sf::Vector2f MenuScene::m_getPlayerNameLabelSize(sf::RenderWindow& window)
 {
-	return { window.getSize().x / 5.0f, window.getSize().y / 5.0f };
+	return { window.getSize().x / 4.0f, window.getSize().y / 8.0f };
 }
 
 sf::Vector2f MenuScene::m_getPlayerNameTextSize(sf::RenderWindow& window)
 {
 	sf::Vector2f playerNameLabelSize = m_getPlayerNameLabelSize(window);
-	return { playerNameLabelSize.x * 2.0f, playerNameLabelSize.y };
+	return { playerNameLabelSize.x * 1.5f, playerNameLabelSize.y };
 }
 
 sf::Vector2f MenuScene::m_getMaxScoreLabelSize(sf::RenderWindow& window)
@@ -21,24 +21,24 @@ sf::Vector2f MenuScene::m_getMaxScoreLabelSize(sf::RenderWindow& window)
 sf::Vector2f MenuScene::m_getMaxScoreTextSize(sf::RenderWindow& window)
 {
 	sf::Vector2f maxScoreLabelSize = m_getMaxScoreLabelSize(window);
-	return { maxScoreLabelSize.x * 2.0f, maxScoreLabelSize.y };
+	return { maxScoreLabelSize.x * 1.5f, maxScoreLabelSize.y };
 }
 
 sf::Vector2f MenuScene::m_getBackButtonSize(sf::RenderWindow& window)
 {
-	return { window.getSize().x / 5.0f, window.getSize().y / 5.0f };
+	return { window.getSize().x / 7.0f, window.getSize().y / 8.0f };
 }
 
 sf::Vector2f MenuScene::m_getNextButtonSize(sf::RenderWindow& window)
 {
-	return { window.getSize().x / 5.0f, window.getSize().y / 5.0f };
+	return m_getBackButtonSize(window);
 }
 
 // POSITION
 
 sf::Vector2f MenuScene::m_getPlayerNameLabelPosition(sf::RenderWindow& window)
 {
-	return { window.getSize().x / 5.0f, window.getSize().y / 5.0f };
+	return { window.getSize().x / 6.0f, window.getSize().y / 6.0f };
 }
 
 sf::Vector2f MenuScene::m_getPlayerNameTextPosition(sf::RenderWindow& window)
@@ -68,7 +68,7 @@ sf::Vector2f MenuScene::m_getMaxScoreTextPosition(sf::RenderWindow& window)
 sf::Vector2f MenuScene::m_getBackButtonPosition(sf::RenderWindow& window)
 {
 	sf::Vector2f backButtonSize = m_getBackButtonSize(window);
-	return { window.getSize().x - backButtonSize.x, backButtonSize.y };
+	return { window.getSize().x - backButtonSize.x, 0 };
 }
 
 sf::Vector2f MenuScene::m_getNextButtonPosition(sf::RenderWindow& window)
@@ -178,7 +178,7 @@ MenuScene::MenuScene(Account* account)
 		window,
 		nextButtonPosition.x, nextButtonPosition.y,
 		nextButtonSize.x, nextButtonSize.y,
-		"BACK",
+		"NEXT",
 		FontManager::m_instance->m_font[FontType::ARIAL],
 		sf::Color::Black,
 		[]()

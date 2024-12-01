@@ -159,8 +159,8 @@ LoginScene::LoginScene()
 
 			if (isPasswordCorrect)
 			{
-				//this->destroy();
-				//sceneManager->setCurrentScene<MenuScene>(account);
+				this->destroy();
+				sceneManager->setCurrentScene<MenuScene>(account);
 			}
 		}
 	);

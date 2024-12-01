@@ -13,12 +13,6 @@
 
 #include <iostream>
 
-std::string toUpperCase(const std::string& input) {
-	std::string result = input;
-	std::transform(result.begin(), result.end(), result.begin(), ::toupper);
-	return result;
-}
-
 class InputField;
 class Button;
 class TextView;
@@ -27,6 +21,13 @@ class Account;
 class MenuScene : public Scene
 {
 private:
+	std::string toUpperCase(const std::string& input)
+	{
+		std::string result = input;
+		std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+		return result;
+	}
+
 	sf::Vector2f m_getPlayerNameLabelSize(sf::RenderWindow& window);
 	sf::Vector2f m_getPlayerNameTextSize(sf::RenderWindow& window);
 	sf::Vector2f m_getMaxScoreLabelSize(sf::RenderWindow& window);
