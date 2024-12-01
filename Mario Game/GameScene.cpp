@@ -4,6 +4,7 @@
 GameScene::GameScene() : m_mario(this), m_jumper(Vector2f(100, 208), this), m_flagpole(170, 32, 2, 160, this) {
 	m_renderOrder = 2;
 
+	m_map.setParent(this);
 	m_map.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
 
 	Texture* texture = new Texture();
@@ -11,7 +12,7 @@ GameScene::GameScene() : m_mario(this), m_jumper(Vector2f(100, 208), this), m_fl
 
 	m_map.setBackground(*texture);
 
-	Beanstalk* beanstalk = nullptr;
+	Beanstalk* beanstalk = new Beanstalk({ 220, 200 }, 64, { 0, 100 });
 }
 
 GameScene::~GameScene() {}

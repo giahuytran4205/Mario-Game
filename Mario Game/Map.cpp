@@ -23,11 +23,11 @@ Map::Map() {
 }
 
 Map::~Map() {
-	/*for (Block* block : m_blocks)
+	for (Block* block : m_blocks)
 		delete block;
 
 	for (Portal* portal : m_portals)
-		delete portal;*/
+		delete portal;
 }
 
 json::object Map::readJsonFile(string filename) {
@@ -63,7 +63,7 @@ void Map::loadFromJsonFile(string filename) {
 				Tile& tile = TextureManager::m_instance->m_tilesets[0][id];
 				int col = TextureManager::m_instance->m_tilesets[0].m_col;
 				if (tile.type == "Coin") {
-					Item* item = new Item(ItemType::Coin);
+					Item* item = new Item(ItemType::Coin, this);
 					item->setAnim(tile.anim);
 					item->getComponent<Transform2D>().setPosition({ i % 211 * 16.0f, i / 211 * 16.0f });
 				}
@@ -82,6 +82,7 @@ void Map::loadFromJsonFile(string filename) {
 						type = Block::SMALL_CLOUD;
 
 					Block* block = new Block(tile.texture, { i % 211 * 16.0f + 8, i / 211 * 16.0f + 8 }, type);
+					block->setParent(this);
 					m_blocks.push_back(block);
 				}
 			}
@@ -123,6 +124,7 @@ void Map::loadFromJsonFile(string filename) {
 				}
 
 				m_portals.push_back(new Portal(Vector2f{ posX, posY }, Vector2f{ destX, destY }, inDir, outDir, destDepth));
+				m_portals.back()->setParent(this);
 			}
 		}
 

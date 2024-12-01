@@ -29,7 +29,7 @@ bool Object::isActive() {
 }
 
 bool Object::isDestroyed() {
-	return (!m_parent || m_parent->isDestroyed()) && m_destroyed;
+	return (m_parent && m_parent->isDestroyed()) || m_destroyed;
 }
 
 Object* Object::getParent() {

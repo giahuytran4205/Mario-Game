@@ -104,9 +104,9 @@ void FRect::setSize(float width, float height) {
 }
 
 void FRect::setWidth(float width) {
-	this->width = width;
+	setSize(width, height);
 }
 
 void FRect::setHeight(float height) {
-	this->height = height;
+	setSize(width, height);
 }

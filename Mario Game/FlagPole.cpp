@@ -6,6 +6,10 @@
 FlagPole::FlagPole(Object* parent) : m_sound(addComponent<SoundComponent>()) {
 	addComponent<Collision>(true);
 	setParent(parent);
+
+	m_flag.setParent(this);
+	m_pole.setParent(this);
+	m_pole1.setParent(this);
 	
 	m_transform.setPosition(0, 0);
 	m_transform.setAnchor(0.5, 0);
