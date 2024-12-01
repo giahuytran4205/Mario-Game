@@ -32,13 +32,6 @@ void GameManager::init() {
 
 	m_collisionManager = { Vector2i(3376, 480), 16};
 
-	m_view.reset(FloatRect(0, 0, getAspectRatio() * 208, 208));
-
-	m_view.setCenter(0, m_view.getSize().y / 2 + 16);
-
-	m_view.setViewport(FloatRect(0, 0, 1, 1));
-	m_window.setView(m_view);
-
 	m_sceneManager.setCurrentScene<LoginScene>();
 }
 

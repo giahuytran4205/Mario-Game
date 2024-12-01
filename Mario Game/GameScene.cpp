@@ -13,15 +13,15 @@ GameScene::GameScene() : m_mario(this), m_jumper(Vector2f(100, 208), this), m_fl
 
 	Beanstalk* beanstalk = nullptr;
 
-	//sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
-	//sf::View& view = GameManager::getInstance()->getView();
+	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+	sf::View& view = GameManager::getInstance()->getView();
 
-	//view.reset(FloatRect(0, 0, GameManager::getInstance()->getAspectRatio() * 208, 208));
+	view.reset(FloatRect(0, 0, GameManager::getInstance()->getAspectRatio() * 208, 208));
 
-	//view.setCenter(0, view.getSize().y / 2 + 16);
+	view.setCenter(0, view.getSize().y / 2 + 16);
 
-	//view.setViewport(FloatRect(0, 0, 1, 1));
-	//window.setView(view);
+	view.setViewport(FloatRect(0, 0, 1, 1));
+	window.setView(view);
 }
 
 GameScene::~GameScene() {}
