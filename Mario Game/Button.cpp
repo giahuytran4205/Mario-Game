@@ -22,11 +22,11 @@ Button::Button(Object* parent, sf::RenderWindow& window, float x, float y, float
 	m_shape.setOutlineThickness(0);
 	m_shape.setOutlineColor(sf::Color::White);
 
-	this->setPosition(x, y);
-
 	unsigned int textSize = m_shape.getSize().y / 3;
 
 	m_label = new TextView(this, this->getButtonRect(), labelContent, labelFont, labelColor, textSize);
+
+	this->setPosition(x, y);
 
 	m_transform.getRect() = { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
 
@@ -36,6 +36,7 @@ Button::Button(Object* parent, sf::RenderWindow& window, float x, float y, float
 
 Button::~Button()
 {
+	delete m_label;
 }
 
 void Button::setLabel(const std::string& s)
@@ -45,13 +46,9 @@ void Button::setLabel(const std::string& s)
 
 void Button::setPosition(float x, float y)
 {
-	std::cout << "1" << std::endl;
 	m_shape.setPosition(x, y);
-	std::cout << "1" << std::endl;
 	m_label->setTable(this->getButtonRect());
-	std::cout << "1" << std::endl;
 	m_transform.getRect() = { x, y, m_shape.getSize().x, m_shape.getSize().y };
-	std::cout << "1" << std::endl;
 }
 
 void Button::setSize(float width, float height)

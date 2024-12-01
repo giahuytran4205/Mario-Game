@@ -120,8 +120,6 @@ LoginScene::LoginScene()
 		FontManager::m_instance->m_font[FontType::ARIAL]
 	);
 
-	std::cout << "Create Button" << std::endl;
-
 	m_confirm = new Button(
 		this,
 		window,
@@ -145,8 +143,6 @@ LoginScene::LoginScene()
 		}
 	);
 
-	std::cout << "Button is Created Successfully" << std::endl;
-
 	sf::Vector2f usernamePosition = m_getUsernamePosition(window);
 	sf::Vector2f passwordPosition = m_getPasswordPosition(window);
 	sf::Vector2f confirmPosition = m_getConfirmPosition(window);
@@ -160,7 +156,7 @@ LoginScene::LoginScene()
 
 	m_username->setPosition(usernamePosition.x, usernamePosition.y);
 	m_password->setPosition(passwordPosition.x, passwordPosition.y);
-	//m_confirm->setPosition(confirmPosition.x, confirmPosition.y);
+	m_confirm->setPosition(confirmPosition.x, confirmPosition.y);
 
 	m_usernameTextView = new TextView(
 		this,
@@ -204,7 +200,7 @@ LoginScene::~LoginScene()
 	delete m_password;
 	delete m_usernameTextView;
 	delete m_passwordTextView;
-	//delete m_confirm;
+	delete m_confirm;
 }
 
 void LoginScene::update()
