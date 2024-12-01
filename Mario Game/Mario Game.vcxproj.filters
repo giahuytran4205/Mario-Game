@@ -183,6 +183,9 @@
     <ClCompile Include="VolumeSlider.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="TotalVolumeSlider.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -318,6 +321,9 @@
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="VolumeSlider.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TotalVolumeSlider.hpp">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>

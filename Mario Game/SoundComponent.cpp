@@ -2,6 +2,11 @@
 #include "GameManager.hpp"
 #include <iostream>
 
+int SoundComponent::setTotalVolume(int volumeValue)
+{
+	m_totalVolume = volumeValue;
+}
+
 SoundComponent::SoundComponent(bool loop) : m_soundBufManager(SoundBufferManager::getInstance()), m_togglePlay(false), m_currentTrack(-1), m_duration(0) {
 	m_sound.setLoop(loop);
 }
@@ -11,6 +16,8 @@ SoundComponent::~SoundComponent() {}
 void SoundComponent::update() {
 	if (m_duration > 0)
 		m_duration -= deltaTime.asMilliseconds();
+
+	m_sound.setVolume(m_volume * m_totalVolume / 100.0f);
 }
 
 void SoundComponent::play(SoundTrack track, int duration) {
@@ -53,5 +60,6 @@ void SoundComponent::setLoop(bool loop) {
 }
 
 void SoundComponent::setVolume(float volume) {
-	m_sound.setVolume(volume);
+	m_volume = volume;
+	m_sound.setVolume(m_volume);
 }

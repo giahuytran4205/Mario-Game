@@ -6,13 +6,18 @@ using namespace sf;
 
 class SoundComponent : public Component {
 private:
+	static float m_totalVolume;
+
 	Sound m_sound;
+	float m_volume;
 	SoundBufferManager* m_soundBufManager;
 	bool m_togglePlay;
 	int m_currentTrack;
 	int m_duration;
 
 public:
+	static int setTotalVolume(int volumeValue);
+
 	SoundComponent(bool loop = false);
 	~SoundComponent();
 

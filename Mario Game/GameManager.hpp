@@ -30,7 +30,6 @@ private:
 	View m_view;
 	Clock m_clock;
 	static Time m_deltaTime;
-	static constexpr float dT = 1.0f / 60.0f;
 
 public:
 	GameManager();

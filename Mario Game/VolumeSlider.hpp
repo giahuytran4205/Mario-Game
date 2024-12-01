@@ -12,12 +12,11 @@ private:
     SoundComponent& m_soundComponent;
 
 public:
-    VolumeSlider(RenderWindow& window, const float& minVal, const float& maxVal, const float& val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr)
-        : Slider<float>(window, minVal, maxVal, val, pos, parent), m_soundComponent(addComponent<SoundComponent>())
+    VolumeSlider(RenderWindow& window, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr, SoundComponent& soundComponent)
+        : Slider<float>(window, 0.0f, 100.0f, 50.0f, pos, parent), m_soundComponent(soundComponent)
     {
         if (val > maxVal)
             throw std::out_of_range("Default volume can't be greater than max volume");
-        m_soundComponent.play(track);
         m_soundComponent.setVolume(val);
     }
 

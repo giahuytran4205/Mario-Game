@@ -183,7 +183,7 @@ MenuScene::MenuScene(Account* account)
 		sf::Color::Black,
 		[]()
 		{
-			std::cout << "NEXT Button of MenuScene is Entered!" << std::endl;
+			std::cout << "Next Button of MenuScene is Entered!" << std::endl;
 		}
 	);
 }

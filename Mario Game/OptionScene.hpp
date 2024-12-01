@@ -11,6 +11,7 @@
 #include "SoundBufferManager.hpp"
 #include "SoundComponent.hpp"
 #include "VolumeSlider.hpp"
+#include "TotalVolumeSlider.hpp"
 #include "Toggle.hpp"
 #include "SFML/Graphics.hpp"
 
@@ -19,11 +20,12 @@ class Button;
 class InputField;
 template<SoundTrack track>
 class VolumeSlider;
+class TotalVolumeSlider;
 
 class OptionScene : public Scene
 {
 private:
-	VolumeSlider<SoundTrack::BACKGROUND>* m_themeMusicSlider;
+	// VolumeSlider<SoundTrack::BACKGROUND>* m_themeMusicSlider;
 
 public:
 	OptionScene();
