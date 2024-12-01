@@ -63,25 +63,22 @@ void InputField::onClick()
     currentlySelectedField = this;
 }
 
-void InputField::onKeyPressed(const sf::Event& event)
+void InputField::onKeyPressed(const sf::Event::TextEvent& textEvent)
 {
-    if (event.type == sf::Event::TextEntered)
+    if (currentlySelectedField == this)
     {
-        if (currentlySelectedField == this)
+        if (textEvent.unicode == 8)
         {
-            if (event.text.unicode == 8)
+            if (!m_content.empty())
             {
-                if (!m_content.empty())
-                {
-                    m_content.pop_back();
-                    m_text.setString(m_content);
-                }
-            }
-            else if (event.text.unicode >= 32 && event.text.unicode < 127)
-            {
-                m_content += static_cast<char>(event.text.unicode);
+                m_content.pop_back();
                 m_text.setString(m_content);
             }
+        }
+        else if (textEvent.unicode >= 32 && textEvent.unicode < 127)
+        {
+            m_content += static_cast<char>(textEvent.unicode);
+            m_text.setString(m_content);
         }
     }
 }
