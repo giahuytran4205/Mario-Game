@@ -7,8 +7,9 @@ FRect Button::getButtonRect()
 	return { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
 }
 
-Button::Button(sf::RenderWindow& window, float x, float y, float width, float height, const std::string& labelContent, sf::Font& labelFont, sf::Color labelColor, std::function<void()> action, Object* parent)
+Button::Button(Object* parent, sf::RenderWindow& window, float x, float y, float width, float height, const std::string& labelContent, sf::Font& labelFont, sf::Color labelColor, std::function<void()> action)
 {
+	setParent(parent);
 	m_window = &window;
 	m_isSelected = false;
 	m_isPressed = false;
@@ -25,7 +26,7 @@ Button::Button(sf::RenderWindow& window, float x, float y, float width, float he
 
 	unsigned int textSize = m_shape.getSize().y / 3;
 
-	m_label.init(this->getButtonRect(), labelContent, labelFont, labelColor, textSize);
+	m_label.init(this, this->getButtonRect(), labelContent, labelFont, labelColor, textSize);
 
 	m_transform.getRect() = { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
 
@@ -86,10 +87,11 @@ void Button::onClick()
 		m_action();
 }
 
-void Button::setAction(void(*func)())
+void Button::setAction(std::function<void()> action)
 {
-	m_action = func;
+	m_action = action;
 }
+
 void Button::draw(sf::RenderWindow& target)
 {
 	target.draw(m_shape);

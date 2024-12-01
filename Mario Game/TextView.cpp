@@ -66,8 +66,9 @@ TextView::TextView()
     m_text.setFillColor(sf::Color::White);
 }
 
-TextView::TextView(const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize)
+TextView::TextView(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize)
 {
+    setParent(parent);
     m_table = table;
     m_content = textContent;
     m_text.setString(m_content);
@@ -77,8 +78,9 @@ TextView::TextView(const FRect& table, const std::string& textContent, sf::Font&
     m_wrapText();
 }
 
-void TextView::init(const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize)
+void TextView::init(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize)
 {
+    setParent(parent);
     m_table = table;
     m_content = textContent;
     m_text.setString(m_content);

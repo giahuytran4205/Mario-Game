@@ -38,8 +38,9 @@ void InputField::adjustTextPosCharSizeInBox(sf::Text& text, const sf::RectangleS
     m_transform.getRect() = { m_box.getPosition().x, m_box.getPosition().y, m_box.getSize().x,  m_box.getSize().y };
 }
 
-InputField::InputField(sf::RenderWindow& window, const float& x, const float& y, const float& width, const float& height, sf::Font& font)
+InputField::InputField(Object* parent, sf::RenderWindow& window, const float& x, const float& y, const float& width, const float& height, sf::Font& font)
 {
+    setParent(parent);
     m_window = &window;
     m_box.setSize({ width, height });
     m_box.setPosition({ x, y });
@@ -62,22 +63,25 @@ void InputField::onClick()
     currentlySelectedField = this;
 }
 
-void InputField::onKeyPressed(const sf::Event::TextEvent& textEvent)
+void InputField::onKeyPressed(const sf::Event& event)
 {
-    if (currentlySelectedField == this)
+    if (event.type == sf::Event::TextEntered)
     {
-        if (textEvent.unicode == 8)
+        if (currentlySelectedField == this)
         {
-            if (!m_content.empty())
+            if (event.text.unicode == 8)
             {
-                m_content.pop_back();
+                if (!m_content.empty())
+                {
+                    m_content.pop_back();
+                    m_text.setString(m_content);
+                }
+            }
+            else if (event.text.unicode >= 32 && event.text.unicode < 127)
+            {
+                m_content += static_cast<char>(event.text.unicode);
                 m_text.setString(m_content);
             }
-        }
-        else if (textEvent.unicode >= 32 && textEvent.unicode < 127)
-        {
-            m_content += static_cast<char>(textEvent.unicode);
-            m_text.setString(m_content);
         }
     }
 }

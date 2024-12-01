@@ -20,7 +20,7 @@ private:
 	std::function<void()> m_action;
 
 public:
-	Button(sf::RenderWindow& window, float x, float y, float width, float height, const std::string& labelContent, sf::Font& labelFont, sf::Color labelColor, std::function<void()> action = nullptr, Object* parent = nullptr);
+	Button(Object* parent, sf::RenderWindow& window, float x, float y, float width, float height, const std::string& labelContent, sf::Font& labelFont, sf::Color labelColor, std::function<void()> action = nullptr);
 	~Button();
 
 	void setLabel(const std::string& s);
@@ -32,7 +32,7 @@ public:
 	void onUnhovered() override;
 	void onPressed() override;
 	void onClick() override;
-	void setAction(void (*func) ());
+	void setAction(std::function<void()> action);
 
 	void draw(sf::RenderWindow& target);
 };

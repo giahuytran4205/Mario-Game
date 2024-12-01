@@ -5,6 +5,7 @@
 #include "Transform2D.hpp"
 #include "SFML/Graphics.hpp"
 #include "Rect.hpp"
+#include "Object.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -12,7 +13,7 @@
 
 constexpr unsigned int TEXT_SIZE_MIN = 15.0f;
 
-class TextView : public Object {
+class TextView : public Object { // Inherit Object to set Parent for TextView
 private:
     void m_wrapText();
 
@@ -20,10 +21,10 @@ private:
     FRect m_table;
     std::string m_content;
 public:
-    TextView(const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize);
+    TextView(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize);
 
     TextView();
-    void init(const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize);
+    void init(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize);
 
     sf::Text& getText();
 

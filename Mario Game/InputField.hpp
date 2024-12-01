@@ -29,10 +29,10 @@ private:
 public:
 	static InputField* currentlySelectedField;
 
-	InputField(sf::RenderWindow& window, const float& x, const float& y, const float& width, const float& height, sf::Font& font);
+	InputField(Object* parent, sf::RenderWindow& window, const float& x, const float& y, const float& width, const float& height, sf::Font& font);
 
 	void onClick() override;
-	void onKeyPressed(const sf::Event::TextEvent& textEvent) override;
+	void onKeyPressed(const sf::Event& event) override;
 
 	void setPosition(float x, float y);
 	void setSize(float width, float height);
