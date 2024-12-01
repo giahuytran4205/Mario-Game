@@ -15,6 +15,7 @@ private:
 	static GameManager* m_instance;
 	EntitiesManager m_entitiesManager;
 	TextureManager m_textureManager;
+	FontManager m_fontManager;
 	SoundBufferManager m_soundBufferManager;
 	CollisionManager m_collisionManager;
 	SceneManager m_sceneManager;
@@ -23,6 +24,7 @@ private:
 	View m_view;
 	Clock m_clock;
 	static Time m_deltaTime;
+	static constexpr float dT = 1.0f / 60.0f;
 
 public:
 	GameManager();

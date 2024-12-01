@@ -10,7 +10,7 @@ namespace json = boost::json;
 class TextureManager {
 public:
 	static TextureManager* m_instance;
-	Texture m_background[NUM_STATE];
+	Texture m_background[BackgroundType::NUM_BACKGROUND_TYPE];
 	TileSet m_tilesets[TileSetType::NUM_TILESET_TYPE];
 
 	TextureManager();

@@ -25,6 +25,36 @@ GameManager::~GameManager() {
 }
 
 void GameManager::init() {
+	//m_window.create(VideoMode(1200, 480), "Super Mario Bros. (1985)", Style::Default);
+	//m_window.setFramerateLimit(120);
+
+	//m_eventSystem.addListener(this);
+
+	//m_player = new Mario();
+	//m_map = new Map();
+	//m_map->loadFromJsonFile("Resources/Map/Worlds-1-1.json");
+
+	//Texture* texture = new Texture();
+	//texture->loadFromFile("Resources/Background/Worlds-1-1.png");
+
+	//m_map->setBackground(*texture);
+
+	//m_collisionManager = { m_map->getSize(), 16};
+
+	//m_view.reset(FloatRect(0, 0, getAspectRatio() * 208, 208));
+
+	//m_view.reset(FloatRect(0, 0, 1200, 480));
+
+	//m_view.setViewport(FloatRect(0, 0, 1, 1));
+
+	//m_view.setCenter(0, m_view.getSize().y / 2 + 16);
+	//
+	//m_window.setView(m_view);
+
+	//Jumper* jumper = new Jumper(Vector2f(100, 208));
+
+	//m_flagPole = new FlagPole(170, 32, 2, 160);
+
 	m_window.create(VideoMode(1200, 600), "Super Mario Bros. (1985)", Style::Default);
 	m_window.setFramerateLimit(120);
 
@@ -35,15 +65,13 @@ void GameManager::init() {
 	m_view.reset(FloatRect(0, 0, getAspectRatio() * 208, 208));
 
 	m_view.setViewport(FloatRect(0, 0, 1, 1));
-
-	m_view.setCenter(0, m_view.getSize().y / 2 + 16);
-	
 	m_window.setView(m_view);
 
 	m_sceneManager.setCurrentScene<GameScene>();
 }
 
 void GameManager::start() {
+	/*
 	while (m_window.isOpen())
 	{
 		m_window.clear();
@@ -68,6 +96,56 @@ void GameManager::start() {
 
 		m_window.display();
 	}
+	*/
+
+	float newTime, frameTime, interpolation; // interpolation: smooth movement between frames
+
+	m_deltaTime = m_clock.getElapsedTime();
+	float currentTime = m_deltaTime.asSeconds();
+	float accumulator = 0.0f;
+
+	std::unique_ptr<State> loginState = std::make_unique<LoginState>();
+
+	m_stateManager.addState(std::move(loginState), false);
+
+	while (m_window.isOpen())
+	{
+		m_stateManager.changeState();
+
+		newTime = m_clock.getElapsedTime().asSeconds();
+		frameTime = newTime - currentTime;
+
+		if (frameTime > 0.25f)
+			frameTime = 0.25f;
+
+		currentTime = newTime;
+		accumulator += frameTime;
+
+		while (accumulator >= this->dT)
+		{
+			// Check if there's a state before polling events
+			State* currentState = m_stateManager.peekState();
+
+			if (currentState) {
+				currentState->handleEvents();
+				currentState->update(this->dT);
+			}
+
+			accumulator -= this->dT;
+
+		}
+
+		State* currentState = m_stateManager.peekState();
+
+		if (currentState) {
+			interpolation = accumulator / dT;
+			currentState->render(interpolation);
+		}
+	}
+}
+
+void GameManager::pause()
+{
 }
 
 void GameManager::render() {

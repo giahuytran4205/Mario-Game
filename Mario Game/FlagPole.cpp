@@ -17,7 +17,7 @@ FlagPole::FlagPole(Object* parent) : m_sound(addComponent<SoundComponent>()) {
 	m_flag.getComponent<Transform2D>().setAnchor(1, 0);
 
 	Texture* texture2 = new Texture();
-	texture2->loadFromFile("D:/GHuy/OOP/Tile/Mario/Mario/Worlds-1-1.png", IntRect(3168, 32, 16, 16));
+	texture2->loadFromFile("Resources/Map/Worlds-1-1.json", IntRect(3168, 32, 16, 16));
 	m_pole.setTexture(*texture2);
 	m_pole.getComponent<Transform2D>().setAnchor(0.5, 0);
 

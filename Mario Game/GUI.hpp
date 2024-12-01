@@ -25,14 +25,14 @@ public:
 
 	void update() override;
 	void render() override;
-	void handleEvent(const Event& event) override;
+	void handleEvent(const sf::Event& event) override;
 	virtual void onSelected();
 	virtual void onDeselect();
 	virtual void onPressed();
 	virtual void onHovered();
 	virtual void onUnhovered();
 	virtual void onClick();
-	virtual void onKeyPressed(const Event& event);
+	virtual void onKeyPressed(const sf::Event::TextEvent& textEvent);
 	virtual void onDrag(const Vector2f& mousePos);
 	bool isSelected();
 	bool isPressed();
