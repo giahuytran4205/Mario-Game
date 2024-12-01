@@ -19,7 +19,7 @@ enum class SoundTrack {
 class SoundBufferManager {
 private:
 	vector<pair<SoundTrack, string>> soundPath = {
-		{ SoundTrack::BACKGROUND,	"background.wav" },
+		{ SoundTrack::BACKGROUND,	"Resources/Sounds/Theme.mp3"},
 		{ SoundTrack::BIGJUMP,		"Resources/Sounds/Big Jump.wav" },
 		{ SoundTrack::HITBLOCK,		"" },
 		{ SoundTrack::ITEM,			"Resources/Sounds/Item.wav" },

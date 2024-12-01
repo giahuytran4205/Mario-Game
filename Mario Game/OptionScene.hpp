@@ -8,12 +8,23 @@
 #include "Enum.hpp"
 #include "TextureManager.hpp"
 #include "FontManager.hpp"
-#include "AccountManager.hpp"
+#include "SoundBufferManager.hpp"
+#include "SoundComponent.hpp"
+#include "MusicSlider.hpp"
+#include "Toggle.hpp"
 #include "SFML/Graphics.hpp"
+
+class TextView;
+class Button;
+class InputField;
+template<SoundTrack track>
+class MusicSlider;
 
 class OptionScene : public Scene
 {
 private:
+	MusicSlider<SoundTrack::BACKGROUND>* m_themeMusicSlider;
+
 public:
 	OptionScene();
 	~OptionScene();

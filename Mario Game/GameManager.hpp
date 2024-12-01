@@ -9,6 +9,7 @@
 #include "FontManager.hpp"
 #include "LoginScene.hpp"
 #include "MenuScene.hpp"
+#include "OptionScene.hpp"
 #include "AccountManager.hpp"
 using namespace sf;
 

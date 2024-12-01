@@ -178,6 +178,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="MusicSlider.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="OptionScene.cpp" />
     <ClCompile Include="Physics2D.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />
     <ClInclude Include="MenuScene.hpp" />
+    <ClInclude Include="MusicSlider.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="OptionScene.hpp" />
     <ClInclude Include="Physics2D.hpp" />
