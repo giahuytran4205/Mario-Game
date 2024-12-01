@@ -172,6 +172,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="LoginScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Jumper.hpp" />
     <ClInclude Include="Line.hpp" />
+    <ClInclude Include="LoginScene.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />
     <ClInclude Include="Object.hpp" />

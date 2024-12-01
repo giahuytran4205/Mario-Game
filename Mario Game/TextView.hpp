@@ -6,6 +6,7 @@
 #include "SFML/Graphics.hpp"
 #include "Rect.hpp"
 #include "Object.hpp"
+#include "GameManager.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -33,4 +34,5 @@ public:
     void setFont(const sf::Font& font);
     void setFillColor(const sf::Color& color);
     void setScale(const sf::Vector2f& scale);
+    void render() override;
 };

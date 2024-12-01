@@ -120,12 +120,12 @@ void InputField::clearContent()
     m_text.setString(m_content);
 }
 
-void InputField::draw(sf::RenderWindow& target)
+void InputField::render()
 {
-    target.draw(m_box);
+    sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+    window.draw(m_box);
     m_text.setString(m_content);
-    target.draw(m_text);
-
+    window.draw(m_text);
     if (m_isSelected)
     {
         if (m_cursorBlinkClock.getElapsedTime().asSeconds() >= 0.5f)
@@ -141,7 +141,7 @@ void InputField::draw(sf::RenderWindow& target)
             float cursorX = m_text.getPosition().x + textBounds.width + 1.f;
             float cursorY = m_text.getPosition().y;
             m_cursor.setPosition(cursorX, cursorY);
-            target.draw(m_cursor);
+            window.draw(m_cursor);
         }
     }
 }

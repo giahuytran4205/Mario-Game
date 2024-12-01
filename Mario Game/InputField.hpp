@@ -40,6 +40,5 @@ public:
 	sf::Vector2f getSize();
 	std::string getContent();
 	void clearContent();
-
-	void draw(sf::RenderWindow& target);
+	void render() override;
 };

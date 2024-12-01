@@ -26,7 +26,7 @@ Button::Button(Object* parent, sf::RenderWindow& window, float x, float y, float
 
 	unsigned int textSize = m_shape.getSize().y / 3;
 
-	m_label.init(this, this->getButtonRect(), labelContent, labelFont, labelColor, textSize);
+	m_label = new TextView(this, this->getButtonRect(), labelContent, labelFont, labelColor, textSize);
 
 	m_transform.getRect() = { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
 
@@ -40,48 +40,52 @@ Button::~Button()
 
 void Button::setLabel(const std::string& s)
 {
-	m_label.setContent(s);
+	m_label->setContent(s);
 }
 
 void Button::setPosition(float x, float y)
 {
+	std::cout << "1" << std::endl;
 	m_shape.setPosition(x, y);
-	m_label.setTable(this->getButtonRect());
+	std::cout << "1" << std::endl;
+	m_label->setTable(this->getButtonRect());
+	std::cout << "1" << std::endl;
 	m_transform.getRect() = { x, y, m_shape.getSize().x, m_shape.getSize().y };
+	std::cout << "1" << std::endl;
 }
 
 void Button::setSize(float width, float height)
 {
 	m_shape.setSize({ width, height });
-	m_label.setTable(this->getButtonRect());
+	m_label->setTable(this->getButtonRect());
 	m_transform.getRect() = { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
 }
 
 void Button::setContentScale(float x, float y)
 {
-	m_label.setScale({ x, y });
+	m_label->setScale({ x, y });
 }
 
 void Button::onHovered()
 {
-	m_label.setFillColor(sf::Color::White);
+	m_label->setFillColor(sf::Color::White);
 }
 
 void Button::onUnhovered()
 {
-	m_label.setFillColor(sf::Color::Black);
+	m_label->setFillColor(sf::Color::Black);
 }
 
 void Button::onPressed()
 {
-	m_label.setFillColor(sf::Color::White);
-	m_label.setScale({ 0.8f, 0.8f });
+	m_label->setFillColor(sf::Color::White);
+	m_label->setScale({ 0.8f, 0.8f });
 }
 
 void Button::onClick()
 {
-	m_label.setScale({ 1.0f, 1.0f });
-	m_label.setFillColor(sf::Color::White);
+	m_label->setScale({ 1.0f, 1.0f });
+	m_label->setFillColor(sf::Color::White);
 
 	if (m_action)
 		m_action();
@@ -92,8 +96,9 @@ void Button::setAction(std::function<void()> action)
 	m_action = action;
 }
 
-void Button::draw(sf::RenderWindow& target)
+void Button::render()
 {
-	target.draw(m_shape);
-	target.draw(m_label.getText());
+	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+	window.draw(m_shape);
+	//m_label.render();
 }

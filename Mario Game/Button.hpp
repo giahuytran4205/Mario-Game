@@ -10,13 +10,15 @@
 
 constexpr unsigned int DEFAULT_TEXT_SIZE = 50;
 
+class TextView;
+
 class Button : public GUI
 {
 private:
 	FRect getButtonRect();
 
 	sf::RectangleShape m_shape;
-	TextView m_label;
+	TextView* m_label;
 	std::function<void()> m_action;
 
 public:
@@ -33,6 +35,5 @@ public:
 	void onPressed() override;
 	void onClick() override;
 	void setAction(std::function<void()> action);
-
-	void draw(sf::RenderWindow& target);
+	void render() override;
 };

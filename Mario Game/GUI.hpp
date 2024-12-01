@@ -5,6 +5,7 @@
 #include "SpriteRenderer.hpp"
 #include "Rect.hpp"
 #include "EventSystem.hpp"
+#include "SFML/Graphics/View.hpp"
 using namespace sf;
 
 class GUI : public Object, public IEventListener {

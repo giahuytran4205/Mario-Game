@@ -97,7 +97,7 @@ sf::Text& TextView::getText()
 
 void TextView::setTable(const FRect& table)
 {
-    m_table = table;
+    m_table = table; // Error at this line
     m_wrapText();
 }
 
@@ -122,4 +122,9 @@ void TextView::setFillColor(const sf::Color& color)
 void TextView::setScale(const sf::Vector2f& scale)
 {
     m_text.setScale(scale);
+}
+
+void TextView::render()
+{
+    GameManager::getInstance()->getRenderWindow().draw(m_text);
 }
