@@ -2,12 +2,15 @@
 #include "GameManager.hpp"
 #include <iostream>
 
-int SoundComponent::setTotalVolume(int volumeValue)
+float SoundComponent::m_totalVolume = 100.0f;
+
+void SoundComponent::setTotalVolume(int volumeValue)
 {
 	m_totalVolume = volumeValue;
 }
 
-SoundComponent::SoundComponent(bool loop) : m_soundBufManager(SoundBufferManager::getInstance()), m_togglePlay(false), m_currentTrack(-1), m_duration(0) {
+SoundComponent::SoundComponent(bool loop)
+	: m_soundBufManager(SoundBufferManager::getInstance()), m_togglePlay(false), m_currentTrack(-1), m_duration(0), m_volume(100.0f) {
 	m_sound.setLoop(loop);
 }
 

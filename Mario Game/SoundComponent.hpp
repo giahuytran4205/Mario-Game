@@ -16,7 +16,7 @@ private:
 	int m_duration;
 
 public:
-	static int setTotalVolume(int volumeValue);
+	static void setTotalVolume(int volumeValue);
 
 	SoundComponent(bool loop = false);
 	~SoundComponent();

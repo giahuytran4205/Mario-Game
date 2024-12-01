@@ -180,12 +180,6 @@
     <ClCompile Include="OptionScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="VolumeSlider.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="TotalVolumeSlider.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -319,12 +313,6 @@
     </ClInclude>
     <ClInclude Include="OptionScene.hpp">
       <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="VolumeSlider.hpp">
-      <Filter>Header Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="TotalVolumeSlider.hpp">
-      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
