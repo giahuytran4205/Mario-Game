@@ -10,6 +10,8 @@ GameScene::GameScene() : m_mario(this), m_jumper(Vector2f(100, 208), this), m_fl
 	texture->loadFromFile("Resources/Background/Worlds-1-1.png");
 
 	m_map.setBackground(*texture);
+
+	Beanstalk* beanstalk = nullptr;
 }
 
 GameScene::~GameScene() {}

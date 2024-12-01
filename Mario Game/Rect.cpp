@@ -102,3 +102,11 @@ void FRect::setSize(float width, float height) {
 	this->height = height;
 	setPosition(pos);
 }
+
+void FRect::setWidth(float width) {
+	this->width = width;
+}
+
+void FRect::setHeight(float height) {
+	this->height = height;
+}
