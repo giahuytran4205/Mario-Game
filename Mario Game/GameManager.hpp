@@ -6,6 +6,7 @@
 #include "EventSystem.hpp"
 #include "Collision.hpp"
 #include "SceneManager.hpp"
+#include "FontManager.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
