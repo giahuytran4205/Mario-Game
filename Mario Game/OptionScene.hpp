@@ -18,7 +18,7 @@ class TextView;
 class Button;
 class InputField;
 template<SoundTrack track>
-class MusicSlider;
+class VolumeSlider;
 
 class OptionScene : public Scene
 {
