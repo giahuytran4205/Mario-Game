@@ -177,6 +177,9 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="OptionScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="SceneManager.hpp">
       <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionScene.hpp">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
