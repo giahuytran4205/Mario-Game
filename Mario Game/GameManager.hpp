@@ -8,6 +8,7 @@
 #include "SceneManager.hpp"
 #include "FontManager.hpp"
 #include "LoginScene.hpp"
+#include "AccountManager.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
@@ -23,6 +24,7 @@ private:
 	SceneManager m_sceneManager;
 	EventSystem m_eventSystem;
 	RenderWindow m_window;
+	AccountManager m_accountManager;
 	View m_view;
 	Clock m_clock;
 	static Time m_deltaTime;

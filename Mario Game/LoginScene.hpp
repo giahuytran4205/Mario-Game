@@ -8,6 +8,9 @@
 #include "Enum.hpp"
 #include "TextureManager.hpp"
 #include "FontManager.hpp"
+#include "AccountManager.hpp"
+#include "SceneManager.hpp"
+#include "GameScene.hpp"
 #include "SFML/Graphics.hpp"
 
 constexpr float SPACE_DISTANCE = 25;

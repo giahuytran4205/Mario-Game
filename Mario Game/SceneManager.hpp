@@ -18,7 +18,7 @@ public:
 
 	~SceneManager() {}
 
-	SceneManager* getInstance() {
+	static SceneManager* getInstance() {
 		return m_instance;
 	}
 

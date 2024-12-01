@@ -128,18 +128,26 @@ LoginScene::LoginScene()
 		"Confirm",
 		FontManager::m_instance->m_font[FontType::ARIAL],
 		sf::Color::Black,
-		[this]()
+		[this, sceneManager = SceneManager::getInstance()]()
 		{
-			if (m_username->getContent() == "a" && m_password->getContent() == "1")
+			bool isPasswordCorrect = false;
+			Account* account = nullptr;
+			if (AccountManager::getInstance()->isPasswordCorrect(m_username->getContent(), m_password->getContent(), account))
 			{
-				std::cout << "Login Success" << std::endl;
+				std::cout << "Login Successfully" << std::endl;
+				isPasswordCorrect = true;
 			}
 			else
 			{
-				std::cout << "Login Failed" << std::endl;
+				std::cout << "Login Falied" << std::endl;
 			}
 			m_username->clearContent();
 			m_password->clearContent();
+
+			if (isPasswordCorrect)
+			{
+				sceneManager->setCurrentScene<GameScene>();
+			}
 		}
 	);
 

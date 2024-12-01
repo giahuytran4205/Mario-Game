@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccountManager.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationFactory.cpp" />
     <ClCompile Include="AnimationType.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Transform2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccountManager.hpp" />
     <ClInclude Include="Animation.hpp" />
     <ClInclude Include="AnimationFactory.hpp" />
     <ClInclude Include="Beanstalk.hpp" />
