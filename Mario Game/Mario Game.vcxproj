@@ -172,7 +172,6 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Line.cpp" />
-    <ClCompile Include="LoginState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
@@ -186,8 +185,6 @@
     <ClCompile Include="SoundBufferManager.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
-    <ClCompile Include="State.cpp" />
-    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TextView.cpp" />
     <ClCompile Include="TileSet.cpp" />
@@ -217,7 +214,6 @@
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Jumper.hpp" />
     <ClInclude Include="Line.hpp" />
-    <ClInclude Include="LoginState.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />
     <ClInclude Include="Object.hpp" />
@@ -231,8 +227,6 @@
     <ClInclude Include="SoundBufferManager.hpp" />
     <ClInclude Include="SoundComponent.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
-    <ClInclude Include="State.hpp" />
-    <ClInclude Include="StateManager.hpp" />
     <ClInclude Include="TextureManager.hpp" />
     <ClInclude Include="TextView.hpp" />
     <ClInclude Include="TileSet.hpp" />
