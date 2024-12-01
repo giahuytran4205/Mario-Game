@@ -1,5 +1,7 @@
 #include "LoginScene.hpp"
 
+//SIZE
+
 sf::Vector2f LoginScene::m_getUsernameSize(sf::RenderWindow& window)
 {
 	return { window.getSize().x / 3.5f, window.getSize().y / 12.0f };
@@ -35,6 +37,8 @@ sf::Vector2f LoginScene::m_getTitleSize(sf::RenderWindow& window)
 	sf::Vector2f size = m_getUsernameSize(window);
 	return { size.x * 2, size.y * 2 };
 }
+
+// POSITION
 
 sf::Vector2f LoginScene::m_getUsernamePosition(sf::RenderWindow& window)
 {
@@ -96,10 +100,18 @@ void LoginScene::fitBackground(sf::Sprite* sprite, sf::RenderWindow& window)
 LoginScene::LoginScene()
 {
 	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+	sf::View& view = GameManager::getInstance()->getView();
+	
+	// SET VIEW;
+	view.reset(FloatRect(0, 0, window.getSize().x, window.getSize().y));
+	view.setViewport(FloatRect(0, 0, 1, 1));
+	window.setView(view);
 
+	// LOAD BACKGROUND
 	m_backgroundSprite.setTexture(TextureManager::m_instance->m_background[BackgroundType::LOGINSTATE_BACKGROUND]);
 	this->fitBackground(&m_backgroundSprite, window);
 
+	// LOAD INPUTFIELD
 	sf::Vector2f usernameSize = m_getUsernameSize(window);
 	sf::Vector2f passwordSize = m_getPasswordSize(window);
 	sf::Vector2f confirmSize = m_getConfirmSize(window);
@@ -120,6 +132,7 @@ LoginScene::LoginScene()
 		FontManager::m_instance->m_font[FontType::ARIAL]
 	);
 
+	// LOAD BUTTON
 	m_confirm = new Button(
 		this,
 		window,
@@ -146,8 +159,8 @@ LoginScene::LoginScene()
 
 			if (isPasswordCorrect)
 			{
-				this->destroy();
-				sceneManager->setCurrentScene<GameScene>();
+				//this->destroy();
+				//sceneManager->setCurrentScene<MenuScene>(account);
 			}
 		}
 	);
@@ -167,6 +180,7 @@ LoginScene::LoginScene()
 	m_password->setPosition(passwordPosition.x, passwordPosition.y);
 	m_confirm->setPosition(confirmPosition.x, confirmPosition.y);
 
+	// LOAD TEXTVIEW
 	m_usernameTextView = new TextView(
 		this,
 		{ usernameTextViewPosition.x, usernameTextViewPosition.y, usernameTextViewSize.x, usernameTextViewSize.y },
@@ -194,12 +208,6 @@ LoginScene::LoginScene()
 		sf::Color::Black,
 		static_cast<unsigned int>(titleSize.y / 2)
 	);
-
-	View& view = GameManager::getInstance()->getView();
-	view.reset(FloatRect(0, 0, window.getSize().x, window.getSize().y));
-
-	view.setViewport(FloatRect(0, 0, 1, 1));
-	window.setView(view);
 }
 
 LoginScene::~LoginScene()
@@ -214,10 +222,6 @@ LoginScene::~LoginScene()
 
 void LoginScene::update()
 {
-	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
-	sf::View& view = GameManager::getInstance()->getView();
-	view.setSize(window.getSize().x, window.getSize().y);
-	window.setView(view);
 }
 
 void LoginScene::render()

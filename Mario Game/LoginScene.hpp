@@ -10,10 +10,8 @@
 #include "FontManager.hpp"
 #include "AccountManager.hpp"
 #include "SceneManager.hpp"
-#include "GameScene.hpp"
+#include "MenuScene.hpp"
 #include "SFML/Graphics.hpp"
-
-constexpr float SPACE_DISTANCE = 25;
 
 class InputField;
 class Button;

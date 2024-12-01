@@ -1,5 +1,7 @@
 #pragma once
 
+constexpr float SPACE_DISTANCE = 25; // Use to create space between labels or buttons
+
 enum FontType {
 	ARIAL,
 	SUPERMARIO256,
