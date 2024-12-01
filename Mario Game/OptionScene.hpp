@@ -25,7 +25,6 @@ class TotalVolumeSlider;
 class OptionScene : public Scene
 {
 private:
-	// VolumeSlider<SoundTrack::BACKGROUND>* m_themeMusicSlider;
 
 public:
 	OptionScene();
