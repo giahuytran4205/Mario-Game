@@ -176,6 +176,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Physics2D.cpp" />
     <ClCompile Include="Portal.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="LoginScene.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />
+    <ClInclude Include="MenuScene.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Physics2D.hpp" />
     <ClInclude Include="Portal.hpp" />
