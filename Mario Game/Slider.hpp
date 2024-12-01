@@ -141,9 +141,4 @@ public:
 	void setHandleThickness(float thickness) {
 		m_handle.setThickness(thickness);
 	}
-
-	T getCurrentValue()
-	{
-		return m_value;
-	}
 };
