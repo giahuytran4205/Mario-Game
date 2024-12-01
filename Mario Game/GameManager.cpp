@@ -40,7 +40,6 @@ void GameManager::init() {
 	m_window.setView(m_view);
 
 	m_sceneManager.setCurrentScene<GameScene>();
-	m_sceneManager.setCurrentScene<Scene>();
 }
 
 void GameManager::start() {
