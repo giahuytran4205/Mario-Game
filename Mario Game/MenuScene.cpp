@@ -181,9 +181,11 @@ MenuScene::MenuScene(Account* account)
 		"NEXT",
 		FontManager::m_instance->m_font[FontType::ARIAL],
 		sf::Color::Black,
-		[]()
+		[this, sceneManager = SceneManager::getInstance()]()
 		{
 			std::cout << "Next Button of MenuScene is Entered!" << std::endl;
+			this->destroy();
+			sceneManager->setCurrentScene<GameScene>();
 		}
 	);
 }

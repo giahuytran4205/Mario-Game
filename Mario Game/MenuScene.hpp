@@ -10,6 +10,7 @@
 #include "FontManager.hpp"
 #include "AccountManager.hpp"
 #include "SFML/Graphics.hpp"
+#include "GameScene.hpp"
 
 #include <iostream>
 
