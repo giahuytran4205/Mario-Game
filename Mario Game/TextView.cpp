@@ -124,6 +124,11 @@ void TextView::setScale(const sf::Vector2f& scale)
     m_text.setScale(scale);
 }
 
+void TextView::setScaleTextSize(float scale)
+{
+    m_text.setCharacterSize(m_text.getCharacterSize() * scale);
+}
+
 void TextView::render()
 {
     GameManager::getInstance()->getRenderWindow().draw(m_text);

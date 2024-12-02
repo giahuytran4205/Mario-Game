@@ -32,7 +32,7 @@ void GameManager::init() {
 
 	m_collisionManager = { Vector2i(3376, 480), 16};
 
-	m_sceneManager.setCurrentScene<LoginScene>();
+	m_sceneManager.setCurrentScene<OptionScene>();
 }
 
 void GameManager::start() {

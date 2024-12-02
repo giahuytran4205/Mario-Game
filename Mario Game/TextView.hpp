@@ -34,5 +34,6 @@ public:
     void setFont(const sf::Font& font);
     void setFillColor(const sf::Color& color);
     void setScale(const sf::Vector2f& scale);
+    void setScaleTextSize(float scale);
     void render() override;
 };
