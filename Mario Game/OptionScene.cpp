@@ -64,6 +64,20 @@ sf::Vector2f OptionScene::m_getExitButtonPostion(sf::RenderWindow& window)
 	return {window.getSize().x - m_getExitButtonSize(window).x, 0};
 }
 
+void OptionScene::fitBackground(sf::Sprite* sprite, sf::RenderWindow& window)
+{
+	if (sprite->getTexture() != nullptr)
+	{
+		sf::Vector2u textureSize = sprite->getTexture()->getSize();
+		sf::Vector2u windowSize = window.getSize();
+
+		float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
+		float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
+
+		sprite->setScale(scaleX, scaleY);
+	}
+}
+
 OptionScene::OptionScene()
 	//m_totalVolume(this),
 	//m_themeVolume(this),
@@ -109,9 +123,9 @@ OptionScene::OptionScene()
 		"Continue",
 		FontManager::m_instance->m_font[FontType::ARIAL],
 		sf::Color::Black,
-		[this, sceneManager = SceneManager::getInstance()]()
+		[]()
 		{
-			std::cout << "Confirm Button";
+			std::cout << "Confirm Button" << std::endl;
 		}
 	);
 
@@ -123,9 +137,9 @@ OptionScene::OptionScene()
 		"Exit",
 		FontManager::m_instance->m_font[FontType::ARIAL],
 		sf::Color::Black,
-		[this, sceneManager = SceneManager::getInstance()]()
+		[]()
 		{
-			std::cout << "Exit Button";
+			std::cout << "Exit Button" << std::endl;
 		}
 	);
 
@@ -137,9 +151,9 @@ OptionScene::OptionScene()
 		"Home",
 		FontManager::m_instance->m_font[FontType::ARIAL],
 		sf::Color::Black,
-		[this, sceneManager = SceneManager::getInstance()]()
+		[]()
 		{
-			std::cout << "Confirm Button";
+			std::cout << "Confirm Button" << std::endl;
 		}
 	);
 

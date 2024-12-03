@@ -35,19 +35,7 @@ private:
 	sf::Vector2f m_getHomeButtonPostion(sf::RenderWindow& window);
 	sf::Vector2f m_getExitButtonPostion(sf::RenderWindow& window);
 
-	void fitBackground(sf::Sprite* sprite, sf::RenderWindow& window)
-	{
-		if (sprite->getTexture() != nullptr)
-		{
-			sf::Vector2u textureSize = sprite->getTexture()->getSize();
-			sf::Vector2u windowSize = window.getSize();
-
-			float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
-			float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
-
-			sprite->setScale(scaleX, scaleY);
-		}
-	}
+	void fitBackground(sf::Sprite* sprite, sf::RenderWindow& window);
 
 	Slider<float>* m_totalVolume;
 	Slider<float>* m_themeVolume;
