@@ -49,9 +49,9 @@ private:
 		}
 	}
 
-	Slider<float> m_totalVolume;
-	Slider<float> m_themeVolume;
-	Slider<float> m_effectVolume;
+	Slider<float>* m_totalVolume;
+	Slider<float>* m_themeVolume;
+	Slider<float>* m_effectVolume;
 	Button* m_continue;
 	Button* m_home;
 	Button* m_exit;
