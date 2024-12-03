@@ -1,18 +1,15 @@
 #include "GameScene.hpp"
-#include "GameManager.hpp"
 
 GameScene::GameScene() : m_mario(this), m_jumper(Vector2f(100, 208), this), m_flagpole(170, 32, 2, 160, this) {
 	m_renderOrder = 2;
 
 	m_map.setParent(this);
 	m_map.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
+	//m_map.destroy();
+	//m_map2.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
 
-	Texture* texture = new Texture();
-	texture->loadFromFile("Resources/Background/Worlds-1-1.png");
-
-	m_map.setBackground(*texture);
-
-	Beanstalk* beanstalk = new Beanstalk({ 220, 200 }, 64, { 0, 100 });
+	//Beanstalk* beanstalk = new Beanstalk({ 220, 200 }, 64, { 0, 100 });
+	Lift* lift = new Lift({ 200, 50 }, 48, 50, 150, { 0, 1 }, 0.05, true, this);
 }
 
 GameScene::~GameScene() {}
@@ -28,4 +25,8 @@ void GameScene::render() {
 
 void GameScene::handleEvent(const Event& event) {
 
+}
+
+void GameScene::loadMap() {
+	m_map.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
 }

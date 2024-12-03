@@ -160,6 +160,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Coroutine.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="FlagPole.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="InputField.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jumper.cpp" />
+    <ClCompile Include="Lift.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -201,6 +203,7 @@
     <ClInclude Include="Collision.hpp" />
     <ClInclude Include="Common.hpp" />
     <ClInclude Include="Controller.hpp" />
+    <ClInclude Include="Coroutine.hpp" />
     <ClInclude Include="ECS.hpp" />
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />
@@ -213,6 +216,7 @@
     <ClInclude Include="InputField.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Jumper.hpp" />
+    <ClInclude Include="Lift.hpp" />
     <ClInclude Include="Line.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />

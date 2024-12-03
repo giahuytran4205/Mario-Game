@@ -18,8 +18,6 @@ void AutoControl::init() {
 }
 
 void AutoControl::update() {
-	m_physics->setEnableGravity(!m_isControlled);
-
 	m_elapsedTime += deltaTime.asMilliseconds();
 
 	if (!m_currentControl.condition || m_currentControl.condition(m_elapsedTime)) {

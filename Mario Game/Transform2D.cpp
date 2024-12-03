@@ -54,6 +54,7 @@ void Transform2D::setPosition(const Vector2f& position) {
 	if (m_lastPos == m_pos && m_pos == Vector2f(0, 0)) {
 		m_lastPos = m_pos = position;
 		FRect::setPosition(getWorldPosition());
+		return;
 	}
 	if (m_pos != position) m_lastPos = m_pos;
 	m_pos = position;

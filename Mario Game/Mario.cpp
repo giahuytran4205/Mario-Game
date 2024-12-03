@@ -17,8 +17,8 @@
 #include <iostream>
 using namespace sf;
 
-Mario::Mario(Object* parent) : m_physics2D(addComponent<Physics2D>()), m_collision(addComponent<Collision>()),
-				 m_sound(addComponent<SoundComponent>()), m_autoControl(addComponent<AutoControl>())
+Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_physics2D(addComponent<Physics2D>()),
+							m_collision(addComponent<Collision>()), m_sound(addComponent<SoundComponent>()) 
 {
 	setParent(parent);
 	m_speed = 0.1f;
@@ -33,6 +33,7 @@ Mario::Mario(Object* parent) : m_physics2D(addComponent<Physics2D>()), m_collisi
 	texture->loadFromFile("Goomba.png");
 	m_sprite.setTexture(*texture);
 
+	m_physics2D.setElastic(true);
 	m_physics2D.setVelocity({ 0, 0 });
 	m_physics2D.setGravity(0.00625f / 8);
 
@@ -62,6 +63,9 @@ Mario::~Mario() {
 void Mario::onCollisionEnter(Collision& col) {
 	int side = m_transform.getRect().tangentSide(col.getCollider());
 
+	if (side == 3 && !col.isTrigger())
+		m_onJump = false;
+
 	if (m_autoControl.isControlled())
 		return;
 
@@ -69,11 +73,7 @@ void Mario::onCollisionEnter(Collision& col) {
 		m_onJump = false;
 		m_state = State::NORMAL;
 
-		if (side == 1) {
-			m_physics2D.setBaseVelocityY(m_speed / 10);
-		}
 		if (side == 0 || side == 2) {
-			m_physics2D.setBaseVelocityY(m_speed);
 			m_onWall = true;
 		}
 	}
@@ -123,6 +123,9 @@ void Mario::onCollisionEnter(Collision& col) {
 		if (!flagPole->isOnLoweringFlag() && !flagPole->isLoweredFlag()) {
 			flagPole->loweringFlag();
 
+			m_physics2D.setEnableGravity(false);
+			m_collision.setTrigger(true);
+
 			Vector2f dest(m_transform.getPosition().x, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
 
 			m_autoControl.addMoveByPoint(dest, 1000, { 0, 0 }, [&](int time) { m_state = State::GRAB_FLAGPOLE; });
@@ -136,6 +139,7 @@ void Mario::onCollisionEnter(Collision& col) {
 					m_direction = Direction::RIGHT;
 					m_state = State::WALK; 
 				});
+			m_autoControl.addAction([&]() { m_physics2D.setEnableGravity(true); m_collision.setTrigger(false); });
 		}
 	}
 
@@ -165,30 +169,21 @@ void Mario::handleMovement() {
 	if (m_autoControl.isControlled())
 		return;
 
-	if (isOnGround()) {
+	/*if (isOnGround()) {
 		m_physics2D.setVelocityY(0);
 		m_physics2D.setBaseVelocityY(0);
-	}
-
-	m_physics2D.setBaseVelocityX(0);
-	m_physics2D.setVelocityX(0);
+	}*/
 
 	m_state = State::NORMAL;
 
-	if (Keyboard::isKeyPressed(Keyboard::A) && (isOnGround() || !isOnWall())) {
-		if (isOnGround()) {
-			m_physics2D.setBaseVelocityX(-2 * m_speed);
-		}
-		else m_physics2D.setBaseVelocityX(-m_speed);
+	if (Keyboard::isKeyPressed(Keyboard::A)) {
+		m_physics2D.setBaseVelocityX(-m_speed);
 
 		m_direction = Direction::LEFT;
 		m_state = State::WALK;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::D) && (isOnGround() || !isOnWall())) {
-		if (isOnGround()) {
-			m_physics2D.setBaseVelocityX(2 * m_speed);
-		}
-		else m_physics2D.setBaseVelocityX(m_speed);
+	if (Keyboard::isKeyPressed(Keyboard::D)) {
+		m_physics2D.setBaseVelocityX(m_speed);
 
 		m_direction = Direction::RIGHT;
 		m_state = State::WALK;

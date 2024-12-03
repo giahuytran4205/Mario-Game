@@ -10,6 +10,7 @@ struct ControlInfo {
 	Vector2f acceleration;
 	function<void(int)> action;
 	function<bool(int)> condition = nullptr;
+	bool isWait = false;
 };
 
 class AutoControl : public Component {

@@ -16,6 +16,7 @@ private:
 	bool m_onGround;
 	bool m_isBounce;
 	bool m_enableGravity;
+	bool m_isElastic;
 	Transform2D* m_transform;
 	
 public:
@@ -49,4 +50,6 @@ public:
 	float getFriction();
 	void setFriction(float friction);
 	void bounce(float velY);
+	void setElastic(bool isElastic);
+	bool isElastic();
 };

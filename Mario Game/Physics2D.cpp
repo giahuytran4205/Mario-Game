@@ -22,6 +22,7 @@ void Physics2D::init() {
 	m_acceleration = { 0, 0 };
 	m_transform = &m_entity->getComponent<Transform2D>();
 	m_enableGravity = true;
+	m_isElastic = false;
 }
 
 void Physics2D::update() {
@@ -144,4 +145,12 @@ void Physics2D::bounce(float velY) {
 	m_baseVelo.y = velY;
 	m_gravity = 0.00625f;
 	m_isBounce = true;
+}
+
+void Physics2D::setElastic(bool isElastic) {
+	m_isElastic = isElastic;
+}
+
+bool Physics2D::isElastic() {
+	return m_isElastic;
 }

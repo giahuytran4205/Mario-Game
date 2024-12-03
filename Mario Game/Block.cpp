@@ -35,7 +35,7 @@ Block::Block(const Vector2f& pos, BlockType type) : Block() {
 	m_transform.setPosition(pos);
 }
 
-Block::Block(Texture& texture, const Vector2f& pos, BlockType type) : Block(pos, type) {
+Block::Block(const Texture& texture, const Vector2f& pos, BlockType type) : Block(pos, type) {
 	m_sprite.setTexture(texture);
 }
 

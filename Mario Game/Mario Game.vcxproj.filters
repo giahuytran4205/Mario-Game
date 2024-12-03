@@ -16,9 +16,6 @@
     <Filter Include="Header Files\UI">
       <UniqueIdentifier>{e606fbac-031d-487e-9201-82bb147ce901}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Componet">
-      <UniqueIdentifier>{29ee27eb-e28e-4bf0-a759-c94125fdb3bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Object">
       <UniqueIdentifier>{39dd40de-391c-40f5-bd5d-97f6b483ca1e}</UniqueIdentifier>
     </Filter>
@@ -37,11 +34,14 @@
     <Filter Include="Source Files\Object">
       <UniqueIdentifier>{290c24fc-4fbf-4898-bf93-1306d3017f10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\State">
-      <UniqueIdentifier>{76081ac4-3cf9-4f07-88e0-86999a4ac389}</UniqueIdentifier>
+    <Filter Include="Header Files\Component">
+      <UniqueIdentifier>{29ee27eb-e28e-4bf0-a759-c94125fdb3bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\State">
-      <UniqueIdentifier>{fc8c2481-4f81-461b-add9-115faf70b437}</UniqueIdentifier>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{f7f8124c-1294-4fc3-9e15-31840267f972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{c5b5e576-cb53-4de1-bbc1-fdea34d15c60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +49,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AnimationType.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files\Component</Filter>
@@ -70,9 +70,6 @@
       <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>Source Files\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
     <ClCompile Include="Common.cpp">
@@ -159,34 +156,34 @@
     <ClCompile Include="Transform2D.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="StateManager.cpp">
-      <Filter>Source Files\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginState.cpp">
-      <Filter>Source Files\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Beanstalk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Lift.cpp">
+      <Filter>Source Files\Object</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Coroutine.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Beanstalk.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="AnimationFactory.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="AutoControl.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="Block.hpp">
       <Filter>Header Files\Object</Filter>
@@ -195,10 +192,10 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="Collision.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="Controller.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="FlagPole.hpp">
       <Filter>Header Files\Object</Filter>
@@ -216,7 +213,7 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="Line.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="Map.hpp">
       <Filter>Header Files\Object</Filter>
@@ -228,13 +225,13 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="Physics2D.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.hpp">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="Rect.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="Slider.hpp">
       <Filter>Header Files\UI</Filter>
@@ -243,10 +240,10 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="SoundComponent.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="SpriteRenderer.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="TextView.hpp">
       <Filter>Header Files\UI</Filter>
@@ -258,7 +255,7 @@
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="Transform2D.hpp">
-      <Filter>Header Files\Componet</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="EventSystem.hpp">
       <Filter>Header Files\UI</Filter>
@@ -287,26 +284,23 @@
     <ClInclude Include="Button.hpp">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="State.hpp">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="StateManager.hpp">
-      <Filter>Header Files\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginState.hpp">
-      <Filter>Header Files\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Beanstalk.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Lift.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Beanstalk.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Coroutine.hpp">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,15 +28,61 @@ void Collision::resolveCollide(Collision& col) {
 	FRect rect = colTF.getRect();
 	rect = {rect.left - m_collider->width / 2, rect.top - m_collider->height / 2, rect.width + m_collider->width, rect.height + m_collider->height};
 
+	Vector2f colVel, bodyVel;
+	if (col.m_entity->hasComponent<Physics2D>()) {
+		colVel = col.m_entity->getComponent<Physics2D>().getVelocity() + col.m_entity->getComponent<Physics2D>().getBaseVelocity();
+	}
+
+	if (m_entity->hasComponent<Physics2D>()) {
+		bodyVel = m_entity->getComponent<Physics2D>().getVelocity() + m_entity->getComponent<Physics2D>().getBaseVelocity();
+	}
+
+	if (col.m_entity->hasComponent<Physics2D>()) {
+		Physics2D& physics = col.m_entity->getComponent<Physics2D>();
+		physics.setBaseVelocity({ 0, 0 });
+		physics.setVelocity({ 0, 0 });
+	}
+
+	if (m_entity->hasComponent<Physics2D>()) {
+		Physics2D& physics = m_entity->getComponent<Physics2D>();
+		physics.setBaseVelocity({ 0, 0 });
+		physics.setVelocity({ 0, 0 });
+	}
+
+
 	if (rect.contains(bodyTF.getLastPosition()) && rect.contains(bodyTF.getPosition())) {
-		bodyTF.adjustPosition(Vector2f(bodyTF.getPosition().x, colTF.getRect().top - m_collider->height / 2));
+		if (colVel.y <= 0)
+			bodyTF.setPosition(bodyTF.getPosition().x, colTF.top - m_collider->height / 2);
+		else {
+			bodyTF.setPosition(bodyTF.getPosition().x, colTF.bottom + m_collider->height / 2);
+			
+			if (m_entity->hasComponent<Physics2D>()) {
+				Physics2D& physics = m_entity->getComponent<Physics2D>();
+				physics.setBaseVelocityY(colVel.y + 0.05);
+			}
+			
+		}
+
 		return;
 	}
 
 	int side;
 	Vector2f tangentPoint = getTangentPoint(col, side);
+	Vector2f vel = bodyTF.getPosition() - tangentPoint;
+	if (side == 0 || side == 2)
+		vel.x = 0;
+	else vel.y = 0;
 
-	bodyTF.adjustPosition(tangentPoint);
+	if (m_entity->hasComponent<Physics2D>()) {
+		Physics2D& physics = m_entity->getComponent<Physics2D>();
+
+		if (side == 3)
+			physics.setBaseVelocityY(colVel.y + 0.05);
+		if (side == 0 || side == 2)
+			physics.setBaseVelocityY(0.1f);
+	}
+
+	bodyTF.adjustPosition(tangentPoint + vel);
 }
 
 void Collision::update() {
@@ -130,26 +176,16 @@ void CollisionManager::update() {
 							continue;
 
 						if (!col->isTrigger() && !item->isTrigger()) {
-							if (tf1.getLastPosition() == tf1.getPosition()) {
-								item->resolveCollide(*col);
+							if (item->m_entity->hasComponent<Physics2D>()) {
+								if (item->m_entity->getComponent<Physics2D>().isElastic())
+									item->resolveCollide(*col);
+								else col->resolveCollide(*item);
 							}
 							else col->resolveCollide(*item);
-
-							if (col->m_entity->hasComponent<Physics2D>()) {
-								Physics2D& physics = col->m_entity->getComponent<Physics2D>();
-								physics.setBaseVelocityY(0);
-								physics.setVelocityY(0);
-							}
-
-							if (item->m_entity->hasComponent<Physics2D>()) {
-								Physics2D& physics = item->m_entity->getComponent<Physics2D>();
-								physics.setBaseVelocityY(0);
-								physics.setVelocityY(0);
-							}
 						}
 
 						col->onCollisionEnter(*item);
-						item->onCollisionEnter(*col);
+						//item->onCollisionEnter(*col);
 					}
 				}
 			}

@@ -45,13 +45,13 @@ Vector2f Line::raycast(const FRect& rect, int& side) {
 	}
 
 	if (a == 0) {
-		if (abs(startPoint.x - rect.left) < abs(startPoint.x - rect.right)) side = 0;
+		if (startPoint.x < endPoint.x) side = 0;
 		else side = 2;
 		return { side == 0 ? rect.left : rect.right, -c / b };
 	}
 
 	if (b == 0) {
-		if (abs(startPoint.y - rect.top) < abs(startPoint.y - rect.bottom)) side = 1;
+		if (startPoint.y < endPoint.y) side = 1;
 		else side = 3;
 		return { -c / a, side == 1 ? rect.top : rect.bottom };
 	}

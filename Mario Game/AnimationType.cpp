@@ -1,5 +1,6 @@
 #include "AnimationType.hpp"
 #include "Common.hpp"
+#include "TextureManager.hpp"
 
 AnimationType::AnimationType() {
 
@@ -19,8 +20,6 @@ AnimationType::AnimationType(string filename) {
 	int size = parsed["tiles"].as_array().size();
 
 	m_anim.assign(size, {});
-	Image tileset;
-	tileset.loadFromFile(imagePath);
 
 	for (auto& item : parsed["tiles"].as_array()) {
 		json::object obj = item.as_object();
@@ -32,7 +31,7 @@ AnimationType::AnimationType(string filename) {
 			int duration = object["duration"].as_int64();
 
 			Frame frame;
-			frame.texture.loadFromImage(tileset, IntRect(id % col * tilewidth, id / col * tileheight, tilewidth, tileheight));
+			frame.texture = TextureManager::getTile(imagePath, IntRect(id % col * tilewidth, id / col * tileheight, tilewidth, tileheight));
 			frame.duration = duration;
 
 			m_anim[state].push_back(frame);

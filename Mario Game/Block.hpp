@@ -24,7 +24,7 @@ protected:
 public:
 	Block();
 	Block(const Vector2f& pos, BlockType type);
-	Block(Texture& texture, const Vector2f& pos, BlockType type);
+	Block(const Texture& texture, const Vector2f& pos, BlockType type);
 	~Block();
 
 	void update() override;

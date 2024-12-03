@@ -15,20 +15,14 @@ FlagPole::FlagPole(Object* parent) : m_sound(addComponent<SoundComponent>()) {
 	m_transform.setAnchor(0.5, 0);
 	m_transform.setSize(16, 160);
 
-	Texture* texture = new Texture();
-	texture->loadFromFile("Resources/Animations/Items&Objects.png", IntRect(128, 16, 16, 16));
-	m_flag.setTexture(*texture);
+	m_flag.setTexture(TextureManager::getTile("Resources/Animations/Items&Objects.png", IntRect(128, 16, 16, 16)));
 	m_flag.getComponent<Transform2D>().setAnchor(1, 0);
 
-	Texture* texture2 = new Texture();
-	texture2->loadFromFile("Resources/Tilesets/Tileset-1.png", IntRect(256, 128, 16, 16));
-	m_pole.setTexture(*texture2);
+	m_pole.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(256, 128, 16, 16)));
 	m_pole.getComponent<Transform2D>().setAnchor(0.5, 0);
 
-	Texture* texture3 = new Texture();
-	texture3->loadFromFile("Resources/Tilesets/Tileset-1.png", { 256, 144, 16, 16 });
-	texture3->setRepeated(true);
-	m_pole1.setTexture(*texture3);
+	m_pole1.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", { 256, 144, 16, 16 }, true));
+	
 	m_pole1.setTextureRect(IntRect(0, 0, 16, 144));
 	m_pole1.getComponent<Transform2D>().setAnchor(0.5, 0);
 
@@ -44,21 +38,21 @@ FlagPole::FlagPole(float x, float y, float width, float height, Object* parent) 
 	m_transform.setPosition(x, y);
 	m_transform.setSize(width, height);
 
-	m_flag.getComponent<Transform2D>().setPosition(x, y + 16);
-	m_pole.getComponent<Transform2D>().setPosition(x, y);
+	m_flag.getComponent<Transform2D>().setPosition(0, 16);
+	m_pole.getComponent<Transform2D>().setPosition(0, 0);
 	
-	m_pole1.getComponent<Transform2D>().setPosition(x, y + 16);
+	m_pole1.getComponent<Transform2D>().setPosition(0, 16);
 }
 
 FlagPole::~FlagPole() {}
 
 void FlagPole::update() {
 	if (m_onLoweringFlag) {
-		Vector2f pos = m_flag.getPosition();
+		Vector2f pos = m_flag.getComponent<Transform2D>().getPosition();
 		pos.y += m_flagSpeed * deltaTime.asMilliseconds();
 
-		if (pos.y >= m_transform.bottom - 16) {
-			pos.y = m_transform.bottom - 16;
+		if (pos.y >= m_transform.height - 16) {
+			pos.y = m_transform.height - 16;
 			m_onLoweringFlag = false;
 			m_isLoweredFlag = true;
 		}

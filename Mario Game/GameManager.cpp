@@ -47,7 +47,7 @@ void GameManager::start() {
 	{
 		m_window.clear();
 
-		m_deltaTime = m_clock.getElapsedTime();
+		m_deltaTime = min(m_clock.getElapsedTime(), milliseconds(10));
 		m_clock.restart();
 
 		m_window.setView(m_view);

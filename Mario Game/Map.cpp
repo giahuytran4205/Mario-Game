@@ -30,23 +30,37 @@ Map::~Map() {
 		delete portal;
 }
 
-json::object Map::readJsonFile(string filename) {
-	ifstream fIn(filename);
-
-	if (!fIn) {
-		cerr << "Cannot open file!";
-		return {};
+void Map::loadTilesets(json::object& data) {
+	for (auto& i : data["tilesets"].as_array()) {
+		json::object& obj = i.as_object();
+		m_tilesets.push_back(pair<int, TileSet&>( obj["firstgid"].as_int64(), TextureManager::getTileset(obj["source"].as_string().c_str()) ));
 	}
+}
 
-	string jsonContent((istreambuf_iterator<char>(fIn)), std::istreambuf_iterator<char>());
+const Texture& Map::getTile(int id) {
+	auto it = upper_bound(m_tilesets.begin(), m_tilesets.end(), pair<int, TileSet>{id, {}},
+		[](const pair<int, TileSet>& a, const pair<int, TileSet>& b)
+		{
+			return a.first < b.first;
+		});
 
-	json::value parsed = json::parse(jsonContent);
-	return parsed.as_object();
+	if (it == m_tilesets.begin())
+		return {};
+
+	--it;
+
+	int numCols = it->second.getSize().x / m_tileWidth;
+
+	id -= it->first;
+
+	return it->second.getTile(IntRect(id % numCols * 16, id / numCols * 16, m_tileWidth, m_tileHeight));
 }
 
 void Map::loadFromJsonFile(string filename) {
 	json::object parsed = readJsonFile(filename);
 	
+	loadTilesets(parsed);
+
 	m_col = parsed["width"].as_int64();
 	m_row = parsed["height"].as_int64();
 	m_tileWidth = parsed["tilewidth"].as_int64();
@@ -58,38 +72,24 @@ void Map::loadFromJsonFile(string filename) {
 		auto& layer = item.as_object();
 		if (layer["name"] == "Graphics Layer") {
 			for (int i = 0; i < layer["data"].as_array().size(); i++) {
-				int id = layer["data"].as_array()[i].as_int64() - 1;
-				if (id == -1 || id >= TextureManager::m_instance->m_tilesets[0].m_tiles.size()) continue;
-				Tile& tile = TextureManager::m_instance->m_tilesets[0][id];
-				int col = TextureManager::m_instance->m_tilesets[0].m_col;
-				if (tile.type == "Coin") {
-					Item* item = new Item(ItemType::Coin, this);
-					item->setAnim(tile.anim);
-					item->getComponent<Transform2D>().setPosition({ i % 211 * 16.0f, i / 211 * 16.0f });
-				}
-				else {
-					Block::BlockType type = Block::EMPTY_BLOCK;
-					if (tile.type == "Ground" || tile.type == "Pipe" || tile.type == "StairBlock" || tile.type == "EmptyBlock")
-						type = Block::TERRAIN;
+				int id = layer["data"].as_array()[i].as_int64();
 
-					if (tile.type == "Brick")
-						type = Block::BRICK;
-
-					if (tile.type == "QuestionBlock")
-						type = Block::QUESTION_BLOCK;
-
-					if (tile.type == "SmallCloud")
-						type = Block::SMALL_CLOUD;
-
-					Block* block = new Block(tile.texture, { i % 211 * 16.0f + 8, i / 211 * 16.0f + 8 }, type);
-					block->setParent(this);
-					m_blocks.push_back(block);
-				}
+				if (id == 0) continue;
+				Block* block = new Block(getTile(id), {i % m_col * 16.0f + 8, i / m_col * 16.0f + 8}, Block::TERRAIN);
+				block->setParent(this);
+				m_blocks.push_back(block);
 			}
 		}
 
 		if (layer["name"] == "Background Layer") {
-			
+			string path = layer["image"].as_string().c_str();
+			m_background.setTexture(TextureManager::getTexture(path));
+		}
+
+		if (layer["name"] == "Spawn Position") {
+			json::object obj = layer["objects"].as_array()[0].as_object();
+			m_spawnPos.x = obj["x"].as_int64();
+			m_spawnPos.y = obj["y"].as_int64();
 		}
 
 		if (layer["name"] == "Teleportation Gate") {
@@ -152,6 +152,10 @@ int Map::colCount() const {
 
 int Map::getCurrentDepth() const {
 	return m_curDepth;
+}
+
+Vector2f Map::getSpawnPos() const {
+	return m_spawnPos;
 }
 
 void Map::render() {
