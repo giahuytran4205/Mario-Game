@@ -38,7 +38,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_physics2D.setGravity(0.00625f / 8);
 
 	m_transform.setSize(16, 16);
-	m_transform.setPosition(150, 0);
+	m_transform.setPosition(150, 50);
 
 	m_anim = &addComponent<Animation>(m_sprite);
 	m_anim->loadFromJsonFile("Resources/Animations/Mario&Luigi.json");

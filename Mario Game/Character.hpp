@@ -5,13 +5,15 @@
 #include "Animation.hpp"
 using namespace sf;
 
+enum Direction {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
+
 class Character : public Object {
 protected:
-	enum Direction {
-		LEFT,
-		RIGHT
-	};
-
 	SpriteRenderer m_sprite;
 	int m_maxHealth;
 	int m_health;

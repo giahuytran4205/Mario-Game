@@ -50,25 +50,36 @@ void Collision::resolveCollide(Collision& col) {
 	}
 
 
-	if (rect.contains(bodyTF.getLastPosition()) && rect.contains(bodyTF.getPosition())) {
-		if (colVel.y <= 0)
-			bodyTF.setPosition(bodyTF.getPosition().x, colTF.top - m_collider->height / 2);
-		else {
-			bodyTF.setPosition(bodyTF.getPosition().x, colTF.bottom + m_collider->height / 2);
-			
-			if (m_entity->hasComponent<Physics2D>()) {
-				Physics2D& physics = m_entity->getComponent<Physics2D>();
-				physics.setBaseVelocityY(colVel.y + 0.05);
+	if (rect.contains(bodyTF.getLastPosition()) && rect.contains(bodyTF.getWorldPosition())) {
+
+		if (abs(colVel.x) > abs(colVel.y)) {
+			if (colVel.x <= 0)
+				bodyTF.setWorldPosition(colTF.left - m_collider->width / 2, bodyTF.getWorldPosition().y);
+			else {
+				bodyTF.setWorldPosition(colTF.right + m_collider->width / 2, bodyTF.getWorldPosition().y);
 			}
-			
+				m_entity->getComponent<Physics2D>().setBaseVelocityY(0.1f);
 		}
 
+		else {
+			if (colVel.y <= 0)
+				bodyTF.setWorldPosition(bodyTF.getWorldPosition().x, colTF.top - m_collider->height / 2);
+			else {
+				bodyTF.setWorldPosition(bodyTF.getWorldPosition().x, colTF.bottom + m_collider->height / 2);
+
+				if (m_entity->hasComponent<Physics2D>()) {
+					Physics2D& physics = m_entity->getComponent<Physics2D>();
+					physics.setBaseVelocityY(colVel.y + 0.05);
+				}
+
+			}
+		}
 		return;
 	}
 
 	int side;
 	Vector2f tangentPoint = getTangentPoint(col, side);
-	Vector2f vel = bodyTF.getPosition() - tangentPoint;
+	Vector2f vel = bodyTF.getWorldPosition() - tangentPoint;
 	if (side == 0 || side == 2)
 		vel.x = 0;
 	else vel.y = 0;
@@ -82,7 +93,7 @@ void Collision::resolveCollide(Collision& col) {
 			physics.setBaseVelocityY(0.1f);
 	}
 
-	bodyTF.adjustPosition(tangentPoint + vel);
+	bodyTF.setWorldPosition(tangentPoint + vel);
 }
 
 void Collision::update() {
@@ -111,7 +122,7 @@ bool Collision::isTrigger() {
 }
 
 Vector2f Collision::getTangentPoint(const Collision& col, int& side) const {
-	Line line(m_entity->getComponent<Transform2D>().getLastPosition(), m_entity->getComponent<Transform2D>().getPosition());
+	Line line(m_entity->getComponent<Transform2D>().getLastPosition(), m_entity->getComponent<Transform2D>().getWorldPosition());
 
 	FRect rect = col.m_entity->getComponent<Transform2D>().getRect();
 	FRect bodyRect = m_entity->getComponent<Transform2D>().getRect();
@@ -172,7 +183,7 @@ void CollisionManager::update() {
 						Transform2D tf1 = col->m_entity->getComponent<Transform2D>();
 						Transform2D tf2 = item->m_entity->getComponent<Transform2D>();
 
-						if (tf1.getLastPosition() == tf1.getPosition() && tf2.getLastPosition() == tf2.getPosition())
+						if (tf1.getLastPosition() == tf1.getWorldPosition() && tf2.getLastPosition() == tf2.getWorldPosition())
 							continue;
 
 						if (!col->isTrigger() && !item->isTrigger()) {

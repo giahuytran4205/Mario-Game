@@ -153,6 +153,7 @@
     <ClCompile Include="AnimationFactory.cpp" />
     <ClCompile Include="AnimationType.cpp" />
     <ClCompile Include="AnimationType.hpp" />
+    <ClCompile Include="BalanceLifts.cpp" />
     <ClCompile Include="Beanstalk.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SingleBalanceLift.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SoundBufferManager.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
@@ -196,6 +198,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.hpp" />
     <ClInclude Include="AnimationFactory.hpp" />
+    <ClInclude Include="BalanceLifts.hpp" />
     <ClInclude Include="Beanstalk.hpp" />
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="Button.hpp" />
@@ -227,6 +230,7 @@
     <ClInclude Include="Rect.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SceneManager.hpp" />
+    <ClInclude Include="SingleBalanceLift.hpp" />
     <ClInclude Include="Slider.hpp" />
     <ClInclude Include="SoundBufferManager.hpp" />
     <ClInclude Include="SoundComponent.hpp" />

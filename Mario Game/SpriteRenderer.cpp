@@ -31,15 +31,6 @@ Sprite& SpriteRenderer::getSprite() {
 	return *this;
 }
 
-void SpriteRenderer::setTexture(const Texture& texture) {
-	Sprite::setTexture(texture);
-}
-
-void SpriteRenderer::setTexture(const Texture& texture, const IntRect& rectangle) {
-	Sprite::setTexture(texture, true);
-	setTextureRect(rectangle);
-}
-
 void SpriteRenderer::setPosition(const Vector2f& pos) {
 	Object::m_transform.setPosition(pos);
 }

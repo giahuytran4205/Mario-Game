@@ -29,6 +29,8 @@ public:
 	void update() override;
 	void setPosition(const Vector2f& position);
 	void setPosition(float x, float y);
+	void setWorldPosition(const Vector2f& position);
+	void setWorldPosition(float x, float y);
 	void setCenter(const Vector2f& center);
 	void setCenter(float x, float y);
 	void setRotation(const Vector2f& rotation);

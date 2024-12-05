@@ -16,8 +16,6 @@ public:
 	void update() override;
 	void render() override;
 	Sprite& getSprite();
-	void setTexture(const Texture& texture);
-	void setTexture(const Texture& texture, const IntRect& rectangle);
 	void setPosition(const Vector2f& pos);
 	void setPosition(float x, float y);
 	void setAnchor(const Vector2f& anchor);

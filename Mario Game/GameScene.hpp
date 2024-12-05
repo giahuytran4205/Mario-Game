@@ -8,6 +8,7 @@
 #include "FlagPole.hpp"
 #include "Beanstalk.hpp"
 #include "Lift.hpp"
+#include "BalanceLifts.hpp"
 
 class GameScene : public Scene {
 private:

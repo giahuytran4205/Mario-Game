@@ -9,14 +9,15 @@ GameScene::GameScene() : m_mario(this), m_jumper(Vector2f(100, 208), this), m_fl
 	//m_map2.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
 
 	//Beanstalk* beanstalk = new Beanstalk({ 220, 200 }, 64, { 0, 100 });
-	Lift* lift = new Lift({ 200, 50 }, 48, 50, 150, { 0, 1 }, 0.05, true, this);
+	BalanceLifts* lift = new BalanceLifts({ 400, 100 }, { 500, 120 }, 50, 20, 0.002f);
+	lift->setParent(this);
 }
 
 GameScene::~GameScene() {}
 
 void GameScene::update() {
 	View& view = GameManager::getInstance()->getView();
-	view.setCenter(m_mario.getComponent<Transform2D>().getPosition().x, view.getCenter().y);
+	view.setCenter(m_mario.getComponent<Transform2D>().getWorldPosition().x, view.getCenter().y);
 }
 
 void GameScene::render() {
