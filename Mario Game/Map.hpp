@@ -28,11 +28,12 @@ private:
 
 public:
 	Map();
+	Map(const string& filename);
 	~Map();
 
 	void render() override;
 	void setBackground(const Texture& texture);
-	void loadFromJsonFile(string filename);
+	void loadFromJsonFile(const string& filename);
 	Vector2i getSize() const;
 	int rowCount() const;
 	int colCount() const;

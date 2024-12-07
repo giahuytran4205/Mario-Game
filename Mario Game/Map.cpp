@@ -15,11 +15,17 @@ using namespace sf;
 
 Map::Map() {
 	m_width = m_height = 0;
+	m_row = m_col = 0;
+	m_tileWidth = m_tileHeight = 0;
 	m_curDepth = 0;
 	m_background.setParent(this);
 	m_background.setPosition(0, 0);
-	m_transform.getRect().setAnchor({ 0, 0 });
+	m_transform.setAnchor( 0, 0 );
 	m_renderOrder = 0;
+}
+
+Map::Map(const string& filename) : Map() {
+	loadFromJsonFile(filename);
 }
 
 Map::~Map() {
@@ -56,7 +62,7 @@ const Texture& Map::getTile(int id) {
 	return it->second.getTile(IntRect(id % numCols * 16, id / numCols * 16, m_tileWidth, m_tileHeight));
 }
 
-void Map::loadFromJsonFile(string filename) {
+void Map::loadFromJsonFile(const string& filename) {
 	json::object parsed = readJsonFile(filename);
 	
 	loadTilesets(parsed);
@@ -132,6 +138,8 @@ void Map::loadFromJsonFile(string filename) {
 			
 		}
 	}
+
+	CollisionManager::getInstance()->resize(m_width, m_height);
 }
 
 void Map::setBackground(const Texture& texture) {
