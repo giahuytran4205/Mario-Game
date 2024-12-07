@@ -10,17 +10,18 @@ BalanceLifts::BalanceLifts(Object* parent) {
 
 	for (int i = 0; i < 2; i++) {
 		m_pivot[i].setParent(this);
-		m_pivot[i].addComponent<Collision>();
+		// FRect(1, 6, 7, 7)
 		m_pivot[i].getComponent<Transform2D>().setAnchor(0.5, 0);
 		m_pivot[i].getComponent<Transform2D>().setSize(16, 16);
 	}
+	m_pivot[0].addComponent<Collision>(FRect(9, 6, 7, 7));
+	m_pivot[1].addComponent<Collision>(FRect(0, 6, 7, 7));
 
 	m_pivot[0].setTexture(TextureManager::getTile("Resources/Tilesets/Items&Objects.png", IntRect(64, 144, 16, 16)));
 	m_pivot[1].setTexture(TextureManager::getTile("Resources/Tilesets/Items&Objects.png", IntRect(80, 160, 16, 16)));
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++)
 		m_cable[i].setParent(this);
-	}
 	
 	m_cable[0].setAnchor(0.5, 0);
 	m_cable[2].setAnchor(0.5, 0);

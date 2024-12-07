@@ -3,6 +3,7 @@
 #include "GUI.hpp"
 #include "Transform2D.hpp"
 #include "Line.hpp"
+#include "GameManager.hpp"
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -13,8 +14,7 @@ private:
 	CircleShape m_handleShape;
 
 public:
-	Handle();
-	Handle(RenderWindow& window, Object* parent = nullptr);
+	Handle(Object* parent = nullptr);
 	~Handle();
 
 	void update() override;
@@ -43,14 +43,13 @@ public:
 		m_parent = parent;
 	}
 
-	Slider(RenderWindow& window, const T& minVal, const T& maxVal, const T& val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(window, this) {
-		m_window = &window;
+	Slider(T minVal, T maxVal, T width, T val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(this) {
 		m_parent = parent;
 		m_transform.setPosition(pos);
 		m_transform.getRect() = { pos.x, pos.y, maxVal, 10 };
 
-		m_background.setSize({ maxVal, 5 });
-		m_fillArea.setSize({ maxVal, 5 });
+		m_background.setSize({ width, 5 });
+		m_fillArea.setSize({ width, 5 });
 
 		m_background.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_background.getSize().y / 2));
 		m_fillArea.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_fillArea.getSize().y / 2));
@@ -71,7 +70,7 @@ public:
 		if (dragPos.x < m_transform.getRect().left) dragPos.x = m_transform.getRect().left;
 		if (dragPos.x > m_transform.getRect().right) dragPos.x = m_transform.getRect().right;
 
-		T tempVal = dragPos.x - m_transform.getRect().left;
+		T tempVal = (dragPos.x - m_transform.left) / m_transform.width * (m_maxVal - m_minVal) + m_minVal;
 
 		if (tempVal != m_value) {
 			m_value = tempVal;
@@ -82,8 +81,8 @@ public:
 		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.getRect().left, m_handle.getComponent<Transform2D>().getPosition().y });
 		m_fillArea.setScale({ m_value / m_transform.getRect().width, 1 });
 
-		m_window->draw(m_background);
-		m_window->draw(m_fillArea);
+		GameManager::getInstance()->getRenderWindow()->draw(m_background);
+		GameManager::getInstance()->getRenderWindow()->draw(m_fillArea);
 	}
 
 	T getValue() {

@@ -2,12 +2,7 @@
 #include "Slider.hpp"
 #include <iostream>
 
-Handle::Handle() {
-
-}
-
-Handle::Handle(RenderWindow& window, Object* parent) : m_handleShape(5, 500) {
-	m_window = &window;
+Handle::Handle(Object* parent) : m_handleShape(5, 500) {
 	m_parent = parent;
 	m_transform.setParent(parent);
 	m_transform.getRect() = { 0, 0, 20, 20 };
@@ -33,7 +28,7 @@ void Handle::update() {
 }
 
 void Handle::render() {
-	m_window->draw(m_handleShape);
+	GameManager::getInstance()->getRenderWindow().draw(m_handleShape);
 }
 
 void Handle::onDrag(const Vector2f& mousePos) {

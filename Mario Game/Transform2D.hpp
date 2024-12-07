@@ -21,6 +21,8 @@ public:
 	Vector2f getLastPosition();
 	Vector2f getRotation();
 	Vector2f getWorldPosition();
+	Vector2f getLastCenter();
+	Vector2f getWorldCenter();
 	Vector2f transformPoint(const Vector2f& point);
 	Vector2f transformPoint(float x, float y);
 	Vector2f reverseTransformPoint(const Vector2f& point);

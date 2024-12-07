@@ -81,7 +81,7 @@ void Transform2D::setWorldPosition(float x, float y) {
 }
 
 void Transform2D::setCenter(const Vector2f& center) {
-	setPosition(center - getSize() / 2.0f);
+	setPosition(center - m_center + getWorldPosition());
 }
 
 void Transform2D::setCenter(float x, float y) {
@@ -104,6 +104,14 @@ Vector2f Transform2D::getWorldPosition() {
 		return m_parent->getComponent<Transform2D>().getWorldPosition() + m_pos;
 	}
 	return m_pos;
+}
+
+Vector2f Transform2D::getLastCenter() {
+	return m_lastPos + transformPoint(m_center);
+}
+
+Vector2f Transform2D::getWorldCenter() {
+	return m_center;
 }
 
 void Transform2D::setRotation(const Vector2f& rotation) {
