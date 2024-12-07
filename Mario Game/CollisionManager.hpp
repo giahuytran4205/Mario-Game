@@ -1,3 +1,4 @@
+#pragma once
 #include "Collision.hpp"
 #include "Physics2D.hpp"
 #include "Transform2D.hpp"
