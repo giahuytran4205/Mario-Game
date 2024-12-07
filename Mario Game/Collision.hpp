@@ -1,7 +1,11 @@
 #pragma once
 #include "Common.hpp"
 #include "SFML/Graphics.hpp"
+#include "CollisionManager.hpp"
+#include "Transform2D.hpp"
+#include "Physics2D.hpp"
 #include "Rect.hpp"
+#include "Line.hpp"
 #include <vector>
 using namespace sf;
 using namespace std;
@@ -28,23 +32,4 @@ public:
 	bool isTrigger();
 	FRect getCollider() const;
 	Vector2f getTangentPoint(const Collision& col, int& side) const;
-};
-
-class CollisionManager {
-private:
-	vector<vector<vector<Collision*>>> m_grid;
-	int m_width;
-	int m_height;
-	int m_gridSize;
-	static vector<Collision*> m_colliders;
-
-public:
-	CollisionManager();
-	CollisionManager(const Vector2i& size, int gridSize);
-	CollisionManager(int width, int height, int gridSize);
-	~CollisionManager();
-
-	static void addCollider(Collision* collider);
-	void update();
-	void refresh();
 };
