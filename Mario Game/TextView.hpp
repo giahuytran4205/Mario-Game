@@ -10,6 +10,9 @@
 // 1. TextView include GameManager
 // 2. GameManager include LoginScene
 // 3. Login Scene include TextView
+
+constexpr float DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT = 0.33333f;
+
 class TextView : public Object, public sf::Text {
 private:
 	void wrapText();

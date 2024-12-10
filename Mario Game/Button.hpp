@@ -22,23 +22,23 @@ private:
 
 public:
 	Button(Object* parent = nullptr);
-	Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action = nullptr, Object* parent = nullptr);
+	Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr, Object* parent = nullptr);
 	~Button();
 
-	void configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action = nullptr);
+	void configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr);
 
 	void setRenderWindow(sf::RenderWindow* window);
-	//void setAction(std::function<void()> action);
-	//void setPosition(const sf::Vector2f& position);
-	//void setSize(const sf::Vector2f& size);
-	//void setContent(const std::string& content);
-	//void setFont(const sf::Font& font);
-	//void setButtonFillColor(const sf::Color& color);
-	//void setTextViewFillColor(const sf::Color& color);
+	void setAction(std::function<void()> action);
+	void setPosition(const sf::Vector2f& position);
+	void setSize(const sf::Vector2f& size);
+	void setContent(const std::string& content);
+	void setFont(const sf::Font& font);
+	void setButtonFillColor(const sf::Color& color);
+	void setTextViewFillColor(const sf::Color& color);
 
-	//void onHovered() override;
-	//void onUnhovered() override;
-	//void onPressed() override;
-	//void onClick() override;
+	void onHovered() override;
+	void onUnhovered() override;
+	void onPressed() override;
+	void onClick() override;
 	void render() override;
 };

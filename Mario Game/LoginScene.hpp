@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Scene.hpp"
-#include "TextView.hpp"
 #include "Button.hpp"
+#include "TextView.hpp"
+#include "InputField.hpp"
 // Include Manager
+#include "FontManager.hpp"
 #include "GameManager.hpp"
 #include "SceneManager.hpp"
-#include "FontManager.hpp"
 #include "TextureManager.hpp"
 
 constexpr float LOGINSCENE_SPACE_DISTANCE = 25;
@@ -14,22 +15,26 @@ constexpr float LOGINSCENE_SPACE_DISTANCE = 25;
 class LoginScene : public Scene
 {
 private:
-	sf::Vector2f m_getUsernameInputFieldSize(sf::RenderWindow& window);
-	sf::Vector2f m_getPasswordInputFieldSize(sf::RenderWindow& window);
-	sf::Vector2f m_getConfirmButtonSize(sf::RenderWindow& window);
-	sf::Vector2f m_getUsernameTextViewSize(sf::RenderWindow& window);
-	sf::Vector2f m_getPasswordTextViewSize(sf::RenderWindow& window);
-	sf::Vector2f m_getTitleTextViewSize(sf::RenderWindow& window);
+	sf::Vector2f getConfirmButtonSize(sf::RenderWindow& window);
+	sf::Vector2f getTitleTextViewSize(sf::RenderWindow& window);
+	sf::Vector2f getUsernameTextViewSize(sf::RenderWindow& window);
+	sf::Vector2f getPasswordTextViewSize(sf::RenderWindow& window);
+	sf::Vector2f getUsernameInputFieldSize(sf::RenderWindow& window);
+	sf::Vector2f getPasswordInputFieldSize(sf::RenderWindow& window);
 
-	sf::Vector2f m_getUsernameInputFieldPosition(sf::RenderWindow& window);
-	sf::Vector2f m_getPasswordInputFieldPosition(sf::RenderWindow& window);
-	sf::Vector2f m_getConfirmButtonPosition(sf::RenderWindow& window);
-	sf::Vector2f m_getUsernameTextViewPosition(sf::RenderWindow& window);
-	sf::Vector2f m_getPasswordTextViewPosition(sf::RenderWindow& window);
-	sf::Vector2f m_getTitleTextViewPosition(sf::RenderWindow& window);
+	sf::Vector2f getConfirmButtonPosition(sf::RenderWindow& window);
+	sf::Vector2f getTitleTextViewPosition(sf::RenderWindow& window);
+	sf::Vector2f getUsernameTextViewPosition(sf::RenderWindow& window);
+	sf::Vector2f getPasswordTextViewPosition(sf::RenderWindow& window);
+	sf::Vector2f getPasswordInputFieldPosition(sf::RenderWindow& window);
+	sf::Vector2f getUsernameInputFieldPosition(sf::RenderWindow& window);
 
-	TextView m_title;
 	Button m_confirm;
+	TextView m_title;
+	TextView m_usernameText;
+	TextView m_passwordText;
+	InputField m_usernameInput;
+	InputField m_passwordInput;
 	//SpriteRenderer m_background;
 
 public:

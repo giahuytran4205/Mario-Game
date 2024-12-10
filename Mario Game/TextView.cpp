@@ -94,7 +94,7 @@ void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& 
 {
 	m_table = FRect(tablePosition.x, tablePosition.y, tableSize.x, tableSize.y);
 
-	m_ratioCharSizeTableHeight = 0.5f;
+	m_ratioCharSizeTableHeight = DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT;
 
 	this->setFont(font);
 
