@@ -12,8 +12,8 @@ private:
 	vector<void (*)(bool isOn)> m_listeners;
 
 public:
-	Toggle();
-	Toggle(RenderWindow& window, Texture& onTexture, Texture& offTexture, void (*action) (bool isOn) = nullptr, Object* parent = nullptr);
+	Toggle(Object* parent = nullptr);
+	Toggle(const Texture& onTexture, const Texture& offTexture, void (*action) (bool isOn) = nullptr, Object* parent = nullptr);
 	~Toggle();
 
 	void onClick() override;

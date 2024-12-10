@@ -38,23 +38,24 @@ private:
 	vector<void (*)(T)> m_listeners;
 
 public:
-	Slider(Object* parent = nullptr) : m_value(0), m_minVal(0), m_maxVal(1) {
+	Slider(Object* parent = nullptr) : GUI(parent) {
 		m_handle.getComponent<Transform2D>().setPosition(m_transform.getPosition());
-		m_parent = parent;
+		m_value = 0;
+		m_minVal = 0;
+		m_maxVal = 0;
 	}
 
-	Slider(T minVal, T maxVal, T width, T val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(this) {
-		m_parent = parent;
+	Slider(T minVal, T maxVal, T width, T val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : GUI(parent), m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(this) {
 		m_transform.setPosition(pos);
-		m_transform.getRect() = { pos.x, pos.y, maxVal, 10 };
+		m_transform.getRect() = { pos.x, pos.y, width, 1 };
 
-		m_background.setSize({ width, 5 });
-		m_fillArea.setSize({ width, 5 });
+		m_background.setSize({ width, 2 });
+		m_fillArea.setSize({ width, 2 });
 
 		m_background.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_background.getSize().y / 2));
 		m_fillArea.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_fillArea.getSize().y / 2));
 
-		m_background.setOutlineThickness(2);
+		m_background.setOutlineThickness(1);
 		m_background.setOutlineColor(Color(150, 150, 150));
 
 		m_background.setFillColor(Color(150, 150, 150));
@@ -79,10 +80,12 @@ public:
 		}
 
 		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.getRect().left, m_handle.getComponent<Transform2D>().getPosition().y });
-		m_fillArea.setScale({ m_value / m_transform.getRect().width, 1 });
+		m_fillArea.setScale({ (T)m_value / (m_maxVal - m_minVal), 1 });
+	}
 
-		GameManager::getInstance()->getRenderWindow()->draw(m_background);
-		GameManager::getInstance()->getRenderWindow()->draw(m_fillArea);
+	void render() override {
+		GameManager::getInstance()->getRenderWindow().draw(m_background);
+		GameManager::getInstance()->getRenderWindow().draw(m_fillArea);
 	}
 
 	T getValue() {

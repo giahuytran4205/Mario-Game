@@ -7,12 +7,11 @@
 #include <iostream>
 using namespace sf;
 
-Toggle::Toggle() {}
+Toggle::Toggle(Object* parent) : GUI(parent) {
+	m_isOn = false;
+}
 
-Toggle::Toggle(RenderWindow& window, Texture& onTexture, Texture& offTexture, void (*action) (bool isOn), Object* parent)
-	: m_onTexture(onTexture), m_offTexture(offTexture)
-{
-	m_window = &window;
+Toggle::Toggle(const Texture& onTexture, const Texture& offTexture, void (*action) (bool isOn), Object* parent) : m_onTexture(onTexture), m_offTexture(offTexture) {
 	m_isOn = false;
 	m_parent = parent;
 	m_background.setTexture(m_offTexture);
