@@ -21,8 +21,8 @@ private:
 	sf::Vector2f m_getPasswordTextViewSize(sf::RenderWindow& window);
 	sf::Vector2f m_getTitleTextViewSize(sf::RenderWindow& window);
 
-	sf::Vector2f m_getUsernamePosition(sf::RenderWindow& window);
-	sf::Vector2f m_getPasswordPosition(sf::RenderWindow& window);
+	sf::Vector2f m_getUsernameInputFieldPosition(sf::RenderWindow& window);
+	sf::Vector2f m_getPasswordInputFieldPosition(sf::RenderWindow& window);
 	sf::Vector2f m_getConfirmButtonPosition(sf::RenderWindow& window);
 	sf::Vector2f m_getUsernameTextViewPosition(sf::RenderWindow& window);
 	sf::Vector2f m_getPasswordTextViewPosition(sf::RenderWindow& window);

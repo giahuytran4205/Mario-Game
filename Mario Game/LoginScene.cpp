@@ -38,14 +38,14 @@ sf::Vector2f LoginScene::m_getTitleTextViewSize(sf::RenderWindow& window)
 
 // POSITION
 
-sf::Vector2f LoginScene::m_getUsernamePosition(sf::RenderWindow& window)
+sf::Vector2f LoginScene::m_getUsernameInputFieldPosition(sf::RenderWindow& window)
 {
 	return { (window.getSize().x - m_getUsernameInputFieldSize(window).x) / 2.0f, window.getSize().y / 2.0f - m_getUsernameInputFieldSize(window).y };
 }
 
-sf::Vector2f LoginScene::m_getPasswordPosition(sf::RenderWindow& window)
+sf::Vector2f LoginScene::m_getPasswordInputFieldPosition(sf::RenderWindow& window)
 {
-	sf::Vector2f position = m_getUsernamePosition(window);
+	sf::Vector2f position = m_getUsernameInputFieldPosition(window);
 	position.y += m_getUsernameInputFieldSize(window).y;
 	position.y += LOGINSCENE_SPACE_DISTANCE;
 	return position;
@@ -61,22 +61,22 @@ sf::Vector2f LoginScene::m_getConfirmButtonPosition(sf::RenderWindow& window)
 
 sf::Vector2f LoginScene::m_getUsernameTextViewPosition(sf::RenderWindow& window)
 {
-	sf::Vector2f position = m_getUsernamePosition(window);
+	sf::Vector2f position = m_getUsernameInputFieldPosition(window);
 	sf::Vector2f size = m_getUsernameTextViewSize(window);
 	return { position.x - size.x, position.y };
 }
 
 sf::Vector2f LoginScene::m_getPasswordTextViewPosition(sf::RenderWindow& window)
 {
-	sf::Vector2f position = m_getPasswordPosition(window);
+	sf::Vector2f position = m_getPasswordInputFieldPosition(window);
 	sf::Vector2f size = m_getPasswordTextViewSize(window);
 	return { position.x - size.x, position.y };
 }
 
 sf::Vector2f LoginScene::m_getTitleTextViewPosition(sf::RenderWindow& window)
 {
-	sf::Vector2f position = m_getUsernamePosition(window);
-	position.x += m_getUsernamePosition(window).x / 2.0f - m_getTitleTextViewSize(window).x / 2.0f;
+	sf::Vector2f position = m_getUsernameInputFieldPosition(window);
+	position.x += m_getUsernameInputFieldPosition(window).x / 2.0f - m_getTitleTextViewSize(window).x / 2.0f;
 	position.y -= (m_getTitleTextViewSize(window).y + LOGINSCENE_SPACE_DISTANCE);
 	return position;
 }
@@ -97,23 +97,23 @@ LoginScene::LoginScene()
 	m_title.setRenderWindow(&window);
 	m_confirm.setRenderWindow(&window);
 
-	sf::Vector2f usernameSize = m_getUsernameInputFieldSize(window);
-	sf::Vector2f passwordSize = m_getPasswordInputFieldSize(window);
-	sf::Vector2f confirmSize = m_getConfirmButtonSize(window);
+	sf::Vector2f usernameInputFieldSize = m_getUsernameInputFieldSize(window);
+	sf::Vector2f passwordInputFieldSize = m_getPasswordInputFieldSize(window);
+	sf::Vector2f confirmButtonSize = m_getConfirmButtonSize(window);
 	sf::Vector2f usernameTextViewSize = m_getUsernameTextViewSize(window);
 	sf::Vector2f passwordTextViewSize = m_getPasswordTextViewSize(window);
-	sf::Vector2f titleSize = m_getTitleTextViewSize(window);
+	sf::Vector2f titleTextViewSize = m_getTitleTextViewSize(window);
 
-	sf::Vector2f usernamePosition = m_getUsernamePosition(window);
-	sf::Vector2f passwordPosition = m_getPasswordPosition(window);
-	sf::Vector2f confirmPosition = m_getConfirmButtonPosition(window);
+	sf::Vector2f usernameInputFieldPosition = m_getUsernameInputFieldPosition(window);
+	sf::Vector2f passwordInputFieldPosition = m_getPasswordInputFieldPosition(window);
+	sf::Vector2f confirmButtonPosition = m_getConfirmButtonPosition(window);
 	sf::Vector2f usernameTextViewPosition = m_getUsernameTextViewPosition(window);
 	sf::Vector2f passwordTextViewPosition = m_getPasswordTextViewPosition(window);
-	sf::Vector2f titlePosition = m_getTitleTextViewPosition(window);
+	sf::Vector2f titleTextViewPosition = m_getTitleTextViewPosition(window);
 
-	m_title.configure(titlePosition, titleSize, "MARIO GAME", FontManager::getInstance()->getFont("SUPERMARIO256"));
+	m_title.configure(titleTextViewPosition, titleTextViewSize, "MARIO GAME", FontManager::getInstance()->getFont("SUPERMARIO256"));
 	m_title.setFillColor(sf::Color::White);
-	m_confirm.configure(confirmPosition, confirmSize, "CONFIRM", FontManager::getInstance()->getFont("ARIAL"), sf::Color::Red, []()
+	m_confirm.configure(confirmButtonPosition, confirmButtonSize, "CONFIRM", FontManager::getInstance()->getFont("ARIAL"), sf::Color::Red, []()
 		{
 			std::cout << "CONFIRM BUTTON" << std::endl;
 		});
