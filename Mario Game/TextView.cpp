@@ -144,6 +144,7 @@ void TextView::render()
 {
     if (m_window != nullptr)
     {
+		std::cout << "TextView::render: m_window is not nullptr!" << std::endl;
 		m_window->draw(*this);
     }
 }

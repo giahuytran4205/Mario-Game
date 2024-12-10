@@ -95,7 +95,7 @@ LoginScene::LoginScene()
 
 	// SET RENDER WINDOW FOR TEXT VIEW, BUTTON, INPUT FIELD, ...
 	m_title.setRenderWindow(&window);
-	//m_confirm.setRenderWindow(&window);
+	m_confirm.setRenderWindow(&window);
 
 	sf::Vector2f usernameSize = m_getUsernameInputFieldSize(window);
 	sf::Vector2f passwordSize = m_getPasswordInputFieldSize(window);
@@ -113,10 +113,10 @@ LoginScene::LoginScene()
 
 	m_title.configure(titlePosition, titleSize, "MARIO GAME", FontManager::getInstance()->getFont("SUPERMARIO256"));
 	m_title.setFillColor(sf::Color::White);
-	//m_confirm.configure(confirmPosition, confirmSize, "CONFIRM", FontManager::getInstance()->getFont("ARIAL"), Color::Red, []()
-	//	{
-	//		std::cout << "CONFIRM BUTTON" << std::endl;
-	//	});
+	m_confirm.configure(confirmPosition, confirmSize, "CONFIRM", FontManager::getInstance()->getFont("ARIAL"), sf::Color::Red, []()
+		{
+			std::cout << "CONFIRM BUTTON" << std::endl;
+		});
 }
 
 LoginScene::~LoginScene()

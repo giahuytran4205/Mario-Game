@@ -13,21 +13,21 @@
 class Button : public GUI
 {
 private:	
-	//sf::RectangleShape m_rectShape;
-	//TextView m_textView;
-	//std::function<void()> m_action;
-	//
-	//// Mandatory
-	//sf::RenderWindow* m_window;
+	sf::RectangleShape m_rectShape;
+	TextView m_textView;
+	std::function<void()> m_action;
+	
+	// Mandatory
+	sf::RenderWindow* m_window;
 
 public:
-	//Button(Object* parent = nullptr);
-	//Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action = nullptr, Object* parent = nullptr);
-	//~Button();
+	Button(Object* parent = nullptr);
+	Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action = nullptr, Object* parent = nullptr);
+	~Button();
 
-	//void configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action = nullptr);
+	void configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action = nullptr);
 
-	//void setRenderWindow(sf::RenderWindow* window);
+	void setRenderWindow(sf::RenderWindow* window);
 	//void setAction(std::function<void()> action);
 	//void setPosition(const sf::Vector2f& position);
 	//void setSize(const sf::Vector2f& size);
@@ -40,5 +40,5 @@ public:
 	//void onUnhovered() override;
 	//void onPressed() override;
 	//void onClick() override;
-	//void render() override;
+	void render() override;
 };

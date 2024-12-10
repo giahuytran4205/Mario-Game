@@ -1,46 +1,44 @@
 #include "Button.hpp"
 
-//Button::Button(Object* parent) : m_window(nullptr)
-//{
-//	this->setParent(parent);
+Button::Button(Object* parent) 
+	: m_window(nullptr)
+{
+	this->setParent(parent);
+
+	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font(), sf::Color::White, nullptr);
+}
+
+Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action, Object* parent) 
+	: m_window(nullptr)
+{
+	this->setParent(parent);
+
+	configure(position, size, content, font, color, action);
+}
+
+Button::~Button()
+{
+}
+
+void Button::configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action)
+{
+	m_rectShape.setPosition(position);
+	m_rectShape.setSize(size);
+	m_rectShape.setFillColor(color);
+
+	m_textView.configure(position, size, content, font);
+
+	m_action = action;
+}
 //
-//	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font(), sf::Color::White, nullptr);
-//}
-//
-//Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action, Object* parent) : m_window(nullptr)
-//{
-//	this->setParent(parent);
-//
-//	configure(position, size, content, font, color, action);
-//}
-//
-//Button::~Button()
-//{
-//}
-//
-//void Button::configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, const sf::Color& color, std::function<void()> action)
-//{
-//	m_rectShape.setPosition(position);
-//	m_rectShape.setSize(size);
-//	m_rectShape.setFillColor(color);
-//
-//	m_textView.setRenderWindow(m_window);
-//	m_textView.configure(position, size, content, font);
-//
-//	m_action = action;
-//}
-//
-//void Button::setRenderWindow(sf::RenderWindow* window)
-//{
-//	if (window == nullptr)
-//	{
-//		std::cout << "Button::setRenderWindow: window is nullptr!" << std::endl;
-//		return;
-//	}
-//
-//	m_window = window;
-//	m_textView.setRenderWindow(window);
-//}
+void Button::setRenderWindow(sf::RenderWindow* window)
+{
+	if (window != nullptr)
+	{
+		m_window = window;
+		m_textView.setRenderWindow(window);
+	}
+}
 //
 //void Button::setAction(std::function<void()> action)
 //{
@@ -112,14 +110,11 @@
 //	}
 //}
 //
-//void Button::render()
-//{
-//	if (m_window == nullptr)
-//	{
-//		std::cout << "Button::render: m_window is nullptr!" << std::endl;
-//		return;
-//	}
-//
-//	//m_window->draw(m_rectShape);
-//	// m_window->draw(m_textView);
-//}
+void Button::render()
+{
+	if (m_window != nullptr)
+	{
+		m_window->draw(m_rectShape);
+		// m_window->draw(m_textView);
+	}
+}
