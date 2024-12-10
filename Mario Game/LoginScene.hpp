@@ -28,9 +28,9 @@ private:
 	sf::Vector2f m_getPasswordTextViewPosition(sf::RenderWindow& window);
 	sf::Vector2f m_getTitleTextViewPosition(sf::RenderWindow& window);
 
-	//TextView m_title;
-	Button m_confirm;
-	 //SpriteRenderer m_background;
+	TextView m_title;
+	//Button m_confirm;
+	//SpriteRenderer m_background;
 
 public:
 	LoginScene();
