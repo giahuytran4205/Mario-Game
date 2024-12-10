@@ -82,7 +82,7 @@ sf::Vector2f LoginScene::m_getTitlePosition(sf::RenderWindow& window)
 }
 
 LoginScene::LoginScene() :
-	m_title(this)
+	m_title()
 {
 	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
 	sf::View& view = GameManager::getInstance()->getView();
@@ -91,6 +91,9 @@ LoginScene::LoginScene() :
 	view.reset(FloatRect(0, 0, window.getSize().x, window.getSize().y));
 	view.setViewport(FloatRect(0, 0, 1, 1));
 	window.setView(view);
+
+	// SET RENDER WINDOW FOR TEXT VIEW, BUTTON, INPUT FIELD, ...
+	m_title.setRenderWindow(&window);
 
 	sf::Vector2f usernameSize = m_getUsernameSize(window);
 	sf::Vector2f passwordSize = m_getPasswordSize(window);
@@ -105,7 +108,6 @@ LoginScene::LoginScene() :
 	sf::Vector2f usernameTextViewPosition = m_getUsernameTextViewPosition(window);
 	sf::Vector2f passwordTextViewPosition = m_getPasswordTextViewPosition(window);
 	sf::Vector2f titlePosition = m_getTitlePosition(window);
-
 
 	m_title.configure(FRect(titlePosition.x, titlePosition.y, titleSize.x, titleSize.y), "MARIO GAME", FontManager::getInstance()->getFont("SUPERMARIO256"));
 	m_title.setFillColor(sf::Color::White);

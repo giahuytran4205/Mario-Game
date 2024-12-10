@@ -2,14 +2,11 @@
 
 #include "Scene.hpp"
 #include "TextView.hpp"
-#include "Enum.hpp"
 // Include Manager
+#include "GameManager.hpp"
 #include "SceneManager.hpp"
 #include "FontManager.hpp"
 #include "TextureManager.hpp"
-// Include Library
-#include <SFML/Graphics.hpp>
-#include <iostream>
 
 constexpr float LOGINSCENE_SPACE_DISTANCE = 25;
 

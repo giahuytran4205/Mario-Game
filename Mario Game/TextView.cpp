@@ -61,7 +61,7 @@ void TextView::wrapText()
         m_table.top + m_table.height / 2.0f);
 }
 
-TextView::TextView(Object* parent)
+TextView::TextView(Object* parent) : m_window(nullptr)
 {
 	this->setParent(parent);
 
@@ -76,7 +76,7 @@ TextView::TextView(Object* parent)
 	this->setStyle(sf::Text::Regular);
 }
 
-TextView::TextView(const FRect& table, const std::string& content, const sf::Font& font, Object* parent)
+TextView::TextView(const FRect& table, const std::string& content, const sf::Font& font, Object* parent) : m_window(nullptr)
 {
 	this->setParent(parent);
 
@@ -95,6 +95,17 @@ TextView::TextView(const FRect& table, const std::string& content, const sf::Fon
 
 TextView::~TextView()
 {
+}
+
+void TextView::setRenderWindow(sf::RenderWindow* window)
+{
+	if (window == nullptr)
+	{
+		std::cout << "TextView::setRenderWindow: window is nullptr!" << std::endl;
+		return;
+	}
+
+	m_window = window;
 }
 
 void TextView::configure(const FRect& table, const std::string& content, const sf::Font& font)
@@ -127,6 +138,8 @@ const FRect& TextView::getTable() const
 
 void TextView::render()
 {
-	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
-	window.draw(*this);
+    if (m_window != nullptr)
+    {
+		m_window->draw(*this);
+    }
 }
