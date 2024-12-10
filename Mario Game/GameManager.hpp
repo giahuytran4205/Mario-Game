@@ -11,7 +11,7 @@ using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
 
-class GameManager : IEventListener {
+class GameManager : public IEventListener {
 private:
 	static GameManager* m_instance;
 	EntitiesManager m_entitiesManager;

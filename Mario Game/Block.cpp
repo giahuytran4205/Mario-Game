@@ -18,6 +18,7 @@ Block::Block() : m_physics2D(addComponent<Physics2D>()) {
 	m_transform.setAnchor(0.5, 0.5);
 
 	m_sprite.setParent(this);
+	m_sprite.setRenderOrder(2);
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
 
 	m_collision = nullptr;

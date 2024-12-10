@@ -2,12 +2,12 @@
 #include "Slider.hpp"
 #include <iostream>
 
-Handle::Handle(Object* parent) : m_handleShape(5, 500) {
-	m_parent = parent;
-	m_transform.setParent(parent);
-	m_transform.getRect() = { 0, 0, 20, 20 };
+Handle::Handle(Object* parent) : GUI(parent) {
+	m_handleShape = CircleShape(2);
+	m_transform.setAnchor(0.5, 0.5);
+	m_transform.setSize(6, 6);
 	m_handleShape.setFillColor(Color(150, 150, 150));
-	m_handleShape.setOutlineThickness(3);
+	m_handleShape.setOutlineThickness(1);
 	m_handleShape.setOutlineColor(Color(70, 70, 70));
 }
 

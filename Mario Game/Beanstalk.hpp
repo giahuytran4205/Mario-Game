@@ -10,7 +10,7 @@ private:
 	float m_growRate;
 	bool m_isOnGrowUp;
 	bool m_isMature;
-	float m_height;
+	float m_maxHeight;
 	Vector2f m_destination;
 
 public:

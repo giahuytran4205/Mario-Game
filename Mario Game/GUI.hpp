@@ -10,7 +10,7 @@ using namespace sf;
 class GUI : public Object, public IEventListener {
 protected:
 	SpriteRenderer m_background;
-	RenderWindow* m_window;
+	RenderWindow& m_window;
 	bool m_isSelected;
 	bool m_isPressed;
 	bool m_isHovered;
@@ -18,9 +18,9 @@ protected:
 	bool m_isInteractable;
 
 public:
-	GUI();
-	GUI(const FRect& rect, RenderWindow* window, Object* parent = nullptr);
-	GUI(float left, float top, float width, float height, RenderWindow* window, Object* parent = nullptr);
+	GUI(Object* parent = nullptr);
+	GUI(const FRect& rect, Object* parent = nullptr);
+	GUI(float left, float top, float width, float height, Object* parent = nullptr);
 	~GUI();
 
 	void update() override;

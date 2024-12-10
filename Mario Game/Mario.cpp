@@ -28,6 +28,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 
 	m_sprite.setParent(this);
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
+	setRenderOrder(3);
 
 	Texture* texture = new Texture();
 	texture->loadFromFile("Goomba.png");
@@ -52,6 +53,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_onJump = false;
 	m_onJumper = false;
 	m_onGrabFlagPole = false;
+	m_isDead = false;
 
 	m_teleportTime = 0;
 }
@@ -223,7 +225,7 @@ void Mario::teleport(const Portal& portal) {
 	m_physics2D.setVelocity({ 0, 0 });
 
 	m_collision.setTrigger(true);
-	m_renderOrder = 1;
+	setRenderOrder(1);
 
 	Vector2f dist = m_enteredPortal.getComponent<Transform2D>().getCenter() - m_transform.getPosition() + Vector2f(16, 16);
 	dist.x *= m_enteredPortal.getInDirection().x;
@@ -234,7 +236,7 @@ void Mario::teleport(const Portal& portal) {
 		[&](int time) {
 			m_collision.setTrigger(false);
 			m_physics2D.setEnableGravity(true);
-			m_renderOrder = 3;
+			setRenderOrder(3);
 			GameManager::getInstance()->getView().setCenter(m_transform.getPosition().x, m_enteredPortal.getDestDepth() * 240 + 120);
 			m_onTeleport = false;
 		});
@@ -246,14 +248,28 @@ void Mario::onGrabFlagPole() {
 
 }
 
-bool Mario::isOnGround() {
+void Mario::dead() {
+	m_isDead = true;
+	m_state = State::DIE;
+	m_physics2D.setVelocity({ 0, 0 });
+	m_physics2D.setBaseVelocityX(0);
+	m_physics2D.setBaseVelocityY(-0.2);
+	m_autoControl.addWaitForMiliseconds(3000);
+	m_sound.play(SoundTrack::DIE);
+}
+
+bool Mario::isOnGround() const {
 	return m_physics2D.getVelocity().y + m_physics2D.getBaseVelocity().y == 0 && !m_onJump;
 }
 
-bool Mario::isOnTeleport() {
+bool Mario::isOnTeleport() const {
 	return m_onTeleport;
 }
 
-bool Mario::isOnGrabFlagPole() {
+bool Mario::isOnGrabFlagPole() const {
 	return m_onGrabFlagPole;
+}
+
+bool Mario::isDead() const {
+	return m_isDead;
 }

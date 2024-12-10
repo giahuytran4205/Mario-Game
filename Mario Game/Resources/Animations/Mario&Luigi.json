@@ -50,6 +50,21 @@
         {
          "animation":[
                 {
+                 "duration":100,
+                 "tileid":52
+                }],
+         "id":52,
+         "properties":[
+                {
+                 "name":"state",
+                 "propertytype":"MarioState",
+                 "type":"int",
+                 "value":4
+                }]
+        }, 
+        {
+         "animation":[
+                {
                  "duration":50,
                  "tileid":53
                 }],

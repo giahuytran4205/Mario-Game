@@ -13,6 +13,7 @@ enum class SoundTrack {
 	COIN,
 	FLAGPOLE,
 	WARP,
+	DIE,
 	NUM_TRACK
 };
 
@@ -25,7 +26,8 @@ private:
 		{ SoundTrack::ITEM,			"Resources/Sounds/Item.wav" },
 		{ SoundTrack::COIN,			"Resources/Sounds/Coin.wav" },
 		{ SoundTrack::FLAGPOLE,		"Resources/Sounds/Flagpole.wav" },
-		{ SoundTrack::WARP,			"Resources/Sounds/Warp.wav" }
+		{ SoundTrack::WARP,			"Resources/Sounds/Warp.wav" },
+		{ SoundTrack::DIE,			"Resources/Sounds/Die.wav" }
 	};
 
 	vector<SoundBuffer> m_soundBufs;

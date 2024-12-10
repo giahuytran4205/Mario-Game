@@ -29,11 +29,8 @@ Map::Map(const string& filename) : Map() {
 }
 
 Map::~Map() {
-	for (Block* block : m_blocks)
-		delete block;
-
-	for (Portal* portal : m_portals)
-		delete portal;
+	for (Object* obj : m_objects)
+		delete obj;
 }
 
 void Map::loadTilesets(json::object& data) {
@@ -83,7 +80,8 @@ void Map::loadFromJsonFile(const string& filename) {
 				if (id == 0) continue;
 				Block* block = new Block(getTile(id), {i % m_col * 16.0f + 8, i / m_col * 16.0f + 8}, Block::TERRAIN);
 				block->setParent(this);
-				m_blocks.push_back(block);
+				block->setRenderOrder(2);
+				m_objects.push_back(block);
 			}
 		}
 
@@ -96,6 +94,8 @@ void Map::loadFromJsonFile(const string& filename) {
 			json::object obj = layer["objects"].as_array()[0].as_object();
 			m_spawnPos.x = obj["x"].as_int64();
 			m_spawnPos.y = obj["y"].as_int64();
+
+			//m_curDepth = obj["properties"].as_array()[0].as_object()["value"].as_int64();
 		}
 
 		if (layer["name"] == "Teleportation Gate") {
@@ -129,13 +129,78 @@ void Map::loadFromJsonFile(const string& filename) {
 						destDepth = prop["value"].as_int64();
 				}
 
-				m_portals.push_back(new Portal(Vector2f{ posX, posY }, Vector2f{ destX, destY }, inDir, outDir, destDepth));
-				m_portals.back()->setParent(this);
+				m_objects.push_back(new Portal(Vector2f{ posX, posY }, Vector2f{ destX, destY }, inDir, outDir, destDepth));
+				m_objects.back()->setParent(this);
 			}
 		}
 
 		if (layer["name"] == "Flagpole") {
-			
+			json::object obj = layer["objects"].as_array()[0].as_object();
+			int x = obj["x"].as_int64();
+			int y = obj["y"].as_int64();
+			int width = obj["width"].as_int64();
+			int height = obj["height"].as_int64();
+
+			FlagPole* flagpole = new FlagPole(x + width / 2, y, 2, height, this);
+			flagpole->setRenderOrder(3);
+			m_objects.push_back(flagpole);
+		}
+
+		if (layer["name"] == "Lift") {
+
+		}
+
+		if (layer["name"] == "Beanstalk") {
+
+		}
+
+		if (layer["name"] == "Dead Zone") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
+
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				DeadZone* deadZone = new DeadZone(FRect(x, y, width, height), this);
+				m_objects.push_back(deadZone);
+			}
+		}
+
+		if (layer["name"] == "Jumper") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
+
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				Jumper* jumper = new Jumper(Vector2f(x + width / 2, y + height), this);
+				m_objects.push_back(jumper);
+			}
+		}
+
+		if (layer["name"] == "Castle Gate") {
+			json::object obj = layer["objects"].as_array()[0].as_object();
+
+			m_castleGate.x = obj["x"].as_int64();
+			m_castleGate.y = obj["y"].as_int64();
+		}
+
+		if (layer["name"] == "Coins") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
+
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				Coin* coin = new Coin(x, y, this);
+				m_objects.push_back(coin);
+			}
 		}
 	}
 

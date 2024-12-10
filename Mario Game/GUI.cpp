@@ -9,40 +9,23 @@
 #include <iostream>
 using namespace sf;
 
-GUI::GUI() : m_window(&GameManager::getInstance()->getRenderWindow()) {
-	m_parent = nullptr;
+GUI::GUI(Object* parent) : m_window(GameManager::getInstance()->getRenderWindow()) {
+	setParent(parent);
 	m_isSelected = false;
 	m_isPressed = false;
 	m_isHovered = false;
 	m_isOnDrag = false;
 	m_isInteractable = true;
 	m_background.setParent(this);
-	EventSystem::m_instance->addListener(this);
 }
 
-GUI::GUI(const FRect& rect, RenderWindow* window, Object* parent) : m_background(parent), m_window(window) {
-	m_parent = parent;
-	m_isSelected = false;
-	m_isPressed = false;
-	m_isHovered = false;
-	m_isOnDrag = false;
-	m_isInteractable = true;
+GUI::GUI(const FRect& rect, Object* parent) : GUI(parent) {
 	m_transform.getRect() = rect;
 }
 
-GUI::GUI(float left, float top, float width, float height, RenderWindow* window, Object* parent) : m_background(parent), m_window(window) {
-	m_parent = parent;
-	m_isSelected = false;
-	m_isPressed = false;
-	m_isHovered = false;
-	m_isOnDrag = false;
-	m_isInteractable = true;
-	m_transform.getRect() = {left, top, width, height};
-}
+GUI::GUI(float left, float top, float width, float height, Object* parent) : GUI(FRect(left, top, width, height), parent) {}
 
-GUI::~GUI() {
-
-}
+GUI::~GUI() {}
 
 void GUI::onSelected() {}
 void GUI::onDeselect() {}
@@ -62,9 +45,9 @@ void GUI::update() {
 
 void GUI::handleEvent(const Event& event) {
 	if (isInteractable()) {
-		Vector2f dist = m_window->getView().getCenter() - m_window->getDefaultView().getCenter();
+		Vector2f mousePos = m_window.mapPixelToCoords(Mouse::getPosition(m_window));
 
-		if (m_transform.getRect().contains((Vector2f)Mouse::getPosition(*m_window) + dist)) {
+		if (m_transform.getRect().contains(mousePos)) {
 			m_isHovered = true;
 			onHovered();
 
@@ -99,7 +82,7 @@ void GUI::handleEvent(const Event& event) {
 		}
 
 		if (isOnDrag() && event.type == Event::MouseMoved) {
-			onDrag((Vector2f)Mouse::getPosition(*m_window) + dist);
+			onDrag(mousePos);
 		}
 
 		if (isSelected())
