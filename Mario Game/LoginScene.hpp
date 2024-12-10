@@ -29,7 +29,7 @@ private:
 	sf::Vector2f m_getTitleTextViewPosition(sf::RenderWindow& window);
 
 	TextView m_title;
-	//Button m_confirm;
+	Button m_confirm;
 	//SpriteRenderer m_background;
 
 public:
