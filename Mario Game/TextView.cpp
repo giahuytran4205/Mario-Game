@@ -71,9 +71,7 @@ TextView::TextView(Object* parent)
 
 	this->setString("");
 
-	this->setCharacterSize(1);
-
-	this->setFillColor(sf::Color::White);
+	this->setFillColor(sf::Color::Black);
 
 	this->setStyle(sf::Text::Regular);
 }
@@ -82,6 +80,25 @@ TextView::TextView(const FRect& table, const std::string& content, const sf::Fon
 {
 	this->setParent(parent);
 
+	m_table = table;
+
+	this->setFont(font);
+
+	this->setString(content);
+
+	this->setFillColor(sf::Color::Black);
+
+	this->setStyle(sf::Text::Regular);
+
+	wrapText();
+}
+
+TextView::~TextView()
+{
+}
+
+void TextView::configure(const FRect& table, const std::string& content, const sf::Font& font)
+{
 	m_table = table;
 
 	this->setFont(font);
@@ -97,10 +114,6 @@ TextView::TextView(const FRect& table, const std::string& content, const sf::Fon
 	wrapText();
 }
 
-TextView::~TextView()
-{
-}
-
 void TextView::setTable(const FRect& table)
 {
 	m_table = table;
@@ -114,4 +127,6 @@ const FRect& TextView::getTable() const
 
 void TextView::render()
 {
+	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+	window.draw(*this);
 }

@@ -6,7 +6,7 @@
 #include "EventSystem.hpp"
 #include "Collision.hpp"
 #include "SceneManager.hpp"
-#include "FontManager.hpp"
+#include "LoginScene.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
@@ -16,7 +16,7 @@ private:
 	static GameManager* m_instance;
 	EntitiesManager m_entitiesManager;
 	TextureManager m_textureManager;
-	FontManager m_fontManager;
+	// FontManager m_fontManager;
 	SoundBufferManager m_soundBufferManager;
 	CollisionManager m_collisionManager;
 	SceneManager m_sceneManager;
