@@ -1,6 +1,15 @@
 #include "EventSystem.hpp"
 
+IEventListener::IEventListener() {
+	EventSystem::getInstance()->addListener(this);
+}
+
+IEventListener::~IEventListener() {
+	EventSystem::getInstance()->removeListener(this);
+}
+
 EventSystem* EventSystem::m_instance = nullptr;
+vector<IEventListener*> EventSystem::m_listeners;
 
 EventSystem::EventSystem(RenderWindow& window) : m_window(window) {
 	if (!m_instance) {
@@ -12,6 +21,10 @@ EventSystem::~EventSystem() {
 
 }
 
+EventSystem* EventSystem::getInstance() {
+	return m_instance;
+}
+
 void EventSystem::handleEvents() {
 	Event event;
 	while (m_window.pollEvent(event)) {
@@ -21,6 +34,10 @@ void EventSystem::handleEvents() {
 
 void EventSystem::addListener(IEventListener* listener) {
 	m_listeners.push_back(listener);
+}
+
+void EventSystem::removeListener(IEventListener* listener) {
+	m_listeners.erase(find(m_listeners.begin(), m_listeners.end(), listener));
 }
 
 void EventSystem::sendEvent(const Event& event) {
