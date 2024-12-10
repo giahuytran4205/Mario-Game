@@ -1,28 +1,31 @@
 #include "TextView.hpp"
 
-void TextView::m_wrapText()
+void TextView::wrapText()
 {
     float maxWidth = m_table.width;
     float maxHeight = m_table.height;
-    unsigned int textSize = m_text.getCharacterSize();
 
+    unsigned int textSize = 1;  // Start with character size 1
     unsigned int initialTextSize = textSize;
 
+    // Loop until the height of the local bounds is 1/3 of the table's height or greater
     while (true)
     {
         std::string wrappedText;
         std::string currentLine;
-        std::istringstream wordStream(m_content);
+        std::istringstream wordStream(this->getString());
 
-        m_text.setCharacterSize(textSize);
+        // Set the current character size to textSize
+        this->setCharacterSize(textSize);
         std::string word;
 
+        // Wrap the text into lines based on maxWidth
         while (wordStream >> word)
         {
             std::string tempLine = currentLine + word + " ";
-            m_text.setString(tempLine);
+            this->setString(tempLine);
 
-            if (m_text.getLocalBounds().width > maxWidth)
+            if (this->getLocalBounds().width > maxWidth)
             {
                 wrappedText += currentLine + "\n";
                 currentLine = word + " ";
@@ -32,94 +35,83 @@ void TextView::m_wrapText()
                 currentLine = tempLine;
             }
         }
-        wrappedText += currentLine;
-        m_text.setString(wrappedText);
 
-        if (m_text.getLocalBounds().height <= maxHeight && m_text.getLocalBounds().width <= maxWidth)
+        wrappedText += currentLine;  // Add the last line
+        this->setString(wrappedText);  // Set the wrapped text
+
+        // Check if the local bounds (height) is under the 1/3 of table height
+        if (this->getLocalBounds().height >= maxHeight / 3)
         {
-            break;
+            break;  // Break the loop when the height reaches 1/3 of the table height
         }
 
-        textSize -= 1;
-        if (textSize <= TEXT_SIZE_MIN)
-        {
-            break;
-        }
+        textSize += 1;  // Increase text size to zoom in
     }
 
-    m_text.setCharacterSize(textSize * 1.3f);
+    // Set the final character size for text zooming
+    this->setCharacterSize(textSize);
 
-    sf::FloatRect textBounds = m_text.getLocalBounds();
-
-    m_text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+    // Adjust the origin to center the text
+    sf::FloatRect textBounds = this->getLocalBounds();
+    this->setOrigin(textBounds.left + textBounds.width / 2.0f,
         textBounds.top + textBounds.height / 2.0f);
-    m_text.setPosition(m_table.left + m_table.width / 2.0f,
+
+    // Set the position to the center of the table
+    this->setPosition(m_table.left + m_table.width / 2.0f,
         m_table.top + m_table.height / 2.0f);
 }
 
-TextView::TextView()
+TextView::TextView(Object* parent)
 {
-    m_table = { 0, 0, 0, 0 };
-    m_content = "";
-    m_text.setString(m_content);
-    m_text.setCharacterSize(0);
-    m_text.setFillColor(sf::Color::White);
+	this->setParent(parent);
+
+	m_table = FRect(0.0f, 0.0f, 0.0f, 0.0f);
+
+	this->setFont(sf::Font());
+
+	this->setString("");
+
+	this->setCharacterSize(1);
+
+	this->setFillColor(sf::Color::White);
+
+	this->setStyle(sf::Text::Regular);
 }
 
-TextView::TextView(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize)
+TextView::TextView(const FRect& table, const std::string& content, const sf::Font& font, Object* parent)
 {
-    setParent(parent);
-    m_table = table;
-    m_content = textContent;
-    m_text.setString(m_content);
-    m_text.setFont(textFont);
-    m_text.setCharacterSize(textSize);
-    m_text.setFillColor(textColor);
-    m_wrapText();
+	this->setParent(parent);
+
+	m_table = table;
+
+	this->setFont(font);
+
+	this->setString(content);
+
+	this->setCharacterSize(1);
+
+	this->setFillColor(sf::Color::White);
+
+	this->setStyle(sf::Text::Regular);
+
+	wrapText();
 }
 
-void TextView::init(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize)
+TextView::~TextView()
 {
-    setParent(parent);
-    m_table = table;
-    m_content = textContent;
-    m_text.setString(m_content);
-    m_text.setFont(textFont);
-    m_text.setCharacterSize(textSize);
-    m_text.setFillColor(textColor);
-    m_wrapText();
-}
-
-sf::Text& TextView::getText()
-{
-    return m_text;
 }
 
 void TextView::setTable(const FRect& table)
 {
-    m_table = table;
-    m_wrapText();
+	m_table = table;
+	wrapText();
 }
 
-void TextView::setContent(const std::string& s)
+const FRect& TextView::getTable() const
 {
-    m_content = s;
-    m_text.setString(m_content);
-    m_wrapText();
+	return m_table;
 }
 
-void TextView::setFont(const sf::Font& font)
+void TextView::render()
 {
-    m_text.setFont(font);
-    m_wrapText();
-}
-
-void TextView::setFillColor(const sf::Color& color)
-{
-    m_text.setFillColor(color);
-}
-
-void TextView::setScale(const sf::Vector2f& scale)
-{
-    m_text.setScale(scale);
 }
