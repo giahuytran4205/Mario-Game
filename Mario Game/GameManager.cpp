@@ -28,8 +28,6 @@ void GameManager::init() {
 	m_window.create(VideoMode(1200, 600), "Super Mario Bros. (1985)", Style::Default);
 	m_window.setFramerateLimit(120);
 
-	m_eventSystem.addListener(this);
-
 	m_collisionManager = { Vector2i(3376, 480), 16};
 
 	m_view.reset(FloatRect(0, 0, getAspectRatio() * 208, 208));

@@ -10,7 +10,6 @@ FRect Button::getButtonRect()
 Button::Button(Object* parent, sf::RenderWindow& window, float x, float y, float width, float height, const std::string& labelContent, sf::Font& labelFont, sf::Color labelColor, std::function<void()> action)
 {
 	setParent(parent);
-	m_window = &window;
 	m_isSelected = false;
 	m_isPressed = false;
 	m_isHovered = false;

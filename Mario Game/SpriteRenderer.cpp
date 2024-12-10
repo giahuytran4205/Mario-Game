@@ -8,7 +8,8 @@ using namespace sf;
 
 SpriteRenderer::SpriteRenderer(Object* parent) : Object(parent) {
 	Object::m_transform.setAnchor(0, 0);
-	m_renderOrder = m_parent->getRenderOrder();
+	if (m_parent)
+		m_renderOrder = m_parent->getRenderOrder();
 }
 
 SpriteRenderer::~SpriteRenderer() {
@@ -20,6 +21,9 @@ void SpriteRenderer::update() {
 
 	setOrigin(getLocalBounds().width * anchor.x, getLocalBounds().height * anchor.y);
 	Sprite::setPosition(Object::m_transform.getWorldPosition());
+
+	if (m_parent)
+		m_renderOrder = m_parent->getRenderOrder();
 }
 
 void SpriteRenderer::render() {

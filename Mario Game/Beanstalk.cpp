@@ -8,29 +8,24 @@ Beanstalk::Beanstalk(Object* parent) {
 
 	m_renderOrder = 2;
 	m_growRate = 0.005f;
-	m_height = 0;
+	m_maxHeight = 0;
 	m_isOnGrowUp = false;
 	m_isMature = false;
 	m_stalk.setParent(this);
 	m_treetop.setParent(this);
 
-	Texture* texture1 = new Texture();
-	texture1->loadFromFile("Resources/Animations/Items&Objects.png", IntRect(64, 48, 16, 16));
-	m_treetop.setTexture(*texture1);
+	m_treetop.setTexture(TextureManager::getTile("Resources/Animations/Items&Objects.png", IntRect(64, 48, 16, 16)));
 	m_treetop.setTextureRect(IntRect(0, 0, 16, 0));
 	m_treetop.setPosition(0, 0);
 	m_treetop.getComponent<Transform2D>().setSize(16, 16);
 
-	Texture* texture2 = new Texture();
-	texture2->loadFromFile("Resources/Animations/Items&Objects.png", IntRect(64, 64, 16, 16));
-	texture2->setRepeated(true);
-	m_stalk.setTexture(*texture2);
+	m_stalk.setTexture(TextureManager::getTile("Resources/Animations/Items&Objects.png", IntRect(64, 64, 16, 16), true));
 	m_stalk.setTextureRect(IntRect(0, 0, 16, 0));
 	m_stalk.setPosition(0, 16);
 }
 
-Beanstalk::Beanstalk(const Vector2f& pos, float height, const Vector2f& destination, Object* parent) : Beanstalk(parent) {
-	m_height = height;
+Beanstalk::Beanstalk(const Vector2f& pos, float maxHeight, const Vector2f& destination, Object* parent) : Beanstalk(parent) {
+	m_maxHeight = maxHeight;
 
 	m_transform.setPosition(pos);
 	m_transform.setAnchor(0.5, 1);
@@ -56,7 +51,7 @@ void Beanstalk::update() {
 		m_treetop.setPosition(0, -m_stalk.getTextureRect().height);
 		m_treetop.setTextureRect(IntRect(0, 0, 16, min(m_transform.height, 16.0f)));
 
-		if (m_stalk.getTextureRect().height >= m_height) {
+		if (m_stalk.getTextureRect().height >= m_maxHeight) {
 			m_isOnGrowUp = false;
 			m_isMature = true;
 		}

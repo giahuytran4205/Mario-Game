@@ -1,9 +1,14 @@
 #pragma once
 #include "Common.hpp"
 #include "SFML/Graphics.hpp"
+#include "TileSet.hpp"
 #include "Block.hpp"
 #include "Portal.hpp"
-#include "TileSet.hpp"
+#include "FlagPole.hpp"
+#include "Beanstalk.hpp"
+#include "DeadZone.hpp"
+#include "Jumper.hpp"
+#include "Coin.hpp"
 #include <boost/json.hpp>
 using namespace sf;
 namespace json = boost::json;
@@ -19,8 +24,8 @@ private:
 	int m_tileHeight;
 	int m_curDepth;
 	Vector2f m_spawnPos;
-	vector<Block*> m_blocks;
-	vector<Portal*> m_portals;
+	Vector2f m_castleGate;
+	vector<Object*> m_objects;
 	vector<pair<int, TileSet&>> m_tilesets;
 
 	void loadTilesets(json::object& data);

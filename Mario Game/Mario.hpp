@@ -14,6 +14,7 @@ public:
 		WALK,
 		JUMP,
 		GRAB_FLAGPOLE,
+		DIE,
 		DAMAGED
 	};
 
@@ -32,6 +33,7 @@ private:
 	bool m_onTeleport;
 	bool m_onJumper;
 	bool m_onGrabFlagPole;
+	bool m_isDead;
 	int m_teleportTime;
 	Portal m_enteredPortal;
 
@@ -48,7 +50,9 @@ public:
 	void jump(float velY = -0.35f);
 	void teleport(const Portal& portal);
 	void onGrabFlagPole();
-	bool isOnGround();
-	bool isOnTeleport();
-	bool isOnGrabFlagPole();
+	void dead();
+	bool isOnGround() const;
+	bool isOnTeleport() const;
+	bool isOnGrabFlagPole() const;
+	bool isDead() const;
 };

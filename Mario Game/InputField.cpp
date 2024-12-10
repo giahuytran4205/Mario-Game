@@ -41,7 +41,6 @@ void InputField::adjustTextPosCharSizeInBox(sf::Text& text, const sf::RectangleS
 InputField::InputField(Object* parent, sf::RenderWindow& window, const float& x, const float& y, const float& width, const float& height, sf::Font& font)
 {
     setParent(parent);
-    m_window = &window;
     m_box.setSize({ width, height });
     m_box.setPosition({ x, y });
     m_box.setFillColor(sf::Color::White);
