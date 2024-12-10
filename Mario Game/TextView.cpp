@@ -40,7 +40,7 @@ void TextView::wrapText()
         this->setString(wrappedText);  // Set the wrapped text
 
         // Check if the local bounds (height) is under the 1/3 of table height
-        if (this->getLocalBounds().height >= maxHeight / 3)
+        if (this->getLocalBounds().height >= maxHeight * m_ratioCharSizeTableHeight)
         {
             break;  // Break the loop when the height reaches 1/3 of the table height
         }
@@ -65,32 +65,14 @@ TextView::TextView(Object* parent) : m_window(nullptr)
 {
 	this->setParent(parent);
 
-	m_table = FRect(0.0f, 0.0f, 0.0f, 0.0f);
-
-	this->setFont(sf::Font());
-
-	this->setString("");
-
-	this->setFillColor(sf::Color::Black);
-
-	this->setStyle(sf::Text::Regular);
+	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font());
 }
 
-TextView::TextView(const FRect& table, const std::string& content, const sf::Font& font, Object* parent) : m_window(nullptr)
+TextView::TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, Object* parent) : m_window(nullptr)
 {
 	this->setParent(parent);
 
-	m_table = table;
-
-	this->setFont(font);
-
-	this->setString(content);
-
-	this->setFillColor(sf::Color::Black);
-
-	this->setStyle(sf::Text::Regular);
-
-	wrapText();
+	configure(tablePosition, tableSize, content, font);
 }
 
 TextView::~TextView()
@@ -108,9 +90,11 @@ void TextView::setRenderWindow(sf::RenderWindow* window)
 	m_window = window;
 }
 
-void TextView::configure(const FRect& table, const std::string& content, const sf::Font& font)
+void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font)
 {
-	m_table = table;
+	m_table = FRect(tablePosition.x, tablePosition.y, tableSize.x, tableSize.y);
+
+	m_ratioCharSizeTableHeight = 0.5f;
 
 	this->setFont(font);
 
@@ -118,16 +102,36 @@ void TextView::configure(const FRect& table, const std::string& content, const s
 
 	this->setCharacterSize(1);
 
-	this->setFillColor(sf::Color::White);
+	this->setFillColor(sf::Color::Black);
 
 	this->setStyle(sf::Text::Regular);
 
 	wrapText();
 }
 
+void TextView::setRatioCharacterSizeTableHeight(float ratio)
+{
+	m_ratioCharSizeTableHeight = ratio;
+	wrapText();
+}
+
 void TextView::setTable(const FRect& table)
 {
 	m_table = table;
+	wrapText();
+}
+
+void TextView::setTablePosition(const sf::Vector2f& tablePosition)
+{
+	m_table.left = tablePosition.x;
+	m_table.top = tablePosition.y;
+	wrapText();
+}
+
+void TextView::setTableSize(const sf::Vector2f& tableSize)
+{
+	m_table.width = tableSize.x;
+	m_table.height = tableSize.y;
 	wrapText();
 }
 
