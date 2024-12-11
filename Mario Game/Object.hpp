@@ -15,14 +15,13 @@ public:
 	virtual ~Object();
 	virtual Object* clone();
 	
-	bool isActive() override;
-	bool isDestroyed() override;
+	bool isActive() const override;
+	bool isDestroyed() const override;
 	void update() override;
 	void render() override;
-	Object* getParent();
+	Object* getParent() const;
 	void setParent(Object* parent);
 	Transform2D& getTransform2D();
-	void setRenderOrder(int order);
 	void setEnable(bool enable);
 	void destroy();
 };

@@ -24,15 +24,15 @@ Object* Object::clone() {
 	return new Object(*this);
 }
 
-bool Object::isActive() {
+bool Object::isActive() const {
 	return (!m_parent || m_parent->isActive()) && m_active;
 }
 
-bool Object::isDestroyed() {
+bool Object::isDestroyed() const {
 	return (m_parent && m_parent->isDestroyed()) || m_destroyed;
 }
 
-Object* Object::getParent() {
+Object* Object::getParent() const {
 	return m_parent;
 }
 
@@ -42,10 +42,6 @@ void Object::setParent(Object* parent) {
 
 Transform2D& Object::getTransform2D() {
 	return m_transform;
-}
-
-void Object::setRenderOrder(int order) {
-	m_renderOrder = order;
 }
 
 void Object::update() {

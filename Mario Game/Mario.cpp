@@ -28,7 +28,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 
 	m_sprite.setParent(this);
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
-	setRenderOrder(3);
+	m_sprite.setRenderOrder(3);
 
 	Texture* texture = new Texture();
 	texture->loadFromFile("Goomba.png");
@@ -39,7 +39,6 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_physics2D.setGravity(0.00625f / 8);
 
 	m_transform.setSize(16, 16);
-	m_transform.setPosition(150, 50);
 
 	m_anim = &addComponent<Animation>(m_sprite);
 	m_anim->loadFromJsonFile("Resources/Animations/Mario&Luigi.json");
@@ -225,7 +224,7 @@ void Mario::teleport(const Portal& portal) {
 	m_physics2D.setVelocity({ 0, 0 });
 
 	m_collision.setTrigger(true);
-	setRenderOrder(1);
+	m_sprite.setRenderOrder(1);
 
 	Vector2f dist = m_enteredPortal.getComponent<Transform2D>().getCenter() - m_transform.getPosition() + Vector2f(16, 16);
 	dist.x *= m_enteredPortal.getInDirection().x;
@@ -236,7 +235,7 @@ void Mario::teleport(const Portal& portal) {
 		[&](int time) {
 			m_collision.setTrigger(false);
 			m_physics2D.setEnableGravity(true);
-			setRenderOrder(3);
+			m_sprite.setRenderOrder(3);
 			GameManager::getInstance()->getView().setCenter(m_transform.getPosition().x, m_enteredPortal.getDestDepth() * 240 + 120);
 			m_onTeleport = false;
 		});

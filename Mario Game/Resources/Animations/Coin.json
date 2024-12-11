@@ -1,5 +1,5 @@
 { "columns":36,
- "image":"..\/Tilesets\/Items&Objects.png",
+ "image":"Resources/Tilesets/Items&Objects.png",
  "imageheight":224,
  "imagewidth":576,
  "margin":0,
@@ -28,15 +28,6 @@
                  "tileid":183
                 }],
          "id":180,
-         "properties":[
-                {
-                 "name":"state",
-                 "type":"int",
-                 "value":0
-                }]
-        }, 
-        {
-         "id":216,
          "properties":[
                 {
                  "name":"state",

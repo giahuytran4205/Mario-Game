@@ -9,20 +9,20 @@
 #include "Beanstalk.hpp"
 #include "Lift.hpp"
 #include "BalanceLifts.hpp"
+#include "Slider.hpp"
 
 class GameScene : public Scene {
 private:
 	Mario m_mario;
-	Map m_map, m_map2;
-	Jumper m_jumper;
-	FlagPole m_flagpole;
+	Map m_map;
+	Slider<float> m_slider;
 
 public:
-	GameScene();
+	GameScene(const string& mapPath);
 	~GameScene();
 
 	void update() override;
 	void render() override;
 	void handleEvent(const Event& event) override;
-	void loadMap();
+	void loadMap(const string& filename);
 };

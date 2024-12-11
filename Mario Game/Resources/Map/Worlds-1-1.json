@@ -194,6 +194,12 @@
                  "height":0,
                  "id":240,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"depth",
+                         "type":"int",
+                         "value":0
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,

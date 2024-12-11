@@ -43,11 +43,15 @@ public:
 		m_value = 0;
 		m_minVal = 0;
 		m_maxVal = 0;
+		m_handle.setRenderOrder(6);
+		setRenderOrder(5);
 	}
 
 	Slider(T minVal, T maxVal, T width, T val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : GUI(parent), m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(this) {
 		m_transform.setPosition(pos);
 		m_transform.getRect() = { pos.x, pos.y, width, 1 };
+		m_handle.setRenderOrder(6);
+		setRenderOrder(5);
 
 		m_background.setSize({ width, 2 });
 		m_fillArea.setSize({ width, 2 });

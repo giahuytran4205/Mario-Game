@@ -36,7 +36,8 @@ void CollisionManager::update() {
 
 		for (int i = rect.top / m_gridSize; i <= bottom / m_gridSize; i++) {
 			for (int j = rect.left / m_gridSize; j <= right / m_gridSize; j++) {
-				if (i < 0 || i >= m_grid.size() || j < 0 || j >= m_grid[0].size()) return;
+				if (i < 0 || i >= m_grid.size() || j < 0 || j >= m_grid[0].size()) 
+					return;
 				m_grid[i][j].push_back(col);
 			}
 		}
@@ -89,7 +90,11 @@ void CollisionManager::refresh() {
 }
 
 void CollisionManager::resize(int width, int height, int gridSize) {
-	CollisionManager(width, height, gridSize);
+	m_width = width;
+	m_height = height;
+	m_gridSize = gridSize;
+	int t = width / gridSize + 1;
+	m_grid.assign(height / gridSize + 1, vector<vector<Collision*>>(width / gridSize + 1));
 }
 
 CollisionManager* CollisionManager::getInstance() {
