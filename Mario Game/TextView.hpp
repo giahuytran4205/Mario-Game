@@ -1,6 +1,7 @@
 #pragma once
 #include "Rect.hpp"
 #include "Object.hpp"
+#include "GameManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>

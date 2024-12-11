@@ -2,6 +2,7 @@
 
 #include "GUI.hpp"
 #include "TextView.hpp"
+#include "GameManager.hpp"
 #include <SFML/Graphics.hpp>
 
 // Must have a sf::RenderWindow to draw the text in render() override funciton

@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "ECS.hpp"
 #include "GameScene.hpp"
+#include "LoginScene.hpp"
 #include <iostream>
 using namespace sf;
 using namespace std;

@@ -2,6 +2,7 @@
 
 #include "Rect.hpp"
 #include "GUI.hpp"
+#include "GameManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
