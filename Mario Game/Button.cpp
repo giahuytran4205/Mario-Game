@@ -1,15 +1,15 @@
 #include "Button.hpp"
 
-Button::Button(Object* parent) 
-	: m_window(nullptr)
+Button::Button(sf::RenderWindow* window, Object* parent)
+	: m_window(window)
 {
 	this->setParent(parent);
 
 	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font(), nullptr);
 }
 
-Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action, Object* parent) 
-	: m_window(nullptr)
+Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action, sf::RenderWindow* window, Object* parent)
+	: m_window(window)
 {
 	this->setParent(parent);
 
@@ -44,13 +44,10 @@ void Button::setRenderWindow(sf::RenderWindow* window)
 
 void Button::setAction(std::function<void()> action)
 {
-	if (action == nullptr)
+	if (action != nullptr)
 	{
-		std::cout << "Button::setAction: action is nullptr!" << std::endl;
-		return;
+		m_action = action;
 	}
-
-	m_action = action;
 }
 
 void Button::setPosition(const sf::Vector2f& position)
@@ -117,6 +114,6 @@ void Button::render()
 	if (m_window != nullptr)
 	{
 		m_window->draw(m_rectShape);
-		// m_window->draw(m_textView);
+		//m_window->draw(m_textView);
 	}
 }

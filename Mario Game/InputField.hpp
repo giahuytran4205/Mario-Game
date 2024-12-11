@@ -25,8 +25,8 @@ private:
 	sf::RenderWindow* m_window;
 
 public:
-	InputField(Object* parent = nullptr);
-	InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, Object* parent = nullptr);
+	InputField(sf::RenderWindow* window = nullptr, Object* parent = nullptr);
+	InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, sf::RenderWindow* window = nullptr, Object* parent = nullptr);
 
 	void configure(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font);
 

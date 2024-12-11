@@ -61,14 +61,14 @@ void TextView::wrapText()
         m_table.top + m_table.height / 2.0f);
 }
 
-TextView::TextView(Object* parent) : m_window(nullptr)
+TextView::TextView(sf::RenderWindow* window, Object* parent) : m_window(window)
 {
 	this->setParent(parent);
 
 	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font());
 }
 
-TextView::TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, Object* parent) : m_window(nullptr)
+TextView::TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, sf::RenderWindow* window, Object* parent) : m_window(window)
 {
 	this->setParent(parent);
 
@@ -88,7 +88,6 @@ void TextView::setRenderWindow(sf::RenderWindow* window)
 	}
 
 	m_window = window;
-    this->wrapText();
 }
 
 void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font)

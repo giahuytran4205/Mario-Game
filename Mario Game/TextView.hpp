@@ -23,8 +23,8 @@ private:
 	sf::RenderWindow* m_window;
 
 public:
-	TextView(Object* parent = nullptr);
-	TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, Object* parent = nullptr);
+	TextView(sf::RenderWindow* window = nullptr, Object* parent = nullptr);
+	TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, sf::RenderWindow* window = nullptr, Object* parent = nullptr);
 	~TextView();
 
 	void setRenderWindow(sf::RenderWindow* window);

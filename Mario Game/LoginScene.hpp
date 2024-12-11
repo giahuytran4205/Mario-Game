@@ -29,13 +29,15 @@ private:
 	sf::Vector2f getPasswordInputFieldPosition(sf::RenderWindow& window);
 	sf::Vector2f getUsernameInputFieldPosition(sf::RenderWindow& window);
 
+	void fitBackground(sf::Sprite* sprite, sf::RenderWindow& window);
+
 	Button m_confirm;
 	TextView m_title;
 	TextView m_usernameText;
 	TextView m_passwordText;
 	InputField m_usernameInput;
 	InputField m_passwordInput;
-	//SpriteRenderer m_background;
+	SpriteRenderer m_background;
 
 public:
 	LoginScene();

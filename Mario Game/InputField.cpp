@@ -33,16 +33,16 @@ void InputField::adjustTextPosCharSizeInBox()
     m_transform.getRect() = { m_box.getPosition().x, m_box.getPosition().y, m_box.getSize().x,  m_box.getSize().y };
 }
 
-InputField::InputField(Object* parent)
-    : m_window(nullptr)
+InputField::InputField(sf::RenderWindow* window, Object* parent)
+    : m_window(window)
 {
     setParent(parent);
 
     this->configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), sf::Font());
 }
 
-InputField::InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, Object* parent)
-    : m_window(nullptr)
+InputField::InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, sf::RenderWindow* window, Object* parent)
+    : m_window(window)
 {
     setParent(parent);
 

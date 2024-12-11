@@ -21,8 +21,8 @@ private:
 	sf::RenderWindow* m_window;
 
 public:
-	Button(Object* parent = nullptr);
-	Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr, Object* parent = nullptr);
+	Button(sf::RenderWindow* window = nullptr, Object* parent = nullptr);
+	Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr, sf::RenderWindow* window = nullptr, Object* parent = nullptr);
 	~Button();
 
 	void configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr);
