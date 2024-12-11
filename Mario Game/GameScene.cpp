@@ -1,22 +1,16 @@
 #include "GameScene.hpp"
 #include "Slider.hpp"
 
-GameScene::GameScene() : m_mario(this), m_jumper(Vector2f(100, 208), this), m_flagpole(170, 32, 2, 160, this) {
+GameScene::GameScene(const string& mapPath) : m_mario(this), m_slider(0, 100, 50, 0, { 100, 350 }, this) {
 	m_renderOrder = 2;
 
 	m_map.setParent(this);
-	m_map.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
-	//m_map.destroy();
-	//m_map2.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
+	m_map.loadFromJsonFile(mapPath);
 
-	//Beanstalk* beanstalk = new Beanstalk({ 220, 200 }, 64, { 0, 100 });
-	BalanceLifts* lift = new BalanceLifts({ 400, 100 }, { 500, 120 }, 50, 20, 0.002f);
-	lift->setParent(this);
+	m_mario.getComponent<Transform2D>().setPosition(m_map.getSpawnPos());
 
 	View& view = GameManager::getInstance()->getView();
-	view.setCenter(m_mario.getComponent<Transform2D>().getWorldCenter().x, m_map.getCurrentDepth() * 240 + 120);
-
-	Slider<float>* slider = new Slider<float>(0, 100, 50, 0, { 50, 50 }, this);
+	view.setCenter(m_mario.getComponent<Transform2D>().getWorldCenter().x, m_map.getStartDepth() * 240 + 120);
 }
 
 GameScene::~GameScene() {}
@@ -36,6 +30,6 @@ void GameScene::handleEvent(const Event& event) {
 
 }
 
-void GameScene::loadMap() {
-	m_map.loadFromJsonFile("Resources/Map/Worlds-1-1.json");
+void GameScene::loadMap(const string& filename) {
+	m_map.loadFromJsonFile(filename);
 }

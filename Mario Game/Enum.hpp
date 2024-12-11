@@ -6,13 +6,16 @@ enum FontType {
 	NUM_FONTS
 };
 
-enum TileSetType {
-	BLOCK,
-	ITEM,
-	NUM_TILESET_TYPE
-};
-
 enum BackgroundType {
 	LOGINSTATE_BACKGROUND,
 	NUM_BACKGROUND_TYPE
+};
+
+
+enum Environment {
+	OVERWORLD,
+	UNDERGROUND,
+	ATHLETIC,
+	CASTLE,
+	UNDERWATER
 };

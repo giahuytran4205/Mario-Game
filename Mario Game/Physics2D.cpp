@@ -8,6 +8,7 @@
 
 Physics2D::Physics2D() {
 	m_static = false;
+	m_gravity = 0.00625 / 8;
 }
 
 Physics2D::Physics2D(float gravity, bool isStatic) {
@@ -18,7 +19,6 @@ Physics2D::Physics2D(float gravity, bool isStatic) {
 Physics2D::~Physics2D() {}
 
 void Physics2D::init() {
-	m_gravity = 0;
 	m_acceleration = { 0, 0 };
 	m_transform = &m_entity->getComponent<Transform2D>();
 	m_enableGravity = true;
@@ -27,6 +27,7 @@ void Physics2D::init() {
 
 void Physics2D::update() {
 	if (m_static) return;
+
 	Vector2f pos = m_transform->getPosition();
 	Vector2f direction = m_transform->getRotation();
 	pos += (m_baseVelo + m_velocity) * (float)deltaTime.asMilliseconds();
@@ -41,7 +42,7 @@ void Physics2D::update() {
 			m_isBounce = false;
 			m_velocity.y = 0;
 			m_baseVelo.y = 0;
-			m_gravity = 0;
+			m_static = true;
 		}
 	}
 
@@ -143,8 +144,8 @@ void Physics2D::setFriction(float friction) {
 void Physics2D::bounce(float velY) {
 	m_startPos = m_transform->getPosition();
 	m_baseVelo.y = velY;
-	m_gravity = 0.00625f;
 	m_isBounce = true;
+	m_static = false;
 }
 
 void Physics2D::setElastic(bool isElastic) {

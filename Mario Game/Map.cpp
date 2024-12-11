@@ -17,7 +17,7 @@ Map::Map() {
 	m_width = m_height = 0;
 	m_row = m_col = 0;
 	m_tileWidth = m_tileHeight = 0;
-	m_curDepth = 0;
+	m_startDepth = 0;
 	m_background.setParent(this);
 	m_background.setPosition(0, 0);
 	m_transform.setAnchor( 0, 0 );
@@ -95,7 +95,7 @@ void Map::loadFromJsonFile(const string& filename) {
 			m_spawnPos.x = obj["x"].as_int64();
 			m_spawnPos.y = obj["y"].as_int64();
 
-			//m_curDepth = obj["properties"].as_array()[0].as_object()["value"].as_int64();
+			m_startDepth = obj["properties"].as_array()[0].as_object()["value"].as_int64();
 		}
 
 		if (layer["name"] == "Teleportation Gate") {
@@ -223,8 +223,8 @@ int Map::colCount() const {
 	return m_col;
 }
 
-int Map::getCurrentDepth() const {
-	return m_curDepth;
+int Map::getStartDepth() const {
+	return m_startDepth;
 }
 
 Vector2f Map::getSpawnPos() const {

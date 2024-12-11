@@ -11,7 +11,8 @@
 #include <iostream>
 using namespace sf;
 
-Block::Block() : m_physics2D(addComponent<Physics2D>()) {
+Block::Block(Object* parent) : m_physics2D(addComponent<Physics2D>()) {
+	setParent(parent);
 	m_renderOrder = 2;
 	m_type = BlockType::EMPTY_BLOCK;
 
@@ -21,7 +22,10 @@ Block::Block() : m_physics2D(addComponent<Physics2D>()) {
 	m_sprite.setRenderOrder(2);
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
 
+	m_physics2D.setStatic(true);
+
 	m_collision = nullptr;
+	m_isHide = false;
 }
 
 Block::Block(const Vector2f& pos, BlockType type) : Block() {
@@ -30,8 +34,7 @@ Block::Block(const Vector2f& pos, BlockType type) : Block() {
 
 	m_type = type;
 
-	m_transform.getRect().width = 16;
-	m_transform.getRect().height = 16;
+	m_transform.setSize(16, 16);
 
 	m_transform.setPosition(pos);
 }
@@ -40,8 +43,18 @@ Block::Block(const Texture& texture, const Vector2f& pos, BlockType type) : Bloc
 	m_sprite.setTexture(texture);
 }
 
+Block::Block(const Block& block) : Block(block.getParent()) {
+
+}
+
 Block::~Block() {
 
+}
+
+Block& Block::operator=(const Block& block) {
+	//m_physics2D = block.m_physics2D;
+	m_sprite = block.m_sprite;
+	return *this;
 }
 
 void Block::update() {

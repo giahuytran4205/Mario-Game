@@ -106,15 +106,19 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
-	virtual bool isActive() {
+	virtual bool isActive() const {
 		return m_active;
 	}
 
-	virtual bool isDestroyed() {
+	virtual bool isDestroyed() const {
 		return m_destroyed;
 	}
 
-	int getRenderOrder() {
+	void setRenderOrder(int order) {
+		m_renderOrder = order;
+	}
+
+	int getRenderOrder() const {
 		return m_renderOrder;
 	}
 

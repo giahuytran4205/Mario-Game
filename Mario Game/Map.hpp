@@ -22,7 +22,7 @@ private:
 	int m_height;
 	int m_tileWidth;
 	int m_tileHeight;
-	int m_curDepth;
+	int m_startDepth;
 	Vector2f m_spawnPos;
 	Vector2f m_castleGate;
 	vector<Object*> m_objects;
@@ -42,6 +42,6 @@ public:
 	Vector2i getSize() const;
 	int rowCount() const;
 	int colCount() const;
-	int getCurrentDepth() const;
+	int getStartDepth() const;
 	Vector2f getSpawnPos() const;
 };

@@ -30,6 +30,10 @@ public:
 		m_currentScene = new T(mArgs...);
 	}
 
+	Scene& getCurrentScene() {
+		return *m_currentScene;
+	}
+
 	void destroyCurrentScene() {
 		if (!m_currentScene)
 			return;
