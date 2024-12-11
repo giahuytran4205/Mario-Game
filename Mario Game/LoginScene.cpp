@@ -1,4 +1,8 @@
 #include "LoginScene.hpp"
+#include "FontManager.hpp"
+#include "GameManager.hpp"
+#include "SceneManager.hpp"
+#include "TextureManager.hpp"
 
 sf::Vector2f LoginScene::getUsernameInputFieldSize(sf::RenderWindow& window)
 {
@@ -41,20 +45,6 @@ sf::Vector2f LoginScene::getTitleTextViewSize(sf::RenderWindow& window)
 sf::Vector2f LoginScene::getUsernameInputFieldPosition(sf::RenderWindow& window)
 {
 	return { (window.getSize().x - getUsernameInputFieldSize(window).x) / 2.0f, window.getSize().y / 2.0f - getUsernameInputFieldSize(window).y };
-}
-
-void LoginScene::fitBackground(sf::Sprite* sprite, sf::RenderWindow& window)
-{
-	if (sprite->getTexture() != nullptr)
-	{
-		sf::Vector2u textureSize = sprite->getTexture()->getSize();
-		sf::Vector2u windowSize = window.getSize();
-
-		float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
-		float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
-
-		sprite->setScale(scaleX, scaleY);
-	}
 }
 
 sf::Vector2f LoginScene::getPasswordInputFieldPosition(sf::RenderWindow& window)
@@ -109,7 +99,7 @@ LoginScene::LoginScene()
 	m_background.setTexture(TextureManager::getTexture("Resources/Background/MarioBros-Background.png"));
 	this->fitBackground(&m_background, window);
 
-	// CALCULATE POSITION AND SIZE
+	// CALCULATE SIZE & POSITION
 	sf::Vector2f usernameInputFieldSize = this->getUsernameInputFieldSize(window);
 	sf::Vector2f passwordInputFieldSize = this->getPasswordInputFieldSize(window);
 	sf::Vector2f usernameTextViewSize = this->getUsernameTextViewSize(window);
@@ -162,7 +152,5 @@ void LoginScene::handleEvent(const sf::Event& event)
 	if (event.type == Event::Resized)
 	{
 		// ... Finish Later
-		// Idea 1: Destroy "this" and add new LoginScene when Resize
-		// Idea 2: Reset position & size of all objects in Window
 	}
 }

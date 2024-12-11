@@ -5,13 +5,6 @@
 #include "GameManager.hpp"
 #include <SFML/Graphics.hpp>
 
-// Must have a sf::RenderWindow to draw the text in render() override funciton
-// If calling Singleton in the GameManager, it will be a circle dependency: 
-// 1. Button include GameManager
-// 2. GameManager include LoginScene
-// 3. Login Scene include Button
-// There are the same problems in TextView Class, so we need to pass the sf::RenderWindow* to the Button and TextView
-
 constexpr int BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER = 0;
 constexpr int BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER = 1;
 

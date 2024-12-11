@@ -16,5 +16,5 @@ public:
     ~FontManager() = default;
 
     static FontManager* getInstance();
-    static const sf::Font& getFont(const std::string& fontName);
+    const sf::Font& getFont(const std::string& fontName);
 };

@@ -6,11 +6,6 @@
 #include <iostream>
 #include <sstream>
 
-// Must have a sf::RenderWindow to draw the text in render() override funciton
-// If calling Singleton in the GameManager, it will be a circle dependency: 
-// 1. TextView include GameManager
-// 2. GameManager include LoginScene
-// 3. Login Scene include TextView
 constexpr float DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT = 0.33333f;
 constexpr int TEXTVIEW_DEFAUTL_RENDER_ORDER = 0;
 

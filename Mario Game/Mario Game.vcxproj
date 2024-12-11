@@ -166,6 +166,7 @@
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Coroutine.cpp" />
     <ClCompile Include="DeadZone.cpp" />
+    <ClCompile Include="DifficultyScene.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="EmptyBlock.cpp" />
     <ClCompile Include="EventSystem.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Controller.hpp" />
     <ClInclude Include="Coroutine.hpp" />
     <ClInclude Include="DeadZone.hpp" />
+    <ClInclude Include="DifficultyScene.hpp" />
     <ClInclude Include="ECS.hpp" />
     <ClInclude Include="EmptyBlock.hpp" />
     <ClInclude Include="Enum.hpp" />

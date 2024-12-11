@@ -4,13 +4,8 @@
 #include "Button.hpp"
 #include "TextView.hpp"
 #include "InputField.hpp"
-// Include Manager
-#include "FontManager.hpp"
-#include "GameManager.hpp"
-#include "SceneManager.hpp"
-#include "TextureManager.hpp"
 
-constexpr float LOGINSCENE_SPACE_DISTANCE = 25;
+constexpr float LOGINSCENE_SPACE_DISTANCE = 25.0f;
 
 class LoginScene : public Scene
 {
@@ -28,8 +23,6 @@ private:
 	sf::Vector2f getPasswordTextViewPosition(sf::RenderWindow& window);
 	sf::Vector2f getPasswordInputFieldPosition(sf::RenderWindow& window);
 	sf::Vector2f getUsernameInputFieldPosition(sf::RenderWindow& window);
-
-	void fitBackground(sf::Sprite* sprite, sf::RenderWindow& window);
 
 	Button m_confirm;
 	TextView m_title;
