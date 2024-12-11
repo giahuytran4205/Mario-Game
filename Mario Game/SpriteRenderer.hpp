@@ -13,6 +13,8 @@ public:
 	SpriteRenderer(Object* parent = nullptr);
 	~SpriteRenderer();
 
+	SpriteRenderer& operator=(const SpriteRenderer& other);
+
 	void update() override;
 	void render() override;
 	Sprite& getSprite();
