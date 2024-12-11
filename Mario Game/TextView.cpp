@@ -61,16 +61,20 @@ void TextView::wrapText()
         m_table.top + m_table.height / 2.0f);
 }
 
-TextView::TextView(sf::RenderWindow* window, Object* parent) : m_window(window)
+TextView::TextView(Object* parent)
 {
 	this->setParent(parent);
+
+    this->setRenderOrder(TEXTVIEW_DEFAUTL_RENDER_ORDER);
 
 	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font());
 }
 
-TextView::TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, sf::RenderWindow* window, Object* parent) : m_window(window)
+TextView::TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, Object* parent)
 {
 	this->setParent(parent);
+
+    this->setRenderOrder(TEXTVIEW_DEFAUTL_RENDER_ORDER);
 
 	configure(tablePosition, tableSize, content, font);
 }
@@ -79,19 +83,9 @@ TextView::~TextView()
 {
 }
 
-void TextView::setRenderWindow(sf::RenderWindow* window)
-{
-	if (window == nullptr)
-	{
-		std::cout << "TextView::setRenderWindow: window is nullptr!" << std::endl;
-		return;
-	}
-
-	m_window = window;
-}
-
 void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font)
 {
+
 	m_table = FRect(tablePosition.x, tablePosition.y, tableSize.x, tableSize.y);
 
 	m_ratioCharSizeTableHeight = DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT;
@@ -142,8 +136,6 @@ const FRect& TextView::getTable() const
 
 void TextView::render()
 {
-    if (m_window != nullptr)
-    {
-		m_window->draw(*this);
-    }
+    sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+    window.draw(*this);
 }

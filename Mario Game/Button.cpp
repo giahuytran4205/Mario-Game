@@ -1,17 +1,23 @@
 #include "Button.hpp"
 
-Button::Button(sf::RenderWindow* window, Object* parent)
-	: m_window(window)
+Button::Button(Object* parent)
 {
 	this->setParent(parent);
+
+	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
+
+	m_textView.setRenderOrder(BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER);
 
 	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font(), nullptr);
 }
 
-Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action, sf::RenderWindow* window, Object* parent)
-	: m_window(window)
+Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action, Object* parent)
 {
 	this->setParent(parent);
+
+	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
+
+	m_textView.setRenderOrder(BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER);
 
 	configure(position, size, content, font, action);
 }
@@ -31,15 +37,6 @@ void Button::configure(sf::Vector2f position, sf::Vector2f size, const std::stri
 	m_textView.configure(position, size, content, font);
 
 	m_action = action;
-}
-
-void Button::setRenderWindow(sf::RenderWindow* window)
-{
-	if (window != nullptr)
-	{
-		m_window = window;
-		m_textView.setRenderWindow(window);
-	}
 }
 
 void Button::setAction(std::function<void()> action)
@@ -82,6 +79,11 @@ void Button::setTextViewFillColor(const sf::Color& color)
 	m_textView.setFillColor(color);
 }
 
+void Button::setTextViewRenderOrder(int renderOrder)
+{
+	m_textView.setRenderOrder(renderOrder);
+}
+
 void Button::onHovered()
 {
 	m_textView.setFillColor(sf::Color::White);
@@ -111,9 +113,7 @@ void Button::onClick()
 
 void Button::render()
 {
-	if (m_window != nullptr)
-	{
-		m_window->draw(m_rectShape);
-		//m_window->draw(m_textView);
-	}
+	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+	window.draw(m_rectShape);
+	//window.draw(m_textView);
 }

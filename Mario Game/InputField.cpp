@@ -33,18 +33,20 @@ void InputField::adjustTextPosCharSizeInBox()
     m_transform.getRect() = { m_box.getPosition().x, m_box.getPosition().y, m_box.getSize().x,  m_box.getSize().y };
 }
 
-InputField::InputField(sf::RenderWindow* window, Object* parent)
-    : m_window(window)
+InputField::InputField(Object* parent)
 {
     setParent(parent);
+
+    this->setRenderOrder(INPUTFIELD_DEFAULT_RENDER_ORDER);
 
     this->configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), sf::Font());
 }
 
-InputField::InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, sf::RenderWindow* window, Object* parent)
-    : m_window(window)
+InputField::InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, Object* parent)
 {
     setParent(parent);
+
+    this->setRenderOrder(INPUTFIELD_DEFAULT_RENDER_ORDER);
 
     this->configure(position, size, font);
 }
@@ -65,14 +67,6 @@ void InputField::configure(const sf::Vector2f& position, const sf::Vector2f& siz
     m_cursor.setFillColor(sf::Color::Black);
     m_cursorVisible = true;
     m_cursorBlinkClock.restart();
-}
-
-void InputField::setRenderWindow(sf::RenderWindow* window)
-{
-    if (window != nullptr)
-    {
-        m_window = window;
-    }
 }
 
 void InputField::setPosition(const sf::Vector2f& position)
@@ -127,28 +121,28 @@ void InputField::onKeyPressed(const sf::Event::TextEvent& textEvent)
 
 void InputField::render()
 {
-    if (m_window != nullptr)
+    sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+
+    window.draw(m_box);
+    m_text.setString(m_content);
+    window.draw(m_text);
+
+    if (m_isSelected)
     {
-        m_window->draw(m_box);
-        m_text.setString(m_content);
-        m_window->draw(m_text);
-        if (m_isSelected)
+        if (m_cursorBlinkClock.getElapsedTime().asSeconds() >= 0.5f)
         {
-            if (m_cursorBlinkClock.getElapsedTime().asSeconds() >= 0.5f)
-            {
-                m_cursorVisible = !m_cursorVisible;
-                m_cursorBlinkClock.restart();
-            }
+            m_cursorVisible = !m_cursorVisible;
+            m_cursorBlinkClock.restart();
+        }
 
-            if (m_cursorVisible)
-            {
-                sf::FloatRect textBounds = m_text.getLocalBounds();
+        if (m_cursorVisible)
+        {
+            sf::FloatRect textBounds = m_text.getLocalBounds();
 
-                float cursorX = m_text.getPosition().x + textBounds.width + 1.f;
-                float cursorY = m_text.getPosition().y;
-                m_cursor.setPosition(cursorX, cursorY);
-                m_window->draw(m_cursor);
-            }
+            float cursorX = m_text.getPosition().x + textBounds.width + 1.f;
+            float cursorY = m_text.getPosition().y;
+            m_cursor.setPosition(cursorX, cursorY);
+            window.draw(m_cursor);
         }
     }
 }

@@ -109,15 +109,7 @@ LoginScene::LoginScene()
 	m_background.setTexture(TextureManager::getTexture("Resources/Background/MarioBros-Background.png"));
 	this->fitBackground(&m_background, window);
 
-	// SET RENDER WINDOW FOR TEXT VIEW, BUTTON, INPUT FIELD, ...
-	m_title.setRenderWindow(&window);
-	m_confirm.setRenderWindow(&window);
-	m_usernameText.setRenderWindow(&window);
-	m_passwordText.setRenderWindow(&window);
-	m_usernameInput.setRenderWindow(&window);
-	m_passwordInput.setRenderWindow(&window);
-
-	// CALCULATE OBJECT's POSITION AND SIZE
+	// CALCULATE POSITION AND SIZE
 	sf::Vector2f usernameInputFieldSize = this->getUsernameInputFieldSize(window);
 	sf::Vector2f passwordInputFieldSize = this->getPasswordInputFieldSize(window);
 	sf::Vector2f usernameTextViewSize = this->getUsernameTextViewSize(window);
@@ -132,7 +124,7 @@ LoginScene::LoginScene()
 	sf::Vector2f confirmButtonPosition = this->getConfirmButtonPosition(window);
 	sf::Vector2f titleTextViewPosition = this->getTitleTextViewPosition(window);
 
-	// CONFIGURE OBJECT
+	// CONFIGURE
 	m_usernameText.configure(usernameTextViewPosition, usernameTextViewSize, "Username", FontManager::getInstance()->getFont("ARIAL"));
 	m_passwordText.configure(passwordTextViewPosition, passwordTextViewSize, "Password", FontManager::getInstance()->getFont("ARIAL"));
 	m_usernameInput.configure(usernameInputFieldPosition, usernameInputFieldSize, FontManager::getInstance()->getFont("ARIAL"));
@@ -142,6 +134,15 @@ LoginScene::LoginScene()
 		{
 			std::cout << "CONFIRM BUTTON" << std::endl;
 		});
+
+	// SET RENDER ORDER
+	m_usernameText.setRenderOrder(10);
+	m_passwordText.setRenderOrder(10);
+	m_usernameInput.setRenderOrder(10);
+	m_passwordInput.setRenderOrder(10);
+	m_title.setRenderOrder(10);
+	m_confirm.setRenderOrder(10);
+	m_confirm.setTextViewRenderOrder(20);
 }
 
 LoginScene::~LoginScene()

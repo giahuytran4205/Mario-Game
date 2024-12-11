@@ -11,24 +11,24 @@
 // 2. GameManager include LoginScene
 // 3. Login Scene include Button
 // There are the same problems in TextView Class, so we need to pass the sf::RenderWindow* to the Button and TextView
+
+constexpr int BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER = 0;
+constexpr int BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER = 1;
+
 class Button : public GUI
 {
 private:	
 	sf::RectangleShape m_rectShape;
 	TextView m_textView;
 	std::function<void()> m_action;
-	
-	// Mandatory
-	sf::RenderWindow* m_window;
 
 public:
-	Button(sf::RenderWindow* window = nullptr, Object* parent = nullptr);
-	Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr, sf::RenderWindow* window = nullptr, Object* parent = nullptr);
+	Button(Object* parent = nullptr);
+	Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr, Object* parent = nullptr);
 	~Button();
 
 	void configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action = nullptr);
 
-	void setRenderWindow(sf::RenderWindow* window);
 	void setAction(std::function<void()> action);
 	void setPosition(const sf::Vector2f& position);
 	void setSize(const sf::Vector2f& size);
@@ -36,6 +36,7 @@ public:
 	void setFont(const sf::Font& font);
 	void setButtonFillColor(const sf::Color& color);
 	void setTextViewFillColor(const sf::Color& color);
+	void setTextViewRenderOrder(int renderOrder);
 
 	void onHovered() override;
 	void onUnhovered() override;
