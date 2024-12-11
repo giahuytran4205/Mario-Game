@@ -88,6 +88,7 @@ void TextView::setRenderWindow(sf::RenderWindow* window)
 	}
 
 	m_window = window;
+    this->wrapText();
 }
 
 void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font)
@@ -106,33 +107,33 @@ void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& 
 
 	this->setStyle(sf::Text::Regular);
 
-	wrapText();
+	this->wrapText();
 }
 
 void TextView::setRatioCharacterSizeTableHeight(float ratio)
 {
 	m_ratioCharSizeTableHeight = ratio;
-	wrapText();
+    this->wrapText();
 }
 
 void TextView::setTable(const FRect& table)
 {
 	m_table = table;
-	wrapText();
+    this->wrapText();
 }
 
 void TextView::setTablePosition(const sf::Vector2f& tablePosition)
 {
 	m_table.left = tablePosition.x;
 	m_table.top = tablePosition.y;
-	wrapText();
+    this->wrapText();
 }
 
 void TextView::setTableSize(const sf::Vector2f& tableSize)
 {
 	m_table.width = tableSize.x;
 	m_table.height = tableSize.y;
-	wrapText();
+    this->wrapText();
 }
 
 const FRect& TextView::getTable() const
