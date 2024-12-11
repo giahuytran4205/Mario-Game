@@ -1,5 +1,5 @@
 { "columns":36,
- "image":"Resources/Tilesets/Items&Objects.png",
+ "image":"..\/Tilesets\/Items&Objects.png",
  "imageheight":224,
  "imagewidth":576,
  "margin":0,
@@ -12,21 +12,30 @@
         {
          "animation":[
                 {
-                 "duration":100,
-                 "tileid":216
+                 "duration":150,
+                 "tileid":180
                 }, 
                 {
-                 "duration":100,
-                 "tileid":217
+                 "duration":150,
+                 "tileid":181
                 }, 
                 {
-                 "duration":100,
-                 "tileid":218
+                 "duration":150,
+                 "tileid":182
                 }, 
                 {
-                 "duration":100,
-                 "tileid":219
+                 "duration":150,
+                 "tileid":183
                 }],
+         "id":180,
+         "properties":[
+                {
+                 "name":"state",
+                 "type":"int",
+                 "value":0
+                }]
+        }, 
+        {
          "id":216,
          "properties":[
                 {

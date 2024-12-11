@@ -16,14 +16,17 @@ SpriteRenderer::~SpriteRenderer() {
 	
 }
 
+SpriteRenderer& SpriteRenderer::operator=(const SpriteRenderer& other) {
+	Sprite::operator=(other);
+	//(Object)*this = other;
+	return *this;
+}
+
 void SpriteRenderer::update() {
 	Vector2f anchor = Object::m_transform.getAnchor();
 
 	setOrigin(getLocalBounds().width * anchor.x, getLocalBounds().height * anchor.y);
 	Sprite::setPosition(Object::m_transform.getWorldPosition());
-
-	if (m_parent)
-		m_renderOrder = m_parent->getRenderOrder();
 }
 
 void SpriteRenderer::render() {
