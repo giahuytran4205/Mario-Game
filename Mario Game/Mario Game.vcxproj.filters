@@ -204,6 +204,9 @@
     <ClCompile Include="DifficultyScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MapSelectionScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -360,6 +363,9 @@
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="DifficultyScene.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSelectionScene.hpp">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
