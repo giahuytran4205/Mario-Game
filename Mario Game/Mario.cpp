@@ -54,6 +54,10 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_onJumper = false;
 	m_onGrabFlagPole = false;
 	m_isDead = false;
+	m_coins = 0;
+	m_score = 0;
+	m_lives = 3;
+	m_countdown = 400;
 	m_ability = Ability::REGULAR;
 
 	m_teleportTime = 0;
@@ -154,6 +158,13 @@ void Mario::onCollisionEnter(Collision& col, const Direction& side) {
 void Mario::update() {
 	handleMovement();
 
+	if (!isDead()) {
+		if (m_countdown > 0)
+			m_countdown -= deltaTime.asMilliseconds();
+		else
+			dead();
+	}
+
 	if (m_direction == Direction::LEFT) {
 		m_sprite.setScale(-1, 1);
 	}
@@ -253,7 +264,12 @@ void Mario::onGrabFlagPole() {
 }
 
 void Mario::dead() {
+	if (m_lives == 0) {
+		// Game over
+	}
+
 	m_isDead = true;
+	m_lives--;
 	m_state = State::DIE;
 	m_physics2D.setVelocity({ 0, 0 });
 	m_physics2D.setBaseVelocityX(0);
@@ -263,19 +279,7 @@ void Mario::dead() {
 }
 
 void Mario::win() {
-	auto coroutine = [&]() -> Coroutine {
-		int numFirework = randRange(5, 10);
-		for (int i = 0; i < numFirework; i++) {
-			float x = randRange(3248.0f, 3248 + 112.0f);
-			float y = randRange(304.0f, 304.0f + 64.0f);
-			Object& firework = ParticleSystem::getInstance()->addParticle("Resources/Particles/Firework.json", Vector2f(x, y));
-			SceneManager::getInstance()->getCurrentScene().getComponent<SoundComponent>().play(SoundTrack::FIREWORK);
-			firework.getComponent<Physics2D>().setEnableGravity(false);
-			co_await WaitForMiliseconds(firework.getComponent<Animation>().getTrackLength(0));
-		}
-	}();
-
-	CoroutineManager::getInstance()->addCoroutine(move(coroutine));
+	
 }
 
 bool Mario::isOnGround() const {
@@ -292,6 +296,22 @@ bool Mario::isOnGrabFlagPole() const {
 
 bool Mario::isDead() const {
 	return m_isDead;
+}
+
+int Mario::getLives() const {
+	return m_lives;
+}
+
+int Mario::getCoins() const {
+	return m_coins;
+}
+
+int Mario::getScore() const {
+	return m_score;
+}
+
+float Mario::getCountdownTime() const {
+	return m_countdown;
 }
 
 Mario::Ability Mario::getAbility() const {

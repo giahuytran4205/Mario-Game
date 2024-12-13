@@ -326,3 +326,19 @@ void Map::render() {
 FRect Map::getFireworkArea() const {
 	return m_fireworkArea;
 }
+
+void Map::launchFireworks() {
+	auto coroutine = [&]() -> Coroutine {
+		int numFirework = randRange(5, 10);
+		for (int i = 0; i < numFirework; i++) {
+			float x = randRange(3248.0f, 3248 + 112.0f);
+			float y = randRange(304.0f, 304.0f + 64.0f);
+			Object& firework = ParticleSystem::getInstance()->addParticle("Resources/Particles/Firework.json", Vector2f(x, y));
+			SceneManager::getInstance()->getCurrentScene().getComponent<SoundComponent>().play(SoundTrack::FIREWORK);
+			firework.getComponent<Physics2D>().setEnableGravity(false);
+			co_await WaitForMiliseconds(firework.getComponent<Animation>().getTrackLength(0));
+		}
+	}();
+
+	CoroutineManager::getInstance()->addCoroutine(move(coroutine));
+}

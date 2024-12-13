@@ -47,4 +47,5 @@ public:
 	int getStartDepth() const;
 	Vector2f getSpawnPos() const;
 	FRect getFireworkArea() const;
+	void launchFireworks();
 };

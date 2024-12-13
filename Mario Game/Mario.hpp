@@ -47,6 +47,11 @@ private:
 	int m_teleportTime;
 	Portal m_enteredPortal;
 
+	int m_lives;
+	int m_coins;
+	int m_score;
+	float m_countdown;
+
 public:
 	Mario(Object* parent = nullptr);
 	~Mario();
@@ -66,5 +71,9 @@ public:
 	bool isOnTeleport() const;
 	bool isOnGrabFlagPole() const;
 	bool isDead() const;
+	int getLives() const;
+	int getCoins() const;
+	int getScore() const;
+	float getCountdownTime() const;
 	Ability getAbility() const;
 };
