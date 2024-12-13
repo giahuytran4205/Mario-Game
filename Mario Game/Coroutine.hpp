@@ -20,9 +20,8 @@ public:
 	};
 
 
-public:
+private:
 	coroutine_handle<promise_type> handle_;
-	float m_duration = 0;
 
 public:
 	explicit Coroutine(std::coroutine_handle<promise_type> handle);
@@ -35,23 +34,23 @@ public:
 
 	void resume();
 	bool done() const;
-	void setDuration(float duration);
-	float getDuration();
+	coroutine_handle<promise_type>& getHandle();
 };
 
 struct WaitForMiliseconds {
+	float duration;
+
 	explicit WaitForMiliseconds(float aDuration) {
 		duration = aDuration;
 	}
 
-	sf::Clock clock;
-	float duration;
 	bool await_ready() {
-		cout << clock.getElapsedTime().asMilliseconds() << '\n';
-		return clock.getElapsedTime().asMilliseconds() >= duration;
+		return false;
 	}
-	void await_suspend(std::coroutine_handle<Coroutine::promise_type> handle) {
-		handle.promise().duration = 1000;
+
+	void await_suspend(std::coroutine_handle<> handle) {
+		coroutine_handle<Coroutine::promise_type>::from_address(handle.address()).promise().duration = duration;
 	}
-	void await_resume() {}
+
+	float await_resume() { return duration; }
 };

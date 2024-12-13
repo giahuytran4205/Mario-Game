@@ -15,12 +15,12 @@ CoroutineManager* CoroutineManager::getInstance() {
 }
 
 void CoroutineManager::addCoroutine(Coroutine&& coroutine) {
-	m_coroutines.push_back(move(coroutine.handle_));
+	m_coroutines.push_back(move(coroutine));
 }
 
 void CoroutineManager::update() {
 	for (auto& coroutine : m_coroutines) {
-		float& duration = coroutine.promise().duration;
+		float& duration = coroutine.getHandle().promise().duration;
 		duration -= deltaTime.asMilliseconds();
 		duration = max(duration, 0.0f);
 		if (duration == 0 && !coroutine.done()) {

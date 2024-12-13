@@ -5,7 +5,7 @@
 class CoroutineManager {
 private:
 	static CoroutineManager* m_instance;
-	std::vector<std::coroutine_handle<Coroutine::promise_type>> m_coroutines;
+	std::vector<Coroutine> m_coroutines;
 
 public:
 	CoroutineManager();

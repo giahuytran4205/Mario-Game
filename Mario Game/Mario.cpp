@@ -127,14 +127,14 @@ void Mario::onCollisionEnter(Collision& col, const Direction& side) {
 			m_physics2D.setEnableGravity(false);
 			m_collision.setTrigger(true);
 
-			Vector2f dest(m_transform.getPosition().x, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
+			Vector2f dest(m_transform.getPosition().x, flagPole->getComponent<Transform2D>().getRect().bottom - m_transform.height / 2);
 
 			m_autoControl.addMoveByPoint(dest, 1000, { 0, 0 }, [&](int time) { m_state = State::GRAB_FLAGPOLE; });
 			m_autoControl.addWaitUntil([flagPole](int time) { return flagPole->isLoweredFlag(); });
 			m_autoControl.addMoveByDistance(Vector2f(16, 0), 0, { 0, 0 }, [&](int time) { m_direction = Direction::LEFT; });
 			m_autoControl.addWaitForMiliseconds(500, [&](int time) { m_anim->stop(); });
 			m_autoControl.addMoveByPoint(dest + Vector2f(16, 0), 0, { 0, 0 });
-			m_autoControl.addMoveByPoint(dest + Vector2f(64, 24), 200, { 0, m_physics2D.getGravity() });
+			m_autoControl.addMoveByPoint(dest + Vector2f(64, 16), 200, { 0, m_physics2D.getGravity() });
 			m_autoControl.addMoveByDistance({ 64, 0 }, 1000, { 0, 0 },
 				[&](int time) {
 					m_direction = Direction::RIGHT;
@@ -263,22 +263,19 @@ void Mario::dead() {
 }
 
 void Mario::win() {
-	int numFirework = randRange(5, 10);
+	auto coroutine = [&]() -> Coroutine {
+		int numFirework = randRange(5, 10);
+		for (int i = 0; i < numFirework; i++) {
+			float x = randRange(3248.0f, 3248 + 112.0f);
+			float y = randRange(304.0f, 304.0f + 64.0f);
+			Object& firework = ParticleSystem::getInstance()->addParticle("Resources/Particles/Firework.json", Vector2f(x, y));
+			SceneManager::getInstance()->getCurrentScene().getComponent<SoundComponent>().play(SoundTrack::FIREWORK);
+			firework.getComponent<Physics2D>().setEnableGravity(false);
+			co_await WaitForMiliseconds(firework.getComponent<Animation>().getTrackLength(0));
+		}
+	}();
 
-	
-
-		auto coroutine = [&]() -> Coroutine {
-			for (int i = 0; i < 4; i++) {
-				float x = randRange(3248.0f, 3248 + 112.0f);
-				float y = randRange(304.0f, 304.0f + 64.0f);
-				Object& firework = ParticleSystem::getInstance()->addParticle("Resources/Particles/Firework.json", 1000, Vector2f(x, y));
-				firework.getComponent<Physics2D>().setEnableGravity(false);
-				co_await WaitForMiliseconds(1000);
-			}
-		}();
-
-		CoroutineManager::getInstance()->addCoroutine(move(coroutine));
-	
+	CoroutineManager::getInstance()->addCoroutine(move(coroutine));
 }
 
 bool Mario::isOnGround() const {
