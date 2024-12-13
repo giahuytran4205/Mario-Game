@@ -11,20 +11,33 @@ GameScene::GameScene(const string& mapPath) : m_mario(this) {
 
 	m_mario.getComponent<Transform2D>().setPosition(3000, 350);
 
+	m_coinsText.setParent(this);
+	m_scoreText.setParent(this);
+	m_livesText.setParent(this);
+	m_countdownText.setParent(this);
+	m_worldNameText.setParent(this);
+
 	View& view = GameManager::getInstance()->getView();
 	view.setCenter(m_mario.getComponent<Transform2D>().getWorldCenter().x, m_map.getStartDepth() * 240 + 120);
+	
+	float textWidth = view.getSize().x / 5;
 
-	QuestionBlock* block = new QuestionBlock(OVERWORLD, this);
-	block->getComponent<Transform2D>().setPosition(50, 380);
+	m_scoreText.setTable(FRect(0, 0, textWidth, 32));
+	m_coinsText.setTable(FRect(textWidth, 0, textWidth, 32));
+	m_worldNameText.setTable(FRect(textWidth * 2, 0, textWidth, 32));
+	m_countdownText.setTable(FRect(textWidth * 3, 0, textWidth, 32));
+	m_livesText.setTable(FRect(textWidth * 4, 0, textWidth, 32));
 
-	m_countdown = 300;
+	m_scoreText.setString("SCORE\n0");
+	m_coinsText.setString("COINS\n0");
+	m_worldNameText.setString("WORLD\n1-1");
+	m_countdownText.setString("TIME\n400");
+	m_livesText.setString("LIVES\n3");
 }
 
 GameScene::~GameScene() {}
 
 void GameScene::update() {
-	if (m_countdown > 0)
-		m_countdown -= deltaTime.asSeconds();
 
 	View& view = GameManager::getInstance()->getView();
 	float x = max(m_mario.getComponent<Transform2D>().getWorldPosition().x, view.getSize().x / 2);
@@ -47,14 +60,4 @@ void GameScene::handleEvent(const Event& event) {
 
 void GameScene::loadMap(const string& filename) {
 	m_map.loadFromJsonFile(filename);
-}
-
-void GameScene::win() {
-	int numFirework = randRange(5, 10);
-	for (int i = 0; i < numFirework; i++) {
-		float x = randRange(m_map.getFireworkArea().left, m_map.getFireworkArea().right);
-		float y = randRange(m_map.getFireworkArea().top, m_map.getFireworkArea().bottom);
-
-		ParticleSystem::getInstance()->addParticle("Resources/Particles/Firework.json", Vector2f(0, 0));
-	}
 }

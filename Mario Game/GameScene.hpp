@@ -10,12 +10,17 @@
 #include "Lift.hpp"
 #include "BalanceLifts.hpp"
 #include "Slider.hpp"
+#include "TextView.hpp"
 
 class GameScene : public Scene {
 private:
 	Mario m_mario;
 	Map m_map;
-	float m_countdown;
+	TextView m_coinsText;
+	TextView m_scoreText;
+	TextView m_livesText;
+	TextView m_countdownText;
+	TextView m_worldNameText;
 
 public:
 	GameScene(const string& mapPath);
@@ -25,5 +30,4 @@ public:
 	void render() override;
 	void handleEvent(const Event& event) override;
 	void loadMap(const string& filename);
-	void win();
 };
