@@ -1,98 +1,119 @@
 #include "Button.hpp"
 
-//Button* m_selectedButton = nullptr;
-
-FRect Button::getButtonRect()
+Button::Button(Object* parent)
 {
-	return { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
+	this->setParent(parent);
+
+	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
+
+	m_textView.setRenderOrder(BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER);
+
+	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font(), nullptr);
 }
 
-Button::Button(Object* parent, sf::RenderWindow& window, float x, float y, float width, float height, const std::string& labelContent, sf::Font& labelFont, sf::Color labelColor, std::function<void()> action)
+Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action, Object* parent)
 {
-	setParent(parent);
-	m_isSelected = false;
-	m_isPressed = false;
-	m_isHovered = false;
-	m_isOnDrag = false;
-	m_isInteractable = true;
+	this->setParent(parent);
 
-	m_shape.setSize(sf::Vector2f(width, height));
-	m_shape.setFillColor(sf::Color::Transparent);
-	m_shape.setOutlineThickness(0);
-	m_shape.setOutlineColor(sf::Color::White);
+	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
 
-	this->setPosition(x, y);
+	m_textView.setRenderOrder(BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER);
 
-	unsigned int textSize = m_shape.getSize().y / 3;
-
-	m_label.init(this, this->getButtonRect(), labelContent, labelFont, labelColor, textSize);
-
-	m_transform.getRect() = { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
-
-	m_action = action;
-	m_parent = parent;
+	configure(position, size, content, font, action);
 }
 
 Button::~Button()
 {
 }
 
-void Button::setLabel(const std::string& s)
+void Button::configure(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action)
 {
-	m_label.setContent(s);
-}
+	m_rectShape.setPosition(position);
+	m_rectShape.setSize(size);
+	m_rectShape.setFillColor(sf::Color::Transparent);
 
-void Button::setPosition(float x, float y)
-{
-	m_shape.setPosition(x, y);
-	m_label.setTable(this->getButtonRect());
-	m_transform.getRect() = { x, y, m_shape.getSize().x, m_shape.getSize().y };
-}
+	m_transform.getRect() = { position.x, position.y, size.x, size.y };
 
-void Button::setSize(float width, float height)
-{
-	m_shape.setSize({ width, height });
-	m_label.setTable(this->getButtonRect());
-	m_transform.getRect() = { m_shape.getPosition().x, m_shape.getPosition().y, m_shape.getSize().x,  m_shape.getSize().y };
-}
+	m_textView.configure(position, size, content, font);
 
-void Button::setContentScale(float x, float y)
-{
-	m_label.setScale({ x, y });
-}
-
-void Button::onHovered()
-{
-	m_label.setFillColor(sf::Color::White);
-}
-
-void Button::onUnhovered()
-{
-	m_label.setFillColor(sf::Color::Black);
-}
-
-void Button::onPressed()
-{
-	m_label.setFillColor(sf::Color::White);
-	m_label.setScale({ 0.8f, 0.8f });
-}
-
-void Button::onClick()
-{
-	m_label.setScale({ 1.0f, 1.0f });
-	m_label.setFillColor(sf::Color::White);
-
-	if (m_action)
-		m_action();
+	m_action = action;
 }
 
 void Button::setAction(std::function<void()> action)
 {
-	m_action = action;
+	if (action != nullptr)
+	{
+		m_action = action;
+	}
 }
 
-void Button::draw(sf::RenderWindow& target)
+void Button::setPosition(const sf::Vector2f& position)
 {
-	target.draw(m_shape);
-	target.draw(m_label.getText());
+	m_rectShape.setPosition(position);
+	m_textView.setTablePosition(position);
+}
+
+void Button::setSize(const sf::Vector2f& size)
+{
+	m_rectShape.setSize(size);
+	m_textView.setTableSize(size);
+}
+
+void Button::setContent(const std::string& content)
+{
+	m_textView.setString(content);
+}
+
+void Button::setFont(const sf::Font& font)
+{
+	m_textView.setFont(font);
+}
+
+void Button::setButtonFillColor(const sf::Color& color)
+{
+	m_rectShape.setFillColor(color);
+}
+
+void Button::setTextViewFillColor(const sf::Color& color)
+{
+	m_textView.setFillColor(color);
+}
+
+void Button::setTextViewRenderOrder(int renderOrder)
+{
+	m_textView.setRenderOrder(renderOrder);
+}
+
+void Button::onHovered()
+{
+	m_textView.setFillColor(sf::Color::White);
+}
+
+void Button::onUnhovered()
+{
+	m_textView.setFillColor(sf::Color::Black);
+}
+
+void Button::onPressed()
+{
+	m_textView.setFillColor(sf::Color::White);
+	m_textView.setScale(sf::Vector2f(0.8f, 0.8f));
+}
+
+void Button::onClick()
+{
+	m_textView.setFillColor(sf::Color::White);
+	m_textView.setScale(sf::Vector2f(1.0f, 1.0f));
+
+	if (m_action != nullptr)
+	{
+		m_action();
+	}
+}
+
+void Button::render()
+{
+	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
+	window.draw(m_rectShape);
+	//window.draw(m_textView);
 }
