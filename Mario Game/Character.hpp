@@ -3,14 +3,8 @@
 #include "Common.hpp"
 #include "Object.hpp"
 #include "Animation.hpp"
+#include "Enum.hpp"
 using namespace sf;
-
-enum Direction {
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
-};
 
 class Character : public Object {
 protected:

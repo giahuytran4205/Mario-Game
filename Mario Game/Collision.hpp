@@ -26,10 +26,10 @@ public:
 	void init() override;
 	void update() override;
 	void lateUpdate() override;
-	void resolveCollide(Collision& col);
-	void onCollisionEnter(Collision& col);
+	void resolveCollide(Collision& col, Direction& side, bool isTrigger);
+	void onCollisionEnter(Collision& col, const Direction& side);
 	void setTrigger(bool isTrigger);
 	bool isTrigger();
 	FRect getCollider() const;
-	Vector2f getTangentPoint(const Collision& col, int& side) const;
+	Vector2f getTangentPoint(const Collision& col, Direction& side) const;
 };

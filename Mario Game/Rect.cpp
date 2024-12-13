@@ -48,13 +48,13 @@ int FRect::tangentSide(const FRect& rect) const {
 	float right = left + width;
 	float bottom = top + height;
 
-	if (rect.left == right)
+	if (rect.left >= right)
 		return 0;
-	if (rect.bottom == top)
+	if (rect.bottom <= top)
 		return 1;
-	if (rect.right == left)
+	if (rect.right <= left)
 		return 2;
-	if (rect.top == bottom)
+	if (rect.top >= bottom)
 		return 3;
 
 	return -1;

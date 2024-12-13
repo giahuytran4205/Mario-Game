@@ -7,11 +7,12 @@
 
 class QuestionBlock : public Block {
 private:
-
+	bool m_isEmpty;
 public:
-	QuestionBlock(Object* parent = nullptr);
+	QuestionBlock(Environment environment = Environment::OVERWORLD, Object* parent = nullptr);
 	~QuestionBlock();
 
-	void onCollisionEnter(Collision& col) override;
+	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void hit();
+	void setHide(bool isHide);
 };

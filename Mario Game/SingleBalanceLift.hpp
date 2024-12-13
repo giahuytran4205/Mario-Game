@@ -17,7 +17,7 @@ public:
 	~SingleBalanceLift();
 
 	void update() override;
-	void onCollisionEnter(Collision& col) override;
+	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void setAmplitude(float amplitude);
 	void linkOtherLift(SingleBalanceLift* other);
 };

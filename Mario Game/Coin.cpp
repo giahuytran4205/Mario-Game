@@ -20,6 +20,6 @@ void Coin::update() {
 
 }
 
-void Coin::onCollisionEnter(Collision& col) {
+void Coin::onCollisionEnter(Collision& col, const Direction& side) {
 
 }

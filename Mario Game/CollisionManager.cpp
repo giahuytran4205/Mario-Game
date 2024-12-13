@@ -61,16 +61,25 @@ void CollisionManager::update() {
 						if (tf1.getLastPosition() == tf1.getWorldPosition() && tf2.getLastPosition() == tf2.getWorldPosition())
 							continue;
 
-						if (!col->isTrigger() && !item->isTrigger()) {
-							if (item->m_entity->hasComponent<Physics2D>()) {
-								if (item->m_entity->getComponent<Physics2D>().isElastic())
-									item->resolveCollide(*col);
-								else col->resolveCollide(*item);
-							}
-							else col->resolveCollide(*item);
-						}
+						Direction side = Direction::LEFT;
 
-						col->onCollisionEnter(*item);
+						bool isTrigger = col->isTrigger() || item->isTrigger();
+
+						if (item->m_entity->hasComponent<Physics2D>()) {
+							if (item->m_entity->getComponent<Physics2D>().isElastic()) {
+								item->resolveCollide(*col, side, isTrigger);
+								item->onCollisionEnter(*col, side);
+							}
+							else {
+								col->resolveCollide(*item, side, isTrigger);
+								col->onCollisionEnter(*item, side);
+							}
+						}
+						else {
+							col->resolveCollide(*item, side, isTrigger);
+							col->onCollisionEnter(*item, side);
+						}
+						
 					}
 				}
 			}

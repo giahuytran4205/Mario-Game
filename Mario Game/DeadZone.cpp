@@ -12,7 +12,7 @@ DeadZone::DeadZone(const FRect& rect, Object* parent) : DeadZone(parent) {
 
 DeadZone::~DeadZone() {}
 
-void DeadZone::onCollisionEnter(Collision& col) {
+void DeadZone::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>()) {
 		Mario* mario = col.m_entity->convertTo<Mario>();
 		if (!mario->isDead())

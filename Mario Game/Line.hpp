@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Rect.hpp"
+#include "Enum.hpp"
 using namespace sf;
 
 class Line {
@@ -15,7 +16,7 @@ public:
 	void createLine(const Vector2f& point1, const Vector2f& point2);
 	float getX(const float& y);
 	float getY(const float& x);
-	Vector2f raycast(const FRect& rect, int& side);
+	Vector2f raycast(const FRect& rect, Direction& side);
 };
 
 float distance(const Vector2f& point1, const Vector2f& point2);

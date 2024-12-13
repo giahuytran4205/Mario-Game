@@ -21,7 +21,7 @@ private:
 	
 public:
 	Physics2D();
-	Physics2D(float gravity, bool isStatic);
+	Physics2D(float gravity, bool isStatic = false);
 	~Physics2D();
 
 	void init() override;

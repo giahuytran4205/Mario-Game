@@ -28,7 +28,7 @@ public:
 	~Lift();
 
 	void update() override;
-	void onCollisionEnter(Collision& col);
+	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void setDirection(Direction direction);
 	void setMovementRange(float startOffset, float endOffset);
 	void setSpeed(float speed);

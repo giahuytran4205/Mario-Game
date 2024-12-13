@@ -3,14 +3,16 @@
 #include "Mario.hpp"
 #include "Collision.hpp"
 #include "TextureManager.hpp"
+#include "ParticleSystem.hpp"
+#include "Random.hpp"
 
 class Brick : public Block {
 private:
 
 public:
-	Brick(Object* parent = nullptr);
+	Brick(Environment environment = OVERWORLD, Object* parent = nullptr);
 	~Brick();
 
-	void onCollisionEnter(Collision& col);
-	void hit();
+	void onCollisionEnter(Collision& col, const Direction& side) override;
+	void hit(bool isDestroy);
 };

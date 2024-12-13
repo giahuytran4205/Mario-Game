@@ -55,7 +55,7 @@ void Jumper::update() {
 
 }
 
-void Jumper::onCollisionEnter(Collision& col) {
+void Jumper::onCollisionEnter(Collision& col, const Direction& side) {
 	
 }
 
@@ -65,5 +65,5 @@ void Jumper::launch() {
 }
 
 float Jumper::getLauchVelocity() {
-	return (m_transform.getSize().y - 32) / 16 * 0.1f - 0.3f;
+	return (m_transform.getSize().y - 32) / 16 * 0.1f - 0.4f;
 }

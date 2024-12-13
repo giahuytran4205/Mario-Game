@@ -15,7 +15,7 @@ class GameScene : public Scene {
 private:
 	Mario m_mario;
 	Map m_map;
-	Slider<float> m_slider;
+	float m_countdown;
 
 public:
 	GameScene(const string& mapPath);
@@ -25,4 +25,5 @@ public:
 	void render() override;
 	void handleEvent(const Event& event) override;
 	void loadMap(const string& filename);
+	void win();
 };

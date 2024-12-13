@@ -56,6 +56,8 @@ void GameManager::start() {
 
 		m_collisionManager.update();
 
+		m_coroutineManager.update();
+
 #if DEBUG
 
 		m_window.draw(Transform2D::rectangles);

@@ -14,6 +14,7 @@
 #include "Portal.hpp"
 #include "Jumper.hpp"
 #include "FlagPole.hpp"
+#include "QuestionBlock.hpp"
 #include <iostream>
 using namespace sf;
 
@@ -53,6 +54,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_onJumper = false;
 	m_onGrabFlagPole = false;
 	m_isDead = false;
+	m_ability = Ability::REGULAR;
 
 	m_teleportTime = 0;
 }
@@ -61,10 +63,8 @@ Mario::~Mario() {
 
 }
 
-void Mario::onCollisionEnter(Collision& col) {
-	int side = m_transform.getRect().tangentSide(col.getCollider());
-
-	if (side == 3 && !col.isTrigger())
+void Mario::onCollisionEnter(Collision& col, const Direction& side) {
+	if (side == Direction::DOWN && !col.isTrigger())
 		m_onJump = false;
 
 	if (m_autoControl.isControlled())
@@ -74,7 +74,7 @@ void Mario::onCollisionEnter(Collision& col) {
 		m_onJump = false;
 		m_state = State::NORMAL;
 
-		if (side == 0 || side == 2) {
+		if (side == Direction::LEFT || side == Direction::RIGHT) {
 			m_onWall = true;
 		}
 	}
@@ -89,14 +89,14 @@ void Mario::onCollisionEnter(Collision& col) {
 		FRect bodyRect = m_transform.getRect();
 		FRect jumperRect = jumper->getComponent<Transform2D>().getRect();
 
-		if (side == 1) {
+		if (side == Direction::UP) {
 			m_physics2D.setBaseVelocityY(m_speed / 10);
 		}
-		if (side == 0 || side == 2) {
+		if (side == Direction::LEFT || side == Direction::RIGHT) {
 			m_physics2D.setBaseVelocityY(m_speed);
 			m_onWall = true;
 		}
-		if (side == 3) {
+		if (side == Direction::DOWN) {
 			jumper->launch();
 			m_onJump = false;
 			m_jumpSpeed = jumper->getLauchVelocity();
@@ -135,12 +135,17 @@ void Mario::onCollisionEnter(Collision& col) {
 			m_autoControl.addWaitForMiliseconds(500, [&](int time) { m_anim->stop(); });
 			m_autoControl.addMoveByPoint(dest + Vector2f(16, 0), 0, { 0, 0 });
 			m_autoControl.addMoveByPoint(dest + Vector2f(64, 24), 200, { 0, m_physics2D.getGravity() });
-			m_autoControl.addMoveByDistance({ 128, 0 }, 1000, { 0, 0 },
+			m_autoControl.addMoveByDistance({ 64, 0 }, 1000, { 0, 0 },
 				[&](int time) {
 					m_direction = Direction::RIGHT;
 					m_state = State::WALK; 
 				});
-			m_autoControl.addAction([&]() { m_physics2D.setEnableGravity(true); m_collision.setTrigger(false); });
+			m_autoControl.addAction(
+				[&]() {
+					m_physics2D.setEnableGravity(true);
+					m_collision.setTrigger(false);
+					win();
+				});
 		}
 	}
 
@@ -257,6 +262,25 @@ void Mario::dead() {
 	m_sound.play(SoundTrack::DIE);
 }
 
+void Mario::win() {
+	int numFirework = randRange(5, 10);
+
+	
+
+		auto coroutine = [&]() -> Coroutine {
+			for (int i = 0; i < 4; i++) {
+				float x = randRange(3248.0f, 3248 + 112.0f);
+				float y = randRange(304.0f, 304.0f + 64.0f);
+				Object& firework = ParticleSystem::getInstance()->addParticle("Resources/Particles/Firework.json", 1000, Vector2f(x, y));
+				firework.getComponent<Physics2D>().setEnableGravity(false);
+				co_await WaitForMiliseconds(1000);
+			}
+		}();
+
+		CoroutineManager::getInstance()->addCoroutine(move(coroutine));
+	
+}
+
 bool Mario::isOnGround() const {
 	return m_physics2D.getVelocity().y + m_physics2D.getBaseVelocity().y == 0 && !m_onJump;
 }
@@ -271,4 +295,8 @@ bool Mario::isOnGrabFlagPole() const {
 
 bool Mario::isDead() const {
 	return m_isDead;
+}
+
+Mario::Ability Mario::getAbility() const {
+	return m_ability;
 }

@@ -7,6 +7,8 @@
 #include "Transform2D.hpp"
 #include "Item.hpp"
 #include "Portal.hpp"
+#include "Brick.hpp"
+#include "QuestionBlock.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -59,6 +61,66 @@ const Texture& Map::getTile(int id) {
 	return it->second.getTile(IntRect(id % numCols * 16, id / numCols * 16, m_tileWidth, m_tileHeight));
 }
 
+void Map::loadObjectInGroup(Environment environment, json::object& group) {
+	for (auto& i : group["layers"].as_array()) {
+		json::object layer = i.as_object();
+		if (layer["name"].as_string() == "Brick") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto obj = i.as_object();
+				float x = obj["x"].as_int64();
+				float y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				Brick* brick = new Brick(environment, this);
+				brick->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+
+				m_objects.push_back(brick);
+			}
+		}
+		if (layer["name"].as_string() == "Question Block") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto obj = i.as_object();
+				float x = obj["x"].as_int64();
+				float y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				QuestionBlock* questionBlock = new QuestionBlock(environment, this);
+				questionBlock->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+
+				m_objects.push_back(questionBlock);
+			}
+		}
+		if (layer["name"].as_string() == "Hidden Block") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto obj = i.as_object();
+				float x = obj["x"].as_int64();
+				float y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				QuestionBlock* questionBlock = new QuestionBlock(environment, this);
+				questionBlock->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				questionBlock->setHide(true);
+
+				m_objects.push_back(questionBlock);
+			}
+		}
+		if (layer["name"].as_string() == "Flagpole") {
+			json::object obj = layer["objects"].as_array()[0].as_object();
+			int x = obj["x"].as_int64();
+			int y = obj["y"].as_int64();
+			int width = obj["width"].as_int64();
+			int height = obj["height"].as_int64();
+
+			FlagPole* flagpole = new FlagPole(x + width / 2, y, 2, height, this);
+			flagpole->setRenderOrder(3);
+			m_objects.push_back(flagpole);
+		}
+	}
+}
+
 void Map::loadFromJsonFile(const string& filename) {
 	json::object parsed = readJsonFile(filename);
 	
@@ -73,12 +135,27 @@ void Map::loadFromJsonFile(const string& filename) {
 
 	for (auto& item : parsed["layers"].as_array()) {
 		auto& layer = item.as_object();
+		if (layer["name"] == "Overworld") {
+			loadObjectInGroup(Environment::OVERWORLD, layer);
+		}
+		if (layer["name"] == "Underground") {
+			loadObjectInGroup(Environment::UNDERGROUND, layer);
+		}
+		if (layer["name"] == "Athletic") {
+			loadObjectInGroup(Environment::ATHLETIC, layer);
+		}
+		if (layer["name"] == "Castle") {
+			loadObjectInGroup(Environment::CASTLE, layer);
+		}
+		if (layer["name"] == "Underwater") {
+			loadObjectInGroup(Environment::UNDERWATER, layer);
+		}
 		if (layer["name"] == "Graphics Layer") {
 			for (int i = 0; i < layer["data"].as_array().size(); i++) {
 				int id = layer["data"].as_array()[i].as_int64();
 
 				if (id == 0) continue;
-				Block* block = new Block(getTile(id), {i % m_col * 16.0f + 8, i / m_col * 16.0f + 8}, Block::TERRAIN);
+				Block* block = new Block(getTile(id), {i % m_col * 16.0f + 8, i / m_col * 16.0f + 8});
 				block->setParent(this);
 				block->setRenderOrder(2);
 				m_objects.push_back(block);
@@ -189,7 +266,18 @@ void Map::loadFromJsonFile(const string& filename) {
 			m_castleGate.y = obj["y"].as_int64();
 		}
 
-		if (layer["name"] == "Coins") {
+		if (layer["name"] == "Firework Area") {
+			json::object obj = layer["objects"].as_array()[0].as_object();
+
+			int x = obj["x"].as_int64();
+			int y = obj["y"].as_int64();
+			int width = obj["width"].as_int64();
+			int height = obj["height"].as_int64();
+
+			m_fireworkArea = FRect(x, y, width, height);
+		}
+
+		if (layer["name"] == "Coin") {
 			for (auto& i : layer["objects"].as_array()) {
 				auto& obj = i.as_object();
 
@@ -233,4 +321,8 @@ Vector2f Map::getSpawnPos() const {
 
 void Map::render() {
 	GameManager::getInstance()->getRenderWindow().draw(m_background);
+}
+
+FRect Map::getFireworkArea() const {
+	return m_fireworkArea;
 }

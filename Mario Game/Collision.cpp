@@ -1,4 +1,5 @@
 #include "Collision.hpp"
+#include "Enum.hpp"
 
 Collision::Collision(bool isTrigger) {
 	m_transform = nullptr;
@@ -20,7 +21,7 @@ void Collision::init() {
 	CollisionManager::addCollider(this);
 }
 
-void Collision::resolveCollide(Collision& col) {
+void Collision::resolveCollide(Collision& col, Direction& side, bool isTrigger) {
 	FRect collider = col.getCollider();
 	Transform2D& bodyTF = m_entity->getComponent<Transform2D>();
 
@@ -36,13 +37,13 @@ void Collision::resolveCollide(Collision& col) {
 		bodyVel = m_entity->getComponent<Physics2D>().getVelocity() + m_entity->getComponent<Physics2D>().getBaseVelocity();
 	}
 
-	if (col.m_entity->hasComponent<Physics2D>()) {
+	if (!isTrigger && col.m_entity->hasComponent<Physics2D>()) {
 		Physics2D& physics = col.m_entity->getComponent<Physics2D>();
 		physics.setBaseVelocity({ 0, 0 });
 		physics.setVelocity({ 0, 0 });
 	}
 
-	if (m_entity->hasComponent<Physics2D>()) {
+	if (!isTrigger && m_entity->hasComponent<Physics2D>()) {
 		Physics2D& physics = m_entity->getComponent<Physics2D>();
 		physics.setBaseVelocity({ 0, 0 });
 		physics.setVelocity({ 0, 0 });
@@ -51,21 +52,36 @@ void Collision::resolveCollide(Collision& col) {
 
 	if (rect.contains(bodyTF.getLastCenter()) && rect.contains(bodyTF.getWorldCenter())) {
 		if (abs(colVel.x) > abs(colVel.y)) {
-			if (colVel.x <= 0)
-				bodyTF.setCenter(collider.left - m_collider->width / 2, bodyTF.getWorldPosition().y);
+			if (colVel.x <= 0) {
+				if (!isTrigger)
+					bodyTF.setCenter(collider.left - m_collider->width / 2, bodyTF.getWorldPosition().y);
+				
+				side = Direction::RIGHT;
+			}
 			else {
-				bodyTF.setCenter(collider.right + m_collider->width / 2, bodyTF.getWorldPosition().y);
+				if (!isTrigger)
+					bodyTF.setCenter(collider.right + m_collider->width / 2, bodyTF.getWorldPosition().y);
+				
+				side = Direction::LEFT;
 			}
 
-			m_entity->getComponent<Physics2D>().setBaseVelocityY(0.1f);
+			if (!isTrigger)
+				m_entity->getComponent<Physics2D>().setBaseVelocityY(0.1f);
 		}
 		else {
-			if (colVel.y <= 0)
-				bodyTF.setCenter(bodyTF.getWorldPosition().x, collider.top - m_collider->height / 2);
+			if (colVel.y <= 0) {
+				if (!isTrigger)
+					bodyTF.setCenter(bodyTF.getWorldPosition().x, collider.top - m_collider->height / 2);
+				
+				side = Direction::DOWN;
+			}
 			else {
-				bodyTF.setCenter(bodyTF.getWorldPosition().x, collider.bottom + m_collider->height / 2);
+				if (!isTrigger)
+					bodyTF.setCenter(bodyTF.getWorldPosition().x, collider.bottom + m_collider->height / 2);
+				
+				side = Direction::UP;
 
-				if (m_entity->hasComponent<Physics2D>()) {
+				if (!isTrigger && m_entity->hasComponent<Physics2D>()) {
 					Physics2D& physics = m_entity->getComponent<Physics2D>();
 					physics.setBaseVelocityY(colVel.y + 0.05);
 				}
@@ -75,23 +91,23 @@ void Collision::resolveCollide(Collision& col) {
 		return;
 	}
 
-	int side;
 	Vector2f tangentPoint = getTangentPoint(col, side);
 	Vector2f vel = bodyTF.getWorldCenter() - tangentPoint;
-	if (side == 0 || side == 2)
+	if (side == Direction::LEFT || side == Direction::RIGHT)
 		vel.x = 0;
 	else vel.y = 0;
 
-	if (m_entity->hasComponent<Physics2D>()) {
+	if (!isTrigger && m_entity->hasComponent<Physics2D>()) {
 		Physics2D& physics = m_entity->getComponent<Physics2D>();
 
-		if (side == 3)
+		if (side == Direction::UP)
 			physics.setBaseVelocityY(colVel.y + 0.05);
-		if (side == 0 || side == 2)
+		if (side == Direction::LEFT || side == Direction::RIGHT)
 			physics.setBaseVelocityY(0.1f);
 	}
 
-	bodyTF.setCenter(tangentPoint + vel);
+	if (!isTrigger)
+		bodyTF.setCenter(tangentPoint + vel);
 }
 
 void Collision::update() {
@@ -109,9 +125,9 @@ FRect Collision::getCollider() const {
 	return *m_transform;
 }
 
-void Collision::onCollisionEnter(Collision& col) {
-	m_entity->onCollisionEnter(col);
-	col.m_entity->onCollisionEnter(*this);
+void Collision::onCollisionEnter(Collision& col, const Direction& side) {
+	m_entity->onCollisionEnter(col, side);
+	col.m_entity->onCollisionEnter(*this, getOpposite(side));
 }
 
 void Collision::setTrigger(bool isTrigger) {
@@ -122,12 +138,14 @@ bool Collision::isTrigger() {
 	return m_isTrigger;
 }
 
-Vector2f Collision::getTangentPoint(const Collision& col, int& side) const {
+Vector2f Collision::getTangentPoint(const Collision& col, Direction& side) const {
 	Line line(m_entity->getComponent<Transform2D>().getLastCenter(), m_entity->getComponent<Transform2D>().getWorldCenter());
 
 	FRect rect = col.getCollider();
 	FRect bodyRect = m_entity->getComponent<Transform2D>();
 
 	rect = { rect.left - bodyRect.width / 2, rect.top - bodyRect.height / 2, rect.width + bodyRect.width, rect.height + bodyRect.height };
-	return line.raycast(rect, side);
+	Vector2f res = line.raycast(rect, side);
+	side = getOpposite(side);
+	return res;
 }

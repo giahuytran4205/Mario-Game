@@ -8,12 +8,13 @@ using namespace sf;
 enum class SoundTrack {
 	BACKGROUND,
 	BIGJUMP,
-	HITBLOCK,
 	ITEM,
 	COIN,
 	FLAGPOLE,
 	WARP,
 	DIE,
+	BREAK,
+	BUMP,
 	NUM_TRACK
 };
 
@@ -22,12 +23,13 @@ private:
 	vector<pair<SoundTrack, string>> soundPath = {
 		{ SoundTrack::BACKGROUND,	"background.wav" },
 		{ SoundTrack::BIGJUMP,		"Resources/Sounds/Big Jump.wav" },
-		{ SoundTrack::HITBLOCK,		"" },
 		{ SoundTrack::ITEM,			"Resources/Sounds/Item.wav" },
 		{ SoundTrack::COIN,			"Resources/Sounds/Coin.wav" },
 		{ SoundTrack::FLAGPOLE,		"Resources/Sounds/Flagpole.wav" },
 		{ SoundTrack::WARP,			"Resources/Sounds/Warp.wav" },
-		{ SoundTrack::DIE,			"Resources/Sounds/Die.wav" }
+		{ SoundTrack::DIE,			"Resources/Sounds/Die.wav" },
+		{ SoundTrack::BREAK,		"Resources/Sounds/Break.wav" },
+		{ SoundTrack::BUMP,			"Resources/Sounds/BUMP.wav" }
 	};
 
 	vector<SoundBuffer> m_soundBufs;

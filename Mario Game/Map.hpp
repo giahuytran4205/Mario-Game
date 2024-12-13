@@ -25,11 +25,13 @@ private:
 	int m_startDepth;
 	Vector2f m_spawnPos;
 	Vector2f m_castleGate;
+	FRect m_fireworkArea;
 	vector<Object*> m_objects;
 	vector<pair<int, TileSet&>> m_tilesets;
 
 	void loadTilesets(json::object& data);
 	const Texture& getTile(int id);
+	void loadObjectInGroup(Environment environment, json::object& group);
 
 public:
 	Map();
@@ -44,4 +46,5 @@ public:
 	int colCount() const;
 	int getStartDepth() const;
 	Vector2f getSpawnPos() const;
+	FRect getFireworkArea() const;
 };
