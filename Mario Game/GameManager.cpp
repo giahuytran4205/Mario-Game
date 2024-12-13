@@ -40,7 +40,7 @@ void GameManager::init() {
 	m_view.setViewport(FloatRect(0, 0, 1, 1));
 	m_window.setView(m_view);
 
-	m_sceneManager.setCurrentScene<MapSelectionScene>();
+	m_sceneManager.setCurrentScene<LoginScene>();
 }
 
 void GameManager::start() {

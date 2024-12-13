@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 
-constexpr float DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT = 0.33333f;
+constexpr float DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT = 1.0f;
 constexpr int TEXTVIEW_DEFAUTL_RENDER_ORDER = 0;
 
 class TextView : public Object, public sf::Text {
