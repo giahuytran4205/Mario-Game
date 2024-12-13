@@ -1,36 +1,32 @@
 #pragma once
-#include "Enum.hpp"
-#include "Common.hpp"
-#include "SpriteRenderer.hpp"
-#include "Transform2D.hpp"
-#include "SFML/Graphics.hpp"
 #include "Rect.hpp"
 #include "Object.hpp"
-
+#include "GameManager.hpp"
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
-#include <map>
 
-constexpr unsigned int TEXT_SIZE_MIN = 15.0f;
+constexpr float DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT = 0.33333f;
+constexpr int TEXTVIEW_DEFAUTL_RENDER_ORDER = 0;
 
-class TextView : public Object { // Inherit Object to set Parent for TextView
+class TextView : public Object, public sf::Text {
 private:
-    void m_wrapText();
+	void wrapText();
 
-    sf::Text m_text;
-    FRect m_table;
-    std::string m_content;
+	FRect m_table;
+	float m_ratioCharSizeTableHeight;
+
 public:
-    TextView(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize);
+	TextView(Object* parent = nullptr);
+	TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, Object* parent = nullptr);
+	~TextView();
 
-    TextView();
-    void init(Object* parent, const FRect& table, const std::string& textContent, sf::Font& textFont, const sf::Color& textColor, unsigned int textSize);
+	void configure(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font);
 
-    sf::Text& getText();
-
-    void setTable(const FRect& table);
-    void setContent(const std::string& s);
-    void setFont(const sf::Font& font);
-    void setFillColor(const sf::Color& color);
-    void setScale(const sf::Vector2f& scale);
+	void setRatioCharacterSizeTableHeight(float ratio);
+	void setTable(const FRect& table);
+	void setTablePosition(const sf::Vector2f& tablePosition);
+	void setTableSize(const sf::Vector2f& tableSize);
+	const FRect& getTable() const;
+	void render() override;
 };
