@@ -3,8 +3,8 @@
 
 void TextView::wrapText()
 {
-    float maxWidth = m_table.width;
-    float maxHeight = m_table.height;
+    float maxWidth = Object::m_transform.getRect().width;
+    float maxHeight = Object::m_transform.getRect().height;
 
     unsigned int textSize = 1;
 
@@ -59,7 +59,7 @@ void TextView::wrapText()
 
     this->setCharacterSize(textSize);
     sf::FloatRect textBounds = this->getGlobalBounds();
-	this->setPosition(m_table.left + (m_table.width - textBounds.width) / 2, m_table.top + (m_table.height - textBounds.height) / 2);
+	this->setPosition(Object::m_transform.getRect().left + (Object::m_transform.getRect().width - textBounds.width) / 2, Object::m_transform.getRect().top + (Object::m_transform.getRect().height - textBounds.height) / 2);
 }
 
 TextView::TextView(Object* parent)
@@ -86,7 +86,7 @@ TextView::~TextView()
 
 void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font)
 {
-	m_table = FRect(tablePosition.x, tablePosition.y, tableSize.x, tableSize.y);
+    Object::m_transform.getRect() = FRect(tablePosition.x, tablePosition.y, tableSize.x, tableSize.y);
 
 	m_ratioCharSizeTableHeight = DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT;
 
@@ -124,7 +124,7 @@ void TextView::setTable(const FRect& table)
 		throw std::out_of_range("Table size must be positive");
 	}
 
-	m_table = table;
+    Object::m_transform.getRect() = table;
     this->wrapText();
 }
 
@@ -135,8 +135,8 @@ void TextView::setTablePosition(const sf::Vector2f& tablePosition)
 		throw std::out_of_range("Table position must be positive");
 	}
 
-	m_table.left = tablePosition.x;
-	m_table.top = tablePosition.y;
+    Object::m_transform.getRect().left = tablePosition.x;
+    Object::m_transform.getRect().top = tablePosition.y;
     this->wrapText();
 }
 
@@ -147,14 +147,14 @@ void TextView::setTableSize(const sf::Vector2f& tableSize)
 		throw std::out_of_range("Table size must be positive");
 	}
 
-	m_table.width = tableSize.x;
-	m_table.height = tableSize.y;
+    Object::m_transform.getRect().width = tableSize.x;
+    Object::m_transform.getRect().height = tableSize.y;
     this->wrapText();
 }
 
 const FRect& TextView::getTable() const
 {
-	return m_table;
+	return Object::m_transform.getRect();
 }
 
 void TextView::render()

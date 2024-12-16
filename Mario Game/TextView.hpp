@@ -13,7 +13,6 @@ class TextView : public Object, public sf::Text {
 private:
 	void wrapText();
 
-	FRect m_table;
 	float m_ratioCharSizeTableHeight;
 
 public:
