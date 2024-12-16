@@ -1,18 +1,20 @@
 #pragma once
-#include "Enum.hpp"
-#include "Common.hpp"
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include <iostream>
+#include <map>
 
 class FontManager
 {
+private:
+	std::map<std::string, sf::Font> m_fonts;
+	static std::unique_ptr<FontManager> m_instance;
+
+	bool loadFont(const std::string& fontName, const std::string& filepath);
+
 public:
-    static FontManager* m_instance;
-    
-    sf::Font m_font[FontType::NUM_FONTS];
+	FontManager();
+	~FontManager() = default;
 
-    FontManager();
-    ~FontManager();
-
-    void loadFonts();
+	static FontManager* getInstance();
+	const sf::Font& getFont(const std::string& fontName);
 };
