@@ -19,7 +19,7 @@ public:
 	~Jumper();
 
 	void update() override;
-	void onCollisionEnter(Collision& col) override;
+	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void launch();
 	float getLauchVelocity();
 };

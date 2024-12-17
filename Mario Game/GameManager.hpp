@@ -6,6 +6,9 @@
 #include "EventSystem.hpp"
 #include "Collision.hpp"
 #include "SceneManager.hpp"
+#include "FontManager.hpp"
+#include "ParticleSystem.hpp"
+#include "CoroutineManager.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
@@ -15,10 +18,12 @@ private:
 	static GameManager* m_instance;
 	EntitiesManager m_entitiesManager;
 	TextureManager m_textureManager;
-	// FontManager m_fontManager;
+	FontManager m_fontManager;
 	SoundBufferManager m_soundBufferManager;
 	CollisionManager m_collisionManager;
+	ParticleSystem m_particle;
 	SceneManager m_sceneManager;
+	CoroutineManager m_coroutineManager;
 	EventSystem m_eventSystem;
 	RenderWindow m_window;
 	View m_view;

@@ -15,6 +15,8 @@ public:
 	virtual ~Object();
 	virtual Object* clone();
 	
+	Object& operator=(const Object& obj);
+
 	bool isActive() const override;
 	bool isDestroyed() const override;
 	void update() override;

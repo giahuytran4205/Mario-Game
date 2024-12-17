@@ -30,7 +30,7 @@ void InputField::adjustTextPosCharSizeInBox()
     m_text.setPosition(textX, textY);
     m_text.setString("");
 
-    m_transform.getRect() = { m_box.getPosition().x, m_box.getPosition().y, m_box.getSize().x,  m_box.getSize().y };
+	m_transform.getRect() = { m_box.getPosition().x, m_box.getPosition().y, m_box.getSize().x,  m_box.getSize().y };
 }
 
 InputField::InputField(Object* parent)
@@ -96,27 +96,27 @@ void InputField::clearContent()
 
 void InputField::onClick()
 {
-    currentlySelectedField = this;
+	currentlySelectedField = this;
 }
 
 void InputField::onKeyPressed(const sf::Event::TextEvent& textEvent)
 {
-    if (currentlySelectedField == this)
-    {
-        if (textEvent.unicode == 8)
-        {
-            if (!m_content.empty())
-            {
-                m_content.pop_back();
-                m_text.setString(m_content);
-            }
-        }
-        else if (textEvent.unicode >= 32 && textEvent.unicode < 127)
-        {
-            m_content += static_cast<char>(textEvent.unicode);
-            m_text.setString(m_content);
-        }
-    }
+	if (currentlySelectedField == this)
+	{
+		if (textEvent.unicode == 8)
+		{
+			if (!m_content.empty())
+			{
+				m_content.pop_back();
+				m_text.setString(m_content);
+			}
+		}
+		else if (textEvent.unicode >= 32 && textEvent.unicode < 127)
+		{
+			m_content += static_cast<char>(textEvent.unicode);
+			m_text.setString(m_content);
+		}
+	}
 }
 
 void InputField::render()
@@ -127,17 +127,17 @@ void InputField::render()
     m_text.setString(m_content);
     window.draw(m_text);
 
-    if (m_isSelected)
-    {
-        if (m_cursorBlinkClock.getElapsedTime().asSeconds() >= 0.5f)
-        {
-            m_cursorVisible = !m_cursorVisible;
-            m_cursorBlinkClock.restart();
-        }
+	if (m_isSelected)
+	{
+		if (m_cursorBlinkClock.getElapsedTime().asSeconds() >= 0.5f)
+		{
+			m_cursorVisible = !m_cursorVisible;
+			m_cursorBlinkClock.restart();
+		}
 
-        if (m_cursorVisible)
-        {
-            sf::FloatRect textBounds = m_text.getLocalBounds();
+		if (m_cursorVisible)
+		{
+			sf::FloatRect textBounds = m_text.getLocalBounds();
 
             float cursorX = m_text.getPosition().x + textBounds.width + 1.f;
             float cursorY = m_text.getPosition().y;

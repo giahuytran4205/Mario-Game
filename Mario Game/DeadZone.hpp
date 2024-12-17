@@ -13,5 +13,5 @@ public:
 	DeadZone(const FRect& rect, Object* parent = nullptr);
 	~DeadZone();
 
-	void onCollisionEnter(Collision& col) override;
+	void onCollisionEnter(Collision& col, const Direction& side) override;
 };

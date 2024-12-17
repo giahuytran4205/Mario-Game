@@ -14,6 +14,7 @@
 #include "Portal.hpp"
 #include "Jumper.hpp"
 #include "FlagPole.hpp"
+#include "QuestionBlock.hpp"
 #include <iostream>
 using namespace sf;
 
@@ -53,6 +54,11 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_onJumper = false;
 	m_onGrabFlagPole = false;
 	m_isDead = false;
+	m_coins = 0;
+	m_score = 0;
+	m_lives = 3;
+	m_countdown = 400;
+	m_ability = Ability::REGULAR;
 
 	m_teleportTime = 0;
 }
@@ -61,10 +67,8 @@ Mario::~Mario() {
 
 }
 
-void Mario::onCollisionEnter(Collision& col) {
-	int side = m_transform.getRect().tangentSide(col.getCollider());
-
-	if (side == 3 && !col.isTrigger())
+void Mario::onCollisionEnter(Collision& col, const Direction& side) {
+	if (side == Direction::DOWN && !col.isTrigger())
 		m_onJump = false;
 
 	if (m_autoControl.isControlled())
@@ -74,7 +78,7 @@ void Mario::onCollisionEnter(Collision& col) {
 		m_onJump = false;
 		m_state = State::NORMAL;
 
-		if (side == 0 || side == 2) {
+		if (side == Direction::LEFT || side == Direction::RIGHT) {
 			m_onWall = true;
 		}
 	}
@@ -89,14 +93,14 @@ void Mario::onCollisionEnter(Collision& col) {
 		FRect bodyRect = m_transform.getRect();
 		FRect jumperRect = jumper->getComponent<Transform2D>().getRect();
 
-		if (side == 1) {
+		if (side == Direction::UP) {
 			m_physics2D.setBaseVelocityY(m_speed / 10);
 		}
-		if (side == 0 || side == 2) {
+		if (side == Direction::LEFT || side == Direction::RIGHT) {
 			m_physics2D.setBaseVelocityY(m_speed);
 			m_onWall = true;
 		}
-		if (side == 3) {
+		if (side == Direction::DOWN) {
 			jumper->launch();
 			m_onJump = false;
 			m_jumpSpeed = jumper->getLauchVelocity();
@@ -127,20 +131,25 @@ void Mario::onCollisionEnter(Collision& col) {
 			m_physics2D.setEnableGravity(false);
 			m_collision.setTrigger(true);
 
-			Vector2f dest(m_transform.getPosition().x, flagPole->getComponent<Transform2D>().getRect().bottom - 16);
+			Vector2f dest(m_transform.getPosition().x, flagPole->getComponent<Transform2D>().getRect().bottom - m_transform.height / 2);
 
 			m_autoControl.addMoveByPoint(dest, 1000, { 0, 0 }, [&](int time) { m_state = State::GRAB_FLAGPOLE; });
 			m_autoControl.addWaitUntil([flagPole](int time) { return flagPole->isLoweredFlag(); });
 			m_autoControl.addMoveByDistance(Vector2f(16, 0), 0, { 0, 0 }, [&](int time) { m_direction = Direction::LEFT; });
 			m_autoControl.addWaitForMiliseconds(500, [&](int time) { m_anim->stop(); });
 			m_autoControl.addMoveByPoint(dest + Vector2f(16, 0), 0, { 0, 0 });
-			m_autoControl.addMoveByPoint(dest + Vector2f(64, 24), 200, { 0, m_physics2D.getGravity() });
-			m_autoControl.addMoveByDistance({ 128, 0 }, 1000, { 0, 0 },
+			m_autoControl.addMoveByPoint(dest + Vector2f(64, 16), 200, { 0, m_physics2D.getGravity() });
+			m_autoControl.addMoveByDistance({ 64, 0 }, 1000, { 0, 0 },
 				[&](int time) {
 					m_direction = Direction::RIGHT;
 					m_state = State::WALK; 
 				});
-			m_autoControl.addAction([&]() { m_physics2D.setEnableGravity(true); m_collision.setTrigger(false); });
+			m_autoControl.addAction(
+				[&]() {
+					m_physics2D.setEnableGravity(true);
+					m_collision.setTrigger(false);
+					win();
+				});
 		}
 	}
 
@@ -148,6 +157,13 @@ void Mario::onCollisionEnter(Collision& col) {
 
 void Mario::update() {
 	handleMovement();
+
+	if (!isDead()) {
+		if (m_countdown > 0)
+			m_countdown -= deltaTime.asMilliseconds();
+		else
+			dead();
+	}
 
 	if (m_direction == Direction::LEFT) {
 		m_sprite.setScale(-1, 1);
@@ -248,13 +264,22 @@ void Mario::onGrabFlagPole() {
 }
 
 void Mario::dead() {
+	if (m_lives == 0) {
+		// Game over
+	}
+
 	m_isDead = true;
+	m_lives--;
 	m_state = State::DIE;
 	m_physics2D.setVelocity({ 0, 0 });
 	m_physics2D.setBaseVelocityX(0);
 	m_physics2D.setBaseVelocityY(-0.2);
 	m_autoControl.addWaitForMiliseconds(3000);
 	m_sound.play(SoundTrack::DIE);
+}
+
+void Mario::win() {
+	
 }
 
 bool Mario::isOnGround() const {
@@ -271,4 +296,24 @@ bool Mario::isOnGrabFlagPole() const {
 
 bool Mario::isDead() const {
 	return m_isDead;
+}
+
+int Mario::getLives() const {
+	return m_lives;
+}
+
+int Mario::getCoins() const {
+	return m_coins;
+}
+
+int Mario::getScore() const {
+	return m_score;
+}
+
+float Mario::getCountdownTime() const {
+	return m_countdown;
+}
+
+Mario::Ability Mario::getAbility() const {
+	return m_ability;
 }

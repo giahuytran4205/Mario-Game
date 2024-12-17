@@ -43,10 +43,8 @@ void SingleBalanceLift::update() {
 	m_mario = nullptr;
 }
 
-void SingleBalanceLift::onCollisionEnter(Collision& col) {
-	int side = m_transform.getRect().tangentSide(col.getCollider());
-
-	if (side == 1 && col.m_entity->isType<Mario>()) {
+void SingleBalanceLift::onCollisionEnter(Collision& col, const Direction& side) {
+	if (side == Direction::UP && col.m_entity->isType<Mario>()) {
 		m_mario = col.m_entity->convertTo<Mario>();
 		m_isLaunch = true;
 		m_otherLift->m_isLaunch = false;

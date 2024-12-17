@@ -1,6 +1,9 @@
 #include "Coroutine.hpp"
+#include "CoroutineManager.hpp"
 
-Coroutine::Coroutine(std::coroutine_handle<promise_type> handle) : handle_(handle) {}
+Coroutine::Coroutine(std::coroutine_handle<promise_type> handle) : handle_(handle) {
+	
+}
 
 Coroutine::Coroutine(Coroutine&& other) noexcept : handle_(other.handle_) {
 	other.handle_ = nullptr;
@@ -27,4 +30,8 @@ void Coroutine::resume() {
 
 bool Coroutine::done() const {
 	return handle_ ? handle_.done() : true;
+}
+
+coroutine_handle<Coroutine::promise_type>& Coroutine::getHandle() {
+	return handle_;
 }

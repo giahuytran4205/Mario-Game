@@ -58,7 +58,7 @@ void Beanstalk::update() {
 	}
 }
 
-void Beanstalk::onCollisionEnter(Collision& col) {
+void Beanstalk::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>() && !m_isOnGrowUp && !m_isMature) {
 		Mario* mario = col.m_entity->convertTo<Mario>();
 		AutoControl& autoControl = col.m_entity->getComponent<AutoControl>();

@@ -3,7 +3,9 @@
 #include <array>
 #include <vector>
 #include <memory>
+#include "SFML/Graphics.hpp"
 #include "Common.hpp"
+#include "Enum.hpp"
 using namespace std;
 
 class Entity;
@@ -74,7 +76,7 @@ public:
 
 	virtual void render() {}
 
-	virtual void onCollisionEnter(Collision& col) {}
+	virtual void onCollisionEnter(Collision& col, const Direction& side) {}
 
 	template<typename T>
 	bool isType() const {
@@ -138,6 +140,7 @@ private:
 	vector<vector<Entity*>> m_renderQueue;
 
 public:
+	static vector<unique_ptr<Entity>> m_entityPtr;
 	EntitiesManager() { }
 	~EntitiesManager() { }
 
@@ -189,3 +192,11 @@ public:
 			m_entities.end());
 	}
 };
+
+template<typename T>
+T& Instantiate() {
+	unique_ptr<T> ptr = make_unique<T>();
+	T* res = ptr.get();
+	EntitiesManager::m_entityPtr.push_back(move(ptr));
+	return *res;
+}

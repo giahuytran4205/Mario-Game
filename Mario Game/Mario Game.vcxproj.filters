@@ -198,6 +198,21 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CoroutineManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
     <ClCompile Include="LoginScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -358,6 +373,18 @@
     </ClInclude>
     <ClInclude Include="Brick.hpp">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CoroutineManager.hpp">
+      <Filter>Header Files\Manager</Filter>
     </ClInclude>
     <ClInclude Include="LoginScene.hpp">
       <Filter>Header Files\Scene</Filter>

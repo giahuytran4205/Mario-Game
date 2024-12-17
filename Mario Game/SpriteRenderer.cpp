@@ -18,7 +18,7 @@ SpriteRenderer::~SpriteRenderer() {
 
 SpriteRenderer& SpriteRenderer::operator=(const SpriteRenderer& other) {
 	Sprite::operator=(other);
-	//(Object)*this = other;
+	Object::operator=(other);
 	return *this;
 }
 

@@ -85,10 +85,8 @@ void Lift::update() {
 	m_mario = nullptr;
 }
 
-void Lift::onCollisionEnter(Collision& col) {
-	int side = m_transform.getRect().tangentSide(col.getCollider());
-
-	if (side == 1 && col.m_entity->isType<Mario>()) {
+void Lift::onCollisionEnter(Collision& col, const Direction& side) {
+	if (side == Direction::UP && col.m_entity->isType<Mario>()) {
 		m_mario = col.m_entity->convertTo<Mario>();
 	}
 }

@@ -63,7 +63,7 @@ void BalanceLifts::update() {
 	m_cable[2].setTextureRect(IntRect(0, 0, 16, m_lifts[1].getComponent<Transform2D>().getPosition().y - 16));
 }
 
-void BalanceLifts::onCollisionEnter(Collision& col) {
+void BalanceLifts::onCollisionEnter(Collision& col, const Direction& side) {
 	
 }
 

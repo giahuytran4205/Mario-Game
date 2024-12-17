@@ -11,5 +11,5 @@ public:
 	~Coin();
 
 	void update() override;
-	void onCollisionEnter(Collision& col) override;
+	void onCollisionEnter(Collision& col, const Direction& side) override;
 };

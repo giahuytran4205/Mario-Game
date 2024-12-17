@@ -11,6 +11,12 @@ enum BackgroundType {
 	NUM_BACKGROUND_TYPE
 };
 
+enum Direction {
+	LEFT,
+	UP,
+	RIGHT,
+	DOWN
+};
 
 enum Environment {
 	OVERWORLD,
@@ -19,3 +25,5 @@ enum Environment {
 	CASTLE,
 	UNDERWATER
 };
+
+Direction getOpposite(const Direction& direction);

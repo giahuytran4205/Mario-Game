@@ -24,6 +24,12 @@ Object* Object::clone() {
 	return new Object(*this);
 }
 
+Object& Object::operator=(const Object& obj) {
+	m_parent = obj.m_parent;
+	m_transform = obj.m_transform;
+	return *this;
+}
+
 bool Object::isActive() const {
 	return (!m_parent || m_parent->isActive()) && m_active;
 }
