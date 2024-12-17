@@ -64,7 +64,7 @@ void TextView::wrapText()
 
 TextView::TextView(Object* parent)
 {
-	this->setParent(parent);
+	//this->setParent(parent);
 
     this->setRenderOrder(TEXTVIEW_DEFAUTL_RENDER_ORDER);
 
@@ -73,7 +73,7 @@ TextView::TextView(Object* parent)
 
 TextView::TextView(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font, Object* parent)
 {
-	this->setParent(parent);
+	//this->setParent(parent);
 
     this->setRenderOrder(TEXTVIEW_DEFAUTL_RENDER_ORDER);
 

@@ -35,16 +35,16 @@ void InputField::adjustTextPosCharSizeInBox()
 
 InputField::InputField(Object* parent)
 {
-    setParent(parent);
+    //setParent(parent);
 
     this->setRenderOrder(INPUTFIELD_DEFAULT_RENDER_ORDER);
 
-    this->configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), sf::Font());
+    this->configure(sf::Vector2f(0, 0), sf::Vector2f(100, 50), FontManager::getInstance()->getFont("ARIAL"));
 }
 
 InputField::InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, Object* parent)
 {
-    setParent(parent);
+    //setParent(parent);
 
     this->setRenderOrder(INPUTFIELD_DEFAULT_RENDER_ORDER);
 

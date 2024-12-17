@@ -86,6 +86,14 @@ sf::Vector2f LoginScene::getTitleTextViewPosition(sf::RenderWindow& window)
 }
 
 LoginScene::LoginScene()
+	:
+	m_confirm(this),
+	m_title(this),
+	m_usernameText(this),
+	m_passwordText(this),
+	m_usernameInput(this),
+	m_passwordInput(this),
+	m_background(this)
 {
 	sf::RenderWindow& window = GameManager::getInstance()->getRenderWindow();
 	sf::View& view = GameManager::getInstance()->getView();

@@ -2,18 +2,18 @@
 
 Button::Button(Object* parent)
 {
-	this->setParent(parent);
+	//this->setParent(parent);
 
 	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
 
 	m_textView.setRenderOrder(BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER);
 
-	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font(), nullptr);
+	configure(sf::Vector2f(0, 0), sf::Vector2f(100, 50), "Button", FontManager::getInstance()->getFont("ARIAL"), nullptr);
 }
 
 Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& content, const sf::Font& font, std::function<void()> action, Object* parent)
 {
-	this->setParent(parent);
+	//this->setParent(parent);
 
 	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
 
