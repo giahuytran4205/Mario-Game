@@ -213,6 +213,9 @@
     <ClCompile Include="CoroutineManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="MapSelectionScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="CoroutineManager.hpp">
       <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSelectionScene.hpp">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,16 @@
 using namespace sf;
 namespace json = boost::json;
 
+struct MapInfo {
+	MapInfo(const string& name, const string& path, const string& thumbnailPath) : name(name), path(path) {
+		thumbnail.loadFromFile(thumbnailPath);
+	}
+
+	string name;
+	string path;
+	Texture thumbnail;
+};
+
 class Map : public Object {
 private:
 	SpriteRenderer m_background;
@@ -32,6 +42,9 @@ private:
 	void loadTilesets(json::object& data);
 	const Texture& getTile(int id);
 	void loadObjectInGroup(Environment environment, json::object& group);
+
+public:
+	static const vector<MapInfo> mapsInfo;
 
 public:
 	Map();

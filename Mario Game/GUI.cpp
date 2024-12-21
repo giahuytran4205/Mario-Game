@@ -30,6 +30,7 @@ GUI::~GUI() {}
 void GUI::onSelected() {}
 void GUI::onDeselect() {}
 void GUI::onPressed() {}
+void GUI::onDePressed() {}
 void GUI::onHovered() {}
 void GUI::onUnhovered() {}
 void GUI::onClick() {}
@@ -58,18 +59,26 @@ void GUI::handleEvent(const Event& event) {
 			}
 
 			if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
-				m_isPressed = false;
 				m_isOnDrag = false;
 				m_isSelected = true;
 				onClick();
+				if (m_isPressed) {
+					m_isPressed = false;
+					onDePressed();
+				}
 			}
 		}
 		else {
 			if (isHovered())
 				onUnhovered();
 
-			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
+			if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
 				m_isSelected = false;
+				if (m_isPressed) {
+					m_isPressed = false;
+					onDePressed();
+				}
+			}
 
 			m_isHovered = false;
 		}

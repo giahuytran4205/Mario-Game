@@ -136,61 +136,23 @@ public:
 
 class EntitiesManager {
 private:
-	static vector<Entity*> m_entities;
-	vector<vector<Entity*>> m_renderQueue;
+	static vector<Object*> m_entities;
+	vector<vector<Object*>> m_renderQueue;
 
 public:
-	static vector<unique_ptr<Entity>> m_entityPtr;
-	EntitiesManager() { }
-	~EntitiesManager() { }
+	static vector<unique_ptr<Object>> m_entityPtr;
+	EntitiesManager();
+	~EntitiesManager();
 
-	void update() {
-		refresh();
+	void update();
 
-		for (auto& e : m_entities)
-			if (e->isActive())
-				e->update();
-				
-		for (auto& e : m_entities)
-			if (e->isActive())
-				e->_update();
+	void refresh();
 
-		m_renderQueue.assign(100, {});
-		for (auto& e : m_entities) {
-			if (e->isActive())
-				m_renderQueue[e->getRenderOrder()].push_back(e);
-		}
+	Object& addEntity();
 
-		for (auto& v : m_renderQueue) {
-			for (auto& e : v)
-				e->_render();
-		}
-	}
+	static void addEntity(Object* entity);
 
-	void refresh() {
-		m_entities.erase(remove_if(begin(m_entities), end(m_entities),
-			[](Entity* entity)
-			{
-				if (!entity) return true;
-				return entity->isDestroyed();
-			}),
-			end(m_entities));
-	}
-
-	Entity& addEntity() {
-		Entity* e = new Entity();
-		m_entities.emplace_back(e);
-		return *e;
-	}
-
-	static void addEntity(Entity* entity) {
-		m_entities.emplace_back(entity);
-	}
-
-	static void removeEntity(Entity* entity) {
-		m_entities.erase(remove_if(m_entities.begin(), m_entities.end(), [&entity](Entity* e) { return e == entity; }),
-			m_entities.end());
-	}
+	static void removeEntity(Object* entity);
 };
 
 template<typename T>

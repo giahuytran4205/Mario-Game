@@ -13,6 +13,7 @@ class Button : public GUI
 private:
 	sf::RectangleShape m_rectShape;
 	TextView m_textView;
+	Color m_textColor;
 	std::function<void()> m_action;
 
 public:
@@ -30,10 +31,14 @@ public:
 	void setButtonFillColor(const sf::Color& color);
 	void setTextViewFillColor(const sf::Color& color);
 	void setTextViewRenderOrder(int renderOrder);
+	void setTexture(const Texture& texture);
+	sf::Text& getText();
 
 	void onHovered() override;
 	void onUnhovered() override;
 	void onPressed() override;
+	void onDePressed() override;
 	void onClick() override;
+	void update() override;
 	void render() override;
 };

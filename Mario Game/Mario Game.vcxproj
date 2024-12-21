@@ -184,6 +184,7 @@
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapSelectionScene.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="Lift.hpp" />
     <ClInclude Include="Line.hpp" />
     <ClInclude Include="Map.hpp" />
+    <ClInclude Include="MapSelectionScene.hpp" />
     <ClInclude Include="Mario.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Particle.hpp" />

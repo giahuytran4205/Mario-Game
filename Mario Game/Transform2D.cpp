@@ -29,9 +29,7 @@ void Transform2D::render() {
 #endif // DEBUG
 
 Transform2D::Transform2D() {
-	if (m_entity) m_parent = m_entity->toObject()->getParent();
-	else m_parent = nullptr;
-
+	
 #if DEBUG
 	m_shape.setOutlineThickness(0.5);
 	m_shape.setFillColor(Color::Transparent);
@@ -42,8 +40,15 @@ Transform2D::Transform2D() {
 
 Transform2D::~Transform2D() {}
 
+void Transform2D::init() {
+	m_parent = m_entity->toObject()->getParent();
+}
+
 Vector2f Transform2D::getPosition() {
-	return m_pos;
+	m_parent = m_entity->toObject()->getParent();
+	if (!m_parent)
+		return FRect::getPosition();
+	return m_parent->getComponent<Transform2D>().transformPoint(FRect::getPosition());
 }
 
 void Transform2D::setPosition(float x, float y) {
@@ -51,27 +56,31 @@ void Transform2D::setPosition(float x, float y) {
 }
 
 void Transform2D::setPosition(const Vector2f& position) {
-	if (m_lastPos == m_pos && m_pos == Vector2f(0, 0)) {
+	m_parent = m_entity->toObject()->getParent();
+	/*if (m_lastPos == m_pos && m_pos == Vector2f(0, 0)) {
 		m_lastPos = m_pos = position;
 		FRect::setPosition(getWorldPosition());
 		return;
-	}
-	if (m_pos != position) m_lastPos = m_pos;
+	}*/
+	if (getPosition() != position) m_lastPos = getPosition();
 	m_pos = position;
-	FRect::setPosition(getWorldPosition());
+	if (m_parent)
+		FRect::setPosition(m_parent->getComponent<Transform2D>().reverseTransformPoint(position));
+	else
+		FRect::setPosition(position);
 }
 
 void Transform2D::setWorldPosition(const Vector2f& position) {
 	m_parent = m_entity->toObject()->getParent();
 
 	if (getWorldPosition() != position) {
-		m_lastPos = m_pos;
+		m_lastPos = getPosition();
 	}
-
-	if (m_parent) {
+	
+	if (m_parent)
 		m_pos = m_parent->getComponent<Transform2D>().transformPoint(position);
-	}
-	else m_pos = position;
+	else
+		m_pos = position;
 
 	FRect::setPosition(position);
 }
@@ -81,7 +90,8 @@ void Transform2D::setWorldPosition(float x, float y) {
 }
 
 void Transform2D::setCenter(const Vector2f& center) {
-	setPosition(center - m_center + getWorldPosition());
+	m_parent = m_entity->toObject()->getParent();
+	setWorldPosition(center - getCenter() + getWorldPosition());
 }
 
 void Transform2D::setCenter(float x, float y) {
@@ -89,6 +99,7 @@ void Transform2D::setCenter(float x, float y) {
 }
 
 Vector2f Transform2D::getLastPosition() {
+	m_parent = m_entity->toObject()->getParent();
 	if (m_parent) {
 		return m_lastPos + m_parent->getComponent<Transform2D>().getWorldPosition();
 	}
@@ -100,18 +111,23 @@ Vector2f Transform2D::getRotation() {
 }
 
 Vector2f Transform2D::getWorldPosition() {
-	if (m_parent) {
-		return m_parent->getComponent<Transform2D>().getWorldPosition() + m_pos;
-	}
-	return m_pos;
+	return FRect::getPosition();
 }
 
 Vector2f Transform2D::getLastCenter() {
-	return m_lastPos + transformPoint(m_center);
+	m_parent = m_entity->toObject()->getParent();
+	return m_lastPos + transformPoint(getCenter());
+}
+
+Vector2f Transform2D::getCenter() {
+	m_parent = m_entity->toObject()->getParent();
+	if (!m_parent)
+		return FRect::getCenter();
+	return m_parent->getComponent<Transform2D>().transformPoint(FRect::getCenter());
 }
 
 Vector2f Transform2D::getWorldCenter() {
-	return m_center;
+	return FRect::getCenter();
 }
 
 void Transform2D::setRotation(const Vector2f& rotation) {
@@ -137,8 +153,13 @@ FRect& Transform2D::getRect() {
 }
 
 void Transform2D::adjustPosition(const Vector2f& pos) {
-	m_pos = pos;
-	FRect::setPosition(getWorldPosition());
+	m_parent = m_entity->toObject()->getParent();
+	if (m_parent)
+		FRect::setPosition(m_parent->getComponent<Transform2D>().transformPoint(pos));
+	else
+		FRect::setPosition(pos);
+
+	m_pos = getPosition();
 }
 
 Vector2f Transform2D::transformPoint(const Vector2f& point) {
@@ -167,6 +188,16 @@ void Transform2D::update() {
 
 	if (m_parent)
 		setPosition(m_pos);
+}
+
+void Transform2D::setRect(const FRect& rect) {
+	setWorldPosition(rect.left, rect.top);
+	setSize(rect.width, rect.height);
+	m_pos = getPosition();
+}
+
+void Transform2D::setRect(float left, float top, float width, float height) {
+	setRect(FRect(left, top, width, height));
 }
 
 void Transform2D::setParent(Object* parent) {

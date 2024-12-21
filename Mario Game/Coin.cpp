@@ -21,5 +21,10 @@ void Coin::update() {
 }
 
 void Coin::onCollisionEnter(Collision& col, const Direction& side) {
-
+	if (col.m_entity->isType<Mario>()) {
+		col.m_entity->convertTo<Mario>()->earnCoins(1);
+		col.m_entity->convertTo<Mario>()->addScore(100);
+		SceneManager::getInstance()->getCurrentScene().getComponent<SoundComponent>().play(SoundTrack::COIN);
+		destroy();
+	}
 }

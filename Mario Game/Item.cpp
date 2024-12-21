@@ -3,6 +3,7 @@
 #include "GameManager.hpp"
 
 Item::Item(Object* parent) : m_anim(addComponent<Animation>(m_sprite)) {
+	setParent(parent);
 	m_sprite.setParent(this);
 	addComponent<Collision>(true);
 	m_transform.setAnchor(0, 0);

@@ -127,7 +127,6 @@ FRect Collision::getCollider() const {
 
 void Collision::onCollisionEnter(Collision& col, const Direction& side) {
 	m_entity->onCollisionEnter(col, side);
-	col.m_entity->onCollisionEnter(*this, getOpposite(side));
 }
 
 void Collision::setTrigger(bool isTrigger) {

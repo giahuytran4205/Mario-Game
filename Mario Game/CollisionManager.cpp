@@ -1,4 +1,5 @@
 #include "CollisionManager.hpp"
+#include <iostream>
 
 vector<Collision*> CollisionManager::m_colliders;
 
@@ -25,6 +26,8 @@ void CollisionManager::addCollider(Collision* collision) {
 }
 
 void CollisionManager::update() {
+	refresh();
+
 	for (auto& row : m_grid) {
 		for (auto& v : row) v.clear();
 	}
@@ -44,15 +47,20 @@ void CollisionManager::update() {
 	}
 
 	for (Collision* col : m_colliders) {
+		if (!col->m_entity->isActive() || col->m_entity->isDestroyed())
+			continue;
+
 		FRect rect = col->getCollider();
 		int right = rect.left + rect.width;
 		int bottom = rect.top + rect.height;
+		set<Collision*> checked;
 
 		for (int i = rect.top / m_gridSize; i <= bottom / m_gridSize; i++) {
 			for (int j = rect.left / m_gridSize; j <= right / m_gridSize; j++) {
 				for (Collision* item : m_grid[i][j]) {
 
-					if (item == col) continue;
+					if (item == col || checked.contains(item) || !item->m_entity->isActive() || item->m_entity->isDestroyed())
+						continue;
 
 					if (col->getCollider().intersects(item->getCollider())) {
 						Transform2D tf1 = col->m_entity->getComponent<Transform2D>();
@@ -69,31 +77,32 @@ void CollisionManager::update() {
 							if (item->m_entity->getComponent<Physics2D>().isElastic()) {
 								item->resolveCollide(*col, side, isTrigger);
 								item->onCollisionEnter(*col, side);
+								col->onCollisionEnter(*item, getOpposite(side));
 							}
 							else {
 								col->resolveCollide(*item, side, isTrigger);
 								col->onCollisionEnter(*item, side);
+								item->onCollisionEnter(*col, getOpposite(side));
 							}
 						}
 						else {
 							col->resolveCollide(*item, side, isTrigger);
 							col->onCollisionEnter(*item, side);
+							item->onCollisionEnter(*col, getOpposite(side));
 						}
-						
+						checked.insert(item);
 					}
 				}
 			}
 		}
 	}
-
-	refresh();
 }
 
 void CollisionManager::refresh() {
 	m_colliders.erase(remove_if(begin(m_colliders), end(m_colliders),
 		[](Collision* col)
 		{
-			return !col->m_entity->isActive();
+			return col->m_entity->toObject()->isDestroyed();
 		}),
 		end(m_colliders));
 }

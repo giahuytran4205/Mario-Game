@@ -233,6 +233,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"destDepth",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
                          "name":"destX",
                          "type":"float",
                          "value":1848

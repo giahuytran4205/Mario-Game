@@ -1,5 +1,8 @@
 #pragma once
 #include "Item.hpp"
+#include "Collision.hpp"
+#include "Mario.hpp"
+#include "SceneManager.hpp"
 
 class Coin : public Item {
 private:

@@ -3,10 +3,10 @@
 
 void TextView::wrapText()
 {
-	float maxWidth = m_table.width;
-	float maxHeight = m_table.height;
+	float maxWidth = Object::m_transform.getRect().width;
+	float maxHeight = Object::m_transform.getRect().height;
 
-	unsigned int textSize = 1;
+	unsigned int textSize = getCharacterSize();
 
 	std::vector<std::string> lines;
 	std::istringstream fullStream(this->getString());
@@ -53,13 +53,11 @@ void TextView::wrapText()
 		{
 			break;
 		}
-
-		textSize += 1;
 	}
 
 	this->setCharacterSize(textSize);
 	sf::FloatRect textBounds = this->getGlobalBounds();
-	this->setPosition(m_table.left + (m_table.width - textBounds.width) / 2, m_table.top + (m_table.height - textBounds.height) / 2);
+	this->setPosition(Object::m_transform.getRect().left + (Object::m_transform.getRect().width - textBounds.width) / 2, Object::m_transform.getRect().top + (Object::m_transform.getRect().height - textBounds.height) / 2);
 }
 
 TextView::TextView(Object* parent)
@@ -86,7 +84,7 @@ TextView::~TextView()
 
 void TextView::configure(const sf::Vector2f& tablePosition, const sf::Vector2f& tableSize, const std::string& content, const sf::Font& font)
 {
-	m_table = FRect(tablePosition.x, tablePosition.y, tableSize.x, tableSize.y);
+	Object::m_transform.getRect() = FRect(tablePosition.x, tablePosition.y, tableSize.x, tableSize.y);
 
 	m_ratioCharSizeTableHeight = DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT;
 
@@ -124,7 +122,7 @@ void TextView::setTable(const FRect& table)
 		throw std::out_of_range("Table size must be positive");
 	}
 
-	m_table = table;
+	Object::m_transform.setRect(table);
 	this->wrapText();
 }
 
@@ -135,8 +133,7 @@ void TextView::setTablePosition(const sf::Vector2f& tablePosition)
 		throw std::out_of_range("Table position must be positive");
 	}
 
-	m_table.left = tablePosition.x;
-	m_table.top = tablePosition.y;
+	Object::m_transform.setPosition(tablePosition);
 	this->wrapText();
 }
 
@@ -147,14 +144,52 @@ void TextView::setTableSize(const sf::Vector2f& tableSize)
 		throw std::out_of_range("Table size must be positive");
 	}
 
-	m_table.width = tableSize.x;
-	m_table.height = tableSize.y;
+	Object::m_transform.setSize(tableSize);
 	this->wrapText();
 }
 
 const FRect& TextView::getTable() const
 {
-	return m_table;
+	return Object::m_transform.getRect();
+}
+
+void TextView::alignLeft() {
+	Vector2f anchor = Object::m_transform.getAnchor();
+	Vector2f dist;
+	dist.x = -anchor.x * Object::m_transform.width;
+	dist.y = -anchor.y * Object::m_transform.height;
+	Object::m_transform.setPosition(dist + Object::m_transform.getPosition());
+	Object::m_transform.setAnchor(0, 0);
+	setOrigin(0, 0);
+}
+
+void TextView::alignRight() {
+	Vector2f anchor = Object::m_transform.getAnchor();
+	Vector2f dist;
+	dist.x = (1 - anchor.x) * Object::m_transform.width;
+	dist.y = -anchor.y * Object::m_transform.height;
+	Object::m_transform.setPosition(dist + Object::m_transform.getPosition());
+	Object::m_transform.setAnchor(1, 0);
+	setOrigin(getGlobalBounds().width, 0);
+}
+
+void TextView::alignCenter() {
+	Vector2f anchor = Object::m_transform.getAnchor();
+	Vector2f dist;
+	dist.x = (0.5 - anchor.x) * Object::m_transform.width;
+	dist.y = -anchor.y * Object::m_transform.height;
+	Object::m_transform.setPosition(dist + Object::m_transform.getPosition());
+	Object::m_transform.setAnchor(0.5, 0);
+	setOrigin(getGlobalBounds().width / 2, 0);
+}
+
+void TextView::update()
+{
+	if (!getString().isEmpty()) {
+		FloatRect bounds = getLocalBounds();
+		setOrigin(bounds.left + bounds.width * Object::m_transform.getAnchor().x, bounds.top + bounds.height * Object::m_transform.getAnchor().y);
+	}
+	setPosition(Object::m_transform.getWorldCenter());
 }
 
 void TextView::render()

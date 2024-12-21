@@ -17,3 +17,13 @@ json::object readJsonFile(string filename) {
 	json::value parsed = json::parse(jsonContent);
 	return parsed.as_object();
 }
+
+Color darkenColor(const Color& color, float factor) {
+	Color newColor;
+	newColor.r = max(color.r - factor, 0.0f);
+	newColor.g = max(color.g - factor, 0.0f);
+	newColor.b = max(color.b - factor, 0.0f);
+	newColor.a = max(color.a - factor, 0.0f);
+
+	return newColor;
+}

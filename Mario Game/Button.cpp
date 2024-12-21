@@ -7,6 +7,7 @@ Button::Button(Object* parent)
 	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
 
 	m_textView.setRenderOrder(BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER);
+	m_textView.setParent(this);
 
 	configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), "", sf::Font(), nullptr);
 }
@@ -18,6 +19,7 @@ Button::Button(sf::Vector2f position, sf::Vector2f size, const std::string& cont
 	this->setRenderOrder(BUTTON_RECTSHAPE_DEFAULT_RENDER_ORDER);
 
 	m_textView.setRenderOrder(BUTTON_TEXTVIEW_DEFAULT_RENDER_ORDER);
+	m_textView.setParent(this);
 
 	configure(position, size, content, font, action);
 }
@@ -32,9 +34,17 @@ void Button::configure(sf::Vector2f position, sf::Vector2f size, const std::stri
 	m_rectShape.setSize(size);
 	m_rectShape.setFillColor(sf::Color::Transparent);
 
-	m_transform.getRect() = { position.x, position.y, size.x, size.y };
+	m_transform.setRect(position.x, position.y, size.x, size.y);
+	m_transform.setAnchor(0.5, 0.5);
 
-	m_textView.configure(position, size, content, font);
+	m_textView.setFont(font);
+	m_textView.setString(content);
+	m_textView.getComponent<Transform2D>().setAnchor(0.5, 0.5);
+	m_textView.getComponent<Transform2D>().setPosition(0, 0);
+
+	m_background.setAnchor(0.5, 0.5);
+	m_background.setPosition(0, 0);
+	m_background.setRenderOrder(2);
 
 	m_action = action;
 }
@@ -77,6 +87,7 @@ void Button::setButtonFillColor(const sf::Color& color)
 void Button::setTextViewFillColor(const sf::Color& color)
 {
 	m_textView.setFillColor(color);
+	m_textColor = color;
 }
 
 void Button::setTextViewRenderOrder(int renderOrder)
@@ -84,31 +95,50 @@ void Button::setTextViewRenderOrder(int renderOrder)
 	m_textView.setRenderOrder(renderOrder);
 }
 
+void Button::setTexture(const Texture& texture) {
+	m_background.setTexture(texture);
+}
+
+sf::Text& Button::getText() {
+	return m_textView;
+}
+
 void Button::onHovered()
 {
-	m_textView.setFillColor(sf::Color::White);
+	m_textView.setFillColor(darkenColor(m_textColor, 30));
 }
 
 void Button::onUnhovered()
 {
-	m_textView.setFillColor(sf::Color::Black);
+	m_textView.setFillColor(m_textColor);
 }
 
 void Button::onPressed()
 {
-	m_textView.setFillColor(sf::Color::White);
+	m_textView.setFillColor(darkenColor(m_textColor, 30));
 	m_textView.setScale(sf::Vector2f(0.8f, 0.8f));
+}
+
+void Button::onDePressed() {
+	m_textView.setScale(sf::Vector2f(1.0f, 1.0f));
+	m_textView.setFillColor(m_textColor);
 }
 
 void Button::onClick()
 {
-	m_textView.setFillColor(sf::Color::White);
-	m_textView.setScale(sf::Vector2f(1.0f, 1.0f));
+	m_textView.setFillColor(darkenColor(m_textColor, 30));
 
 	if (m_action != nullptr)
 	{
 		m_action();
 	}
+}
+
+void Button::update() {
+	m_textView.getComponent<Transform2D>().setSize(m_transform.getSize());
+	m_rectShape.setSize(m_transform.getSize());
+	m_rectShape.setOrigin(m_rectShape.getGlobalBounds().width * 0.5, m_rectShape.getGlobalBounds().height * 0.5);
+	m_rectShape.setPosition(m_transform.getWorldCenter());
 }
 
 void Button::render()

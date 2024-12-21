@@ -57,7 +57,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_coins = 0;
 	m_score = 0;
 	m_lives = 3;
-	m_countdown = 400;
+	m_countdown = 400000;
 	m_ability = Ability::REGULAR;
 
 	m_teleportTime = 0;
@@ -282,6 +282,14 @@ void Mario::win() {
 	
 }
 
+void Mario::earnCoins(int coins) {
+	m_coins += coins;
+}
+
+void Mario::addScore(int score) {
+	m_score += score;
+}
+
 bool Mario::isOnGround() const {
 	return m_physics2D.getVelocity().y + m_physics2D.getBaseVelocity().y == 0 && !m_onJump;
 }
@@ -310,8 +318,8 @@ int Mario::getScore() const {
 	return m_score;
 }
 
-float Mario::getCountdownTime() const {
-	return m_countdown;
+Time Mario::getCountdownTime() const {
+	return milliseconds(m_countdown);
 }
 
 Mario::Ability Mario::getAbility() const {

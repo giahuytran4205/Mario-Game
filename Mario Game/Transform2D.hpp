@@ -17,11 +17,13 @@ public:
 	Transform2D();
 	~Transform2D();
 
+	void init() override;
 	Vector2f getPosition();
 	Vector2f getLastPosition();
 	Vector2f getRotation();
 	Vector2f getWorldPosition();
 	Vector2f getLastCenter();
+	Vector2f getCenter();
 	Vector2f getWorldCenter();
 	Vector2f transformPoint(const Vector2f& point);
 	Vector2f transformPoint(float x, float y);
@@ -29,6 +31,8 @@ public:
 	Vector2f reverseTransformPoint(float x, float y);
 	FRect& getRect();
 	void update() override;
+	void setRect(const FRect& rect);
+	void setRect(float left, float top, float width, float height);
 	void setPosition(const Vector2f& position);
 	void setPosition(float x, float y);
 	void setWorldPosition(const Vector2f& position);

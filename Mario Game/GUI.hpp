@@ -29,6 +29,7 @@ public:
 	virtual void onSelected();
 	virtual void onDeselect();
 	virtual void onPressed();
+	virtual void onDePressed();
 	virtual void onHovered();
 	virtual void onUnhovered();
 	virtual void onClick();

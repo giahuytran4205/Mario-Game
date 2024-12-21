@@ -7,13 +7,12 @@
 #include <sstream>
 
 constexpr float DEFAULT_RATIO_CHAR_SIZE_TABLE_HEIGHT = 1.0f;
-constexpr int TEXTVIEW_DEFAUTL_RENDER_ORDER = 0;
+constexpr int TEXTVIEW_DEFAUTL_RENDER_ORDER = 20;
 
 class TextView : public Object, public sf::Text {
 private:
 	void wrapText();
 
-	FRect m_table;
 	float m_ratioCharSizeTableHeight;
 
 public:
@@ -27,6 +26,10 @@ public:
 	void setTable(const FRect& table);
 	void setTablePosition(const sf::Vector2f& tablePosition);
 	void setTableSize(const sf::Vector2f& tableSize);
+	void alignLeft();
+	void alignRight();
+	void alignCenter();
 	const FRect& getTable() const;
+	void update() override;
 	void render() override;
 };

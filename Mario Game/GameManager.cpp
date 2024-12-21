@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "ECS.hpp"
 #include "GameScene.hpp"
+#include "MapSelectionScene.hpp"
 #include <iostream>
 using namespace sf;
 using namespace std;
@@ -37,7 +38,7 @@ void GameManager::init() {
 	m_view.setViewport(FloatRect(0, 0, 1, 1));
 	m_window.setView(m_view);
 
-	m_sceneManager.setCurrentScene<GameScene>("Resources/Map/Worlds-2-1.json");
+	m_sceneManager.setCurrentScene<MapSelectionScene>();
 }
 
 void GameManager::start() {

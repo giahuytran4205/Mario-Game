@@ -67,6 +67,8 @@ public:
 	void onGrabFlagPole();
 	void dead();
 	void win();
+	void earnCoins(int coins);
+	void addScore(int score);
 	bool isOnGround() const;
 	bool isOnTeleport() const;
 	bool isOnGrabFlagPole() const;
@@ -74,6 +76,6 @@ public:
 	int getLives() const;
 	int getCoins() const;
 	int getScore() const;
-	float getCountdownTime() const;
+	Time getCountdownTime() const;
 	Ability getAbility() const;
 };

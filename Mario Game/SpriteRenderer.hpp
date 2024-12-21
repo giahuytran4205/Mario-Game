@@ -8,6 +8,7 @@ using namespace sf;
 
 class SpriteRenderer : public Object, public Sprite {
 private:
+	RectangleShape m_outline;
 
 public:
 	SpriteRenderer(Object* parent = nullptr);
@@ -22,4 +23,6 @@ public:
 	void setPosition(float x, float y);
 	void setAnchor(const Vector2f& anchor);
 	void setAnchor(float anchorX, float anchorY);
+	void setOutlineThickness(float thickness);
+	void setOutlineColor(const Color& color);
 };

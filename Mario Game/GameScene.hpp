@@ -16,14 +16,15 @@ class GameScene : public Scene {
 private:
 	Mario m_mario;
 	Map m_map;
-	TextView m_coinsText;
-	TextView m_scoreText;
-	TextView m_livesText;
-	TextView m_countdownText;
-	TextView m_worldNameText;
+	Object m_canvas;
+	TextView m_coinsText[2];
+	TextView m_scoreText[2];
+	TextView m_livesText[2];
+	TextView m_countdownText[2];
+	TextView m_worldNameText[2];
 
 public:
-	GameScene(const string& mapPath);
+	GameScene(const MapInfo& mapPath);
 	~GameScene();
 
 	void update() override;

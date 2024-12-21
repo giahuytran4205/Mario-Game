@@ -9,11 +9,20 @@
 #include "Portal.hpp"
 #include "Brick.hpp"
 #include "QuestionBlock.hpp"
+#include <map>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 using namespace std;
 using namespace sf;
+
+const vector<MapInfo> Map::mapsInfo = {
+	{ "1-1", "Resources/Map/Worlds-1-1.json", "Resources/Thumbnails/Worlds-1-1.png" },
+	{ "2-1", "Resources/Map/Worlds-2-1.json", "Resources/Thumbnails/Worlds-2-1.png" },
+	{ "3-1", "Resources/Map/Worlds-3-1.json", "Resources/Thumbnails/Worlds-3-1.png" },
+	{ "4-1", "Resources/Map/Worlds-4-1.json", "Resources/Thumbnails/Worlds-4-1.png" },
+	{ "5-1", "Resources/Map/Worlds-5-1.json", "Resources/Thumbnails/Worlds-5-1.png" }
+};
 
 Map::Map() {
 	m_width = m_height = 0;

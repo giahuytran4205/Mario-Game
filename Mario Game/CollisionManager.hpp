@@ -2,6 +2,8 @@
 #include "Collision.hpp"
 #include "Physics2D.hpp"
 #include "Transform2D.hpp"
+#include "Object.hpp"
+#include <set>
 
 class CollisionManager {
 private:
