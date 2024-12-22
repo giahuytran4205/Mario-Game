@@ -16,11 +16,12 @@ private:
 	bool m_onGround;
 	bool m_isBounce;
 	bool m_enableGravity;
+	bool m_isElastic;
 	Transform2D* m_transform;
 	
 public:
 	Physics2D();
-	Physics2D(float gravity, bool isStatic);
+	Physics2D(float gravity, bool isStatic = false);
 	~Physics2D();
 
 	void init() override;
@@ -49,4 +50,6 @@ public:
 	float getFriction();
 	void setFriction(float friction);
 	void bounce(float velY);
+	void setElastic(bool isElastic);
+	bool isElastic();
 };

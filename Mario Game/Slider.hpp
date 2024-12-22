@@ -3,7 +3,10 @@
 #include "GUI.hpp"
 #include "Transform2D.hpp"
 #include "Line.hpp"
+#include "GameManager.hpp"
+#include <vector>
 #include <iostream>
+using namespace std;
 
 class Handle : public GUI {
 private:
@@ -11,8 +14,7 @@ private:
 	CircleShape m_handleShape;
 
 public:
-	Handle();
-	Handle(RenderWindow& window, Object* parent = nullptr);
+	Handle(Object* parent = nullptr);
 	~Handle();
 
 	void update() override;
@@ -33,34 +35,35 @@ private:
 	Handle m_handle;
 	RectangleShape m_background;
 	RectangleShape m_fillArea;
+	vector<void (*)(T)> m_listeners;
 
 public:
-	Slider(Object* parent = nullptr) : m_value(0), m_minVal(0), m_maxVal(1) {
+	Slider(Object* parent = nullptr) : GUI(parent) {
 		m_handle.getComponent<Transform2D>().setPosition(m_transform.getPosition());
-		m_parent = parent;
+		m_value = 0;
+		m_minVal = 0;
+		m_maxVal = 0;
+		m_handle.setRenderOrder(6);
+		setRenderOrder(5);
 	}
 
-	Slider(RenderWindow& window, const T& minVal, const T& maxVal, const T& val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(window, this) {
-		m_window = &window;
-		m_parent = parent;
+	Slider(T minVal, T maxVal, T width, T val = 0, const Vector2f& pos = { 0, 0 }, Object* parent = nullptr) : GUI(parent), m_minVal(minVal), m_maxVal(maxVal), m_value(val), m_handle(this) {
 		m_transform.setPosition(pos);
-		m_transform.getRect() = { pos.x, pos.y, maxVal, 10 };
+		m_transform.getRect() = { pos.x, pos.y, width, 1 };
+		m_handle.setRenderOrder(6);
+		setRenderOrder(5);
 
-		m_background.setSize({ maxVal, 5 });
-		m_fillArea.setSize({ maxVal, 5 });
+		m_background.setSize({ width, 2 });
+		m_fillArea.setSize({ width, 2 });
 
 		m_background.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_background.getSize().y / 2));
 		m_fillArea.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_fillArea.getSize().y / 2));
 
-		m_background.setOutlineThickness(2);
+		m_background.setOutlineThickness(1);
 		m_background.setOutlineColor(Color(150, 150, 150));
 
 		m_background.setFillColor(Color(150, 150, 150));
 		m_fillArea.setFillColor(Color(50, 50, 50));
-	}
-
-	Slider(const Slider& slider) {
-
 	}
 
 	~Slider() {
@@ -71,12 +74,42 @@ public:
 		Vector2f dragPos = m_handle.getDragPos();
 		if (dragPos.x < m_transform.getRect().left) dragPos.x = m_transform.getRect().left;
 		if (dragPos.x > m_transform.getRect().right) dragPos.x = m_transform.getRect().right;
-		m_value = dragPos.x - m_transform.getRect().left;
-		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.getRect().left, m_handle.getComponent<Transform2D>().getPosition().y });
-		m_fillArea.setScale({ m_value / m_transform.getRect().width, 1 });
 
-		m_window->draw(m_background);
-		m_window->draw(m_fillArea);
+		T tempVal = (dragPos.x - m_transform.left) / m_transform.width * (m_maxVal - m_minVal) + m_minVal;
+
+		if (tempVal != m_value) {
+			m_value = tempVal;
+			for (auto& i : m_listeners)
+				i(m_value);
+		}
+
+		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.getRect().left, m_handle.getComponent<Transform2D>().getPosition().y });
+		m_fillArea.setScale({ (T)m_value / (m_maxVal - m_minVal), 1 });
+	}
+
+	void render() override {
+		GameManager::getInstance()->getRenderWindow().draw(m_background);
+		GameManager::getInstance()->getRenderWindow().draw(m_fillArea);
+	}
+
+	T getValue() {
+		return m_value;
+	}
+
+	void addListener(void (*listener)(T)) {
+		m_listeners.push_back(listener);
+	}
+
+	void removeListener(void (*listener)(T)) {
+		m_listeners.erase(remove_if(m_listeners.begin(), m_listeners.end(),
+			[](const void (*&item)(T)) {
+				return item == listener;
+			}),
+			m_listeners.end());
+	}
+
+	void removeAllListeners() {
+		m_listeners.clear();
 	}
 
 	void setBackgroundColor(const Color& color) {

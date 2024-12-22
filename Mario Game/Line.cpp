@@ -38,21 +38,21 @@ float Line::getY(const float& x) {
 	return -c / b - a / b * x;
 }
 
-Vector2f Line::raycast(const FRect& rect, int& side) {
+Vector2f Line::raycast(const FRect& rect, Direction& side) {
 	if (a == 0 && b == 0) {
-		side = 0;
+		side = Direction::LEFT;
 		return startPoint;
 	}
 
 	if (a == 0) {
-		if (abs(startPoint.x - rect.left) < abs(startPoint.x - rect.right)) side = 0;
-		else side = 2;
+		if (startPoint.x < endPoint.x) side = Direction::LEFT;
+		else side = Direction::RIGHT;
 		return { side == 0 ? rect.left : rect.right, -c / b };
 	}
 
 	if (b == 0) {
-		if (abs(startPoint.y - rect.top) < abs(startPoint.y - rect.bottom)) side = 1;
-		else side = 3;
+		if (startPoint.y < endPoint.y) side = Direction::UP;
+		else side = Direction::DOWN;
 		return { -c / a, side == 1 ? rect.top : rect.bottom };
 	}
 
@@ -63,18 +63,17 @@ Vector2f Line::raycast(const FRect& rect, int& side) {
 	points[3] = { getX(rect.bottom), rect.bottom };
 
 	float mn = 1e9;
-	side = -1;
 
 	for (int i = 0; i < 4; i++) {
 		if (!rect.pointOverlap(points[i])) continue;
 		if (rect.pointOverlap(startPoint)) {
 			if (distance(startPoint, points[i]) <= distance(points[i], endPoint)) {
-				side = i;
+				side = (Direction)i;
 			}
 		}
 		else if (side == -1 || distance(endPoint, points[i]) < mn) {
 			mn = distance(startPoint, points[i]);
-			side = i;
+			side = (Direction)i;
 		}
 	}
 	return points[side];

@@ -5,9 +5,7 @@
 #include "AnimationFactory.hpp"
 namespace json = boost::json;
 
-Animation::Animation() : m_animSprite(m_entity->getComponent<SpriteRenderer>().getSprite()), m_countdown(0), m_isPlay(false), m_currentTrack(-1), m_currentIndex(-1) {}
-
-Animation::Animation(string filename) : Animation() {
+Animation::Animation(Sprite& sprite, string filename) : m_animSprite(sprite), m_countdown(0), m_isPlay(false), m_currentTrack(-1), m_currentIndex(-1) {
 	loadFromJsonFile(filename);
 }
 

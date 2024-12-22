@@ -2,17 +2,12 @@
 #include "Slider.hpp"
 #include <iostream>
 
-Handle::Handle() {
-
-}
-
-Handle::Handle(RenderWindow& window, Object* parent) : m_handleShape(5, 500) {
-	m_window = &window;
-	m_parent = parent;
-	m_transform.setParent(parent);
-	m_transform.getRect() = { 0, 0, 20, 20 };
+Handle::Handle(Object* parent) : GUI(parent) {
+	m_handleShape = CircleShape(2);
+	m_transform.setAnchor(0.5, 0.5);
+	m_transform.setSize(6, 6);
 	m_handleShape.setFillColor(Color(150, 150, 150));
-	m_handleShape.setOutlineThickness(3);
+	m_handleShape.setOutlineThickness(1);
 	m_handleShape.setOutlineColor(Color(70, 70, 70));
 }
 
@@ -33,7 +28,7 @@ void Handle::update() {
 }
 
 void Handle::render() {
-	m_window->draw(m_handleShape);
+	GameManager::getInstance()->getRenderWindow().draw(m_handleShape);
 }
 
 void Handle::onDrag(const Vector2f& mousePos) {

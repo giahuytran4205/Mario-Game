@@ -5,7 +5,6 @@
 FRect::FRect() {
 	left = top = right = bottom = 0;
 	width = height = 0;
-	m_center = { 0, 0 };
 }
 
 FRect::FRect(float left, float top, float width, float height) {
@@ -15,7 +14,6 @@ FRect::FRect(float left, float top, float width, float height) {
 	this->height = height;
 	right = left + width;
 	bottom = top + height;
-	m_center = { left + width / 2, top + height / 2 };
 }
 
 FRect::~FRect() {
@@ -23,7 +21,7 @@ FRect::~FRect() {
 }
 
 sf::Vector2f FRect::getCenter() const {
-	return m_center;
+	return { left + width / 2, top + height / 2 };
 }
 
 sf::Vector2f FRect::getPosition() const {
@@ -35,29 +33,40 @@ sf::Vector2f FRect::getAnchor() const {
 }
 
 bool FRect::pointOverlap(const sf::Vector2f& point) const {
+	float right = left + width;
+	float bottom = top + height;
 	return (point.x >= left && point.x <= right && point.y >= top && point.y <= bottom);
 }
 
 bool FRect::contains(const sf::Vector2f& point) const {
+	float right = left + width;
+	float bottom = top + height;
 	return left < point.x && top < point.y && right > point.x && bottom > point.y;
 }
 
 int FRect::tangentSide(const FRect& rect) const {
-	if (rect.left == right)
+	float right = left + width;
+	float bottom = top + height;
+
+	if (rect.left >= right)
 		return 0;
-	if (rect.bottom == top)
+	if (rect.bottom <= top)
 		return 1;
-	if (rect.right == left)
+	if (rect.right <= left)
 		return 2;
-	if (rect.top == bottom)
+	if (rect.top >= bottom)
 		return 3;
 
 	return -1;
 }
 
 void FRect::setPosition(const sf::Vector2f& pos) {
-	left = pos.x - m_anchor.x * width;
-	top = pos.y - m_anchor.y * height;
+	setPosition(pos.x, pos.y);
+}
+
+void FRect::setPosition(float x, float y) {
+	left = x - m_anchor.x * width;
+	top = y - m_anchor.y * height;
 	right = left + width;
 	bottom = top + height;
 	m_center = { left + width / 2, top + height / 2 };
@@ -71,13 +80,33 @@ void FRect::setCenter(const sf::Vector2f& center) {
 	bottom = right + height;
 }
 
+void FRect::setCenter(float x, float y) {
+	setCenter({ x, y });
+}
+
 void FRect::setAnchor(const sf::Vector2f& anchor) {
 	m_anchor = anchor;
 }
 
+void FRect::setAnchor(float anchorX, float anchorY) {
+	setAnchor({ anchorX, anchorY });
+}
+
 void FRect::setSize(const sf::Vector2f& size) {
+	setSize(size.x, size.y);
+}
+
+void FRect::setSize(float width, float height) {
 	sf::Vector2f pos = getPosition();
-	width = size.x;
-	height = size.y;
+	this->width = width;
+	this->height = height;
 	setPosition(pos);
+}
+
+void FRect::setWidth(float width) {
+	setSize(width, height);
+}
+
+void FRect::setHeight(float height) {
+	setSize(width, height);
 }

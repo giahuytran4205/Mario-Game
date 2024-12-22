@@ -1,42 +1,54 @@
-#include "SpriteRenderer.hpp"
 #include "ECS.hpp"
 #include "Transform2D.hpp"
 #include "GameManager.hpp"
 #include "SFML/Graphics.hpp"
+#include "Object.hpp"
+#include "SpriteRenderer.hpp"
 using namespace sf;
 
-SpriteRenderer::SpriteRenderer() {
-	
+SpriteRenderer::SpriteRenderer(Object* parent) : Object(parent) {
+	Object::m_transform.setAnchor(0, 0);
+	if (m_parent)
+		m_renderOrder = m_parent->getRenderOrder();
 }
 
 SpriteRenderer::~SpriteRenderer() {
+	
+}
 
+SpriteRenderer& SpriteRenderer::operator=(const SpriteRenderer& other) {
+	Sprite::operator=(other);
+	Object::operator=(other);
+	return *this;
 }
 
 void SpriteRenderer::update() {
-	if (m_entity->hasComponent<Transform2D>()) {
-		Vector2f anchor = m_entity->getComponent<Transform2D>().getRect().getAnchor();
-		m_sprite.setOrigin(m_sprite.getLocalBounds().width * anchor.x, m_sprite.getLocalBounds().height * anchor.y);
-		Transform2D& transform = m_entity->getComponent<Transform2D>();
-		m_sprite.setPosition(transform.getPosition());
-	}
+	Vector2f anchor = Object::m_transform.getAnchor();
+
+	setOrigin(getLocalBounds().width * anchor.x, getLocalBounds().height * anchor.y);
+	Sprite::setPosition(Object::m_transform.getWorldPosition());
 }
 
 void SpriteRenderer::render() {
-	GameManager::getInstance()->getRenderWindow().draw(m_sprite);
+	GameManager::getInstance()->getRenderWindow().draw(*this);
 }
 
 Sprite& SpriteRenderer::getSprite() {
-	return m_sprite;
+	return *this;
 }
 
-void SpriteRenderer::setTexture(Texture& texture) {
-	m_sprite.setTexture(texture);
-	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
+void SpriteRenderer::setPosition(const Vector2f& pos) {
+	Object::m_transform.setPosition(pos);
 }
 
-void SpriteRenderer::setTexture(Texture& texture, const IntRect& rectangle) {
-	m_sprite.setTexture(texture, true);
-	m_sprite.setTextureRect(rectangle);
-	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
+void SpriteRenderer::setPosition(float x, float y) {
+	setPosition({ x, y });
+}
+
+void SpriteRenderer::setAnchor(const Vector2f& anchor) {
+	Object::m_transform.setAnchor(anchor);
+}
+
+void SpriteRenderer::setAnchor(float anchorX, float anchorY) {
+	setAnchor({ anchorX, anchorY });
 }

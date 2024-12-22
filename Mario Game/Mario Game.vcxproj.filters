@@ -13,221 +13,428 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{e606fbac-031d-487e-9201-82bb147ce901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object">
+      <UniqueIdentifier>{39dd40de-391c-40f5-bd5d-97f6b483ca1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{1df65719-738d-420d-bca5-55c7e8e1c12c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Manager">
+      <UniqueIdentifier>{1ed423b2-d9a1-48a5-b540-b0df18872704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Manager">
+      <UniqueIdentifier>{6b1aa946-ad87-47bc-a660-7a2378baf850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{2c1d3217-4137-4b68-873b-d16a09215f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object">
+      <UniqueIdentifier>{290c24fc-4fbf-4898-bf93-1306d3017f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Component">
+      <UniqueIdentifier>{29ee27eb-e28e-4bf0-a759-c94125fdb3bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{f7f8124c-1294-4fc3-9e15-31840267f972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{c5b5e576-cb53-4de1-bbc1-fdea34d15c60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ECS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Line.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Toggle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EventSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TileSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Slider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundComponent.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AnimationType.hpp">
+      <Filter>Header Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Common.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundBufferManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Jumper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationType.hpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationType.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="AnimationFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
-    <ClCompile Include="FlagPole.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AnimationType.cpp">
+      <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="AutoControl.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Common.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSystem.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FlagPole.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Jumper.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics2D.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundBufferManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextView.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Toggle.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform2D.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Lift.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Coroutine.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Beanstalk.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BalanceLifts.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleBalanceLift.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadZone.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionBlock.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptyBlock.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CoroutineManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGoomba.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesKoopaTroopa.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesBlooper.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesBuzzyBeetle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mushroom.cpp">
+    <ClCompile Include="EnemiesCheepCheepBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
+    <ClCompile Include="EnemiesCheepCheepNormal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesCheepCheepWarter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesGoomba.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesPiranhaPlant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesLavaBubble.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ECS.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Line.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rect.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Toggle.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Common.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TileSet.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Slider.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundBufferManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Jumper.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="AnimationFactory.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FlagPole.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="AutoControl.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="FlagPole.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InputField.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Jumper.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics2D.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundComponent.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TextView.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Toggle.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform2D.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSystem.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundBufferManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.hpp">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Lift.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Beanstalk.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Coroutine.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.hpp">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BalanceLifts.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleBalanceLift.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadZone.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBlock.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyBlock.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CoroutineManager.hpp">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGoomba.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesKoopaTroopa.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesBlooper.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesBuzzyBeetle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mushroom.hpp">
+    <ClInclude Include="EnemiesCheepCheepBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.hpp">
+    <ClInclude Include="EnemiesCheepCheepNormal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyType.hpp">
+    <ClInclude Include="EnemiesCheepCheepWarter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesGoomba.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesPiranhaPlant.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesLavaBubble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

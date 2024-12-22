@@ -2,7 +2,7 @@
 #include "Object.hpp"
 
 Character::Character() {
-
+	m_direction = Direction::RIGHT;
 }
 
 Character::~Character() {

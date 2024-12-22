@@ -3,7 +3,9 @@
 #include <array>
 #include <vector>
 #include <memory>
+#include "SFML/Graphics.hpp"
 #include "Common.hpp"
+#include "Enum.hpp"
 using namespace std;
 
 class Entity;
@@ -46,10 +48,11 @@ private:
 
 protected:
 	bool m_active;
+	bool m_destroyed;
 	int m_renderOrder = 0;
 
 public:
-	Entity() : m_renderOrder(0), m_active(true) {}
+	Entity() : m_renderOrder(0), m_active(true), m_destroyed(false) {}
 	virtual ~Entity() {}
 
 	void _update() {
@@ -73,7 +76,7 @@ public:
 
 	virtual void render() {}
 
-	virtual void onCollisionEnter(Collision& col) {}
+	virtual void onCollisionEnter(Collision& col, const Direction& side) {}
 
 	template<typename T>
 	bool isType() const {
@@ -105,11 +108,19 @@ public:
 		return *static_cast<T*>(ptr);
 	}
 
-	bool isActive() {
+	virtual bool isActive() const {
 		return m_active;
 	}
 
-	int getRenderOrder() {
+	virtual bool isDestroyed() const {
+		return m_destroyed;
+	}
+
+	void setRenderOrder(int order) {
+		m_renderOrder = order;
+	}
+
+	int getRenderOrder() const {
 		return m_renderOrder;
 	}
 
@@ -129,6 +140,7 @@ private:
 	vector<vector<Entity*>> m_renderQueue;
 
 public:
+	static vector<unique_ptr<Entity>> m_entityPtr;
 	EntitiesManager() { }
 	~EntitiesManager() { }
 
@@ -136,14 +148,17 @@ public:
 		refresh();
 
 		for (auto& e : m_entities)
-			e->update();
+			if (e->isActive())
+				e->update();
 				
 		for (auto& e : m_entities)
-			e->_update();
+			if (e->isActive())
+				e->_update();
 
 		m_renderQueue.assign(100, {});
 		for (auto& e : m_entities) {
-			m_renderQueue[e->getRenderOrder()].push_back(e);
+			if (e->isActive())
+				m_renderQueue[e->getRenderOrder()].push_back(e);
 		}
 
 		for (auto& v : m_renderQueue) {
@@ -157,7 +172,7 @@ public:
 			[](Entity* entity)
 			{
 				if (!entity) return true;
-				return !entity->isActive();
+				return entity->isDestroyed();
 			}),
 			end(m_entities));
 	}
@@ -177,3 +192,11 @@ public:
 			m_entities.end());
 	}
 };
+
+template<typename T>
+T& Instantiate() {
+	unique_ptr<T> ptr = make_unique<T>();
+	T* res = ptr.get();
+	EntitiesManager::m_entityPtr.push_back(move(ptr));
+	return *res;
+}

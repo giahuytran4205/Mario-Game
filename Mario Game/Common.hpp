@@ -3,12 +3,15 @@
 #include <string>
 using namespace std;
 
+#define DEBUG true
+
 class Object;
 class Transform2D;
 class TextureManager;
 class Physics2D;
 class Collision;
 class GUI;
+class SpriteRenderer;
 class Toggle;
 
 boost::json::object readJsonFile(string filename);

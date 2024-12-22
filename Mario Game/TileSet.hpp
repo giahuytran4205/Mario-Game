@@ -5,6 +5,24 @@ using namespace std;
 using namespace sf;
 namespace json = boost::json;
 
+namespace sf {
+	inline bool operator<(const IntRect& a, const IntRect& b) {
+		if (a.left != b.left)
+			return a.left < b.left;
+
+		if (a.top != b.top)
+			return a.top < b.top;
+
+		if (a.width != b.width)
+			return a.width < b.width;
+
+		if (a.height != b.height)
+			return a.height < b.height;
+
+		return false;
+	}
+}
+
 struct Frame {
 	Texture texture;
 	int duration;
@@ -19,17 +37,17 @@ struct Tile {
 };
 
 class TileSet {
-public:
-	vector<Tile> m_tiles;
-	int m_row, m_col, m_tilesize;
-	json::object readJsonFile(string filename);
+private:
+	Image m_tileset;
+	Vector2u m_size;
+	map<pair<IntRect, bool>, Texture> m_tiles;
 
 public:
 	TileSet();
-	TileSet(string filename);
-	TileSet(const TileSet& tileset);
 	~TileSet();
 
-	Tile& operator[](const int& id);
-	void loadFromJsonFile(string filename);
+	bool loadFromFile(const string& filename);
+	const Vector2u& getSize();
+	const Texture& getTile(const IntRect& rect, bool isRepeated = false);
+	const Texture& getTexture();
 };

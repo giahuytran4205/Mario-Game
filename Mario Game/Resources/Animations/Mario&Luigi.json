@@ -5,7 +5,7 @@
  "margin":0,
  "name":"Mario&Luigi",
  "spacing":0,
- "tilecount":800,
+ "tilecount":693,
  "tiledversion":"1.11.0",
  "tileheight":16,
  "tiles":[
@@ -50,6 +50,21 @@
         {
          "animation":[
                 {
+                 "duration":100,
+                 "tileid":52
+                }],
+         "id":52,
+         "properties":[
+                {
+                 "name":"state",
+                 "propertytype":"MarioState",
+                 "type":"int",
+                 "value":4
+                }]
+        }, 
+        {
+         "animation":[
+                {
                  "duration":50,
                  "tileid":53
                 }],
@@ -60,6 +75,25 @@
                  "propertytype":"MarioState",
                  "type":"int",
                  "value":0
+                }]
+        }, 
+        {
+         "animation":[
+                {
+                 "duration":100,
+                 "tileid":54
+                }, 
+                {
+                 "duration":100,
+                 "tileid":55
+                }],
+         "id":55,
+         "properties":[
+                {
+                 "name":"state",
+                 "propertytype":"MarioState",
+                 "type":"int",
+                 "value":3
                 }]
         }],
  "tilewidth":16,

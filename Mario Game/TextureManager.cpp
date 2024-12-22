@@ -5,24 +5,34 @@
 using namespace std;
 using namespace sf;
 
+map<string, TileSet> TextureManager::m_tilesets;
 TextureManager* TextureManager::m_instance = nullptr;
 
 TextureManager::TextureManager() {
 	if (!m_instance) {
 		m_instance = this;
 	}
-	loadTilesets();
 }
 
 TextureManager::~TextureManager() {
 
 }
 
-void TextureManager::loadBackground() {
-	m_background[0].loadFromFile("");
+TextureManager* TextureManager::getInstance() {
+	return m_instance;
 }
 
-void TextureManager::loadTilesets() {
-	m_tilesets[TileSetType::BLOCK].loadFromJsonFile("Resources/Map/Tileset-1.json");
-	//m_tilesets[TileSetType::ITEM].loadFromJsonFile("Resources/TileSets/");
+const Texture& TextureManager::getTexture(const string& filename) {
+	return getTileset(filename).getTexture();
+}
+
+TileSet& TextureManager::getTileset(const string& filename) {
+	if (!m_tilesets.contains(filename)) {
+		m_tilesets[filename].loadFromFile(filename);
+	}
+	return m_tilesets[filename];
+}
+
+const Texture& TextureManager::getTile(string filename, const IntRect& rect, bool isRepeated) {
+	return getTileset(filename).getTile(rect, isRepeated);
 }

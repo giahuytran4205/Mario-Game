@@ -9,8 +9,8 @@ using namespace sf;
 
 class GUI : public Object, public IEventListener {
 protected:
-	SpriteRenderer& m_background;
-	RenderWindow* m_window;
+	SpriteRenderer m_background;
+	RenderWindow& m_window;
 	bool m_isSelected;
 	bool m_isPressed;
 	bool m_isHovered;
@@ -18,21 +18,21 @@ protected:
 	bool m_isInteractable;
 
 public:
-	GUI();
-	GUI(const FRect& rect, RenderWindow* window, Object* parent = nullptr);
-	GUI(float left, float top, float width, float height, RenderWindow* window, Object* parent = nullptr);
+	GUI(Object* parent = nullptr);
+	GUI(const FRect& rect, Object* parent = nullptr);
+	GUI(float left, float top, float width, float height, Object* parent = nullptr);
 	~GUI();
 
 	void update() override;
 	void render() override;
-	void handleEvent(const Event& event) override;
+	void handleEvent(const sf::Event& event) override;
 	virtual void onSelected();
 	virtual void onDeselect();
 	virtual void onPressed();
 	virtual void onHovered();
 	virtual void onUnhovered();
 	virtual void onClick();
-	virtual void onKeyPressed(const Keyboard::Key& key);
+	virtual void onKeyPressed(const sf::Event::TextEvent& textEvent);
 	virtual void onDrag(const Vector2f& mousePos);
 	bool isSelected();
 	bool isPressed();
