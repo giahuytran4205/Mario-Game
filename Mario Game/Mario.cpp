@@ -15,6 +15,7 @@
 #include "Jumper.hpp"
 #include "FlagPole.hpp"
 #include "QuestionBlock.hpp"
+#include "GameScene.hpp"
 #include <iostream>
 using namespace sf;
 
@@ -54,6 +55,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_onJumper = false;
 	m_onGrabFlagPole = false;
 	m_isDead = false;
+	m_isInvisible = false;
 	m_coins = 0;
 	m_score = 0;
 	m_lives = 3;
@@ -211,6 +213,9 @@ void Mario::handleMovement() {
 	if (Keyboard::isKeyPressed(Keyboard::S)) {
 		m_physics2D.setBaseVelocityY(m_speed);
 	}
+	if (Keyboard::isKeyPressed(Keyboard::Space)) {
+		setAbility(Ability::SUPER);
+	}
 
 	if (m_onJump) m_state = State::JUMP;
 }
@@ -226,6 +231,15 @@ void Mario::jump(float velY) {
 
 	m_state = State::JUMP;
 	m_sound.play(SoundTrack::BIGJUMP, 100);
+}
+
+void Mario::setAbility(Ability ability) {
+	m_ability = ability;
+
+	if (ability == Ability::SUPER) {
+		m_anim->loadFromJsonFile("Resources/Animations/BigMario.json");
+		m_transform.setHeight(32);
+	}
 }
 
 void Mario::teleport(const Portal& portal) {

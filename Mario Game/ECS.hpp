@@ -49,10 +49,11 @@ private:
 protected:
 	bool m_active;
 	bool m_destroyed;
+	bool m_pause;
 	int m_renderOrder = 0;
 
 public:
-	Entity() : m_renderOrder(0), m_active(true), m_destroyed(false) {}
+	Entity() : m_renderOrder(0), m_active(true), m_destroyed(false), m_pause(false) {}
 	virtual ~Entity() {}
 
 	void _update() {
@@ -61,9 +62,6 @@ public:
 
 		for (auto& c : m_components)
 			c->lateUpdate();
-
-		for (auto& c : m_components)
-			c->render();
 	}
 
 	void _render() {
@@ -114,6 +112,14 @@ public:
 
 	virtual bool isDestroyed() const {
 		return m_destroyed;
+	}
+
+	virtual bool isPause() const {
+		return m_pause;
+	}
+
+	void pause() {
+		m_pause = true;
 	}
 
 	void setRenderOrder(int order) {

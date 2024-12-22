@@ -38,6 +38,10 @@ bool Object::isDestroyed() const {
 	return (m_parent && m_parent->isDestroyed()) || m_destroyed;
 }
 
+bool Object::isPause() const {
+	return (m_parent && m_parent->isPause()) || m_pause;
+}
+
 Object* Object::getParent() const {
 	return m_parent;
 }

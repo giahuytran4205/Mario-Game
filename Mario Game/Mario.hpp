@@ -44,6 +44,7 @@ private:
 	bool m_onJumper;
 	bool m_onGrabFlagPole;
 	bool m_isDead;
+	bool m_isInvisible;
 	int m_teleportTime;
 	Portal m_enteredPortal;
 
@@ -63,6 +64,7 @@ public:
 	void onTeleport();
 	void handleMovement();
 	void jump(float velY = -0.35f);
+	void setAbility(Ability ability);
 	void teleport(const Portal& portal);
 	void onGrabFlagPole();
 	void dead();

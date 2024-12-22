@@ -13,11 +13,11 @@ void EntitiesManager::update() {
 	refresh();
 
 	for (auto& e : m_entities)
-		if (e->isActive())
+		if (e->isActive() && !e->isPause())
 			e->update();
 
 	for (auto& e : m_entities)
-		if (e->isActive())
+		if (e->isActive() && e->isPause())
 			e->_update();
 
 	m_renderQueue.assign(100, {});

@@ -19,6 +19,7 @@ public:
 
 	bool isActive() const override;
 	bool isDestroyed() const override;
+	bool isPause() const override;
 	void update() override;
 	void render() override;
 	Object* getParent() const;
