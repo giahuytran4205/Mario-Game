@@ -71,13 +71,13 @@ void Collision::resolveCollide(Collision& col, Direction& side, bool isTrigger) 
 		else {
 			if (colVel.y <= 0) {
 				if (!isTrigger)
-					bodyTF.setCenter(bodyTF.getWorldPosition().x, collider.top - m_collider->height / 2);
+					bodyTF.setCenter(bodyTF.getWorldCenter().x, collider.top - m_collider->height / 2);
 				
 				side = Direction::DOWN;
 			}
 			else {
 				if (!isTrigger)
-					bodyTF.setCenter(bodyTF.getWorldPosition().x, collider.bottom + m_collider->height / 2);
+					bodyTF.setCenter(bodyTF.getWorldCenter().x, collider.bottom + m_collider->height / 2);
 				
 				side = Direction::UP;
 
