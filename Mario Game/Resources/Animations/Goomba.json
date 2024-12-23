@@ -23,6 +23,7 @@
          "properties":[
                 {
                  "name":"state",
+                 "propertytype":"GoombaState",
                  "type":"int",
                  "value":0
                 }]
@@ -37,6 +38,7 @@
          "properties":[
                 {
                  "name":"state",
+                 "propertytype":"GoombaState",
                  "type":"int",
                  "value":1
                 }]

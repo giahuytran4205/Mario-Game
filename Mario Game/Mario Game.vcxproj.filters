@@ -225,6 +225,9 @@
     <ClCompile Include="EnemiesKoopaTroopa.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -399,6 +402,9 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="EnemiesKoopaTroopa.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.hpp">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>

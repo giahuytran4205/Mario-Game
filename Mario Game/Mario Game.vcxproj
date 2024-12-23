@@ -172,6 +172,7 @@
     <ClCompile Include="EnemiesBuzzyBeetle.cpp" />
     <ClCompile Include="EnemiesGoomba.cpp" />
     <ClCompile Include="EnemiesKoopaTroopa.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enum.cpp" />
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="FlagPole.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="EnemiesBuzzyBeetle.hpp" />
     <ClInclude Include="EnemiesGoomba.hpp" />
     <ClInclude Include="EnemiesKoopaTroopa.hpp" />
+    <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />
     <ClInclude Include="FlagPole.hpp" />

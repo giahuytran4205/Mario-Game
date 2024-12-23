@@ -7,8 +7,18 @@
 #include "Random.hpp"
 #include "Item.hpp"
 #include "GameManager.hpp"
-class EnemiesGoomba : public Item
+#include "Enemy.hpp"
+#include "AutoControl.hpp"
+
+class EnemiesGoomba : public Enemy
 {
+private:
+	enum State {
+		WALK,
+		DIE
+	};
+
+	AutoControl& m_autoControl;
 	float m_speed_Vy = 0.0f;
 	const float G = 0.001f;
 	bool m_onWall{ false };

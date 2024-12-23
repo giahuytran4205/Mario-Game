@@ -28,14 +28,19 @@ template<typename T> inline ComponentID getComponentTypeID() noexcept {
 }
 
 class Component {
+private:
+	bool m_active;
 public:
 	Entity* m_entity;
+	Component() : m_active(true) {}
 
 	virtual void init() {}
 	virtual void start() {}
 	virtual void update() {}
 	virtual void lateUpdate() {}
 	virtual void render() {}
+	void setEnable(bool isEnable) { m_active = isEnable; }
+	bool isEnable() { return m_active; }
 
 	virtual ~Component() {}
 };
@@ -58,16 +63,19 @@ public:
 
 	void _update() {
 		for (auto& c : m_components)
-			c->update();
+			if (c->isEnable())
+				c->update();
 
 		for (auto& c : m_components)
-			c->lateUpdate();
+			if (c->isEnable())
+				c->lateUpdate();
 	}
 
 	void _render() {
 		render();
 		for (auto& component : m_components)
-			component->render();
+			if (component->isEnable())
+				component->render();
 	}
 
 	virtual void update() {}
