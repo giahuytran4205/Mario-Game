@@ -72,8 +72,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ExternalIncludePath>$(SolutionDir)External\boost_1_86_0;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>$(SolutionDir)External\boost_1_86_0\libs;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>C:\Users\VÕLÂMHẢIQUỐC\Desktop\Mario-Game-feature-GUI-Silder\External\boost_1_86_0;$(SolutionDir)External\boost_1_86_0;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>C:\Users\VÕLÂMHẢIQUỐC\Desktop\Mario-Game-feature-GUI-Silder\External\boost_1_86_0\libs;$(SolutionDir)External\boost_1_86_0\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ExternalIncludePath>$(SolutionDir)External\boost_1_86_0;$(ExternalIncludePath)</ExternalIncludePath>
@@ -85,14 +85,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\SFML\include;$(SolutionDir)External\boost_1_86_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\VÕLÂMHẢIQUỐC\Desktop\Mario-Game-feature-GUI-Silder\External\boost_1_86_0;$(SolutionDir)External\SFML\include;$(SolutionDir)External\boost_1_86_0</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-main-d.lib;libboost_json-vc143-mt-gd-x32-1_86.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\SFML\lib;$(SolutionDir)External\boost_1_86_0\lib32-msvc-14.3</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\VÕLÂMHẢIQUỐC\Desktop\Mario-Game-feature-GUI-Silder\External\boost_1_86_0\lib32-msvc-14.3;$(SolutionDir)External\SFML\lib;$(SolutionDir)External\boost_1_86_0\lib32-msvc-14.3</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -188,13 +188,13 @@
     <ClCompile Include="AutoControl.cpp" />
     <ClCompile Include="InputField.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="ItemGoomba.cpp" />
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Lift.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -260,6 +260,7 @@
     <ClInclude Include="Line.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Mario.hpp" />
+    <ClInclude Include="Mushroom.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleSystem.hpp" />

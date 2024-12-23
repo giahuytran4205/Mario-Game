@@ -1,9 +1,9 @@
 #include "EnemiesBlooper.h"
 
-EnemiesBlooper::EnemiesBlooper(Mario& mario, Object* parent): mMario(mario)
+EnemiesBlooper::EnemiesBlooper(Mario& mario, Object* parent) : mMario(mario)
 {
-	m_transform.setSize(16, 16);
-	m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
+    m_transform.setSize(16, 16);
+    m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
     m_sprite.setParent(this);
     m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
     m_sprite.setRenderOrder(3);
@@ -41,13 +41,16 @@ void EnemiesBlooper::update()
             if ((lastPost.x - posMario.x) * randomX > 0) {
                 randomX = -randomX;
             }
+            if ((lastPost.y - posMario.y) * randomY > 0) {
+                randomY = -randomY;
+            }
         }
         std::cout << "lastPost.x " << lastPost.x << " lastPost.x " << posMario.x << "\n";
 
         Vector2f move(randomX, randomY);
 
 
-       
+
 
         m_transform.move(move);
         mTimeUpdate = 0;

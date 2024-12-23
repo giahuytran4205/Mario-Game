@@ -10,6 +10,8 @@
 #include "Jumper.hpp"
 #include "Coin.hpp"
 #include <boost/json.hpp>
+#include "Mushroom.hpp"
+
 using namespace sf;
 namespace json = boost::json;
 

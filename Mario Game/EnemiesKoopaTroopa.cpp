@@ -50,6 +50,14 @@ void EnemiesKoopaTroopa::update()
         m_speed = -m_speed;
         m_onWall = false;
     }
+    auto lastPost = m_transform.getLastPosition();
+    if (lastPost.y < 430) {
+        m_speed_Vy += G * deltaTime.asMilliseconds();
+    }
+    else {
+        m_speed_Vy = 0;
+    }
+
     if (mIsStep2) {
         m_anim.loadFromJsonFile("Resources/Animations/Fireball.json");
         mTimeUpdate = 0;
@@ -69,10 +77,10 @@ void EnemiesKoopaTroopa::update()
     }
 
     if (mTimeUpdate < 2000 && mState == STEP_3) {
-        m_transform.move(m_speed * 10, 0); 
+        m_transform.move(m_speed * 10, m_speed_Vy);
     }
     else {
-        m_transform.move(m_speed, 0); 
+        m_transform.move(m_speed, m_speed_Vy); 
     }
 
 }

@@ -13,6 +13,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "Mushroom.hpp"
 #include "EnemiesKoopaTroopa.h"
 #include "EnemiesBlooper.h"
 #include "EnemiesBuzzyBeetle.h"
@@ -110,13 +111,36 @@ void Map::loadObjectInGroup(Environment environment, json::object& group) {
 				//enemiesCheepCheepWarter->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
 				//m_objects.push_back(enemiesCheepCheepWarter);
 
+
+				//EnemiesBlooper* enemiesBlooper = new EnemiesBlooper(mMario, this);
+				//enemiesBlooper->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				//m_objects.push_back(enemiesBlooper);
+
+				//EnemiesBuzzyBeetle* enemiesBuzzyBeetle = new EnemiesBuzzyBeetle(this);
+				//enemiesBuzzyBeetle->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				//m_objects.push_back(enemiesBuzzyBeetle);
+
+
 				//EnemiesGoomba* enemiesGoomba = new EnemiesGoomba(this);
 				//enemiesGoomba->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
 				//m_objects.push_back(enemiesGoomba);
 
-				EnemiesPiranhaPlant* enemiesPiranhaPlant = new EnemiesPiranhaPlant(mMario, this);
-				enemiesPiranhaPlant->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
-				m_objects.push_back(enemiesPiranhaPlant);
+				//EnemiesPiranhaPlant* enemiesPiranhaPlant = new EnemiesPiranhaPlant(mMario, this);
+				//enemiesPiranhaPlant->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				//m_objects.push_back(enemiesPiranhaPlant);
+
+				EnemiesKoopaTroopa* enemiesKoopaTroopa = new EnemiesKoopaTroopa(this);
+				enemiesKoopaTroopa->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				m_objects.push_back(enemiesKoopaTroopa);
+
+
+				//Mushroom* mushroom = new Mushroom(MushroomType::ORANGE, this);
+				//mushroom->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				//m_objects.push_back(mushroom);
+
+				//Mushroom* mushroom = new Mushroom(MushroomType::GREEN, this);
+				//mushroom->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				//m_objects.push_back(mushroom);
 
 			}
 		}
@@ -275,22 +299,23 @@ void Map::loadFromJsonFile(const string& filename) {
 
 		if (layer["name"] == "Jumper") {
 			for (auto& i : layer["objects"].as_array()) {
-				//auto& obj = i.as_object();
-
-				//int x = obj["x"].as_int64();
-				//int y = obj["y"].as_int64();
-				//int width = obj["width"].as_int64();
-				//int height = obj["height"].as_int64();
-
-				//Jumper* jumper = new Jumper(Vector2f(x + width / 2, y + height), this);
-				//m_objects.push_back(jumper);
-
 				auto& obj = i.as_object();
 
 				int x = obj["x"].as_int64();
 				int y = obj["y"].as_int64();
 				int width = obj["width"].as_int64();
 				int height = obj["height"].as_int64();
+
+				Jumper* jumper = new Jumper(Vector2f(x + width / 2, y + height), this);
+				
+				m_objects.push_back(jumper);
+
+				//auto& obj = i.as_object();
+
+				//int x = obj["x"].as_int64();
+				//int y = obj["y"].as_int64();
+				//int width = obj["width"].as_int64();
+				//int height = obj["height"].as_int64();
 
 
 
@@ -307,9 +332,9 @@ void Map::loadFromJsonFile(const string& filename) {
 				//enemiesBuzzyBeetle->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
 				//m_objects.push_back(enemiesBuzzyBeetle);
 
-				EnemiesGoomba* enemiesGoomba = new EnemiesGoomba(this);
-				enemiesGoomba->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
-				m_objects.push_back(enemiesGoomba);
+				//EnemiesGoomba* enemiesGoomba = new EnemiesGoomba(this);
+				//enemiesGoomba->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				//m_objects.push_back(enemiesGoomba);
 			}
 		}
 

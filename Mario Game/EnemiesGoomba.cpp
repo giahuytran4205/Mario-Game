@@ -60,5 +60,13 @@ void EnemiesGoomba::update()
         m_speed = -m_speed;
         m_onWall = false;
     }
-    m_transform.move(m_speed, 0);
+    auto lastPost = m_transform.getLastPosition();
+    if (lastPost.y < 430) {
+        m_speed_Vy += G * (float)deltaTime.asMilliseconds();
+    }
+    else
+    {
+        m_speed_Vy = 0;
+    }
+    m_transform.move(m_speed, m_speed_Vy);
 }

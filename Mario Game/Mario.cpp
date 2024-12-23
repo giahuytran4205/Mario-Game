@@ -189,6 +189,23 @@ void Mario::onCollisionEnter(Collision& col, const Direction& side) {
 		}
 	}
 
+	if (col.m_entity->isType<EnemiesCheepCheepNormal>()) {
+		if (side != Direction::DOWN) {
+			if (side == Direction::LEFT || side == Direction::RIGHT)
+				m_physics2D.setBaseVelocityY(0.1f);
+			dead();
+		}
+	}
+
+	if (col.m_entity->isType<EnemiesCheepCheepWarter>()) {
+		if (side != Direction::DOWN) {
+			if (side == Direction::LEFT || side == Direction::RIGHT)
+				m_physics2D.setBaseVelocityY(0.1f);
+			dead();
+		}
+	}
+
+
 	if (col.m_entity->isType<EnemiesPiranhaPlant>()) {
 
 		auto* enemis = col.m_entity->convertTo<EnemiesPiranhaPlant>();

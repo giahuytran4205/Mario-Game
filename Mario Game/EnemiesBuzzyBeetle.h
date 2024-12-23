@@ -6,7 +6,7 @@
 #include "ParticleSystem.hpp"
 #include "Random.hpp"
 #include "Item.hpp"
-
+#include "GameManager.hpp"
 class EnemiesBuzzyBeetle : public Item
 {
 public:
@@ -22,6 +22,8 @@ private:
 	bool m_onWall{ false };
 	int mTimeUpdate{ 0 };
 	State mState{ NORMAL };
+	float m_speed_Vy = 0.0f;
+	const float G = 0.1f;
 	//Physics2D& m_physics2D;
 public:
 	EnemiesBuzzyBeetle(Object* parent = nullptr);

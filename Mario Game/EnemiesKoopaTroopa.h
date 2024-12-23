@@ -7,7 +7,7 @@
 #include "ParticleSystem.hpp"
 #include "Random.hpp"
 #include "Item.hpp"
-
+#include "GameManager.hpp"
 class EnemiesKoopaTroopa : public Item
 {
 public:
@@ -23,7 +23,8 @@ private:
 	bool m_onWall{ false };
 	int mTimeUpdate{ 0 };
 	State mState{ NORMAL };
-	//Physics2D& m_physics2D;
+	float m_speed_Vy = 0.0f;
+	const float G = 0.0708f;
 public:
 	EnemiesKoopaTroopa( Object* parent = nullptr);
 	~EnemiesKoopaTroopa();

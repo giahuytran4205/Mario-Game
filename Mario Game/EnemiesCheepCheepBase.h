@@ -11,7 +11,7 @@
 class EnemiesCheepCheepBase : public Item
 {
 protected:
-	float m_speed = 0.1;
+	float m_speed = 0.3;
 	int mTimeUpdate{ 0 };
 	Mario& mMario;
 
