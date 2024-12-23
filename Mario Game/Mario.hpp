@@ -17,7 +17,8 @@ public:
 		JUMP,
 		GRAB_FLAGPOLE,
 		DIE,
-		DAMAGED
+		DUCK,
+		DAMAGED,
 	};
 
 	enum Ability {
@@ -44,7 +45,7 @@ private:
 	bool m_onJumper;
 	bool m_onGrabFlagPole;
 	bool m_isDead;
-	bool m_isInvisible;
+	bool m_isInvincible;
 	int m_teleportTime;
 	Portal m_enteredPortal;
 

@@ -55,7 +55,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_onJumper = false;
 	m_onGrabFlagPole = false;
 	m_isDead = false;
-	m_isInvisible = false;
+	m_isInvincible = false;
 	m_coins = 0;
 	m_score = 0;
 	m_lives = 3;
@@ -214,7 +214,7 @@ void Mario::handleMovement() {
 		m_physics2D.setBaseVelocityY(m_speed);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
-		setAbility(Ability::SUPER);
+		setAbility(Ability::INVINCIBLE);
 	}
 
 	if (m_onJump) m_state = State::JUMP;
@@ -238,6 +238,14 @@ void Mario::setAbility(Ability ability) {
 
 	if (ability == Ability::SUPER) {
 		m_anim->loadFromJsonFile("Resources/Animations/BigMario.json");
+		m_transform.setHeight(32);
+	}
+	else if (ability == Ability::FIERY) {
+		m_anim->loadFromJsonFile("Resources/Animations/FieryMario.json");
+		m_transform.setHeight(32);
+	}
+	else if (ability == Ability::INVINCIBLE) {
+		m_anim->loadFromJsonFile("Resources/Animations/InvincibleMario.json");
 		m_transform.setHeight(32);
 	}
 }

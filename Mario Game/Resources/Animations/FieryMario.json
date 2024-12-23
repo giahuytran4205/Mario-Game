@@ -1,11 +1,11 @@
 { "columns":21,
- "image":"Resources/Animations/mario-luigi-2.png",
- "imageheight":528,
+ "image":"Resources/Animations/FieryMario.png",
+ "imageheight":48,
  "imagewidth":336,
  "margin":0,
- "name":"BigMario",
+ "name":"FieryMario",
  "spacing":0,
- "tilecount":336,
+ "tilecount":4686,
  "tiledversion":"1.11.0",
  "tileheight":32,
  "tiles":[
@@ -50,7 +50,7 @@
         {
          "animation":[
                 {
-                 "duration":100,
+                 "duration":50,
                  "tileid":10
                 }],
          "id":10,
@@ -65,7 +65,7 @@
         {
          "animation":[
                 {
-                 "duration":100,
+                 "duration":50,
                  "tileid":11
                 }],
          "id":11,

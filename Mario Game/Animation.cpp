@@ -36,7 +36,7 @@ void Animation::update() {
 		if (m_countdown > 0) m_countdown -= deltaTime.asMilliseconds();
 		else {
 			const Frame& frame = m_anim[m_currentTrack][++m_currentIndex %= m_anim[m_currentTrack].size()];
-			m_animSprite.setTexture(frame.texture);
+			m_animSprite.setTexture(frame.texture, true);
 			m_countdown += frame.duration;
 		}
 	}

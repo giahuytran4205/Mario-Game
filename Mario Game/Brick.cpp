@@ -22,7 +22,7 @@ Brick::~Brick() {}
 void Brick::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>()) {
 		if (side == Direction::DOWN) {
-			hit(col.m_entity->convertTo<Mario>()->getAbility() == Mario::Ability::REGULAR);
+			hit(col.m_entity->convertTo<Mario>()->getAbility() != Mario::Ability::REGULAR);
 		}
 	}
 }

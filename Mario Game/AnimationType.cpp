@@ -17,7 +17,8 @@ AnimationType::AnimationType(string filename) {
 	int tilewidth = parsed["tilewidth"].as_int64();
 	int tileheight = parsed["tileheight"].as_int64();
 	int col = parsed["columns"].as_int64();
-	int size = parsed["tiles"].as_array().size();
+	//int size = parsed["tiles"].as_array().size();
+	int size = 10;
 
 	m_anim.assign(size, {});
 
