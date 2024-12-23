@@ -1,6 +1,7 @@
 #include "GameScene.hpp"
 #include "QuestionBlock.hpp"
 #include "Brick.hpp"
+#include "EnemiesGoomba.hpp"
 
 GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_renderOrder = 2;
@@ -73,6 +74,9 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_worldNameText[0].setString("WORLD");
 	m_countdownText[0].setString("TIME");
 	m_livesText[0].setString("LIVES");
+
+	EnemiesGoomba* goomba = new EnemiesGoomba(this);
+	goomba->getComponent<Transform2D>().setWorldPosition(150, 380);
 }
 
 GameScene::~GameScene() {}

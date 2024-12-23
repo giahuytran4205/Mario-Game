@@ -21,23 +21,11 @@
                 }, 
                 {
                  "duration":50,
-                 "tileid":7
-                }, 
-                {
-                 "duration":50,
-                 "tileid":26
-                }, 
-                {
-                 "duration":50,
-                 "tileid":27
-                }, 
-                {
-                 "duration":50,
                  "tileid":28
                 }, 
                 {
                  "duration":50,
-                 "tileid":47
+                 "tileid":26
                 }, 
                 {
                  "duration":50,
@@ -57,7 +45,11 @@
                 }, 
                 {
                  "duration":50,
-                 "tileid":70
+                 "tileid":28
+                }, 
+                {
+                 "duration":50,
+                 "tileid":27
                 }],
          "id":5,
          "properties":[
