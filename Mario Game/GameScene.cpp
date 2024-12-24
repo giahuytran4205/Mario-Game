@@ -2,6 +2,8 @@
 #include "QuestionBlock.hpp"
 #include "Brick.hpp"
 #include "EnemiesGoomba.hpp"
+#include "EnemiesKoopaTroopa.hpp"
+#include "PiranhaPlant.hpp"
 
 GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_renderOrder = 2;
@@ -75,8 +77,14 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_countdownText[0].setString("TIME");
 	m_livesText[0].setString("LIVES");
 
-	EnemiesGoomba* goomba = new EnemiesGoomba(this);
-	goomba->getComponent<Transform2D>().setWorldPosition(450, 380);
+	//EnemiesGoomba* goomba = new EnemiesGoomba(this);
+	//goomba->getComponent<Transform2D>().setWorldPosition(450, 380);
+
+	EnemiesKoopaTroopa* KoopaTroopa = new EnemiesKoopaTroopa(this);
+	KoopaTroopa->getComponent<Transform2D>().setWorldPosition(480, 380);
+
+	//PiranhaPlant* Piranha = new PiranhaPlant(this);
+	//Piranha->getComponent<Transform2D>().setWorldPosition(480, 380);
 }
 
 GameScene::~GameScene() {}

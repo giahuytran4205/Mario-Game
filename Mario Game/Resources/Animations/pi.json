@@ -1,34 +1,25 @@
 { "columns":50,
- "image":"Resources/Tilesets/enemies-4.png",
- "imageheight":128,
+ "image":"Resources/Animations/enemies-4-cropped.png",
+ "imageheight":120,
  "imagewidth":808,
  "margin":0,
- "name":"enemies-4",
+ "name":"enemies-4-cropped",
  "spacing":0,
- "tilecount":200,
+ "tilecount":250,
  "tiledversion":"1.11.0",
- "tileheight":32,
+ "tileheight":24,
  "tiles":[
         {
          "animation":[
                 {
                  "duration":200,
-                 "tileid":6
+                 "tileid":13
                 }, 
                 {
                  "duration":200,
-                 "tileid":7
+                 "tileid":12
                 }],
-         "id":6,
-         "properties":[
-                {
-                 "name":"state",
-                 "type":"int",
-                 "value":0
-                }]
-        }, 
-        {
-         "id":10,
+         "id":12,
          "properties":[
                 {
                  "name":"state",
@@ -37,12 +28,17 @@
                 }]
         }, 
         {
-         "id":11,
+         "animation":[
+                {
+                 "duration":200,
+                 "tileid":13
+                }],
+         "id":13,
          "properties":[
                 {
                  "name":"state",
                  "type":"int",
-                 "value":2
+                 "value":0
                 }]
         }],
  "tilewidth":16,

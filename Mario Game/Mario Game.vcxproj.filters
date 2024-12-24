@@ -228,6 +228,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="PiranhaPlant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -406,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.hpp">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PiranhaPlant.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -194,6 +194,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Physics2D.cpp" />
+    <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleSystem.hpp" />
     <ClInclude Include="Physics2D.hpp" />
+    <ClInclude Include="PiranhaPlant.hpp" />
     <ClInclude Include="Portal.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="QuestionBlock.hpp" />

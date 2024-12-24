@@ -45,7 +45,7 @@ void EnemiesGoomba::onCollisionEnter(Collision& col, const Direction& side)
     }
     else if (col.m_entity->isType<EnemiesKoopaTroopa>()) {
         EnemiesKoopaTroopa* tropa = col.m_entity->convertTo<EnemiesKoopaTroopa>();
-        if (tropa->getState() == EnemiesKoopaTroopa::STEP_2) {
+        if (tropa->getState() == EnemiesKoopaTroopa::SHELL) {
             hit(true);
         }
     }
