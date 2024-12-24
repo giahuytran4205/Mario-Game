@@ -15,6 +15,10 @@ EnemiesGoomba::EnemiesGoomba(Object* parent) : m_autoControl(addComponent<AutoCo
 
 void EnemiesGoomba::onCollisionEnter(Collision& col, const Direction& side)
 {
+	if (col.m_entity->isDerivedFrom<Projectile>()) {
+		destroy();
+	}
+
     if (col.m_entity->isType<Mario>()) {
         if (side == Direction::UP) {
             hit(true);
@@ -22,7 +26,7 @@ void EnemiesGoomba::onCollisionEnter(Collision& col, const Direction& side)
         }
      
     }
-    else if (col.m_entity->isType<Block>()) {
+    else if (col.m_entity->isDerivedFrom<Block>()) {
         if (side == Direction::LEFT || side == Direction::RIGHT) {
 			m_dir *= -1;
         }
@@ -60,5 +64,5 @@ void EnemiesGoomba::hit(bool isDestroy)
 
 void EnemiesGoomba::update()
 {
-	m_physics.setBaseVelocityX(0.01f * m_dir);
+	m_physics.setBaseVelocityX(m_speed * m_dir);
 }

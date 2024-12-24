@@ -22,7 +22,7 @@ private:
 	float m_speed_Vy = 0.0f;
 	const float G = 0.001f;
 	bool m_onWall{ false };
-	float m_speed = 0.2;
+	float m_speed = 0.1;
 	int m_dir = 1;
 
 public:

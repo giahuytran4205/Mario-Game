@@ -72,9 +72,6 @@ Mario::~Mario() {
 }
 
 void Mario::onCollisionEnter(Collision& col, const Direction& side) {
-	vector<string> dirStr = { "LEFT", "UP", "RIGHT", "DOWN" };
-	cout << dirStr[side] << '\n';
-
 	if (side == Direction::DOWN && !col.isTrigger())
 		m_onJump = false;
 
