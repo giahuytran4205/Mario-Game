@@ -58,3 +58,7 @@ void Block::update() {
 void Block::onHit(bool isDestroy) {
 	m_physics2D.bounce(-0.09f);
 }
+
+bool Block::isHidden() const {
+	return m_isHide;
+}

@@ -183,6 +183,21 @@
                  "type":"int",
                  "value":3
                 }]
+        }, 
+        {
+         "animation":[
+                {
+                 "duration":50,
+                 "tileid":20
+                }],
+         "id":20,
+         "properties":[
+                {
+                 "name":"state",
+                 "propertytype":"MarioState",
+                 "type":"int",
+                 "value":6
+                }]
         }],
  "tilewidth":16,
  "type":"tileset",

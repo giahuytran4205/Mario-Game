@@ -228,6 +228,15 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTrack.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTrack.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -405,6 +414,9 @@
       <Filter>Header Files\Object</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireball.hpp">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>

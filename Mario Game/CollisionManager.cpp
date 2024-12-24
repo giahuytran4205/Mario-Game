@@ -40,29 +40,34 @@ void CollisionManager::update() {
 		for (int i = rect.top / m_gridSize; i <= bottom / m_gridSize; i++) {
 			for (int j = rect.left / m_gridSize; j <= right / m_gridSize; j++) {
 				if (i < 0 || i >= m_grid.size() || j < 0 || j >= m_grid[0].size()) 
-					return;
+					continue;
 				m_grid[i][j].push_back(col);
 			}
 		}
 	}
 
 	for (Collision* col : m_colliders) {
-		if (!col->m_entity->isActive() || col->m_entity->isDestroyed())
+		if (!col->m_entity->isActive() || col->m_entity->isDestroyed() || !col->isEnable())
 			continue;
 
 		FRect rect = col->getCollider();
 		int right = rect.left + rect.width;
 		int bottom = rect.top + rect.height;
 		set<Collision*> checked;
+		vector<Collision*> intersectCols;
 
 		for (int i = rect.top / m_gridSize; i <= bottom / m_gridSize; i++) {
 			for (int j = rect.left / m_gridSize; j <= right / m_gridSize; j++) {
+				if (i < 0 || i >= m_grid.size() || j < 0 || j >= m_grid[0].size())
+					continue;
+
 				for (Collision* item : m_grid[i][j]) {
 
-					if (item == col || checked.contains(item) || !item->m_entity->isActive() || item->m_entity->isDestroyed())
+					if (item == col || checked.contains(item) || !item->m_entity->isActive() || item->m_entity->isDestroyed() || !col->isEnable())
 						continue;
 
 					if (col->getCollider().intersects(item->getCollider())) {
+
 						Transform2D tf1 = col->m_entity->getComponent<Transform2D>();
 						Transform2D tf2 = item->m_entity->getComponent<Transform2D>();
 
@@ -76,25 +81,32 @@ void CollisionManager::update() {
 						if (item->m_entity->hasComponent<Physics2D>()) {
 							if (item->m_entity->getComponent<Physics2D>().isElastic()) {
 								item->resolveCollide(*col, side, isTrigger);
-								item->onCollisionEnter(*col, side);
-								col->onCollisionEnter(*item, getOpposite(side));
+								side = getOpposite(side);
 							}
 							else {
 								col->resolveCollide(*item, side, isTrigger);
-								col->onCollisionEnter(*item, side);
-								item->onCollisionEnter(*col, getOpposite(side));
 							}
 						}
 						else {
 							col->resolveCollide(*item, side, isTrigger);
-							col->onCollisionEnter(*item, side);
-							item->onCollisionEnter(*col, getOpposite(side));
 						}
+
+						intersectCols.push_back(item);
 						checked.insert(item);
 					}
 				}
 			}
 		}
+
+		for (auto& item : intersectCols) {
+			Direction dir;
+			col->getTangentPoint(*item, dir);
+
+			col->onCollisionEnter(*item, dir);
+			item->onCollisionEnter(*col, getOpposite(dir));
+		}
+
+		col->m_entity->getComponent<Transform2D>().setCenter(col->m_entity->getComponent<Transform2D>().getWorldCenter());
 	}
 }
 

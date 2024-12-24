@@ -40,6 +40,9 @@ void Particle::assign(const string& path, const Vector2f& pos) {
 	getComponent<Animation>().loadFromJsonFile(path);
 	getComponent<Animation>().play(0);
 
+	getComponent<Physics2D>().setVelocity({ 0, 0 });
+	getComponent<Physics2D>().setBaseVelocity({ 0, 0 });
+
 	m_duration = getComponent<Animation>().getTrackLength(0);
 	m_transform.setWorldPosition(pos);
 	setEnable(true);

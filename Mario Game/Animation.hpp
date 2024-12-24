@@ -3,6 +3,7 @@
 #include "ECS.hpp"
 #include "TileSet.hpp"
 #include "SpriteRenderer.hpp"
+#include "AnimationTrack.hpp"
 #include <vector>
 #include <map>
 using namespace std;
@@ -10,18 +11,16 @@ using namespace std;
 class Animation : public Component {
 private:
 	Sprite& m_animSprite;
-	vector<vector<Frame>> m_anim;
+	vector<AnimationTrack> m_anim;
 	int m_countdown;
+	int m_exitTime;
 	bool m_isPlay;
 	int m_currentTrack;
 	int m_currentIndex;
 
 public:
+	Animation(Sprite& sprite);
 	Animation(Sprite& sprite, string filename);
-	Animation(Sprite& sprite, const vector<vector<Frame>>& anim = {});
-	Animation(SpriteRenderer& spriteRenderer, const vector<vector<Frame>>& anim = {});
-	Animation(Sprite& sprite, int numTrack);
-	Animation(SpriteRenderer& spriteRenderer, int numTrack);
 	~Animation();
 
 	Animation& operator=(const Animation& anim);
@@ -38,6 +37,5 @@ public:
 	int getIndexInCurrentTrack();
 	bool isPlay();
 	bool isPlayTrack(int track);
-	void addAnim(const vector<Frame>& anim);
-	void setAnim(int track, const vector<Frame>& anim);
+	AnimationTrack& getTrack(int track);
 };

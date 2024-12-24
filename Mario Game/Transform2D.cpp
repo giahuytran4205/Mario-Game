@@ -162,6 +162,15 @@ void Transform2D::adjustPosition(const Vector2f& pos) {
 	m_pos = getPosition();
 }
 
+void Transform2D::adjustCenter(const Vector2f& center) {
+	m_parent = m_entity->toObject()->getParent();
+	adjustPosition(center - getCenter() + getWorldPosition());
+}
+
+void Transform2D::adjustCenter(float centerX, float centerY) {
+	adjustCenter({ centerX, centerY });
+}
+
 Vector2f Transform2D::transformPoint(const Vector2f& point) {
 	return point - getWorldPosition();
 }

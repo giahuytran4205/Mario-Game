@@ -151,6 +151,8 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationFactory.cpp" />
+    <ClCompile Include="AnimationTrack.cpp" />
+    <ClCompile Include="AnimationTrack.hpp" />
     <ClCompile Include="AnimationType.cpp" />
     <ClCompile Include="AnimationType.hpp" />
     <ClCompile Include="BalanceLifts.cpp" />
@@ -175,6 +177,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enum.cpp" />
     <ClCompile Include="EventSystem.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="FlagPole.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -236,6 +239,7 @@
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />
+    <ClInclude Include="Fireball.hpp" />
     <ClInclude Include="FlagPole.hpp" />
     <ClInclude Include="FontManager.hpp" />
     <ClInclude Include="GameManager.hpp" />

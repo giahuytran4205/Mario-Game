@@ -38,6 +38,7 @@ void Brick::hit(bool isDestroy) {
 			Object& debris = ParticleSystem::getInstance()->addParticle("Resources/Particles/Debris.json", 1000, pos);
 			float randSpeed = randRange(0.08f, 0.12f);
 			debris.getComponent<Physics2D>().setBaseVelocity({ cos(PI / 2 * i + PI / 4) * randSpeed, sin(PI / 2 * i + PI / 4) * randSpeed });
+			debris.getComponent<Physics2D>().setEnableGravity(true);
 			debris.setRenderOrder(5);
 		}
 

@@ -2,7 +2,7 @@
 #include "CoroutineManager.hpp"
 
 Coroutine::Coroutine(std::coroutine_handle<promise_type> handle) : handle_(handle) {
-	
+	CoroutineManager::getInstance()->addCoroutine(move(*this));
 }
 
 Coroutine::Coroutine(Coroutine&& other) noexcept : handle_(other.handle_) {

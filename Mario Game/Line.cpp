@@ -40,13 +40,27 @@ float Line::getY(const float& x) {
 
 Vector2f Line::raycast(const FRect& rect, Direction& side) {
 	if (a == 0 && b == 0) {
-		side = Direction::LEFT;
+		if (startPoint.y == rect.top)
+			side = Direction::UP;
+		else if (startPoint.y == rect.bottom)
+			side = Direction::DOWN;
+		else if (startPoint.x == rect.left)
+			side = Direction::LEFT;
+		else if (startPoint.x == rect.right)
+			side = Direction::RIGHT;
+		
 		return startPoint;
 	}
 
 	if (a == 0) {
-		if (startPoint.x < endPoint.x) side = Direction::LEFT;
-		else side = Direction::RIGHT;
+		if (startPoint.y == rect.top)
+			side = Direction::UP;
+		else if (startPoint.y == rect.bottom)
+			side = Direction::DOWN;
+		else if (startPoint.x < endPoint.x)
+			side = Direction::LEFT;
+		else
+			side = Direction::RIGHT;
 		return { side == 0 ? rect.left : rect.right, -c / b };
 	}
 

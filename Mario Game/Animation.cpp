@@ -5,17 +5,11 @@
 #include "AnimationFactory.hpp"
 namespace json = boost::json;
 
-Animation::Animation(Sprite& sprite, string filename) : m_animSprite(sprite), m_countdown(0), m_isPlay(false), m_currentTrack(-1), m_currentIndex(-1) {
+Animation::Animation(Sprite& sprite) : m_animSprite(sprite), m_isPlay(false), m_currentTrack(-1), m_currentIndex(-1), m_countdown(0), m_exitTime(0) {}
+
+Animation::Animation(Sprite& sprite, string filename) : Animation(sprite) {
 	loadFromJsonFile(filename);
 }
-
-Animation::Animation(Sprite& sprite, const vector<vector<Frame>>& anim) : m_animSprite(sprite), m_anim(anim), m_isPlay(false), m_currentTrack(-1), m_currentIndex(-1), m_countdown(0) {}
-
-Animation::Animation(SpriteRenderer& spriteRenderer, const vector<vector<Frame>>& anim) : Animation(spriteRenderer.getSprite(), anim) {}
-
-Animation::Animation(Sprite& sprite, int numTrack) : m_animSprite(sprite), m_anim(numTrack), m_isPlay(false), m_currentTrack(-1), m_currentIndex(-1), m_countdown(0) {}
-
-Animation::Animation(SpriteRenderer& spriteRenderer, int numTrack) : Animation(spriteRenderer.getSprite(), numTrack) {}
 
 Animation::~Animation() {
 
@@ -32,19 +26,42 @@ void Animation::loadFromJsonFile(string filename) {
 }
 
 void Animation::update() {
+	if (m_exitTime > 0)
+		m_exitTime -= deltaTime.asMilliseconds();
+
 	if (m_currentTrack != -1 && isPlay()) {
 		if (m_countdown > 0) m_countdown -= deltaTime.asMilliseconds();
 		else {
-			const Frame& frame = m_anim[m_currentTrack][++m_currentIndex %= m_anim[m_currentTrack].size()];
-			m_animSprite.setTexture(frame.texture, true);
-			m_countdown += frame.duration;
+			m_currentIndex++;
+			if (m_currentIndex >= m_anim[m_currentTrack].getFrames().size()) {
+				if (m_anim[m_currentTrack].isLoop())
+					m_currentIndex = 0;
+				else {
+					m_currentIndex--;
+					if (m_anim[m_currentTrack].hasExitTime()) {
+						m_exitTime = m_anim[m_currentTrack].getExitTime();
+						pause();
+					}
+				}
+			}
+			if (m_exitTime <= 0) {
+				const Frame& frame = m_anim[m_currentTrack][m_currentIndex];
+				m_animSprite.setTexture(frame.texture, true);
+				m_countdown += frame.duration;
+			}
 		}
 	}
 	
 }
 
 void Animation::play(int track) {
-	if (m_currentTrack != track) m_currentIndex = -1;
+	if (m_currentTrack != track) {
+		if (m_currentTrack != -1 && m_anim[m_currentTrack].hasExitTime() && isPlay())
+			return;
+
+		m_currentIndex = -1;
+	}
+
 	m_currentTrack = track;
 	m_isPlay = true;
 }
@@ -85,7 +102,7 @@ int Animation::getIndexInCurrentTrack() {
 int Animation::getTrackLength(int track) {
 	int length = 0;
 
-	for (auto& i : m_anim[track]) {
+	for (auto& i : m_anim[track].getFrames()) {
 		length += i.duration;
 	}
 
@@ -100,10 +117,6 @@ bool Animation::isPlayTrack(int trackname) {
 	return m_currentTrack == trackname && m_isPlay;
 }
 
-void Animation::addAnim(const vector<Frame>& anim) {
-	m_anim.push_back(anim);
-}
-
-void Animation::setAnim(int trackname, const vector<Frame>& anim) {
-	m_anim[trackname] = anim;
+AnimationTrack& Animation::getTrack(int track) {
+	return m_anim[track];
 }

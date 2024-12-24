@@ -23,6 +23,8 @@ private:
 	const float G = 0.001f;
 	bool m_onWall{ false };
 	float m_speed = 0.2;
+	int m_dir = 1;
+
 public:
 	EnemiesGoomba(Object* parent = nullptr);
 

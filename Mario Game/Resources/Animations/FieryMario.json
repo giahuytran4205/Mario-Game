@@ -5,7 +5,7 @@
  "margin":0,
  "name":"FieryMario",
  "spacing":0,
- "tilecount":4686,
+ "tilecount":21,
  "tiledversion":"1.11.0",
  "tileheight":32,
  "tiles":[
@@ -94,6 +94,21 @@
                  "propertytype":"MarioState",
                  "type":"int",
                  "value":3
+                }]
+        }, 
+        {
+         "animation":[
+                {
+                 "duration":50,
+                 "tileid":20
+                }],
+         "id":20,
+         "properties":[
+                {
+                 "name":"state",
+                 "propertytype":"MarioState",
+                 "type":"int",
+                 "value":6
                 }]
         }],
  "tilewidth":16,

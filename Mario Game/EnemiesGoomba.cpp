@@ -23,10 +23,10 @@ void EnemiesGoomba::onCollisionEnter(Collision& col, const Direction& side)
      
     }
     else if (col.m_entity->isType<Block>()) {
-            if (side == Direction::LEFT || side == Direction::RIGHT) {
-                m_onWall = true;
-            }
+        if (side == Direction::LEFT || side == Direction::RIGHT) {
+			m_dir *= -1;
         }
+    }
 
     // TODO: merge ...
     else if (col.m_entity->isType<EnemiesBuzzyBeetle>()) {
@@ -60,18 +60,5 @@ void EnemiesGoomba::hit(bool isDestroy)
 
 void EnemiesGoomba::update()
 {
-	m_physics.setBaseVelocityX(0.02f);
-    if (m_onWall) {
-        m_speed = -m_speed;
-        m_onWall = false;
-    }
-    auto lastPost = m_transform.getLastPosition();
-    if (lastPost.y < 430) {
-        m_speed_Vy += G * (float)deltaTime.asMilliseconds();
-    }
-    else
-    {
-        m_speed_Vy = 0;
-    }
-    m_transform.move(m_speed, m_speed_Vy);
+	m_physics.setBaseVelocityX(0.01f * m_dir);
 }

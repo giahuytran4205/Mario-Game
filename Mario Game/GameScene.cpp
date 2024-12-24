@@ -76,7 +76,7 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_livesText[0].setString("LIVES");
 
 	EnemiesGoomba* goomba = new EnemiesGoomba(this);
-	goomba->getComponent<Transform2D>().setWorldPosition(150, 380);
+	goomba->getComponent<Transform2D>().setPosition(150, 250);
 }
 
 GameScene::~GameScene() {}
