@@ -32,6 +32,7 @@ public:
 	Vector2f reverseTransformPoint(float x, float y);
 	FRect& getRect();
 	void update() override;
+	void lateUpdate() override;
 	void setRect(const FRect& rect);
 	void setRect(float left, float top, float width, float height);
 	void setPosition(const Vector2f& position);

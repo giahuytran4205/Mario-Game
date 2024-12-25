@@ -165,13 +165,10 @@ public:
 	~EntitiesManager();
 
 	void update();
-
+	void render();
 	void refresh();
-
 	Object& addEntity();
-
 	static void addEntity(Object* entity);
-
 	static void removeEntity(Object* entity);
 };
 

@@ -195,12 +195,11 @@ Vector2f Transform2D::reverseTransformPoint(float x, float y) {
 }
 
 void Transform2D::update() {
-	Vector2f worldPos = getWorldPosition();
+	
+}
 
-	if (m_parent != m_entity->toObject()->getParent()) {
-		m_parent = m_entity->toObject()->getParent();
-		//setWorldPosition(worldPos);
-	}
+void Transform2D::lateUpdate() {
+	m_parent = m_entity->toObject()->getParent();
 
 	if (m_parent)
 		setPosition(m_pos);
