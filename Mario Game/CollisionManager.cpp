@@ -34,6 +34,9 @@ void CollisionManager::update() {
 	}
 
 	for (Collision* col : m_colliders) {
+		if (!col->isEnable())
+			continue;
+
 		FRect rect = col->getCollider();
 		int right = rect.left + rect.width;
 		int bottom = rect.top + rect.height;

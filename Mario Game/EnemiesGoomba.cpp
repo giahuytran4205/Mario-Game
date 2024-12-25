@@ -54,8 +54,8 @@ void EnemiesGoomba::hit(bool isDestroy)
 {
     if (isDestroy) {
 		m_anim.play(State::DIE);
-		getComponent<Physics2D>().setStatic(true);
-		getComponent<Collision>().setTrigger(true);
+		getComponent<Physics2D>().setEnable(false);
+		getComponent<Collision>().setEnable(false);
 		m_autoControl.addWaitForMiliseconds(1000);
 		m_autoControl.addAction([&]() { destroy(); });
     }
