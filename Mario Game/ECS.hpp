@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 #include <memory>
+#include <type_traits>
 #include "SFML/Graphics.hpp"
 #include "Common.hpp"
 #include "Enum.hpp"
@@ -87,6 +88,11 @@ public:
 	template<typename T>
 	bool isType() const {
 		return typeid(*this) == typeid(T);
+	}
+
+	template<typename T>
+	bool isDerivedFrom() const {
+		return (dynamic_cast<const T*>(this));
 	}
 
 	template<typename T>

@@ -12,6 +12,7 @@ private:
 	Vector2f m_lastPos;
 	Vector2f m_rotation;
 	Object* m_parent;
+	bool m_firstSetPos;
 
 public:
 	Transform2D();
@@ -44,6 +45,8 @@ public:
 	void move(float dx, float dy);
 	void move(const Vector2f& d);
 	void adjustPosition(const Vector2f& pos);
+	void adjustCenter(const Vector2f& center);
+	void adjustCenter(float centerX, float centerY);
 	void setParent(Object* parent);
 
 #if DEBUG

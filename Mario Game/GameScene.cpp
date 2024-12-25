@@ -3,7 +3,17 @@
 #include "Brick.hpp"
 #include "EnemiesGoomba.hpp"
 #include "EnemiesKoopaTroopa.hpp"
-#include "PiranhaPlant.hpp"
+#include "EnemiesBuzzyBeetle.hpp"
+#include "cheepcheepnormal.hpp"
+#include "CheepCheepUnder.hpp"
+//#include "PiranhaPlant.hpp"
+
+
+Mario* GameScene::getMario() {
+	std::cout << n_mario << " ";
+	return n_mario;
+}
+
 
 GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_renderOrder = 2;
@@ -77,14 +87,40 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_countdownText[0].setString("TIME");
 	m_livesText[0].setString("LIVES");
 
-	//EnemiesGoomba* goomba = new EnemiesGoomba(this);
-	//goomba->getComponent<Transform2D>().setWorldPosition(450, 380);
+		EnemiesGoomba* goomba = new EnemiesGoomba(this);
+		goomba->getComponent<Transform2D>().setPosition(500, 350);
 
-	EnemiesKoopaTroopa* KoopaTroopa = new EnemiesKoopaTroopa(this);
-	KoopaTroopa->getComponent<Transform2D>().setWorldPosition(480, 380);
+	EnemiesKoopaTroopa* koopa1 = new EnemiesKoopaTroopa(this);
+	koopa1->getComponent<Transform2D>().setPosition(450, 350);
 
-	//PiranhaPlant* Piranha = new PiranhaPlant(this);
-	//Piranha->getComponent<Transform2D>().setWorldPosition(480, 380);
+
+	EnemiesKoopaTroopa* koopa2 = new EnemiesKoopaTroopa(this);
+	koopa2->getComponent<Transform2D>().setPosition(550, 350);
+
+	EnemiesBuzzyBeetle* buzzy = new EnemiesBuzzyBeetle(this);
+	buzzy->getComponent<Transform2D>().setPosition(250, 350);
+
+	//EnemiesPiranhaPlant* Pi = new EnemiesPiranhaPlant(this);
+	//Pi->getComponent<Transform2D>().setPosition(155, 400);
+
+
+		EnemiesCheepCheepNormal* cheep = new EnemiesCheepCheepNormal(nullptr, this);
+		cheep->getComponent<Transform2D>().setPosition(500, 390);
+
+		EnemiesCheepCheepNormal* cheep1 = new EnemiesCheepCheepNormal(nullptr, this);
+		cheep1->getComponent<Transform2D>().setPosition(550, 440);
+
+		EnemiesCheepCheepNormal* cheep2 = new EnemiesCheepCheepNormal(nullptr, this);
+		cheep2->getComponent<Transform2D>().setPosition(450, 350);
+
+		//CheepCheepUnder* cheep3 = new CheepCheepUnder(nullptr, this);
+		//cheep3->getComponent<Transform2D>().setPosition(500, 390);
+
+		//CheepCheepUnder* cheep4 = new CheepCheepUnder(nullptr, this);
+		//cheep4->getComponent<Transform2D>().setPosition(550, 440);
+
+		//CheepCheepUnder* cheep5 = new CheepCheepUnder(nullptr, this);
+		//cheep5->getComponent<Transform2D>().setPosition(450, 350);
 }
 
 GameScene::~GameScene() {}
@@ -121,3 +157,4 @@ void GameScene::handleEvent(const Event& event) {
 void GameScene::loadMap(const string& filename) {
 	m_map.loadFromJsonFile(filename);
 }
+

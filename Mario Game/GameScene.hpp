@@ -23,6 +23,8 @@ private:
 	TextView m_countdownText[2];
 	TextView m_worldNameText[2];
 
+	Mario * n_mario;
+
 public:
 	GameScene(const MapInfo& mapPath);
 	~GameScene();
@@ -31,4 +33,5 @@ public:
 	void render() override;
 	void handleEvent(const Event& event) override;
 	void loadMap(const string& filename);
+	Mario* getMario(); // Khai báo hàm getMario
 };

@@ -56,6 +56,8 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_onGrabFlagPole = false;
 	m_isDead = false;
 	m_isInvincible = false;
+	m_fireCD = 1000;
+	m_curFireCD = 0;
 	m_coins = 0;
 	m_score = 0;
 	m_lives = 3;
@@ -175,6 +177,10 @@ void Mario::update() {
 	}
 
 	m_anim->play(m_state);
+
+	m_curFireCD -= deltaTime.asMilliseconds();
+	if (m_curFireCD < 0)
+		m_curFireCD = 0;
 	
 	m_onWall = false;
 	m_onJumper = false;
@@ -201,6 +207,11 @@ void Mario::handleMovement() {
 		m_direction = Direction::LEFT;
 		m_state = State::WALK;
 	}
+	if (Keyboard::isKeyPressed(Keyboard::P)) {
+		Vector2f pos = m_transform.getWorldPosition();
+		std::cout << "Mario position - X: " << pos.x << " Y: " << pos.y << "\n";
+	}
+
 	if (Keyboard::isKeyPressed(Keyboard::D)) {
 		m_physics2D.setBaseVelocityX(m_speed);
 
@@ -213,8 +224,11 @@ void Mario::handleMovement() {
 	if (Keyboard::isKeyPressed(Keyboard::S)) {
 		m_physics2D.setBaseVelocityY(m_speed);
 	}
+	if (Keyboard::isKeyPressed(Keyboard::G)) {
+		setAbility(Ability::FIERY);
+	}
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
-		setAbility(Ability::INVINCIBLE);
+		fire();
 	}
 
 	if (m_onJump) m_state = State::JUMP;
@@ -231,6 +245,41 @@ void Mario::jump(float velY) {
 
 	m_state = State::JUMP;
 	m_sound.play(SoundTrack::BIGJUMP, 100);
+}
+
+void Mario::fire() {
+	if (m_curFireCD > 0)
+		return;
+
+	m_curFireCD = m_fireCD;
+
+	m_state = State::FIRE;
+	m_anim->getTrack(State::FIRE).setLoop(false);
+	m_anim->getTrack(State::FIRE).setEnableExitTime(true);
+
+	Coroutine coroutine = [](Mario* mario) -> Coroutine {
+		Fireball* fireball = new Fireball(mario->m_parent);
+		if (mario->m_direction == Direction::LEFT) {
+			fireball->getComponent<Transform2D>().setWorldPosition(mario->m_transform.left - fireball->getComponent<Transform2D>().width, mario->m_transform.top);
+			fireball->setDirection(Vector2f(-1, 0));
+		}
+		else if (mario->m_direction == Direction::RIGHT) {
+			fireball->getComponent<Transform2D>().setWorldPosition(mario->m_transform.right, mario->m_transform.top);
+			fireball->setDirection(Vector2f(1, 0));
+		}
+		
+		co_await WaitForMiliseconds(200);
+
+		Fireball* fireball2 = new Fireball(mario->m_parent);
+		if (mario->m_direction == Direction::LEFT) {
+			fireball2->getComponent<Transform2D>().setWorldPosition(mario->m_transform.left - fireball2->getComponent<Transform2D>().width, mario->m_transform.top);
+			fireball2->setDirection(Vector2f(-1, 0));
+		}
+		else if (mario->m_direction == Direction::RIGHT) {
+			fireball2->getComponent<Transform2D>().setWorldPosition(mario->m_transform.right, mario->m_transform.top);
+			fireball2->setDirection(Vector2f(1, 0));
+		}
+	}(this);
 }
 
 void Mario::setAbility(Ability ability) {
@@ -346,4 +395,12 @@ Time Mario::getCountdownTime() const {
 
 Mario::Ability Mario::getAbility() const {
 	return m_ability;
+}
+
+Vector2f Mario::getPos()
+{
+	//m_collision.getTangentPoint().x
+	//m_entity->
+	//Transform2D tf1 = col->m_entity->getComponent<Transform2D>();
+	return m_physics2D.m_entity->getComponent<Transform2D>().getPosition();
 }

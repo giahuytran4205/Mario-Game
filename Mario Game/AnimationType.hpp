@@ -2,11 +2,12 @@
 #include <vector>
 #include <string>
 #include "TileSet.hpp"
+#include "AnimationTrack.hpp"
 using namespace std;
 
 class AnimationType {
 private:
-	vector<vector<Frame>> m_anim;
+	vector<AnimationTrack> m_anim;
 	string m_path;
 
 public:
@@ -14,6 +15,6 @@ public:
 	AnimationType(string filename);
 	~AnimationType();
 
-	const vector<vector<Frame>>& getAnim() const;
+	const vector<AnimationTrack>& getAnim() const;
 	const string& getAnimPath() const;
 };

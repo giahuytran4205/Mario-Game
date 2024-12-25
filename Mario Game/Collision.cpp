@@ -54,13 +54,13 @@ void Collision::resolveCollide(Collision& col, Direction& side, bool isTrigger) 
 		if (abs(colVel.x) > abs(colVel.y)) {
 			if (colVel.x <= 0) {
 				if (!isTrigger)
-					bodyTF.setCenter(collider.left - m_collider->width / 2, bodyTF.getWorldPosition().y);
+					bodyTF.adjustCenter(collider.left - m_collider->width / 2, bodyTF.getWorldPosition().y);
 				
 				side = Direction::RIGHT;
 			}
 			else {
 				if (!isTrigger)
-					bodyTF.setCenter(collider.right + m_collider->width / 2, bodyTF.getWorldPosition().y);
+					bodyTF.adjustCenter(collider.right + m_collider->width / 2, bodyTF.getWorldPosition().y);
 				
 				side = Direction::LEFT;
 			}
@@ -71,13 +71,13 @@ void Collision::resolveCollide(Collision& col, Direction& side, bool isTrigger) 
 		else {
 			if (colVel.y <= 0) {
 				if (!isTrigger)
-					bodyTF.setCenter(bodyTF.getWorldCenter().x, collider.top - m_collider->height / 2);
+					bodyTF.adjustCenter(bodyTF.getWorldCenter().x, collider.top - m_collider->height / 2);
 				
 				side = Direction::DOWN;
 			}
 			else {
 				if (!isTrigger)
-					bodyTF.setCenter(bodyTF.getWorldCenter().x, collider.bottom + m_collider->height / 2);
+					bodyTF.adjustCenter(bodyTF.getWorldCenter().x, collider.bottom + m_collider->height / 2);
 				
 				side = Direction::UP;
 
@@ -107,7 +107,7 @@ void Collision::resolveCollide(Collision& col, Direction& side, bool isTrigger) 
 	}
 
 	if (!isTrigger)
-		bodyTF.setCenter(tangentPoint + vel);
+		bodyTF.adjustCenter(tangentPoint + vel);
 }
 
 void Collision::update() {

@@ -1,44 +1,34 @@
 #pragma once
-#include "Block.hpp"
-#include "Mario.hpp"
-#include "Collision.hpp"
-#include "TextureManager.hpp"
-#include "ParticleSystem.hpp"
-#include "Random.hpp"
-#include "Item.hpp"
-#include "GameManager.hpp"
 #include "Enemy.hpp"
 #include "AutoControl.hpp"
 #include "SoundComponent.hpp"
+#include "Mario.hpp"
+#include "Block.hpp"
 
-class EnemiesKoopaTroopa : public Enemy
-{
-private:
+class EnemiesKoopaTroopa : public Enemy {
+public:
     enum State {
-        WALK,
-        SHELL,
-        SHELL_FLASHING,
-        DIE
+        NORMAL,     // Đi bộ bình thường
+        STEP_2,     // Mai rùa đứng yên
+        STEP_3      // Mai rùa di chuyển nhanh khi bị đá
     };
+
+private:
     AutoControl& m_autoControl;
     SoundComponent& m_sound;
-    bool m_isDead;
-    bool m_isInShell;
-    bool m_isShellMoving;
-    float m_speed_Vy = 0.0f;
-    const float G = 0.001f;
-    float m_speed = 0.05f;
-    int m_movingDirection; // Hướng di chuyển
-    int m_flashTimer; // Bộ đếm thời gian chớp khi trong mai
-    State m_currentState; // Lưu trữ trạng thái hiện tại
-    friend class EnemiesGoomba; // goomba có tương tác với trạng thái shell của koopa
+    float m_speed = -0.05f;
+    int m_dir = 1;
+    bool m_isDead = false;
+    State mState = NORMAL;
+    bool mIsStep2 = false;
+    bool mIsStep3 = false;
+    int mTimeUpdate = 0;
 
 public:
-
     EnemiesKoopaTroopa(Object* parent = nullptr);
+    ~EnemiesKoopaTroopa();
     void onCollisionEnter(Collision& col, const Direction& side) override;
+    void update() override;
     void hit(bool isDestroy);
-    void update();
-    State getState() const; // Thêm hàm getState
+    EnemiesKoopaTroopa::State getState();
 };
-

@@ -35,7 +35,7 @@ AnimationType::AnimationType(string filename) {
 			frame.texture = TextureManager::getTile(imagePath, IntRect(id % col * tilewidth, id / col * tileheight, tilewidth, tileheight));
 			frame.duration = duration;
 
-			m_anim[state].push_back(frame);
+			m_anim[state].getFrames().push_back(frame);
 		}
 	}
 }
@@ -44,7 +44,7 @@ AnimationType::~AnimationType() {
 
 }
 
-const vector<vector<Frame>>& AnimationType::getAnim() const {
+const vector<AnimationTrack>& AnimationType::getAnim() const {
 	return m_anim;
 }
 

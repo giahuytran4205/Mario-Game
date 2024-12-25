@@ -36,6 +36,7 @@ Transform2D::Transform2D() {
 	m_shape.setOutlineColor(Color::Red);
 #endif // DEBUG
 
+	m_firstSetPos = true;
 }
 
 Transform2D::~Transform2D() {}
@@ -57,17 +58,18 @@ void Transform2D::setPosition(float x, float y) {
 
 void Transform2D::setPosition(const Vector2f& position) {
 	m_parent = m_entity->toObject()->getParent();
-	/*if (m_lastPos == m_pos && m_pos == Vector2f(0, 0)) {
-		m_lastPos = m_pos = position;
-		FRect::setPosition(getWorldPosition());
-		return;
-	}*/
+
 	if (getPosition() != position) m_lastPos = getPosition();
 	m_pos = position;
 	if (m_parent)
 		FRect::setPosition(m_parent->getComponent<Transform2D>().reverseTransformPoint(position));
 	else
 		FRect::setPosition(position);
+	
+	if (m_firstSetPos) {
+		m_firstSetPos = false;
+		m_lastPos = m_pos;
+	}
 }
 
 void Transform2D::setWorldPosition(const Vector2f& position) {
@@ -83,6 +85,11 @@ void Transform2D::setWorldPosition(const Vector2f& position) {
 		m_pos = position;
 
 	FRect::setPosition(position);
+
+	if (m_firstSetPos) {
+		m_firstSetPos = false;
+		m_lastPos = m_pos;
+	}
 }
 
 void Transform2D::setWorldPosition(float x, float y) {
@@ -116,7 +123,7 @@ Vector2f Transform2D::getWorldPosition() {
 
 Vector2f Transform2D::getLastCenter() {
 	m_parent = m_entity->toObject()->getParent();
-	return m_lastPos + transformPoint(getCenter());
+	return getLastPosition() + transformPoint(getWorldCenter());
 }
 
 Vector2f Transform2D::getCenter() {
@@ -160,6 +167,15 @@ void Transform2D::adjustPosition(const Vector2f& pos) {
 		FRect::setPosition(pos);
 
 	m_pos = getPosition();
+}
+
+void Transform2D::adjustCenter(const Vector2f& center) {
+	m_parent = m_entity->toObject()->getParent();
+	adjustPosition(center - getCenter() + getWorldPosition());
+}
+
+void Transform2D::adjustCenter(float centerX, float centerY) {
+	adjustCenter({ centerX, centerY });
 }
 
 Vector2f Transform2D::transformPoint(const Vector2f& point) {

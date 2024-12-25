@@ -1,127 +1,176 @@
 #include "EnemiesKoopaTroopa.hpp"
+#include "enemiesGoomba.hpp"
 
 
 EnemiesKoopaTroopa::EnemiesKoopaTroopa(Object* parent) :
+    Enemy(parent),
     m_autoControl(addComponent<AutoControl>()),
-    m_sound(addComponent<SoundComponent>()),
-    m_currentState(WALK) // Khởi tạo trạng thái
+    m_sound(addComponent<SoundComponent>())
 {
-    m_transform.setSize(16, 24); // Koopa Troopa lớn hơn Goomba
+    m_transform.setSize(16, 24);
     m_anim.loadFromJsonFile("Resources/Animations/koopa.json");
-    m_anim.play(0); // WALK state
+    m_anim.play(0);
     m_sprite.setParent(this);
-    m_sprite.getComponent<Transform2D>().setAnchor(0, 0);
+    m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
     m_sprite.setRenderOrder(3);
-    m_transform.setAnchor(0, 0);
-    m_movingDirection = 1; // -1 là sang trái, 1 là sang phải
-    m_isDead = false;
-    m_isInShell = false;
-    m_isShellMoving = false;
-    m_flashTimer = 0;
+    m_transform.setAnchor(0.5, 0.5);
 }
 
-void EnemiesKoopaTroopa::onCollisionEnter(Collision& col, const Direction& side)
-{
+EnemiesKoopaTroopa::~EnemiesKoopaTroopa() {
+}
+
+void EnemiesKoopaTroopa::onCollisionEnter(Collision& col, const Direction& side) {
     if (m_isDead) {
-        return; // Không xử lý va chạm nếu Koopa Troopa đã chết
+        return;
     }
 
     if (col.m_entity->isType<Mario>()) {
         if (side == Direction::UP) {
-            if (!m_isInShell) {
-                m_isInShell = true;
-                m_currentState = SHELL;
-                m_anim.loadFromJsonFile("Resources/Animations/koopaShell.json");
-                m_anim.play(0); // SHELL state
-                getComponent<Physics2D>().setStatic(true);
-                m_sound.play(SoundTrack::STOMP);
+            m_sound.play(SoundTrack::STOMP);
+            if (mState == NORMAL) {
+                hit(true);
+                m_transform.setSize(16, 16);
+                mIsStep2 = true;
             }
-            else {
-                m_isShellMoving = !m_isShellMoving;
-                if (m_isShellMoving) {
-                    m_currentState = SHELL; // Chuyển trạng thái shell khi bắt đầu lăn
-                    m_anim.play(0); // SHELL state
-                    m_sound.play(SoundTrack::STOMP);
-                }
-                m_movingDirection *= (m_isShellMoving ? 1 : 0); // Đặt hướng nếu đang lăn
+            else if (mState == STEP_2) {
+                mIsStep3 = true;
+                m_dir = (col.m_entity->getComponent<Transform2D>().getPosition().x > m_transform.getPosition().x) ? -1 : 1;
             }
-
+            else if (mState == STEP_3) {
+                mState = STEP_2;
+                mTimeUpdate = 0;
+            }
             col.m_entity->convertTo<Mario>()->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
         }
         else {
-            col.m_entity->convertTo<Mario>()->dead();
+            if (mState == STEP_2) {
+                mIsStep3 = true;
+                if (side == Direction::LEFT) {
+                    m_dir = 1;
+                }
+                else if (side == Direction::RIGHT) {
+                    m_dir = -1;
+                }
+            }
+            else if (mState == STEP_3 || mState == NORMAL) {
+                col.m_entity->convertTo<Mario>()->dead();
+            }
         }
     }
-    else if (col.m_entity->isType<Block>()) {
+    else if (col.m_entity->isDerivedFrom<Block>()) {
+        // Luôn giữ collision với Block để không rơi xuyên đất
         if (side == Direction::LEFT || side == Direction::RIGHT) {
-            if (m_isShellMoving) {
-                m_movingDirection *= -1; // Đảo chiều nếu va chạm trong trạng thái lăn
+            m_dir *= -1;
+        }
+    }
+    else if (col.m_entity->isDerivedFrom<Enemy>()) {
+        if (col.m_entity->isType<EnemiesKoopaTroopa>()) {
+            EnemiesKoopaTroopa* otherKoopa = col.m_entity->convertTo<EnemiesKoopaTroopa>();
+
+            // Xử lý va chạm giữa 2 koopa
+            if (mState == STEP_3) {
+                // Nếu shell đang di chuyển va chạm với koopa bình thường
+                if (otherKoopa->getState() == NORMAL) {
+                    otherKoopa->hit(true);
+                    col.m_entity->toObject()->destroy();
+                }
+                // Nếu 2 shell đang di chuyển va chạm với nhau
+                else if (otherKoopa->getState() == STEP_3) {
+                    mState = STEP_2;
+                    otherKoopa->mState = STEP_2;
+                    mTimeUpdate = 0;
+                    otherKoopa->mTimeUpdate = 0;
+                    m_physics.setBaseVelocityX(0);
+                    otherKoopa->getComponent<Physics2D>().setBaseVelocityX(0);
+                }
+            }
+            else if (otherKoopa->getState() == STEP_3) {
+                // Bị shell đang di chuyển va chạm vào
+                hit(true);
+                this->toObject()->destroy();
             }
             else {
-                m_movingDirection *= -1; // Đảo chiều trong trạng thái đi bộ
+                // Va chạm bình thường giữa 2 koopa, đổi hướng
+                if (side == Direction::LEFT || side == Direction::RIGHT) {
+                    m_dir *= -1;
+                }
+            }
+        }
+        else {
+            // Xử lý va chạm với các enemy khác
+            if (mState == STEP_3) {
+                // Shell đang di chuyển sẽ tiêu diệt enemy khác
+                col.m_entity->toObject()->destroy();
+            }
+            else {
+                if (side == Direction::LEFT || side == Direction::RIGHT) {
+                    m_dir *= -1;
+                }
             }
         }
     }
 }
 
-void EnemiesKoopaTroopa::hit(bool isDestroy)
-{
+
+void EnemiesKoopaTroopa::hit(bool isDestroy) {
     if (isDestroy) {
-        m_isDead = true;
-        m_currentState = DIE; // Chuyển trạng thái DIE
-        m_anim.play(0); // DIE state
-        getComponent<Physics2D>().setStatic(true);
-        getComponent<Collision>().setTrigger(true);
-        m_autoControl.addWaitForMiliseconds(1000);
-        m_autoControl.addAction([&]() { destroy(); });
+        mState = STEP_2;
+        m_anim.loadFromJsonFile("Resources/Animations/koopaShell.json");
+        m_anim.play(0);
     }
 }
 
-void EnemiesKoopaTroopa::update()
-{
+void EnemiesKoopaTroopa::update() {
     if (m_isDead) {
-        return; // Không cập nhật nếu Koopa Troopa đã chết
+        return;
     }
 
-    if (!m_isInShell || m_isShellMoving) {
-        m_physics.setBaseVelocityX(m_speed * m_movingDirection);
-        m_sprite.setScale(m_movingDirection == -1 ? 1.f : -1.f, 1.f); // Flip sprite dựa trên hướng di chuyển
-    }
-    else {
-        m_physics.setBaseVelocityX(0); // Dừng lại nếu đang trong mai và không lăn
-    }
-
-    if (m_isInShell && !m_isShellMoving) {
-        m_flashTimer += deltaTime.asMilliseconds();
-        if (m_flashTimer >= 5000) {
-            m_isInShell = false;
-            m_flashTimer = 0;
-            m_currentState = WALK;
-            m_anim.loadFromJsonFile("Resources/Animations/Koopa.json");
-            m_anim.play(0); // WALK state
-            getComponent<Physics2D>().setStatic(false);
-        }
-        else if (m_flashTimer % 500 < 250) {
-            m_anim.play(1); // SHELL_FLASHING state
+    if (mState == NORMAL) {
+        m_physics.setBaseVelocityX(m_speed * m_dir);
+        if (m_dir < 0) {
+            m_sprite.setScale(-1, 1);
         }
         else {
-            m_anim.play(0); // SHELL state
+            m_sprite.setScale(1, 1);
         }
     }
+    else if (mState == STEP_2) {
+        m_physics.setBaseVelocityX(0);
+        mTimeUpdate++;
 
-    // Xử lý trọng lực
-    auto lastPost = m_transform.getLastPosition();
-    if (lastPost.y < 430) {
-        m_speed_Vy += G * deltaTime.asMilliseconds();
-        m_physics.setBaseVelocityY(m_speed_Vy);
+        if (mTimeUpdate >= 200) {
+            m_anim.play(1);
+        }
+        if (mTimeUpdate >= 300) {
+            mState = NORMAL;
+            m_transform.setSize(16, 24);
+            m_anim.loadFromJsonFile("Resources/Animations/koopa.json");
+            m_anim.play(0);
+            mTimeUpdate = 0;
+        }
     }
-    else {
-        m_speed_Vy = 0;
-        m_physics.setBaseVelocityY(0);
+    else if (mState == STEP_3) {
+        // Mai rùa di chuyển nhanh
+        m_physics.setBaseVelocityX(m_speed * m_dir * 2);
+    }
+
+    if (mIsStep2) {
+        m_transform.setSize(16, 16);
+        m_anim.loadFromJsonFile("Resources/Animations/koopaShell.json");
+        m_anim.play(0);
+        mTimeUpdate = 0;
+        mIsStep2 = false;
+        mState = STEP_2;
+    }
+
+    if (mIsStep3) {
+        mState = STEP_3;
+        mIsStep3 = false;
+        mTimeUpdate = 0;
     }
 }
 
-EnemiesKoopaTroopa::State EnemiesKoopaTroopa::getState() const
-{
-    return m_currentState; // Trả về trạng thái hiện tại
+
+EnemiesKoopaTroopa::State EnemiesKoopaTroopa::getState() {
+    return mState;
 }

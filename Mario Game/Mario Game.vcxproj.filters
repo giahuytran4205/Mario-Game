@@ -228,7 +228,22 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTrack.hpp">
+      <Filter>Header Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTrack.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
     <ClCompile Include="PiranhaPlant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CheepCheepNormal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CheepCheepUnder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -410,7 +425,16 @@
     <ClInclude Include="Enemy.hpp">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Fireball.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
     <ClInclude Include="PiranhaPlant.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheepCheepNormal.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheepCheepUnder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

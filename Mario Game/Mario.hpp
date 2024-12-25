@@ -7,6 +7,8 @@
 #include "AutoControl.hpp"
 #include "Random.hpp"
 #include "Coroutine.hpp"
+#include "Fireball.hpp"
+#include "CheepCheepNormal.hpp"
 using namespace sf;
 
 class Mario : public Character {
@@ -18,6 +20,7 @@ public:
 		GRAB_FLAGPOLE,
 		DIE,
 		DUCK,
+		FIRE,
 		DAMAGED,
 	};
 
@@ -47,12 +50,16 @@ private:
 	bool m_isDead;
 	bool m_isInvincible;
 	int m_teleportTime;
+	float m_fireCD;
+	float m_curFireCD;
 	Portal m_enteredPortal;
 
 	int m_lives;
 	int m_coins;
 	int m_score;
 	float m_countdown;
+
+	friend class EnemiesCheepCheepNormal;
 
 public:
 	Mario(Object* parent = nullptr);
@@ -65,6 +72,7 @@ public:
 	void onTeleport();
 	void handleMovement();
 	void jump(float velY = -0.35f);
+	void fire();
 	void setAbility(Ability ability);
 	void teleport(const Portal& portal);
 	void onGrabFlagPole();
@@ -81,4 +89,5 @@ public:
 	int getScore() const;
 	Time getCountdownTime() const;
 	Ability getAbility() const;
+	Vector2f getPos();
 };

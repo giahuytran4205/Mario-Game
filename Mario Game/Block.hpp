@@ -24,4 +24,5 @@ public:
 
 	void update() override;
 	void onHit(bool isDestroy);
+	bool isHidden() const;
 };

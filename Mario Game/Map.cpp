@@ -348,6 +348,4 @@ void Map::launchFireworks() {
 			co_await WaitForMiliseconds(firework.getComponent<Animation>().getTrackLength(0));
 		}
 	}();
-
-	CoroutineManager::getInstance()->addCoroutine(move(coroutine));
 }
