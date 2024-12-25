@@ -61,12 +61,20 @@ Vector2f Line::raycast(const FRect& rect, Direction& side) {
 			side = Direction::LEFT;
 		else
 			side = Direction::RIGHT;
+
 		return { side == 0 ? rect.left : rect.right, -c / b };
 	}
 
 	if (b == 0) {
-		if (startPoint.y < endPoint.y) side = Direction::UP;
-		else side = Direction::DOWN;
+		if (startPoint.x == rect.right)
+			side = Direction::LEFT;
+		else if (startPoint.x == rect.left)
+			side = Direction::RIGHT;
+		else if (startPoint.y < endPoint.y)
+			side = Direction::UP;
+		else
+			side = Direction::DOWN;
+
 		return { -c / a, side == 1 ? rect.top : rect.bottom };
 	}
 

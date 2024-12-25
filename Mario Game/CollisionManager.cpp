@@ -1,4 +1,5 @@
 #include "CollisionManager.hpp"
+#include "EnemiesGoomba.hpp"
 #include <iostream>
 
 vector<Collision*> CollisionManager::m_colliders;
@@ -48,6 +49,9 @@ void CollisionManager::update() {
 
 	for (Collision* col : m_colliders) {
 		if (!col->m_entity->isActive() || col->m_entity->isDestroyed() || !col->isEnable())
+			continue;
+
+		if (col->m_entity->hasComponent<Physics2D>() && !col->m_entity->getComponent<Physics2D>().isElastic())
 			continue;
 
 		FRect rect = col->getCollider();

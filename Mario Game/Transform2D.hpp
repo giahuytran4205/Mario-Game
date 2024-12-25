@@ -12,6 +12,7 @@ private:
 	Vector2f m_lastPos;
 	Vector2f m_rotation;
 	Object* m_parent;
+	bool m_firstSetPos;
 
 public:
 	Transform2D();
