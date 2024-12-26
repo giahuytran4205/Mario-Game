@@ -14,8 +14,6 @@ public:
     };
 
 private:
-    AutoControl& m_autoControl;
-    SoundComponent& m_sound;
     float m_speed = -0.05f;
     int m_dir = 1;
     bool m_isDead = false;

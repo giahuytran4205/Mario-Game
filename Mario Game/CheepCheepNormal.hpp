@@ -12,8 +12,6 @@ class Mario;
 
 class EnemiesCheepCheepNormal : public Enemy {
 private:
-    AutoControl& m_autoControl;
-    SoundComponent& m_sound;
     Mario* m_mario;
     float m_speed;
     int mTimeUpdate;

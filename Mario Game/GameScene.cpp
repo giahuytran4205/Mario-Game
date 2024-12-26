@@ -8,6 +8,8 @@
 #include "CheepCheepUnder.hpp"
 //#include "PiranhaPlant.hpp"
 
+#include "EnemiesHammerBro.h"
+#include "EnemiesLakitu.h"
 
 Mario* GameScene::getMario() {
 	std::cout << n_mario << " ";
@@ -87,31 +89,31 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_countdownText[0].setString("TIME");
 	m_livesText[0].setString("LIVES");
 
-		EnemiesGoomba* goomba = new EnemiesGoomba(this);
-		goomba->getComponent<Transform2D>().setPosition(500, 350);
+	//	EnemiesGoomba* goomba = new EnemiesGoomba(this);
+	//	goomba->getComponent<Transform2D>().setPosition(500, 350);
 
-	EnemiesKoopaTroopa* koopa1 = new EnemiesKoopaTroopa(this);
-	koopa1->getComponent<Transform2D>().setPosition(450, 350);
+	//EnemiesKoopaTroopa* koopa1 = new EnemiesKoopaTroopa(this);
+	//koopa1->getComponent<Transform2D>().setPosition(450, 350);
 
 
-	EnemiesKoopaTroopa* koopa2 = new EnemiesKoopaTroopa(this);
-	koopa2->getComponent<Transform2D>().setPosition(550, 350);
+	//EnemiesKoopaTroopa* koopa2 = new EnemiesKoopaTroopa(this);
+	//koopa2->getComponent<Transform2D>().setPosition(550, 350);
 
-	EnemiesBuzzyBeetle* buzzy = new EnemiesBuzzyBeetle(this);
-	buzzy->getComponent<Transform2D>().setPosition(250, 350);
+	//EnemiesBuzzyBeetle* buzzy = new EnemiesBuzzyBeetle(this);
+	//buzzy->getComponent<Transform2D>().setPosition(250, 350);
 
 	//EnemiesPiranhaPlant* Pi = new EnemiesPiranhaPlant(this);
 	//Pi->getComponent<Transform2D>().setPosition(155, 400);
 
 
-		EnemiesCheepCheepNormal* cheep = new EnemiesCheepCheepNormal(nullptr, this);
-		cheep->getComponent<Transform2D>().setPosition(500, 390);
+		//EnemiesCheepCheepNormal* cheep = new EnemiesCheepCheepNormal(nullptr, this);
+		//cheep->getComponent<Transform2D>().setPosition(500, 390);
 
-		EnemiesCheepCheepNormal* cheep1 = new EnemiesCheepCheepNormal(nullptr, this);
-		cheep1->getComponent<Transform2D>().setPosition(550, 440);
+		//EnemiesCheepCheepNormal* cheep1 = new EnemiesCheepCheepNormal(nullptr, this);
+		//cheep1->getComponent<Transform2D>().setPosition(550, 440);
 
-		EnemiesCheepCheepNormal* cheep2 = new EnemiesCheepCheepNormal(nullptr, this);
-		cheep2->getComponent<Transform2D>().setPosition(450, 350);
+		//EnemiesCheepCheepNormal* cheep2 = new EnemiesCheepCheepNormal(nullptr, this);
+		//cheep2->getComponent<Transform2D>().setPosition(450, 350);
 
 		//CheepCheepUnder* cheep3 = new CheepCheepUnder(nullptr, this);
 		//cheep3->getComponent<Transform2D>().setPosition(500, 390);
@@ -121,6 +123,14 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 
 		//CheepCheepUnder* cheep5 = new CheepCheepUnder(nullptr, this);
 		//cheep5->getComponent<Transform2D>().setPosition(450, 350);
+
+
+
+		EnemiesHammerBro* hammerBro = new EnemiesHammerBro(m_mario, Vector2f( 950, 350 ), this);
+		hammerBro->getComponent<Transform2D>().setPosition(950, 350);
+
+		//EnemiesLakitu* lakitu = new EnemiesLakitu(m_mario, Vector2f(850, 350), this);
+		//lakitu->getComponent<Transform2D>().setPosition(850, 350);
 }
 
 GameScene::~GameScene() {}

@@ -4,8 +4,6 @@
 
 EnemiesCheepCheepNormal::EnemiesCheepCheepNormal(Mario* mario, Object* parent)
     : Enemy(parent),
-    m_autoControl(addComponent<AutoControl>()),
-    m_sound(addComponent<SoundComponent>()),
     m_mario(mario),
     m_speed(0.1f),
     mTimeUpdate(0),

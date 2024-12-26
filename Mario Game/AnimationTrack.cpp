@@ -11,10 +11,10 @@ bool AnimationTrack::isLoop() const {
 int AnimationTrack::getExitTime() const {
     return m_exitTime;
 }
-
+ 
 void AnimationTrack::setEnableExitTime(bool isEnable) {
     m_hasExitTime = isEnable;
-}
+} 
 
 void AnimationTrack::setExitTime(float time) {
     m_exitTime = time;
@@ -30,4 +30,4 @@ std::vector<Frame>& AnimationTrack::getFrames() {
 
 Frame& AnimationTrack::operator[](const int index) {
     return m_frames[index];
-}
+} 

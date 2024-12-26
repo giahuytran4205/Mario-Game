@@ -6,26 +6,28 @@
 #include "ParticleSystem.hpp"
 #include "Random.hpp"
 #include "Item.hpp"
-#include "GameManager.hpp"
 #include "Enemy.hpp"
-#include "AutoControl.hpp"
-#include "SoundComponent.hpp"
-class EnemiesGoomba : public Enemy
-{
-private:
-	enum State {
-		WALK,
-		DIE
-	};
 
-	
-	bool m_onWall{ false };
-	float m_speed = -0.05f;
-	int m_dir = 1;
-	
-	bool m_isDead;
+class EnemiesHammer : public Enemy
+{
+	enum State {
+		NONE,
+		INIT,
+		FALL,
+	};
+private:
+	bool mIsActive{ false };
+	State mState{ NONE };
+	Vector2f mPosSrc;
+	Vector2f mPosTarget;
+	float mXTagret{ 0 };
 public:
-	EnemiesGoomba(Object* parent = nullptr);
+	EnemiesHammer(Object* parent = nullptr);
+	~EnemiesHammer() = default;
+	void setActive(
+		const Vector2f& posSrc,
+		const Vector2f& posTarget
+	);
 
 	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void hit(bool isDestroy);

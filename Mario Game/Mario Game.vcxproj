@@ -175,7 +175,12 @@
     <ClCompile Include="EmptyBlock.cpp" />
     <ClCompile Include="EnemiesBuzzyBeetle.cpp" />
     <ClCompile Include="EnemiesGoomba.cpp" />
+    <ClCompile Include="EnemiesHammer.cpp" />
+    <ClCompile Include="EnemiesHammerBro.cpp" />
     <ClCompile Include="EnemiesKoopaTroopa.cpp" />
+    <ClCompile Include="EnemiesLakitu.cpp" />
+    <ClCompile Include="EnemiesLavaBubble.cpp" />
+    <ClCompile Include="EnemiesSpiny.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enum.cpp" />
     <ClCompile Include="EventSystem.cpp" />
@@ -240,7 +245,12 @@
     <ClInclude Include="EmptyBlock.hpp" />
     <ClInclude Include="EnemiesBuzzyBeetle.hpp" />
     <ClInclude Include="EnemiesGoomba.hpp" />
+    <ClInclude Include="EnemiesHammer.h" />
+    <ClInclude Include="EnemiesHammerBro.h" />
     <ClInclude Include="EnemiesKoopaTroopa.hpp" />
+    <ClInclude Include="EnemiesLakitu.h" />
+    <ClInclude Include="EnemiesLavaBubble.h" />
+    <ClInclude Include="EnemiesSpiny.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />

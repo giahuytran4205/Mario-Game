@@ -3,9 +3,7 @@
 
 
 EnemiesKoopaTroopa::EnemiesKoopaTroopa(Object* parent) :
-    Enemy(parent),
-    m_autoControl(addComponent<AutoControl>()),
-    m_sound(addComponent<SoundComponent>())
+    Enemy(parent)
 {
     m_transform.setSize(16, 24);
     m_anim.loadFromJsonFile("Resources/Animations/koopa.json");

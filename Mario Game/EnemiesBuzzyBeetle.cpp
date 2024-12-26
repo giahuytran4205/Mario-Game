@@ -3,9 +3,7 @@
 #include "EnemiesKoopaTroopa.hpp"
 
 EnemiesBuzzyBeetle::EnemiesBuzzyBeetle(Object* parent) :
-    Enemy(parent),
-    m_autoControl(addComponent<AutoControl>()),
-    m_sound(addComponent<SoundComponent>()) {
+    Enemy(parent) {
     m_transform.setSize(16, 16);
     m_anim.loadFromJsonFile("Resources/Animations/buzzy.json");
     m_anim.play(0);

@@ -2,8 +2,7 @@
 #include "EnemiesBuzzyBeetle.hpp"
 #include "EnemiesKoopaTroopa.hpp"
 
-EnemiesGoomba::EnemiesGoomba(Object* parent) : m_autoControl(addComponent<AutoControl>())
-, m_sound(addComponent<SoundComponent>()) {
+EnemiesGoomba::EnemiesGoomba(Object* parent): Enemy(parent, false){
     m_transform.setSize(16, 16);
     m_anim.loadFromJsonFile("Resources/Animations/Goomba.json");
 	m_anim.play(State::WALK);

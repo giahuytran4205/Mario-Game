@@ -227,6 +227,13 @@ void Mario::handleMovement() {
 	if (Keyboard::isKeyPressed(Keyboard::G)) {
 		setAbility(Ability::FIERY);
 	}
+
+	if (Keyboard::isKeyPressed(Keyboard::I)) {
+		setAbility(Ability::SUPER);
+	}
+	if (Keyboard::isKeyPressed(Keyboard::O)) {
+		setAbility(Ability::INVINCIBLE);
+	}
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
 		fire();
 	}
