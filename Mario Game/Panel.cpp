@@ -91,8 +91,13 @@ sf::Vector2f Panel::getThemeVolumePosition()
         m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 3.0f);
 }
 
-Panel::Panel(Object* parent) : Object(parent)
+Panel::Panel(Object* parent) : 
+    Object(parent),
+	m_totalVolume(0, 100, getTotalVolumeSize().x, 0, getTotalVolumePosition(), this),
+	m_themeVolume(0, 100, getThemeVolumeSize().x, 0, getThemeVolumePosition(), this)
 {
+    this->setEnable(false);
+
     const View& view = GameManager::getInstance()->getRenderWindow().getView();
 
     m_background.setFillColor(sf::Color::White);
@@ -128,7 +133,8 @@ Panel::Panel(Object* parent) : Object(parent)
     m_title.getComponent<Transform2D>().setPosition(getTitlePosition());
     m_title.setString("Settings");
 
-    this->setEnable(false);
+    m_totalVolume.setRenderOrder(20);
+	m_themeVolume.setRenderOrder(20);
 }
 
 Panel::~Panel()

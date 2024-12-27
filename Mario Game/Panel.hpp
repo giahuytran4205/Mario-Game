@@ -28,6 +28,8 @@ private:
 	Button m_continue;
 	Button m_exit;
 	TextView m_title;
+	Slider<float> m_totalVolume;
+	Slider<float> m_themeVolume;
 	SpriteRenderer m_backgroundRenderer;
 	RectangleShape m_background;
 
