@@ -148,3 +148,13 @@ Vector2f Collision::getTangentPoint(const Collision& col, Direction& side) const
 	side = getOpposite(side);
 	return res;
 }
+
+bool Collision::isSkipResolveCollide() const
+{
+	return m_isSkipResolveCollide;
+}
+
+void Collision::setSkipResolveCollide(bool isSkipResolveCollide)
+{
+	m_isSkipResolveCollide = isSkipResolveCollide;
+}

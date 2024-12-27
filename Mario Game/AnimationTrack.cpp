@@ -19,7 +19,7 @@ void AnimationTrack::setEnableExitTime(bool isEnable) {
 void AnimationTrack::setExitTime(float time) {
     m_exitTime = time;
 }
-
+ 
 void AnimationTrack::setLoop(bool isLoop) {
     m_isLoop = isLoop;
 }

@@ -1,4 +1,6 @@
 #include "QuestionBlock.hpp"
+#include "ItemMushroom.h"
+#include "EnemiesSpiny.hpp"
 
 QuestionBlock::QuestionBlock(Environment environment, Object* parent) : Block(parent) {
 	m_isHide = false;
@@ -45,6 +47,29 @@ void QuestionBlock::hit() {
 	m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(48, 0, 16, 16)));
 	m_isEmpty = true;
 	setHide(false);
+
+	//RANDOM ITEM
+	//int random = std::rand() % 4;
+
+	auto mushroom = new ItemMushroom(ItemMushroom::GREEN, this);
+	auto Post = m_transform.getPosition();	
+	auto Size = mushroom->getComponent<Transform2D>().getSize().y;
+	//mushroom->getComponent<Transform2D>().setPosition(Post.x, Post.y - Size);
+
+	mushroom->getComponent<Transform2D>().setWorldPosition(Post.x ,
+		Post.y + Size);
+
+	std::cout << Post.y << "dadas " << Size << "\n";
+
+	mushroom->setActive(Vector2f(m_transform.getPosition().x, m_transform.getPosition().y + Size));
+
+
+	//auto spiny = new EnemiesSpiny(this->getParent());
+	//const bool isRight = true;
+	//spiny->getComponent<Transform2D>().setWorldPosition(Post.x + ((isRight ? 1 : -1) * spiny->getTransform2D().getSize().x),
+	//	Post.y - spiny->getTransform2D().getSize().y);
+	//spiny->setActive(Post, { Post.x + 100, Post.y }, isRight);
+
 }
 
 void QuestionBlock::setHide(bool isHide) {

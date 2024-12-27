@@ -1,0 +1,29 @@
+{ "columns":42,
+"image":"Resources/Animations/output.png",
+ "imageheight":1252,
+ "imagewidth":677,
+ "margin":0,
+ "name":"output",
+ "spacing":0,
+ "tilecount":1638,
+ "tiledversion":"1.11.0",
+ "tileheight":32,
+ "tiles":[
+        {
+         "animation":[
+                {
+                 "duration":100,
+                 "tileid":1087
+                }],
+         "id":1087,
+         "properties":[
+                {
+                 "name":"state",
+                 "type":"int",
+                 "value":0
+                }]
+        }],
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

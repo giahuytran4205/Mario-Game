@@ -17,6 +17,8 @@ private:
 	FRect m_localCol;
 	bool m_isTrigger;
 	bool m_isUseOwnCollider;
+	
+	bool m_isSkipResolveCollide{ false };
 
 public:
 	Collision(bool isTrigger = false);
@@ -32,4 +34,8 @@ public:
 	bool isTrigger();
 	FRect getCollider() const;
 	Vector2f getTangentPoint(const Collision& col, Direction& side) const;
+
+	// Getter and Setter
+	bool isSkipResolveCollide() const;
+	void setSkipResolveCollide(bool isSkipResolveCollide);
 };

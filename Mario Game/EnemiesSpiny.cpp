@@ -1,4 +1,4 @@
-#include "EnemiesSpiny.h"
+#include "EnemiesSpiny.hpp"
 
 EnemiesSpiny::EnemiesSpiny(Object* parent): Enemy(parent, false)
 {
@@ -10,14 +10,17 @@ EnemiesSpiny::EnemiesSpiny(Object* parent): Enemy(parent, false)
 	m_sprite.setRenderOrder(3);
 	m_transform.setAnchor(0, 0);
 
+
 	m_physics.setEnableGravity(false);
+	m_physics.setElastic(false);
 	setEnable(true);
-	//m_collision.setTrigger(true);
-	m_physics.setElastic(true);
+	
 }
 
 
+
 void EnemiesSpiny::onCollisionEnter(Collision& col, const Direction& side) {
+	// Kiểm tra nếu va chạm với Mario
 	if (col.m_entity->isType<Mario>()) {
 		if (mState == EGG) {
 			// Mario chết khi chạm vào Spiny Egg
@@ -28,12 +31,16 @@ void EnemiesSpiny::onCollisionEnter(Collision& col, const Direction& side) {
 			col.m_entity->convertTo<Mario>()->dead();
 		}
 	}
+	// Xử lý va chạm với Block
 	else if (col.m_entity->isType<Block>() && mState == NORMAL) {
 		// Khi chạm vào tường, đổi hướng
 		if (side == Direction::LEFT || side == Direction::RIGHT) {
 			m_onWall = true;
+			m_physics.setBaseVelocityX(-m_physics.getBaseVelocity().x);
 		}
 	}
+
+	// Xử lý va chạm giữa các Spiny
 	else if (col.m_entity->isType<EnemiesSpiny>()) {
 		// Khi Spiny chạm nhau, đổi hướng
 		if (side == Direction::LEFT || side == Direction::RIGHT) {
@@ -41,7 +48,6 @@ void EnemiesSpiny::onCollisionEnter(Collision& col, const Direction& side) {
 		}
 	}
 }
-
 
 
 void EnemiesSpiny::hit(bool isDestroy)
@@ -77,23 +83,22 @@ void EnemiesSpiny::update()
 	auto Post = m_transform.getPosition();
 	
 	if (Post.y >= 430 && mState == EGG) {
-		m_physics.setEnableGravity(false);
-		m_physics.setVelocity(Vector2f(0, 0));
 		mState = NORMAL;
 		m_anim.loadFromJsonFile("Resources/Animations/Latiku-Spawn.json");
 		m_anim.play(1);
-		m_physics.setBaseVelocityX(mIsRunRight ? 0.05 : -0.05);
-
-		addComponent<Collision>();
+		m_collision.setSkipResolveCollide(false);
+		m_physics.setAcceleration({ 0,0 });
+		m_physics.setEnableGravity(false);
+		m_physics.setVelocityY(0);
+		m_physics.setVelocityX(mIsRunRight ? 0.05 : -0.05);
 		m_autoControl.addWaitForMiliseconds(5000);
 
-	}
-	//std::cout << "Post.y: " << Post.y << std::endl;
-	if (m_physics.getBaseVelocity().x > 0) {
-		m_sprite.setScale(-1, 1); // Lật ảnh qua phải
-	}
-	else {
-		m_sprite.setScale(1, 1); // Ảnh qua trái
+		if (m_physics.getBaseVelocity().x > 0) {
+			m_sprite.setScale(-1, 1); // Lật ảnh sang phải 
+		}
+		else if (m_physics.getBaseVelocity().x < 0) {
+			m_sprite.setScale(1, 1); // Ảnh hướng trái
+		}
 	}
 
 	switch (mState)
@@ -136,7 +141,9 @@ void EnemiesSpiny::setActive(const Vector2f& posSrc,
 	auto Distance =( isRunRight ? 1 : -1 )*abs(posTarget.x - posSrc.x) * 0.4f;
 	Vector2f dest = { posSrc.x + Distance , posSrc.y - 50};
 	m_autoControl.addMoveByPoint(dest, 800, { 0, 0 }, [&](int time) {});
+
+
 	// show
 
-	setEnable(true);
 }
+

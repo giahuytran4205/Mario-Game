@@ -1,4 +1,4 @@
-#include "EnemiesHammerBro.h"
+#include "EnemiesHammerBro.hpp"
 
 // TODO add 2 platform
 EnemiesHammerBro::EnemiesHammerBro(Mario& mario, const Vector2f pos, Object* parent):

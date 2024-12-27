@@ -15,6 +15,8 @@ protected:
 	Physics2D& m_physics;
 	AutoControl& m_autoControl;
 	SoundComponent& m_sound;
+	Collision& m_collision;
+
 public:
 	Enemy(Object* parent = nullptr, const bool isNeedCollision = true);
 	~Enemy();

@@ -1,4 +1,4 @@
-#include "EnemiesHammer.h"
+#include "EnemiesHammer.hpp"
 
 EnemiesHammer::EnemiesHammer(Object* parent) : Enemy(parent, false)
 {

@@ -81,18 +81,19 @@ void CollisionManager::update() {
 						Direction side = Direction::LEFT;
 
 						bool isTrigger = col->isTrigger() || item->isTrigger();
-
-						if (item->m_entity->hasComponent<Physics2D>()) {
-							if (item->m_entity->getComponent<Physics2D>().isElastic()) {
-								item->resolveCollide(*col, side, isTrigger);
-								side = getOpposite(side);
+						if (col->isSkipResolveCollide() == false && item->isSkipResolveCollide() == false) {
+							if (item->m_entity->hasComponent<Physics2D>()) {
+								if (item->m_entity->getComponent<Physics2D>().isElastic()) {
+									item->resolveCollide(*col, side, isTrigger);
+									side = getOpposite(side);
+								}
+								else {
+									col->resolveCollide(*item, side, isTrigger);
+								}
 							}
 							else {
 								col->resolveCollide(*item, side, isTrigger);
 							}
-						}
-						else {
-							col->resolveCollide(*item, side, isTrigger);
 						}
 
 						intersectCols.push_back(item);

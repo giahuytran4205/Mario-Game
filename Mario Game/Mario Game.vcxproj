@@ -173,6 +173,8 @@
     <ClCompile Include="DeadZone.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="EmptyBlock.cpp" />
+    <ClCompile Include="EnemiesBillBlaster.cpp" />
+    <ClCompile Include="EnemiesBillBlasterBullet.cpp" />
     <ClCompile Include="EnemiesBuzzyBeetle.cpp" />
     <ClCompile Include="EnemiesGoomba.cpp" />
     <ClCompile Include="EnemiesHammer.cpp" />
@@ -193,6 +195,7 @@
     <ClCompile Include="AutoControl.cpp" />
     <ClCompile Include="InputField.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemMushroom.cpp" />
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Lift.cpp" />
     <ClCompile Include="Line.cpp" />
@@ -243,14 +246,16 @@
     <ClInclude Include="DeadZone.hpp" />
     <ClInclude Include="ECS.hpp" />
     <ClInclude Include="EmptyBlock.hpp" />
+    <ClInclude Include="EnemiesBillBlaster.hpp" />
+    <ClInclude Include="EnemiesBillBlasterBullet.hpp" />
     <ClInclude Include="EnemiesBuzzyBeetle.hpp" />
     <ClInclude Include="EnemiesGoomba.hpp" />
-    <ClInclude Include="EnemiesHammer.h" />
-    <ClInclude Include="EnemiesHammerBro.h" />
+    <ClInclude Include="EnemiesHammer.hpp" />
+    <ClInclude Include="EnemiesHammerBro.hpp" />
     <ClInclude Include="EnemiesKoopaTroopa.hpp" />
-    <ClInclude Include="EnemiesLakitu.h" />
-    <ClInclude Include="EnemiesLavaBubble.h" />
-    <ClInclude Include="EnemiesSpiny.h" />
+    <ClInclude Include="EnemiesLakitu.hpp" />
+    <ClInclude Include="EnemiesLavaBubble.hpp" />
+    <ClInclude Include="EnemiesSpiny.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />
@@ -263,6 +268,7 @@
     <ClInclude Include="AutoControl.hpp" />
     <ClInclude Include="InputField.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="ItemMushroom.h" />
     <ClInclude Include="Jumper.hpp" />
     <ClInclude Include="Lift.hpp" />
     <ClInclude Include="Line.hpp" />

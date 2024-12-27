@@ -6,10 +6,10 @@
 #include "ParticleSystem.hpp"
 #include "Random.hpp"
 #include "Item.hpp"
-#include "Mario.hpp"
 #include "Enemy.hpp"
 
-#include "EnemiesSpiny.h"
+#include "EnemiesSpiny.hpp"
+
 
 class EnemiesLakitu : public Enemy
 {
@@ -31,17 +31,15 @@ private:
 	int mMinActiveX, mMaxActiveX;
 	State mState = RUNING_LEFT;
 	bool mIsStep{ false };
-
-	int mCnt{ 0 };
+	bool m_isDead;
 
 	/*std::vector<std::shared_ptr<EnemiesSpiny>> mSpinys;*/
 	std::vector<EnemiesSpiny*> mSpinys;
 public:
-	EnemiesLakitu(Mario& mario, const Vector2f pos, 
+	EnemiesLakitu(Mario& mario, const Vector2f pos,
 		Object* parent);
 
 	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void hit(bool isDestroy);
 	void update();
 };
-

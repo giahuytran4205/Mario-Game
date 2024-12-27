@@ -1,4 +1,4 @@
-#include "EnemiesLakitu.h"
+#include "EnemiesLakitu.hpp"
 #include "GameManager.hpp"
 
 
@@ -16,10 +16,10 @@ EnemiesLakitu::EnemiesLakitu(Mario& mario, const Vector2f pos, Object* parent) :
     m_sprite.setRenderOrder(3);
     m_transform.setAnchor(0, 0);
 
-	mMinActiveX = std::max(0.0f, pos.x - RANGE_ACTIVE);
-	mMaxActiveX = pos.x + RANGE_ACTIVE;
+    mMinActiveX = std::max(0.0f, pos.x - RANGE_ACTIVE);
+    mMaxActiveX = pos.x + RANGE_ACTIVE;
 
-	m_physics.setElastic(false);
+    m_physics.setElastic(false);
     m_physics.setEnableGravity(false);
 
 
@@ -84,64 +84,64 @@ void EnemiesLakitu::update()
         return spiny->isActive() == false;
         });
     if (it != mSpinys.end()) {
-		mSpinys.erase(it);
+        mSpinys.erase(it);
     }
-	
+
 
     if (posMario.x > mMinActiveX && posMario.x < mMaxActiveX) {
         if (mIsActive == false) {
         }
-		mIsActive = true;
+        mIsActive = true;
     }
     else
     {
-		mIsActive = false;
+        mIsActive = false;
 
     }
 
 
     if (mIsActive) {
-		if (m_autoControl.isControlled())
-			return;
+        if (m_autoControl.isControlled())
+            return;
 
 
-            auto  Distance = std::abs(Post.x - posMario.x);
-            if (static_cast<int>(Distance) == 0) {
-				Distance = 20;
-            }
-            int random = std::rand() % 80;
-            
-            float newPosX;
+        auto  Distance = std::abs(Post.x - posMario.x);
+        if (static_cast<int>(Distance) == 0) {
+            Distance = 20;
+        }
+        int random = std::rand() % 80;
 
-            if (Post.x > posMario.x) {
-                //random = -random;
-                newPosX = -Distance - random;
-            }
-            else {
-                newPosX = Distance + random;
-            }
-			Vector2f dest = { Post.x  + newPosX, Post.y };
-            m_autoControl.addMoveByPoint(dest, 3000, { 0, 0 }, [&](int time) {  });
-            
-            // find
-            if (mSpinys.size() < MAX_SPINY) {
-				//auto spiny = std::make_shared<EnemiesSpiny>(this->getParent());
-                auto spiny = new EnemiesSpiny(this->getParent());
-                const bool isRight = (Post.x < posMario.x);
-                spiny->getComponent<Transform2D>().setWorldPosition(Post.x + ((isRight ? 1 : -1) * spiny->getTransform2D().getSize().x),
-                    Post.y - spiny->getTransform2D().getSize().y);
-                spiny->setActive(Post, posMario, isRight);
-                mSpinys.push_back(spiny);
+        float newPosX;
 
-            }
-          
+        if (Post.x > posMario.x) {
+            //random = -random;
+            newPosX = -Distance - random;
+        }
+        else {
+            newPosX = Distance + random;
+        }
+        Vector2f dest = { Post.x + newPosX, Post.y };
+        m_autoControl.addMoveByPoint(dest, 3000, { 0, 0 }, [&](int time) {});
+
+        // find
+        if (mSpinys.size() < MAX_SPINY) {
+            //auto spiny = std::make_shared<EnemiesSpiny>(this->getParent());
+            auto spiny = new EnemiesSpiny(this->getParent());
+            const bool isRight = (Post.x < posMario.x);
+            spiny->getComponent<Transform2D>().setWorldPosition(Post.x + ((isRight ? 1 : -1) * spiny->getTransform2D().getSize().x),
+                Post.y - spiny->getTransform2D().getSize().y);
+            spiny->setActive(Post, posMario, isRight);
+            mSpinys.push_back(spiny);
+
+        }
+
 
         //const auto posGame = GameManager::getInstance()->getView().getCenter();
         //const auto sizeView = GameManager::getInstance()->getView().getSize();
 
         //const auto left = posGame.x - sizeView.x / 2;
         //const auto right = posGame.x + sizeView.x / 2;
-		
+
 
 
     }

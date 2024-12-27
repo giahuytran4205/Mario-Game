@@ -8,8 +8,10 @@
 #include "CheepCheepUnder.hpp"
 //#include "PiranhaPlant.hpp"
 
-#include "EnemiesHammerBro.h"
-#include "EnemiesLakitu.h"
+#include "EnemiesHammerBro.hpp"
+#include "EnemiesLakitu.hpp"
+
+#include "EnemiesBillBlaster.hpp"
 
 Mario* GameScene::getMario() {
 	std::cout << n_mario << " ";
@@ -89,8 +91,8 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_countdownText[0].setString("TIME");
 	m_livesText[0].setString("LIVES");
 
-	//	EnemiesGoomba* goomba = new EnemiesGoomba(this);
-	//	goomba->getComponent<Transform2D>().setPosition(500, 350);
+		EnemiesGoomba* goomba = new EnemiesGoomba(this);
+		goomba->getComponent<Transform2D>().setPosition(500, 350);
 
 	//EnemiesKoopaTroopa* koopa1 = new EnemiesKoopaTroopa(this);
 	//koopa1->getComponent<Transform2D>().setPosition(450, 350);
@@ -102,15 +104,15 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	//EnemiesBuzzyBeetle* buzzy = new EnemiesBuzzyBeetle(this);
 	//buzzy->getComponent<Transform2D>().setPosition(250, 350);
 
-	//EnemiesPiranhaPlant* Pi = new EnemiesPiranhaPlant(this);
-	//Pi->getComponent<Transform2D>().setPosition(155, 400);
+	////EnemiesPiranhaPlant* Pi = new EnemiesPiranhaPlant(this);
+	////Pi->getComponent<Transform2D>().setPosition(155, 400);
 
 
-		//EnemiesCheepCheepNormal* cheep = new EnemiesCheepCheepNormal(nullptr, this);
-		//cheep->getComponent<Transform2D>().setPosition(500, 390);
+	//	EnemiesCheepCheepNormal* cheep = new EnemiesCheepCheepNormal(nullptr, this);
+	//	cheep->getComponent<Transform2D>().setPosition(500, 390);
 
-		//EnemiesCheepCheepNormal* cheep1 = new EnemiesCheepCheepNormal(nullptr, this);
-		//cheep1->getComponent<Transform2D>().setPosition(550, 440);
+	//	EnemiesCheepCheepNormal* cheep1 = new EnemiesCheepCheepNormal(nullptr, this);
+	//	cheep1->getComponent<Transform2D>().setPosition(550, 440);
 
 		//EnemiesCheepCheepNormal* cheep2 = new EnemiesCheepCheepNormal(nullptr, this);
 		//cheep2->getComponent<Transform2D>().setPosition(450, 350);
@@ -126,11 +128,14 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 
 
 
-		EnemiesHammerBro* hammerBro = new EnemiesHammerBro(m_mario, Vector2f( 950, 350 ), this);
-		hammerBro->getComponent<Transform2D>().setPosition(950, 350);
+		//EnemiesHammerBro* hammerBro = new EnemiesHammerBro(m_mario, Vector2f( 950, 350 ), this);
+		//hammerBro->getComponent<Transform2D>().setPosition(950, 350);
 
-		//EnemiesLakitu* lakitu = new EnemiesLakitu(m_mario, Vector2f(850, 350), this);
-		//lakitu->getComponent<Transform2D>().setPosition(850, 350);
+		EnemiesLakitu* lakitu = new EnemiesLakitu(m_mario, Vector2f(450, 350), this);
+		lakitu->getComponent<Transform2D>().setPosition(450, 350);
+
+		//EnemiesBillBlaster* billBlaster = new EnemiesBillBlaster(m_mario, this);
+		//billBlaster->getComponent<Transform2D>().setPosition(680, 440);
 }
 
 GameScene::~GameScene() {}
