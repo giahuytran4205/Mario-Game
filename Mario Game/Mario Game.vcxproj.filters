@@ -237,6 +237,9 @@
     <ClCompile Include="AnimationTrack.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Panel.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -404,9 +407,6 @@
     <ClInclude Include="MapSelectionScene.hpp">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="EnemiesGoomba.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EnemiesBuzzyBeetle.hpp">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
@@ -418,6 +418,12 @@
     </ClInclude>
     <ClInclude Include="Fireball.hpp">
       <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesGoomba.hpp">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.hpp">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

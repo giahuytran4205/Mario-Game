@@ -194,6 +194,7 @@
     <ClCompile Include="MapSelectionScene.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Physics2D.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="MapSelectionScene.hpp" />
     <ClInclude Include="Mario.hpp" />
     <ClInclude Include="Object.hpp" />
+    <ClInclude Include="Panel.hpp" />
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleSystem.hpp" />
     <ClInclude Include="Physics2D.hpp" />

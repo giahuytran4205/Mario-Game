@@ -11,6 +11,7 @@
 #include "BalanceLifts.hpp"
 #include "Slider.hpp"
 #include "TextView.hpp"
+#include "Panel.hpp"
 
 class GameScene : public Scene {
 private:
@@ -22,6 +23,7 @@ private:
 	TextView m_livesText[2];
 	TextView m_countdownText[2];
 	TextView m_worldNameText[2];
+	Panel m_panel;
 
 public:
 	GameScene(const MapInfo& mapPath);

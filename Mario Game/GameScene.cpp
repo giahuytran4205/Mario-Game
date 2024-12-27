@@ -3,7 +3,7 @@
 #include "Brick.hpp"
 #include "EnemiesGoomba.hpp"
 
-GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
+GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this), m_panel(this) {
 	m_renderOrder = 2;
 	addComponent<SoundComponent>();
 
@@ -100,14 +100,17 @@ void GameScene::update() {
 	m_worldNameText[1].setString("2-1");
 	m_countdownText[1].setString(to_string((int)m_mario.getCountdownTime().asSeconds()));
 	m_livesText[1].setString(to_string(m_mario.getLives()));
+
+	if (Keyboard::isKeyPressed(Keyboard::Escape)) 
+	{
+		m_panel.setEnable(true);
+	}
 }
 
 void GameScene::render() {
-
 }
 
 void GameScene::handleEvent(const Event& event) {
-
 }
 
 void GameScene::loadMap(const string& filename) {
