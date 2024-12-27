@@ -3,7 +3,8 @@
 #include "Brick.hpp"
 #include "EnemiesGoomba.hpp"
 
-GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this), m_panel(this) {
+GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this), m_panel(this)
+{
 	m_renderOrder = 2;
 	addComponent<SoundComponent>();
 

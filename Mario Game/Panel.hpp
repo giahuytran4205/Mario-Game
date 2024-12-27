@@ -30,8 +30,8 @@ private:
 	TextView m_title;
 	Slider<float> m_totalVolume;
 	Slider<float> m_themeVolume;
-	SpriteRenderer m_backgroundRenderer;
 	RectangleShape m_background;
+	RectangleShape m_background2;
 
 public:
 	Panel(Object* parent = nullptr);

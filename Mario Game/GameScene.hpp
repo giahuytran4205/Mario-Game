@@ -12,6 +12,7 @@
 #include "Slider.hpp"
 #include "TextView.hpp"
 #include "Panel.hpp"
+#include "Slider.hpp"
 
 class GameScene : public Scene {
 private:

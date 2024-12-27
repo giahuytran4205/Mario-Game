@@ -103,6 +103,11 @@ sf::Text& Button::getText() {
 	return m_textView;
 }
 
+TextView& Button::getTextView()
+{
+	return m_textView;
+}
+
 void Button::onHovered()
 {
 	m_textView.setFillColor(darkenColor(m_textColor, 30));

@@ -28,7 +28,7 @@ sf::Vector2f Panel::getTotalVolumeTextSize()
 
 sf::Vector2f Panel::getTotalVolumeSize()
 {
-    return sf::Vector2f(m_background.getSize().x / WIDTH_RATIO * 2.0f, m_background.getSize().y / 2.0f);
+    return sf::Vector2f(m_background.getSize().x / WIDTH_RATIO * 3.0f, m_background.getSize().y / 2.0f);
 }
 
 sf::Vector2f Panel::getThemeVolumeTextSize()
@@ -38,7 +38,7 @@ sf::Vector2f Panel::getThemeVolumeTextSize()
 
 sf::Vector2f Panel::getThemeVolumeSize()
 {
-    return sf::Vector2f(m_background.getSize().x / WIDTH_RATIO * 2.0f, m_background.getSize().y / 2.0f);
+    return getTotalVolumeSize();
 }
 
 sf::Vector2f Panel::getContinueButtonPosition()
@@ -73,8 +73,8 @@ sf::Vector2f Panel::getTotalVolumeTextPosition()
 sf::Vector2f Panel::getTotalVolumePosition()
 {
     return sf::Vector2f(
-        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 3.0f,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 2.0f);
+        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO,
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 2.5f);
 }
 
 sf::Vector2f Panel::getThemeVolumeTextPosition()
@@ -87,22 +87,26 @@ sf::Vector2f Panel::getThemeVolumeTextPosition()
 sf::Vector2f Panel::getThemeVolumePosition()
 {
     return sf::Vector2f(
-        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 3.0f,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 3.0f);
+        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO,
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 3.5f);
 }
 
 Panel::Panel(Object* parent) : 
     Object(parent),
-	m_totalVolume(0, 100, getTotalVolumeSize().x, 0, getTotalVolumePosition(), this),
-	m_themeVolume(0, 100, getThemeVolumeSize().x, 0, getThemeVolumePosition(), this)
+	m_totalVolume(0, 100, 150, 0, {135, 90}, this),
+	m_themeVolume(0, 100, 150, 0, {135, 130}, this)
 {
     this->setEnable(false);
 
     const View& view = GameManager::getInstance()->getRenderWindow().getView();
 
-    m_background.setFillColor(sf::Color::White);
+    m_background.setFillColor(sf::Color::Black);
     m_background.setSize(sf::Vector2f(view.getSize().x / 5.0f * 3.0f, view.getSize().y / 5.0f * 4.0f));
 	m_background.setPosition(sf::Vector2f(view.getCenter().x - m_background.getSize().x / 2.0f, view.getCenter().y - m_background.getSize().y / 2.0f));
+
+    m_background2.setFillColor(sf::Color::Cyan);
+	m_background2.setSize(sf::Vector2f(m_background.getSize().x - 10.0f * 2, m_background.getSize().y - 10.0f * 2));
+    m_background2.setPosition(sf::Vector2f(m_background.getPosition().x + 10.0f, m_background.getPosition().y + 10.0f));
 
     m_continue.setParent(this);
     m_exit.setParent(this);
@@ -133,8 +137,14 @@ Panel::Panel(Object* parent) :
     m_title.getComponent<Transform2D>().setPosition(getTitlePosition());
     m_title.setString("Settings");
 
-    m_totalVolume.setRenderOrder(20);
-	m_themeVolume.setRenderOrder(20);
+    setRenderOrder(20);
+	m_continue.setRenderOrder(21);
+	m_exit.setRenderOrder(30);
+	m_title.setRenderOrder(30);
+    m_continue.getTextView().setRenderOrder(40);
+    m_exit.getTextView().setRenderOrder(40);
+    m_totalVolume.setRenderOrder(40);
+    m_themeVolume.setRenderOrder(40);
 }
 
 Panel::~Panel()
@@ -144,6 +154,7 @@ Panel::~Panel()
 void Panel::render()
 {
 	GameManager::getInstance()->getRenderWindow().draw(m_background);
+    GameManager::getInstance()->getRenderWindow().draw(m_background2);
 }
 
 
