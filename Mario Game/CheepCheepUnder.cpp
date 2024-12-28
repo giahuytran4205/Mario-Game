@@ -100,7 +100,9 @@ void CheepCheepUnder::onCollisionEnter(Collision& col, const Direction& side) {
     if (m_isDead) {
         return; // Không xử lý va chạm nếu đã chết
     }
-
+    if (col.m_entity->isDerivedFrom<Projectile>()) {
+        destroy();
+    }
     if (col.m_entity->isType<Mario>()) {
         if (side == Direction::UP) {
             m_sound.play(SoundTrack::STOMP);

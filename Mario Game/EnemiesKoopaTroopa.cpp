@@ -32,6 +32,9 @@ void EnemiesKoopaTroopa::onCollisionEnter(Collision& col, const Direction& side)
     if (m_isDead) {
         return;
     }
+    if (col.m_entity->isDerivedFrom<Projectile>()) {
+        destroy();
+    }
 
     if (col.m_entity->isType<Mario>()) {
         if (side == Direction::UP) {

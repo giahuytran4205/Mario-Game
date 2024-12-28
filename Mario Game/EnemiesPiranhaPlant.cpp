@@ -16,6 +16,10 @@ EnemiesPiranhaPlant::EnemiesPiranhaPlant(Mario& mario, Object* parent):
 
 void EnemiesPiranhaPlant::onCollisionEnter(Collision& col, const Direction& side)
 {
+	if (col.m_entity->isDerivedFrom<Projectile>()) {
+		destroy();
+	}
+
 	    if (col.m_entity->isType<Mario>()) {
 			col.m_entity->convertTo<Mario>()->dead();
 		// TODO check dead 

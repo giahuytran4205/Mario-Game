@@ -24,6 +24,7 @@ void EnemiesBlooper::onCollisionEnter(Collision& col, const Direction& side)
     if (col.m_entity->isDerivedFrom<Projectile>()) {
         destroy();
     }
+
 }
 
 void EnemiesBlooper::hit(bool isDestroy)
