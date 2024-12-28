@@ -7,8 +7,9 @@ EnemiesKoopaTroopa::EnemiesKoopaTroopa(Object* parent, bool isCanFly):
    
     if (mIsCanFly) {
         mLive = 2;
-        m_transform.setSize(16, 16);
-        m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
+        m_transform.setSize(16, 24);
+        m_anim.loadFromJsonFile("Resources/Animations/parakoopa.json");
+        m_anim.play(0);
     }
     else {
         mLive = 1;

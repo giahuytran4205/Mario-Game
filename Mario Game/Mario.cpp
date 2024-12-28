@@ -350,6 +350,8 @@ void Mario::dead() {
 	m_physics2D.setBaseVelocityY(-0.2);
 	m_autoControl.addWaitForMiliseconds(3000);
 	m_sound.play(SoundTrack::DIE);
+	getComponent<Physics2D>().setStatic(true);  // để mario không bị kẹt animation chết do địch bao vây
+	getComponent<Collision>().setTrigger(true);
 }
 
 void Mario::win() {
