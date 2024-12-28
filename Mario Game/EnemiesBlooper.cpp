@@ -25,6 +25,15 @@ void EnemiesBlooper::onCollisionEnter(Collision& col, const Direction& side)
         destroy();
     }
 
+
+    if (side == Direction::UP) {
+        m_sound.play(SoundTrack::STOMP);
+        destroy();
+        col.m_entity->convertTo<Mario>()->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+    }
+    else {
+        col.m_entity->convertTo<Mario>()->dead();
+    }
 }
 
 void EnemiesBlooper::hit(bool isDestroy)
