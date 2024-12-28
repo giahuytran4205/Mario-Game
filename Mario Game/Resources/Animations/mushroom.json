@@ -1,25 +1,25 @@
-{ "columns":50,
- "image":"Resources/Animations/enemies-4-cropped.png",
- "imageheight":120,
- "imagewidth":808,
+{ "columns":36,
+"image":"Resources/Animations/Items&Objects.png",
+ "imageheight":224,
+ "imagewidth":576,
  "margin":0,
- "name":"enemies-4-cropped",
+ "name":"Items&Objects",
  "spacing":0,
- "tilecount":250,
+ "tilecount":504,
  "tiledversion":"1.11.0",
- "tileheight":24,
+ "tileheight":16,
  "tiles":[
         {
          "animation":[
                 {
-                 "duration":1000,
-                 "tileid":38
+                 "duration":250,
+                 "tileid":0
                 }, 
                 {
-                 "duration":1000,
-                 "tileid":37
+                 "duration":250,
+                 "tileid":36
                 }],
-         "id":38,
+         "id":0,
          "properties":[
                 {
                  "name":"state",

@@ -175,6 +175,7 @@
     <ClCompile Include="EmptyBlock.cpp" />
     <ClCompile Include="EnemiesBillBlaster.cpp" />
     <ClCompile Include="EnemiesBillBlasterBullet.cpp" />
+    <ClCompile Include="EnemiesBlooper.cpp" />
     <ClCompile Include="EnemiesBuzzyBeetle.cpp" />
     <ClCompile Include="EnemiesGoomba.cpp" />
     <ClCompile Include="EnemiesHammer.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="EnemiesKoopaTroopa.cpp" />
     <ClCompile Include="EnemiesLakitu.cpp" />
     <ClCompile Include="EnemiesLavaBubble.cpp" />
+    <ClCompile Include="EnemiesPiranhaPlant.cpp" />
     <ClCompile Include="EnemiesSpiny.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enum.cpp" />
@@ -195,7 +197,10 @@
     <ClCompile Include="AutoControl.cpp" />
     <ClCompile Include="InputField.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemFireAx.cpp" />
+    <ClCompile Include="ItemFireFlower.cpp" />
     <ClCompile Include="ItemMushroom.cpp" />
+    <ClCompile Include="ItemStar.cpp" />
     <ClCompile Include="Jumper.cpp" />
     <ClCompile Include="Lift.cpp" />
     <ClCompile Include="Line.cpp" />
@@ -207,7 +212,6 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Physics2D.cpp" />
-    <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
@@ -248,14 +252,16 @@
     <ClInclude Include="EmptyBlock.hpp" />
     <ClInclude Include="EnemiesBillBlaster.hpp" />
     <ClInclude Include="EnemiesBillBlasterBullet.hpp" />
+    <ClInclude Include="EnemiesBlooper.h" />
     <ClInclude Include="EnemiesBuzzyBeetle.hpp" />
     <ClInclude Include="EnemiesGoomba.hpp" />
-    <ClInclude Include="EnemiesHammer.hpp" />
-    <ClInclude Include="EnemiesHammerBro.hpp" />
+    <ClInclude Include="EnemiesHammer.h" />
+    <ClInclude Include="EnemiesHammerBro.h" />
     <ClInclude Include="EnemiesKoopaTroopa.hpp" />
-    <ClInclude Include="EnemiesLakitu.hpp" />
-    <ClInclude Include="EnemiesLavaBubble.hpp" />
-    <ClInclude Include="EnemiesSpiny.hpp" />
+    <ClInclude Include="EnemiesLakitu.h" />
+    <ClInclude Include="EnemiesLavaBubble.h" />
+    <ClInclude Include="EnemiesPiranhaPlant.h" />
+    <ClInclude Include="EnemiesSpiny.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enum.hpp" />
     <ClInclude Include="EventSystem.hpp" />
@@ -268,7 +274,10 @@
     <ClInclude Include="AutoControl.hpp" />
     <ClInclude Include="InputField.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="ItemFireAx.hpp" />
+    <ClInclude Include="ItemFireFlower.hpp" />
     <ClInclude Include="ItemMushroom.h" />
+    <ClInclude Include="ItemStar.hpp" />
     <ClInclude Include="Jumper.hpp" />
     <ClInclude Include="Lift.hpp" />
     <ClInclude Include="Line.hpp" />
@@ -279,7 +288,6 @@
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleSystem.hpp" />
     <ClInclude Include="Physics2D.hpp" />
-    <ClInclude Include="PiranhaPlant.hpp" />
     <ClInclude Include="Portal.hpp" />
     <ClInclude Include="Projectile.hpp" />
     <ClInclude Include="QuestionBlock.hpp" />

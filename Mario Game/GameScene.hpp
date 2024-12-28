@@ -33,5 +33,5 @@ public:
 	void render() override;
 	void handleEvent(const Event& event) override;
 	void loadMap(const string& filename);
-	Mario* getMario(); // Khai báo hàm getMario
+	Mario& getMario(); // Khai báo hàm getMario
 };

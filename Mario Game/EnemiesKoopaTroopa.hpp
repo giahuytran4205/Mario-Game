@@ -21,9 +21,13 @@ private:
     bool mIsStep2 = false;
     bool mIsStep3 = false;
     int mTimeUpdate = 0;
+    bool mIsCanFly{ false };
+    int mLive{ 1 };
 
+    float m_speedY = -0.2f;
+    int m_dirY = 1;
 public:
-    EnemiesKoopaTroopa(Object* parent = nullptr);
+    EnemiesKoopaTroopa(Object* parent = nullptr, bool isCanFly = false);
     ~EnemiesKoopaTroopa();
     void onCollisionEnter(Collision& col, const Direction& side) override;
     void update() override;

@@ -7,8 +7,6 @@
 #include "Random.hpp"
 #include "Item.hpp"
 #include "Enemy.hpp"
-#include "Physics2D.hpp"
-#include "ECS.hpp"
 
 class EnemiesBillBlasterBullet : public Enemy
 {
@@ -17,6 +15,7 @@ private:
 	Vector2f mPosSrc;
 	float mSpeed = 0.05;
 	Mario& mMario;
+	bool m_isDead;
 
 public:
 	EnemiesBillBlasterBullet(Mario& mario, Object* parent = nullptr);

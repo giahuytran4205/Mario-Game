@@ -1,10 +1,9 @@
-#include "EnemiesHammer.hpp"
+#include "EnemiesHammer.h"
 
 EnemiesHammer::EnemiesHammer(Object* parent) : Enemy(parent, false)
 {
 	m_transform.setSize(16, 16);
-	m_anim.loadFromJsonFile("Resources/Animations/hammer.json");
-	m_anim.play(0);
+	m_anim.loadFromJsonFile("Resources/Animations/Fireball.json");
 	m_sprite.setParent(this);
 	m_sprite.getComponent<Transform2D>().setAnchor(0, 0);
 	m_sprite.setRenderOrder(3);

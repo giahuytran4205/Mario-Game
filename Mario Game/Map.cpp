@@ -13,6 +13,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+
 using namespace std;
 using namespace sf;
 
@@ -71,6 +72,14 @@ const Texture& Map::getTile(int id) {
 }
 
 void Map::loadObjectInGroup(Environment environment, json::object& group) {
+	// set random question
+
+	auto randomQuestion = std::make_shared<RandomQuestion>();
+	randomQuestion->setPerMushroom(50);
+	randomQuestion->setPerCoin(0);
+	randomQuestion->setPerFlower(25);
+	randomQuestion->setPerStar(25);
+
 	for (auto& i : group["layers"].as_array()) {
 		json::object layer = i.as_object();
 		if (layer["name"].as_string() == "Brick") {
@@ -98,6 +107,7 @@ void Map::loadObjectInGroup(Environment environment, json::object& group) {
 				QuestionBlock* questionBlock = new QuestionBlock(environment, this);
 				questionBlock->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
 
+				questionBlock->setRandom(randomQuestion);
 				m_objects.push_back(questionBlock);
 			}
 		}

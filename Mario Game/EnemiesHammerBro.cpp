@@ -1,4 +1,4 @@
-#include "EnemiesHammerBro.hpp"
+#include "EnemiesHammerBro.h"
 
 // TODO add 2 platform
 EnemiesHammerBro::EnemiesHammerBro(Mario& mario, const Vector2f pos, Object* parent):
@@ -6,7 +6,7 @@ EnemiesHammerBro::EnemiesHammerBro(Mario& mario, const Vector2f pos, Object* par
 	mMario(mario)
 {
 	m_transform.setSize(16, 16);
-	m_anim.loadFromJsonFile("Resources/Animations/hammer-bros.json");
+	m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
 	m_sprite.setParent(this);
 	m_sprite.getComponent<Transform2D>().setAnchor(0, 0);
 	m_sprite.setRenderOrder(3);

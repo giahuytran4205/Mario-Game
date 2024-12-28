@@ -65,7 +65,6 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_ability = Ability::REGULAR;
 
 	m_teleportTime = 0;
-
 }
 
 Mario::~Mario() {
@@ -183,7 +182,8 @@ void Mario::update() {
 	if (m_curFireCD < 0)
 		m_curFireCD = 0;
 	
-
+	m_onWall = false;
+	m_onJumper = false;
 }
 
 void Mario::render() {
@@ -227,12 +227,8 @@ void Mario::handleMovement() {
 	if (Keyboard::isKeyPressed(Keyboard::G)) {
 		setAbility(Ability::FIERY);
 	}
-
-	if (Keyboard::isKeyPressed(Keyboard::I)) {
-		setAbility(Ability::SUPER);
-	}
 	if (Keyboard::isKeyPressed(Keyboard::O)) {
-		setAbility(Ability::INVINCIBLE);
+		setAbility(Ability::SUPER);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
 		fire();

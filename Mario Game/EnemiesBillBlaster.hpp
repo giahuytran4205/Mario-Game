@@ -8,6 +8,8 @@ class EnemiesBillBlaster : public Enemy
 
 	std::vector<EnemiesBillBlasterBullet*> mBullet;
 
+	Vector2f mPos{ -1, -1 };
+
 public:
 	EnemiesBillBlaster(Mario& mario, Object* parent);
 

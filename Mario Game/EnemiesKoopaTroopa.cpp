@@ -1,17 +1,28 @@
 #include "EnemiesKoopaTroopa.hpp"
-#include "enemiesGoomba.hpp"
 
 
-EnemiesKoopaTroopa::EnemiesKoopaTroopa(Object* parent) :
-    Enemy(parent)
+EnemiesKoopaTroopa::EnemiesKoopaTroopa(Object* parent, bool isCanFly):
+    Enemy(parent), mIsCanFly(isCanFly)
 {
-    m_transform.setSize(16, 24);
-    m_anim.loadFromJsonFile("Resources/Animations/koopa.json");
+   
+    if (mIsCanFly) {
+        mLive = 2;
+        m_transform.setSize(16, 16);
+        m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
+    }
+    else {
+        mLive = 1;
+        m_transform.setSize(16, 24);
+        m_anim.loadFromJsonFile("Resources/Animations/koopa.json");
+    }
+   
     m_anim.play(0);
     m_sprite.setParent(this);
     m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
     m_sprite.setRenderOrder(3);
     m_transform.setAnchor(0.5, 0.5);
+    m_physics.setEnableGravity(true);
+
 }
 
 EnemiesKoopaTroopa::~EnemiesKoopaTroopa() {
@@ -26,9 +37,17 @@ void EnemiesKoopaTroopa::onCollisionEnter(Collision& col, const Direction& side)
         if (side == Direction::UP) {
             m_sound.play(SoundTrack::STOMP);
             if (mState == NORMAL) {
-                hit(true);
-                m_transform.setSize(16, 16);
-                mIsStep2 = true;
+                mLive--;
+                if (mLive <=  0) {
+                    hit(true);
+                    m_transform.setSize(16, 16);
+                    mIsStep2 = true;
+                }
+                else {
+                    m_transform.setSize(16, 24);
+                    m_anim.loadFromJsonFile("Resources/Animations/koopa.json");
+                }
+
             }
             else if (mState == STEP_2) {
                 mIsStep3 = true;
@@ -124,6 +143,13 @@ void EnemiesKoopaTroopa::update() {
     }
 
     if (mState == NORMAL) {
+        if (mLive >= 2) {
+            m_physics.setBaseVelocityY(m_speedY * m_dirY);
+            //m_physics.setAcceleration(Vector2f(0, 0.001 * m_dir));
+        }
+        else {
+            m_physics.setBaseVelocityY(0);
+        }
         m_physics.setBaseVelocityX(m_speed * m_dir);
         if (m_dir < 0) {
             m_sprite.setScale(-1, 1);

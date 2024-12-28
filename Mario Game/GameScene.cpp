@@ -8,14 +8,17 @@
 #include "CheepCheepUnder.hpp"
 //#include "PiranhaPlant.hpp"
 
-#include "EnemiesHammerBro.hpp"
-#include "EnemiesLakitu.hpp"
+#include "EnemiesHammerBro.h"
+#include "EnemiesLakitu.h"
 
 #include "EnemiesBillBlaster.hpp"
+#include "EnemiesPiranhaPlant.h"
+#include "EnemiesBlooper.h"
 
-Mario* GameScene::getMario() {
-	std::cout << n_mario << " ";
-	return n_mario;
+#include "Random.hpp"
+
+Mario& GameScene::getMario() {
+	return m_mario;
 }
 
 
@@ -91,10 +94,10 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	m_countdownText[0].setString("TIME");
 	m_livesText[0].setString("LIVES");
 
-		EnemiesGoomba* goomba = new EnemiesGoomba(this);
-		goomba->getComponent<Transform2D>().setPosition(500, 350);
+		//EnemiesGoomba* goomba = new EnemiesGoomba(this);
+		//goomba->getComponent<Transform2D>().setPosition(300, 350);
 
-	//EnemiesKoopaTroopa* koopa1 = new EnemiesKoopaTroopa(this);
+	//EnemiesKoopaTroopa* koopa1 = new EnemiesKoopaTroopa(this, true);
 	//koopa1->getComponent<Transform2D>().setPosition(450, 350);
 
 
@@ -104,38 +107,44 @@ GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this) {
 	//EnemiesBuzzyBeetle* buzzy = new EnemiesBuzzyBeetle(this);
 	//buzzy->getComponent<Transform2D>().setPosition(250, 350);
 
-	////EnemiesPiranhaPlant* Pi = new EnemiesPiranhaPlant(this);
-	////Pi->getComponent<Transform2D>().setPosition(155, 400);
+	//EnemiesPiranhaPlant* Pi = new EnemiesPiranhaPlant(m_mario, this);
+	//Pi->getComponent<Transform2D>().setPosition(155, 400);
 
 
-	//	EnemiesCheepCheepNormal* cheep = new EnemiesCheepCheepNormal(nullptr, this);
-	//	cheep->getComponent<Transform2D>().setPosition(500, 390);
+		//EnemiesCheepCheepNormal* cheep = new EnemiesCheepCheepNormal(nullptr, this);
+		//cheep->getComponent<Transform2D>().setPosition(500, 390);
 
-	//	EnemiesCheepCheepNormal* cheep1 = new EnemiesCheepCheepNormal(nullptr, this);
-	//	cheep1->getComponent<Transform2D>().setPosition(550, 440);
+		//EnemiesCheepCheepNormal* cheep1 = new EnemiesCheepCheepNormal(nullptr, this);
+		//cheep1->getComponent<Transform2D>().setPosition(550, 440);
 
 		//EnemiesCheepCheepNormal* cheep2 = new EnemiesCheepCheepNormal(nullptr, this);
 		//cheep2->getComponent<Transform2D>().setPosition(450, 350);
 
-		//CheepCheepUnder* cheep3 = new CheepCheepUnder(nullptr, this);
-		//cheep3->getComponent<Transform2D>().setPosition(500, 390);
+		//CheepCheepUnder* cheep3 = new CheepCheepUnder(m_mario, this);
+		//cheep3->getComponent<Transform2D>().setPosition(300, 500);
 
-		//CheepCheepUnder* cheep4 = new CheepCheepUnder(nullptr, this);
-		//cheep4->getComponent<Transform2D>().setPosition(550, 440);
+		//CheepCheepUnder* cheep4 = new CheepCheepUnder(m_mario, this);
+		//cheep4->getComponent<Transform2D>().setPosition(550, 500);
 
-		//CheepCheepUnder* cheep5 = new CheepCheepUnder(nullptr, this);
-		//cheep5->getComponent<Transform2D>().setPosition(450, 350);
+		//CheepCheepUnder* cheep5 = new CheepCheepUnder(m_mario, this);
+		//cheep5->getComponent<Transform2D>().setPosition(450, 500);
 
 
 
 		//EnemiesHammerBro* hammerBro = new EnemiesHammerBro(m_mario, Vector2f( 950, 350 ), this);
 		//hammerBro->getComponent<Transform2D>().setPosition(950, 350);
 
-		EnemiesLakitu* lakitu = new EnemiesLakitu(m_mario, Vector2f(450, 350), this);
-		lakitu->getComponent<Transform2D>().setPosition(450, 350);
+		//EnemiesLakitu* lakitu = new EnemiesLakitu(m_mario, Vector2f(450, 350), this);
+		//lakitu->getComponent<Transform2D>().setPosition(450, 350);
 
-		//EnemiesBillBlaster* billBlaster = new EnemiesBillBlaster(m_mario, this);
-		//billBlaster->getComponent<Transform2D>().setPosition(680, 440);
+		EnemiesBillBlaster* billBlaster = new EnemiesBillBlaster(m_mario, this);
+		billBlaster->getComponent<Transform2D>().setPosition(250, 350);
+
+		EnemiesPiranhaPlant* piranhaPlant = new EnemiesPiranhaPlant(m_mario, this);
+		piranhaPlant->getComponent<Transform2D>().setPosition(749, 376);
+
+		EnemiesBlooper* blooper = new EnemiesBlooper(m_mario, this);
+		blooper->getComponent<Transform2D>().setPosition(250, 250);
 }
 
 GameScene::~GameScene() {}

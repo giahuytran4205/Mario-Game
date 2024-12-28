@@ -31,7 +31,7 @@ private:
 	int mMinActiveX, mMaxActiveX;
 	State mState = RUNING_LEFT;
 	bool mIsStep{ false };
-
+	bool m_isDead;
 	int mCnt{ 0 };
 
 	/*std::vector<std::shared_ptr<EnemiesSpiny>> mSpinys;*/

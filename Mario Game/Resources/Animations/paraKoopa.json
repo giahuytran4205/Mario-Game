@@ -1,5 +1,5 @@
 { "columns":50,
- "image":"Resources/Animations/enemies-4-cropped.png",
+"image":"Resources/Animations/enemies-4-cropped.png",
  "imageheight":120,
  "imagewidth":808,
  "margin":0,
@@ -12,14 +12,14 @@
         {
          "animation":[
                 {
-                 "duration":1000,
-                 "tileid":38
+                 "duration":200,
+                 "tileid":8
                 }, 
                 {
-                 "duration":1000,
-                 "tileid":37
+                 "duration":200,
+                 "tileid":9
                 }],
-         "id":38,
+         "id":8,
          "properties":[
                 {
                  "name":"state",

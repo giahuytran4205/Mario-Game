@@ -1,8 +1,12 @@
 #include "QuestionBlock.hpp"
 #include "ItemMushroom.h"
-#include "EnemiesSpiny.hpp"
+#include "EnemiesSpiny.h"
+#include "ItemFireFlower.hpp"
+#include "ItemStar.hpp"
 
-QuestionBlock::QuestionBlock(Environment environment, Object* parent) : Block(parent) {
+
+QuestionBlock::QuestionBlock(Environment environment, Object* parent, const RandomQuestion::Type type) :
+	Block(parent), mType(type) {
 	m_isHide = false;
 	m_renderOrder = 4;
 	m_transform.setSize(16, 16);
@@ -19,6 +23,8 @@ QuestionBlock::QuestionBlock(Environment environment, Object* parent) : Block(pa
 		m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(384, 64, 16, 16)));
 	if (environment == Environment::UNDERWATER)
 		m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(384, 96, 16, 16)));
+
+	m_sprite.setRenderOrder(3);
 }
 
 QuestionBlock::~QuestionBlock() {
@@ -51,24 +57,84 @@ void QuestionBlock::hit() {
 	//RANDOM ITEM
 	//int random = std::rand() % 4;
 
-	auto mushroom = new ItemMushroom(ItemMushroom::GREEN, this);
-	auto Post = m_transform.getPosition();	
-	auto Size = mushroom->getComponent<Transform2D>().getSize().y;
-	//mushroom->getComponent<Transform2D>().setPosition(Post.x, Post.y - Size);
-
-	mushroom->getComponent<Transform2D>().setWorldPosition(Post.x ,
-		Post.y + Size);
-
-	std::cout << Post.y << "dadas " << Size << "\n";
-
-	mushroom->setActive(Vector2f(m_transform.getPosition().x, m_transform.getPosition().y + Size));
+	//auto mushroom = new ItemMushroom(ItemMushroom::GREEN, this->getParent());
+	//auto Post = m_transform.getPosition();	
+	//auto Size = mushroom->getComponent<Transform2D>().getSize().y;
+	//mushroom->getComponent<Transform2D>().setWorldPosition(Post.x - mushroom->getTransform2D().getSize().x/2,
+	//	Post.y - Size);
+	//mushroom->setActive(Vector2f(m_transform.getPosition().x - mushroom->getTransform2D().getSize().x / 2, Post.y - 1.5*Size));
 
 
-	//auto spiny = new EnemiesSpiny(this->getParent());
-	//const bool isRight = true;
-	//spiny->getComponent<Transform2D>().setWorldPosition(Post.x + ((isRight ? 1 : -1) * spiny->getTransform2D().getSize().x),
-	//	Post.y - spiny->getTransform2D().getSize().y);
-	//spiny->setActive(Post, { Post.x + 100, Post.y }, isRight);
+	//{
+	//	auto fireFlower = new ItemFireFlower(this->getParent());
+	//	auto Post = m_transform.getPosition();
+	//	auto Size = fireFlower->getComponent<Transform2D>().getSize().y;
+	//	fireFlower->getComponent<Transform2D>().setWorldPosition(Post.x - fireFlower->getTransform2D().getSize().x / 2,
+	//		Post.y - Size);
+	//	fireFlower->setActive(Vector2f(m_transform.getPosition().x - fireFlower->getTransform2D().getSize().x / 2, Post.y - 1.5 * Size));
+
+	//}
+
+	//{
+	//	auto star = new ItemStar(this->getParent());
+	//	auto Post = m_transform.getPosition();
+	//	auto Size = star->getComponent<Transform2D>().getSize().y;
+	//	star->getComponent<Transform2D>().setWorldPosition(Post.x - star->getTransform2D().getSize().x / 2,
+	//		Post.y - Size);
+	//	star->setActive(Vector2f(m_transform.getPosition().x - star->getTransform2D().getSize().x / 2, Post.y - 1.5 * Size));
+
+	//}
+
+	// check type
+	int type = 0;
+	
+	if (mType != RandomQuestion::UNKNOW) {
+		type = mType;
+	}
+	else if(mRadom == nullptr){
+		type = RandomQuestion::COIN;
+	}
+	else {
+		type = mRadom->getRadomType();
+	}
+	switch (type)
+	{
+	case RandomQuestion::COIN: {
+		// TODO
+		break;
+	}
+	case RandomQuestion::MUSH_ROOM: {
+		auto mushroom = new ItemMushroom(ItemMushroom::GREEN, this->getParent());
+		auto Post = m_transform.getPosition();	
+		auto Size = mushroom->getComponent<Transform2D>().getSize().y;
+		mushroom->getComponent<Transform2D>().setWorldPosition(Post.x - mushroom->getTransform2D().getSize().x/2,
+			Post.y - Size);
+		mushroom->setActive(Vector2f(m_transform.getPosition().x - mushroom->getTransform2D().getSize().x / 2, Post.y - 1.5*Size));
+
+		break;
+	}
+	case RandomQuestion::FLOWER: {
+		auto fireFlower = new ItemFireFlower(this->getParent());
+		auto Post = m_transform.getPosition();
+		auto Size = fireFlower->getComponent<Transform2D>().getSize().y;
+			fireFlower->getComponent<Transform2D>().setWorldPosition(Post.x - fireFlower->getTransform2D().getSize().x / 2,
+			Post.y - Size);
+		fireFlower->setActive(Vector2f(m_transform.getPosition().x - fireFlower->getTransform2D().getSize().x / 2, Post.y - 1.5 * Size));
+
+		break;
+	}
+	case RandomQuestion::STAR: {
+		auto star = new ItemStar(this->getParent());
+		auto Post = m_transform.getPosition();
+		auto Size = star->getComponent<Transform2D>().getSize().y;
+		star->getComponent<Transform2D>().setWorldPosition(Post.x - star->getTransform2D().getSize().x / 2,
+			Post.y - Size);
+		star->setActive(Vector2f(m_transform.getPosition().x - star->getTransform2D().getSize().x / 2, Post.y - 1.5 * Size));
+		break;
+	}
+	default:
+		break;
+	}
 
 }
 
@@ -76,4 +142,17 @@ void QuestionBlock::setHide(bool isHide) {
 	m_isHide = isHide;
 	m_sprite.setEnable(!isHide);
 	getComponent<Collision>().setTrigger(isHide);
+}
+
+void QuestionBlock::setRandom(std::shared_ptr<RandomQuestion> radom)
+{
+	mRadom = radom;
+	if (mRadom != nullptr) {
+		mType = RandomQuestion::UNKNOW;
+	}
+}
+
+void QuestionBlock::setFixType(RandomQuestion::Type type)
+{
+	mType = type;
 }

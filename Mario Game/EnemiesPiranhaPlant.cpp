@@ -1,92 +1,63 @@
 #include "EnemiesPiranhaPlant.h"
 
-EnemiesPiranhaPlant::EnemiesPiranhaPlant(Mario& mario, Object* parent): Item(parent), mMario(mario)
+EnemiesPiranhaPlant::EnemiesPiranhaPlant(Mario& mario, Object* parent): 
+	Enemy(parent, false), mMario(mario)
 {
-	m_transform.setSize(16, 16);
-	m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
+	m_transform.setSize(16, 24);
+	m_anim.loadFromJsonFile("Resources/Animations/pi.json");
+	m_anim.play(1);
 	m_sprite.setParent(this);
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
 	m_sprite.setRenderOrder(3);
 	m_transform.setAnchor(0.5, 0.5);
+	m_physics.setEnableGravity(false);
+	m_sprite.setRenderOrder(0);
 }
 
 void EnemiesPiranhaPlant::onCollisionEnter(Collision& col, const Direction& side)
 {
 	    if (col.m_entity->isType<Mario>()) {
-        if (side == Direction::UP) {
-			mIsMarioOnTop = true;
-        }
+			col.m_entity->convertTo<Mario>()->dead();
+		// TODO check dead 
     }
 	
 }
 
 void EnemiesPiranhaPlant::update()
 {
+	if (m_autoControl.isControlled())
+		return;
+
 	const auto posMario = mMario.getPos();
 	auto Post = m_transform.getPosition();
-
-	if(!(mIsMarioOnTop && mState == HIDDEN)) {
-		
-		mTimeCnt++;
+	if (posYHide < 0) {
+		auto Size = this->getComponent<Transform2D>().getSize().y;
+		posYHide = Post.y + Size;
+		posYTop = Post.y;
 	}
-	mIsMarioOnTop = false;
-	
+
+	const auto Distance = std::abs(posMario.x - Post.x);
+	const bool isMarioNear = Distance < 50;
+
 	switch (mState) {
 	case HIDDEN: {
-		if (mTimeCnt >= TIME_HIDE) {
-			mState = SHOWING;
-			mTimeCnt = 0;
-			 m_anim.loadFromJsonFile("Resources/Animations/Fireball.json");
-			 setHide(false);
-		}	
+		if (!isMarioNear) {
+			m_autoControl.addMoveByPoint({ Post.x, posYTop }, TIME_RAISING, { 0, 0 }, [&](int time) {});
+			mState = SHOW;
+		}
 		break;
 	}
 	case SHOW: {
-		if (mTimeCnt >= TIME_SHOW) {
-			mState = HIDING;
-			mTimeCnt = 0;
-			m_anim.loadFromJsonFile("Resources/Animations/Fireball.json");
-			setHide(false);
-		}	
+
+		m_autoControl.addMoveByPoint({ Post.x, posYHide }, TIME_RAISING, { 0, 0 }, [&](int time) {});
+		mState = HIDDEN;
 		break;
 	}
-	case HIDING: {
-		if (mTimeCnt >= TIME_HIDE) {
-			mState = HIDDEN;
-			mTimeCnt = 0;
-			setHide(true);
-		}	
-		break;
-	} 
-	case SHOWING: {
-		if (mTimeCnt >= TIME_SHOWING) {
-				mState = SHOW;
-				mTimeCnt = 0;
-				m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
-				setHide(false);
-			}
-		m_transform.setPosition(Post.x, Post.y - 0.01);	
-		break;
-	}
+
 	default:
 		break;
 	}
-	//if(mState == HIDDEN) {
-	//	setHide(true);
-	//}
-	//else {
-	//	setHide(false);
-	//}
-	// if( mState == SHOWING) {
-	// 	m_transform.setPosition(Post.x, Post.y - 0.01);
-	// }
-	if (mState == SHOWING || mState == HIDING) {
-		//m_anim.loadFromJsonFile("Resources/Animations/Fireball.json");
-	}
-	else {
-		//m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
 
-	}
 }
 
 EnemiesPiranhaPlant::State EnemiesPiranhaPlant::getState()

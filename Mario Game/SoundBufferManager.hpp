@@ -44,6 +44,7 @@ private:
 		{ SoundTrack::FIREWORK,		"Resources/Sounds/fireworks.mp3" },
 		{ SoundTrack::PAUSE,		"Resources/Sounds/pause.mp3" },
 		{ SoundTrack::STOMP,		"Resources/Sounds/stomp.mp3" },
+		{ SoundTrack::ONE_UP,		"Resources/Sounds/1-up.mp3" },
 	};
 
 	vector<SoundBuffer> m_soundBufs;

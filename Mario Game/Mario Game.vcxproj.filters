@@ -237,13 +237,19 @@
     <ClCompile Include="AnimationTrack.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
-    <ClCompile Include="PiranhaPlant.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CheepCheepNormal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CheepCheepUnder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesBillBlaster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesBillBlasterBullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesBlooper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnemiesHammer.cpp">
@@ -258,16 +264,22 @@
     <ClCompile Include="EnemiesLavaBubble.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EnemiesPiranhaPlant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="EnemiesSpiny.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemiesBillBlasterBullet.cpp">
+    <ClCompile Include="ItemFireAx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemiesBillBlaster.cpp">
+    <ClCompile Include="ItemFireFlower.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ItemMushroom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemStar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -452,37 +464,49 @@
     <ClInclude Include="Fireball.hpp">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
-    <ClInclude Include="PiranhaPlant.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CheepCheepNormal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CheepCheepUnder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemiesHammer.hpp">
+    <ClInclude Include="EnemiesBillBlaster.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemiesHammerBro.hpp">
+    <ClInclude Include="EnemiesBillBlasterBullet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemiesLakitu.hpp">
+    <ClInclude Include="EnemiesBlooper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemiesLavaBubble.hpp">
+    <ClInclude Include="EnemiesHammer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemiesSpiny.hpp">
+    <ClInclude Include="EnemiesHammerBro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesLakitu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesLavaBubble.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesPiranhaPlant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesSpiny.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFireAx.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFireFlower.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ItemMushroom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemiesBillBlaster.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemiesBillBlasterBullet.hpp">
+    <ClInclude Include="ItemStar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

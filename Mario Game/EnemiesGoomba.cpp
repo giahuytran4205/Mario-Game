@@ -1,8 +1,9 @@
 #include "EnemiesGoomba.hpp"
 #include "EnemiesBuzzyBeetle.hpp"
 #include "EnemiesKoopaTroopa.hpp"
+#include "GameScene.hpp"
 
-EnemiesGoomba::EnemiesGoomba(Object* parent): Enemy(parent, false){
+EnemiesGoomba::EnemiesGoomba(Object* parent): Enemy(parent, true){
     m_transform.setSize(16, 16);
     m_anim.loadFromJsonFile("Resources/Animations/Goomba.json");
 	m_anim.play(State::WALK);
@@ -23,14 +24,54 @@ void EnemiesGoomba::onCollisionEnter(Collision& col, const Direction& side)
 	}
 
     if (col.m_entity->isType<Mario>()) {
-        if (side == Direction::UP) {
-            m_sound.play(SoundTrack::STOMP);
-            hit(true);
-			col.m_entity->convertTo<Mario>()->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+        // get mario
+        auto gameScenen = dynamic_cast<GameScene*>(this->getParent());
+
+        if (gameScenen != nullptr) {
+            auto& mario = gameScenen->getMario();
+            auto stateMario = mario.getAbility();
+            switch (stateMario)
+            {
+            case Mario::Ability::REGULAR:  /////////////////từ khúc này trở đi là a ứng biến theo logic thôi chứ không rõ cách 
+            {
+                if (side == Direction::UP) {
+                    m_sound.play(SoundTrack::STOMP);
+                    hit(true);
+                    col.m_entity->convertTo<Mario>()->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+                }
+                else {
+                    col.m_entity->convertTo<Mario>()->dead();
+                }
+                break;
+            }
+            case Mario::Ability::SUPER:
+            {
+                if (side == Direction::UP) {
+                    m_sound.play(SoundTrack::STOMP);
+                    hit(true);
+                    col.m_entity->convertTo<Mario>()->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+                }
+                else {
+                    // TODO
+                    mario.setAbility(Mario::Ability::REGULAR);
+                }
+                break;
+            }
+            case Mario::Ability::FIERY:
+            {
+                break;
+            }
+            case Mario::Ability::INVINCIBLE:
+            {
+                break;
+            }
+
+
+            default:
+                break;
+            }
         }
-        else {
-            col.m_entity->convertTo<Mario>()->dead();
-        }
+
      
     }
     else if (col.m_entity->isDerivedFrom<Block>()) {

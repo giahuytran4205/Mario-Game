@@ -1,5 +1,5 @@
 { "columns":36,
-"image":"Resources/Animations/Items&Objects.png",
+ "image":"THIS\/Mario-Game\/Mario Game\/Resources\/Animations\/Items&Objects.png",
  "imageheight":224,
  "imagewidth":576,
  "margin":0,
@@ -12,22 +12,22 @@
         {
          "animation":[
                 {
-                 "duration":50,
-                 "tileid":108
+                 "duration":250,
+                 "tileid":252
                 }, 
                 {
-                 "duration":50,
-                 "tileid":109
+                 "duration":250,
+                 "tileid":253
                 }, 
                 {
-                 "duration":50,
-                 "tileid":110
+                 "duration":250,
+                 "tileid":254
                 }, 
                 {
-                 "duration":50,
-                 "tileid":111
+                 "duration":250,
+                 "tileid":255
                 }],
-         "id":108,
+         "id":252,
          "properties":[
                 {
                  "name":"state",

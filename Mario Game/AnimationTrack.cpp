@@ -11,7 +11,7 @@ bool AnimationTrack::isLoop() const {
 int AnimationTrack::getExitTime() const {
     return m_exitTime;
 }
- 
+    
 void AnimationTrack::setEnableExitTime(bool isEnable) {
     m_hasExitTime = isEnable;
 } 

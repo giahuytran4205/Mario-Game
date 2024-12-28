@@ -1,5 +1,5 @@
 { "columns":36,
-"image":"Resources/Animations/Items&Objects.png",
+ "image":"Resources/Animations/Items&Objects.png",
  "imageheight":224,
  "imagewidth":576,
  "margin":0,
@@ -13,21 +13,21 @@
          "animation":[
                 {
                  "duration":50,
-                 "tileid":108
+                 "tileid":72
                 }, 
                 {
                  "duration":50,
-                 "tileid":109
+                 "tileid":73
                 }, 
                 {
                  "duration":50,
-                 "tileid":110
+                 "tileid":74
                 }, 
                 {
                  "duration":50,
-                 "tileid":111
+                 "tileid":75
                 }],
-         "id":108,
+         "id":72,
          "properties":[
                 {
                  "name":"state",

@@ -23,9 +23,10 @@ private:
 	bool m_onWall{ false };
 	int mTimeUpdate{ 0 };
 	State mState{ NORMAL };
+	bool mIsCanFly{ false };
 	//Physics2D& m_physics2D;
 public:
-	EnemiesKoopaTroopa( Object* parent = nullptr);
+	EnemiesKoopaTroopa( Object* parent = nullptr, bool isCanFly = false);
 	~EnemiesKoopaTroopa();
 
 	void onCollisionEnter(Collision& col, const Direction& side) override;
