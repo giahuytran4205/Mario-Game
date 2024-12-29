@@ -94,7 +94,7 @@ sf::Vector2f Panel::getThemeVolumePosition()
 Panel::Panel(Object* parent) : 
     Object(parent),
 	m_totalVolume(0, 100, 150, 0, {135, 90}, this),
-	m_themeVolume(0, 100, 150, 0, {135, 130}, this)
+	m_themeVolume(0, 100, 150, 0, {135, 120}, this)
 {
     this->setEnable(false);
 
