@@ -7,7 +7,7 @@
 #include <iostream>
 #include <sstream>
 
-constexpr int INPUTFIELD_DEFAULT_RENDER_ORDER = 0;
+constexpr int INPUTFIELD_DEFAULT_RENDER_ORDER = 10;
 
 class InputField : public GUI
 {

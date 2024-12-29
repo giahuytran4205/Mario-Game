@@ -9,7 +9,7 @@ void InputField::adjustTextPosCharSizeInBox()
 	float boxHeight = m_box.getSize().y;
 	float boxWidth = m_box.getSize().x;
 
-	m_text.setCharacterSize(20);
+	m_text.setCharacterSize(12);
 
 	while (true)
 	{
@@ -29,8 +29,6 @@ void InputField::adjustTextPosCharSizeInBox()
 	float textY = m_box.getPosition().y + (boxHeight - textBounds.height) / 3.0f;
 	m_text.setPosition(textX, textY);
 	m_text.setString("");
-
-	m_transform.getRect() = { m_box.getPosition().x, m_box.getPosition().y, m_box.getSize().x,  m_box.getSize().y };
 }
 
 InputField::InputField(Object* parent)
@@ -39,7 +37,7 @@ InputField::InputField(Object* parent)
 
 	this->setRenderOrder(INPUTFIELD_DEFAULT_RENDER_ORDER);
 
-	this->configure(sf::Vector2f(0, 0), sf::Vector2f(0, 0), sf::Font());
+	this->configure(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(200.0f, 10.0f), FontManager::getInstance()->getFont("ARIAL"));
 }
 
 InputField::InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, Object* parent)
@@ -61,6 +59,7 @@ void InputField::configure(const sf::Vector2f& position, const sf::Vector2f& siz
 
 	m_text.setFont(font);
 	this->adjustTextPosCharSizeInBox();
+	getComponent<Transform2D>().setRect(position.x, position.y, size.x, size.y);
 	m_text.setFillColor(sf::Color::Black);
 
 	m_cursor.setSize(sf::Vector2f(2.f, m_text.getCharacterSize()));
