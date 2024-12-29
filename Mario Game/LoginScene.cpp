@@ -41,7 +41,7 @@ sf::Vector2f LoginScene::getPasswordTextViewSize()
 sf::Vector2f LoginScene::getTitleTextViewSize()
 {
 	sf::Vector2f size = GameManager::getInstance()->getView().getSize();
-	size.x = size.x / WIDTH_RATIO * 4.5f;
+	size.x = size.x / WIDTH_RATIO * 6.5f;
 	size.y = size.y / HEIGHT_RATIO * 2.0f;
 	return size;
 }
@@ -133,8 +133,8 @@ LoginScene::LoginScene() :
 		});
 
 	m_title.setParent(this);
-	m_title.setFont(FontManager::getInstance()->getFont("ARIAL"));
-	m_title.setCharacterSize(18);
+	m_title.setFont(FontManager::getInstance()->getFont("SUPERMARIO256"));
+	m_title.setCharacterSize(22);
 	m_title.getComponent<Transform2D>().setAnchor(0.5f, 0.5f);
 	m_title.getComponent<Transform2D>().setPosition(getTitleTextViewPosition());
 	m_title.getComponent<Transform2D>().setSize(getTitleTextViewSize());
