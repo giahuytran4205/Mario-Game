@@ -83,7 +83,9 @@ public:
 				i(m_value);
 		}
 
-		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.left, 0 });
+		if (m_handle.isOnDrag())
+			m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.left, 0 });
+
 		m_fillArea.setScale({ (T)m_value / (m_maxVal - m_minVal), 1 });
 	}
 
