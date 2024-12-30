@@ -181,9 +181,9 @@ public:
 	static void removeEntity(Object* entity);
 };
 
-template<typename T>
-T& Instantiate() {
-	unique_ptr<T> ptr = make_unique<T>();
+template<typename T, typename... TArgs>
+T& Instantiate(TArgs&&... mArgs) {
+	unique_ptr<T> ptr = make_unique<T>(forward<TArgs>(mArgs)...);
 	T* res = ptr.get();
 	EntitiesManager::m_entityPtr.push_back(move(ptr));
 	return *res;

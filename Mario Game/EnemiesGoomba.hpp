@@ -22,7 +22,7 @@ public:
 	EnemiesGoomba(Object* parent = nullptr);
 
 	void onCollisionEnter(Collision& col, const Direction& side) override;
-	void hit(bool isDestroy);
+	void die();
 	void update();
 };
 

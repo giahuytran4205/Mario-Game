@@ -12,6 +12,7 @@
 #include "EnemiesGoomba.hpp"
 #include "EnemiesHammerBro.hpp"
 #include "EnemiesKoopaTroopa.hpp"
+#include "EnemiesPiranhaPlant.hpp"
 #include <map>
 #include <fstream>
 #include <iostream>
@@ -189,37 +190,45 @@ void Map::loadFromJsonFile(const string& filename) {
 
 		if (layer["name"] == "Teleportation Gate") {
 			for (auto& i : layer["objects"].as_array()) {
-				auto& portal = i.as_object();
+				auto& obj = i.as_object();
 
-				int width = portal["width"].as_int64();
-				int height = portal["height"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
 
-				float posX = portal["x"].as_int64();
-				float posY = portal["y"].as_int64();
+				float posX = obj["x"].as_int64();
+				float posY = obj["y"].as_int64();
 
 				float destX = 0, destY = 0, inDir = 0, outDir = 0, destDepth = 0;
+				bool isAutoEnter = false;
 				
-				for (auto& j : portal["properties"].as_array()) {
+				for (auto& j : obj["properties"].as_array()) {
 					auto prop = j.as_object();
 
-					if (prop["name"].as_string() == "destX")
+					if (prop["name"] == "destX")
 						destX = prop["value"].as_int64();
 
-					if (prop["name"].as_string() == "destY")
+					if (prop["name"] == "destY")
 						destY = prop["value"].as_int64();
 
-					if (prop["name"].as_string() == "inDirection")
+					if (prop["name"] == "inDirection")
 						inDir = prop["value"].as_int64();
 
-					if (prop["name"].as_string() == "outDirection")
+					if (prop["name"] == "outDirection")
 						outDir = prop["value"].as_int64();
 
-					if (prop["name"].as_string() == "destDepth")
+					if (prop["name"] == "destDepth")
 						destDepth = prop["value"].as_int64();
+
+					if (prop["name"] == "isAutoEnter")
+						isAutoEnter = prop["value"].as_bool();
 				}
 
-				m_objects.push_back(new Portal(Vector2f{ posX, posY }, Vector2f{ destX, destY }, inDir, outDir, destDepth));
-				m_objects.back()->setParent(this);
+				Portal* portal = new Portal(Vector2f{ posX, posY }, Vector2f{ destX, destY }, inDir, outDir, destDepth);
+				portal->getComponent<Transform2D>().setSize(width, height);
+				portal->setParent(this);
+				portal->setAutoEnter(isAutoEnter);
+
+				m_objects.push_back(portal);
 			}
 		}
 
@@ -275,14 +284,14 @@ void Map::loadFromJsonFile(const string& filename) {
 		}
 
 		if (layer["name"] == "Beanstalk") {
-			/*for (auto& i : layer["objects"].as_array()) {
+			for (auto& i : layer["objects"].as_array()) {
 				auto& portal = i.as_object();
 
 				int width = portal["width"].as_int64();
 				int height = portal["height"].as_int64();
 
-				float posX = portal["x"].as_int64();
-				float posY = portal["y"].as_int64();
+				float x = portal["x"].as_int64();
+				float y = portal["y"].as_int64();
 
 				float destX = 0, destY = 0, maxHeight = 0;
 				int destDepth = 0;
@@ -300,9 +309,14 @@ void Map::loadFromJsonFile(const string& filename) {
 						maxHeight = prop["value"].as_int64();
 				}
 
-				Beanstalk* beanstalk = new Beanstalk(Vector2f(posX, posY), maxHeight, Vector2f(destX, destY), this);
+				Beanstalk* beanstalk = new Beanstalk(Vector2f(x + width / 2, y + height / 2), maxHeight, Vector2f(destX, destY), this);
+				QuestionBlock* questionBlock = new QuestionBlock(Environment::OVERWORLD, this);
+				questionBlock->getComponent<Transform2D>().setWorldPosition(x + width / 2, y + height / 2);
+				questionBlock->addBeanstalk(beanstalk);
+
 				m_objects.push_back(beanstalk);
-			}*/
+				m_objects.push_back(questionBlock);
+			}
 		}
 
 		if (layer["name"] == "Dead Zone") {
@@ -403,6 +417,20 @@ void Map::loadFromJsonFile(const string& filename) {
 				EnemiesHammerBro* hammerBro = new EnemiesHammerBro(m_mario, this);
 				hammerBro->getComponent<Transform2D>().setWorldPosition(x, y);
 				m_objects.push_back(hammerBro);
+			}
+		}
+
+		if (layer["name"] == "PiranhaPlant") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
+
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+
+				EnemiesPiranhaPlant* piranha = new EnemiesPiranhaPlant(this);
+				piranha->getComponent<Transform2D>().setWorldPosition(x, y);
+
+				m_objects.push_back(piranha);
 			}
 		}
 	}

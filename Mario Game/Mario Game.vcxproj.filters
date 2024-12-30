@@ -285,6 +285,9 @@
     <ClCompile Include="LoginScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="SpecialObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.hpp">
@@ -502,6 +505,9 @@
     </ClInclude>
     <ClInclude Include="LoginScene.hpp">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecialObject.hpp">
+      <Filter>Header Files\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

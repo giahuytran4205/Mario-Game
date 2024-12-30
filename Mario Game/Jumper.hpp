@@ -1,10 +1,10 @@
 #pragma once
-#include "Object.hpp"
+#include "SpecialObject.hpp"
 #include "SFML/Graphics.hpp"
 #include "ECS.hpp"
 #include "Animation.hpp"
 
-class Jumper : public Object {
+class Jumper : public SpecialObject {
 private:
 	SpriteRenderer m_sprite;
 	Collision& m_collision;

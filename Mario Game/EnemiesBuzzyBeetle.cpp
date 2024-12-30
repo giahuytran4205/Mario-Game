@@ -25,12 +25,17 @@ void EnemiesBuzzyBeetle::onCollisionEnter(Collision& col, const Direction& side)
     }
 
 	if (col.m_entity->isType<Mario>()) {
+		Mario& mario = *col.m_entity->convertTo<Mario>();
+
 		if (side == Direction::UP) {
-			col.m_entity->convertTo<Mario>()->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+			mario.getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+			die();
+		}
+		else if (mario.getAbility() == Mario::INVINCIBLE) {
 			die();
 		}
 		else {
-			col.m_entity->convertTo<Mario>()->dead();
+			mario.damaged();
 		}
 	}
 	else if (col.m_entity->isDerivedFrom<Block>()) {

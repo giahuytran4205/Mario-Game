@@ -64,6 +64,11 @@ void AutoControl::update() {
 		}
 		else {
 			if (m_isControlled) {
+				if (!m_currentControl.action) {
+					m_physics->setVelocity({ 0, 0 });
+					m_physics->setBaseVelocity({ 0, 0 });
+				}
+
 				m_isControlled = false;
 			}
 		}
@@ -92,7 +97,14 @@ void AutoControl::addMoveByDistance(const Vector2f& distance, int duration, cons
 
 void AutoControl::addWaitForMiliseconds(int duration, function<void(int)> action) {
 	m_isControlled = true;
-	m_controlQueue.push({ {0, 0}, duration, {0, 0}, action, nullptr, true});
+
+	Vector2f pos;
+	if (m_controlQueue.empty()) {
+		pos = m_entity->getComponent<Transform2D>().getPosition();
+	}
+	else pos = m_controlQueue.back().pos;
+
+	m_controlQueue.push({ pos, duration, {0, 0}, action, nullptr, true });
 }
 
 void AutoControl::addWaitUntil(function<bool(int)> condition) {

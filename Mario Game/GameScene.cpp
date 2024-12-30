@@ -5,9 +5,10 @@
 #include "EnemiesHammerBro.hpp"
 #include "EnemiesBillBlaster.hpp"
 #include "EnemiesBuzzyBeetle.hpp"
+#include "EnemiesPiranhaPlant.hpp"
 #include "MapSelectionScene.hpp"
 
-GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this), m_map(m_mario) {
+GameScene::GameScene(const MapInfo& mapInfo) : m_mario(this), m_map(m_mario), m_optionPanel(m_parent) {
 	m_renderOrder = 2;
 	addComponent<SoundComponent>();
 
@@ -111,7 +112,7 @@ void GameScene::render() {
 void GameScene::handleEvent(const Event& event) {
 	if (event.type == Event::KeyPressed && event.key.code == Keyboard::P) {
 		setPause(!isPause());
-		setEnableOptionPanel(!isPause());
+		setEnableOptionPanel(isPause());
 	}
 	if (event.type == Event::KeyPressed && event.key.code == Keyboard::R) {
 		SceneManager::getInstance()->setCurrentScene<MapSelectionScene>();
@@ -128,6 +129,6 @@ Panel& GameScene::getOptionPanel() {
 
 void GameScene::setEnableOptionPanel(bool isEnable) {
 	getComponent<SoundComponent>().play(SoundTrack::PAUSE);
-	//m_optionPanel.getComponent<Transform2D>().setCenter(GameManager::getInstance()->getView().getCenter());
-	//m_optionPanel.setEnable(isEnable);
+	m_optionPanel.getComponent<Transform2D>().setCenter(GameManager::getInstance()->getView().getCenter());
+	m_optionPanel.setEnable(isEnable);
 }

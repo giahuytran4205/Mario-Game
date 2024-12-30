@@ -37,11 +37,12 @@ void EventSystem::addListener(IEventListener* listener) {
 }
 
 void EventSystem::removeListener(IEventListener* listener) {
-	m_listeners.erase(find(m_listeners.begin(), m_listeners.end(), listener));
+	auto it = find(m_listeners.begin(), m_listeners.end(), listener);
+	if (it != m_listeners.end())
+		m_listeners.erase(it);
 }
 
 void EventSystem::sendEvent(const Event& event) {
-	for (auto& listener : m_listeners) {
-		listener->handleEvent(event);
-	}
+	for (int i = 0; i < m_listeners.size(); i++)
+		m_listeners[i]->handleEvent(event);
 }

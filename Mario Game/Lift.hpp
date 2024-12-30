@@ -1,6 +1,6 @@
 #pragma once
 #include "ECS.hpp"
-#include "Object.hpp"
+#include "SpecialObject.hpp"
 #include "Physics2D.hpp"
 #include "Collision.hpp"
 #include "SpriteRenderer.hpp"
@@ -8,7 +8,7 @@
 #include "GameManager.hpp"
 #include "Mario.hpp"
 
-class Lift : public Object {
+class Lift : public SpecialObject {
 protected:
 	Physics2D& m_physics;
 	SpriteRenderer m_sprite;

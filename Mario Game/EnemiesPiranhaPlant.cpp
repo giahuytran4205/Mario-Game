@@ -2,6 +2,8 @@
 #include "GameManager.hpp"
 
 EnemiesPiranhaPlant::EnemiesPiranhaPlant(Object* parent) : Enemy(parent) {
+	getComponent<Collision>().setTrigger(true);
+
 	m_transform.setSize(16, 24);
 	m_transform.setAnchor(0.5, 0.5);
 
@@ -10,13 +12,14 @@ EnemiesPiranhaPlant::EnemiesPiranhaPlant(Object* parent) : Enemy(parent) {
 
 	m_sprite.setParent(this);
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
-	m_sprite.setRenderOrder(3);
+	m_sprite.setRenderOrder(0);
 
 	m_physics.setEnableGravity(false);
+	m_physics.setElastic(false);
 
-	m_timeAtk = 3000;
-	m_atkCD = 2000;
-	m_curAtkCD = 0;
+	m_timeAtk = 2000;
+	m_atkCD = 7000;
+	m_curAtkCD = randRange(0, 1);
 }
 
 void EnemiesPiranhaPlant::onCollisionEnter(Collision& col, const Direction& side)

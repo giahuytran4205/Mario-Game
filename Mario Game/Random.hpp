@@ -1,5 +1,6 @@
 #pragma once
 #include <random>
+#include <vector>
 #include <ctime>
 using namespace std;
 
@@ -18,3 +19,10 @@ T randRange(T min, T max) {
 }
 
 int randByProbability(const vector<int>& weights);
+
+template<typename T, typename... TArgs>
+T rand(T first, TArgs... other) {
+	vector<T> v{ first, other... };
+	int idx = randRange<int>(0, v.size() - 1);
+	return v[idx];
+}

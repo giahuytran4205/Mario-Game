@@ -2,6 +2,7 @@
 #include "Object.hpp"
 #include "AutoControl.hpp"
 #include "GameManager.hpp"
+#include "Random.hpp"
 
 Item::Item(Object* parent) : m_anim(addComponent<Animation>(m_sprite)), m_physics(addComponent<Physics2D>()), m_autoControl(addComponent<AutoControl>()) {
 	setParent(parent);
@@ -11,7 +12,7 @@ Item::Item(Object* parent) : m_anim(addComponent<Animation>(m_sprite)), m_physic
 	m_sprite.setParent(this);
 	
 	m_renderOrder = 1;
-	m_direction = Direction::LEFT;
+	m_direction = rand(Direction::LEFT, Direction::RIGHT);
 	m_speed = 0;
 }
 

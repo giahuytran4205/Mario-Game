@@ -19,15 +19,22 @@ EnemiesKoopaTroopa::~EnemiesKoopaTroopa() {
 
 void EnemiesKoopaTroopa::onCollisionEnter(Collision& col, const Direction& side) {
     if (col.m_entity->isType<Mario>()) {
+		Mario& mario = *col.m_entity->convertTo<Mario>();
         if (side == Direction::UP) {
 			col.m_entity->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
 			die();
         }
+		else if (mario.getAbility() == Mario::INVINCIBLE) {
+			die();
+		}
+		else {
+			mario.damaged();
+		}
     }
     
 	if (col.m_entity->isType<Block>()) {
         if (side == Direction::LEFT || side == Direction::RIGHT) {
-			m_direction = getOpposite(side);
+			m_direction = getOpposite(m_direction);
         }
     }
 

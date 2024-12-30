@@ -222,6 +222,7 @@
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SoundBufferManager.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
+    <ClCompile Include="SpecialObject.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="Starman.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="Slider.hpp" />
     <ClInclude Include="SoundBufferManager.hpp" />
     <ClInclude Include="SoundComponent.hpp" />
+    <ClInclude Include="SpecialObject.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Starman.hpp" />
     <ClInclude Include="TextureManager.hpp" />

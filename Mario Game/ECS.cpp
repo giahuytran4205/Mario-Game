@@ -43,6 +43,13 @@ void EntitiesManager::refresh() {
 			return object->isDestroyed();
 		}),
 		end(m_entities));
+
+	m_entityPtr.erase(remove_if(begin(m_entityPtr), end(m_entityPtr),
+		[](const unique_ptr<Object>& object)
+		{
+			return object->isDestroyed();
+		}),
+		end(m_entityPtr));
 }
 
 Object& EntitiesManager::addEntity() {

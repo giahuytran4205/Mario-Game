@@ -23,18 +23,23 @@ BuzzyShell::~BuzzyShell() {}
 
 void BuzzyShell::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>()) {
-		if (side == Direction::UP) {
-			col.m_entity->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+		Mario& mario = *col.m_entity->convertTo<Mario>();
 
-			int t = randRange(0, 1);
-			if (t == 0)
-				m_direction = Direction::LEFT;
+		if (side == Direction::UP) {
+			mario.getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+
+			if (!m_isLaunch)
+				m_direction = rand(Direction::LEFT, Direction::RIGHT);
 			else
-				m_direction = Direction::RIGHT;
+				die();
 		}
 		else if (side == Direction::LEFT || side == Direction::RIGHT) {
-			col.m_entity->convertTo<Mario>()->dead();
+			if (!m_isLaunch)
+				m_direction = getOpposite(side);
+			else
+				mario.damaged();
 		}
+
 		m_isLaunch = true;
 	}
 

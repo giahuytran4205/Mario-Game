@@ -357,6 +357,11 @@
                          "value":3
                         }, 
                         {
+                         "name":"isAutoEnter",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"outDirection",
                          "type":"int",
                          "value":3
@@ -368,6 +373,17 @@
                  "x":3232,
                  "y":224
                 }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":24,
+         "name":"KoopaTroopa",
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -533,7 +549,6 @@
         {
          "draworder":"topdown",
          "id":21,
-         "locked":true,
          "name":"Beanstalk",
          "objects":[
                 {
@@ -1316,6 +1331,7 @@
         {
          "draworder":"topdown",
          "id":22,
+         "locked":true,
          "name":"Goomba",
          "objects":[
                 {
@@ -1383,6 +1399,84 @@
                  "width":16,
                  "x":1568,
                  "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":182,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":560,
+                 "y":672
+                }, 
+                {
+                 "height":16,
+                 "id":183,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":640,
+                 "y":672
+                }, 
+                {
+                 "height":16,
+                 "id":184,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1776,
+                 "y":432
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":25,
+         "locked":true,
+         "name":"PiranhaPlant",
+         "objects":[
+                {
+                 "height":0,
+                 "id":186,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":528,
+                 "y":412
+                }, 
+                {
+                 "height":0,
+                 "id":187,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":928,
+                 "y":412
+                }, 
+                {
+                 "height":0,
+                 "id":188,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1664,
+                 "y":396
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2052,17 +2146,6 @@
                         }, 
                         {
                          "height":16,
-                         "id":41,
-                         "name":"",
-                         "rotation":0,
-                         "type":"",
-                         "visible":true,
-                         "width":16,
-                         "x":2096,
-                         "y":320
-                        }, 
-                        {
-                         "height":16,
                          "id":42,
                          "name":"",
                          "rotation":0,
@@ -2385,8 +2468,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":24,
- "nextobjectid":182,
+ "nextlayerid":26,
+ "nextobjectid":189,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.11.0",

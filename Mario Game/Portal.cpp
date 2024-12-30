@@ -7,6 +7,7 @@ Portal::Portal() : m_collision(addComponent<Collision>(true)) {
 	m_inDirection = 0;
 	m_outDirection = 0;
 	m_destDepth = 0;
+	m_isAutoEnter = false;
 }
 
 Portal::Portal(const Vector2f& position, const Vector2f& destination, int inDir, int outDir, int destDepth) : Portal() {
@@ -87,4 +88,12 @@ Vector2f Portal::getOutDirection() {
 
 int Portal::getDestDepth() {
 	return m_destDepth;
+}
+
+void Portal::setAutoEnter(bool isAutoEnter) {
+	m_isAutoEnter = isAutoEnter;
+}
+
+bool Portal::isAutoEnter() const {
+	return m_isAutoEnter;
 }

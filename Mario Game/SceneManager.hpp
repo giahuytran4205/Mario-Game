@@ -27,7 +27,7 @@ public:
 		if (m_currentScene)
 			m_currentScene->destroy();
 		
-		m_currentScene = new T(mArgs...);
+		m_currentScene = &Instantiate<T>(forward<TArgs>(mArgs)...);
 	}
 
 	Scene& getCurrentScene() {

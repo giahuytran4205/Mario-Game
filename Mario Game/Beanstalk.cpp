@@ -3,7 +3,7 @@
 #include "GameManager.hpp"
 
 Beanstalk::Beanstalk(Object* parent) {
-	addComponent<Collision>(true);
+	addComponent<Collision>(true).setEnable(false);
 	setParent(parent);
 
 	m_renderOrder = 2;
@@ -56,6 +56,8 @@ Beanstalk::~Beanstalk() {}
 
 void Beanstalk::update() {
 	if (m_isOnGrowUp) {
+		m_transform.setHeight(m_transform.height + m_growRate * deltaTime.asMilliseconds());
+
 		if (m_stalk[0].getTextureRect().height < m_maxHeight) {
 			m_height[0] += m_growRate * deltaTime.asMilliseconds();
 			m_stalk[0].setTextureRect(IntRect(0, 0, 16, max(m_height[0], 0.0f)));
@@ -67,7 +69,6 @@ void Beanstalk::update() {
 		}
 		else {
 			m_isOnGrowUp = false;
-			m_isMature = true;
 		}
 
 		for (int i = 0; i < 2; i++) {
@@ -78,14 +79,15 @@ void Beanstalk::update() {
 }
 
 void Beanstalk::onCollisionEnter(Collision& col, const Direction& side) {
-	if (col.m_entity->isType<Mario>() && !m_isOnGrowUp && !m_isMature) {
+	if (col.m_entity->isType<Mario>() && !m_isMature) {
+		m_isMature = true;
+
 		Mario* mario = col.m_entity->convertTo<Mario>();
 		AutoControl& autoControl = col.m_entity->getComponent<AutoControl>();
 
-		growUp();
-
 		mario->getComponent<Collision>().setTrigger(true);
 		mario->getComponent<Physics2D>().setEnableGravity(false);
+		mario->getComponent<Animation>().play(Mario::GRAB_FLAGPOLE);
 
 		autoControl.addMoveByDistance(Vector2f(0, -m_maxHeight), 3000, Vector2f(0, 0));
 		autoControl.addWaitForMiliseconds(1000);
@@ -100,6 +102,7 @@ void Beanstalk::onCollisionEnter(Collision& col, const Direction& side) {
 				mario->getComponent<Collision>().setTrigger(false);
 				mario->getComponent<Physics2D>().setEnableGravity(true);
 				mario->getComponent<Physics2D>().setBaseVelocity({ 0.1, -0.2 });
+				mario->getComponent<Animation>().play(Mario::JUMP);
 			});		
 	}
 }
@@ -109,8 +112,9 @@ void Beanstalk::setDestDepth(int depth) {
 }
 
 void Beanstalk::growUp() {
-	if (m_isMature)
+	if (m_isOnGrowUp)
 		return;
 
 	m_isOnGrowUp = true;
+	getComponent<Collision>().setEnable(true);
 }

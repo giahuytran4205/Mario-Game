@@ -13,7 +13,9 @@ Collision::Collision(const FRect& collider, bool isTrigger) : Collision(isTrigge
 	m_isUseOwnCollider = true;
 }
 
-Collision::~Collision() {}
+Collision::~Collision() {
+	CollisionManager::removeCollider(this);
+}
 
 void Collision::init() {
 	m_transform = &m_entity->getComponent<Transform2D>();

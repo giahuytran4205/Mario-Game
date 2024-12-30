@@ -19,7 +19,6 @@ public:
 	~Hammer() = default;
 
 	void onCollisionEnter(Collision& col, const Direction& side) override;
-	void hit(bool isDestroy);
 	void update();
 	void setDestination(const Vector2f& dest);
 	void launch();

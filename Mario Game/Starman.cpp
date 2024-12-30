@@ -1,5 +1,6 @@
 #include "Starman.hpp"
 #include "Mario.hpp"
+#include "DeadZone.hpp"
 
 Starman::Starman(Object* parent) : Item(parent) {
 	m_transform.setSize(16, 16);
@@ -33,6 +34,14 @@ void Starman::onCollisionEnter(Collision& col, const Direction& side) {
 		col.m_entity->convertTo<Mario>()->setAbility(Mario::INVINCIBLE);
 		destroy();
 	}
+
+	if (col.m_entity->isDerivedFrom<Block>()) {
+		if (side == Direction::LEFT || side == Direction::RIGHT)
+			m_direction = getOpposite(m_direction);
+	}
+
+	if (col.m_entity->isType<DeadZone>())
+		destroy();
 }
 
 void Starman::update() {

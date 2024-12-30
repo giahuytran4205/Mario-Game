@@ -3,7 +3,7 @@
 
 void TextView::wrapText()
 {
-	float maxWidth = Object::m_transform.getRect().width;
+	/*float maxWidth = Object::m_transform.getRect().width;
 	float maxHeight = Object::m_transform.getRect().height;
 
 	unsigned int textSize = getCharacterSize();
@@ -55,7 +55,7 @@ void TextView::wrapText()
 		}
 	}
 
-	this->setCharacterSize(textSize);
+	this->setCharacterSize(textSize);*/
 	sf::FloatRect textBounds = this->getGlobalBounds();
 	this->setPosition(Object::m_transform.getRect().left + (Object::m_transform.getRect().width - textBounds.width) / 2, Object::m_transform.getRect().top + (Object::m_transform.getRect().height - textBounds.height) / 2);
 }

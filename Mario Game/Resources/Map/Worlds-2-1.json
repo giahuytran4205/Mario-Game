@@ -187,7 +187,6 @@
         {
          "draworder":"topdown",
          "id":6,
-         "locked":true,
          "name":"Teleportation Gate",
          "objects":[
                 {
@@ -253,6 +252,48 @@
                  "width":16,
                  "x":1728,
                  "y":672
+                }, 
+                {
+                 "height":16,
+                 "id":160,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"destDepth",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"destX",
+                         "type":"float",
+                         "value":2608
+                        }, 
+                        {
+                         "name":"destY",
+                         "type":"float",
+                         "value":288
+                        }, 
+                        {
+                         "name":"inDirection",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
+                         "name":"isAutoEnter",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"outDirection",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"TeleportGate",
+                 "visible":true,
+                 "width":288,
+                 "x":2272,
+                 "y":208
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -262,10 +303,338 @@
         }, 
         {
          "draworder":"topdown",
-         "id":21,
+         "id":24,
          "locked":true,
+         "name":"Goomba",
+         "objects":[
+                {
+                 "height":16,
+                 "id":162,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":432,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":163,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":512,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":164,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":864,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":165,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":912,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":166,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1056,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":167,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1120,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":171,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1264,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":172,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1360,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":173,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1600,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":174,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1904,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":180,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2960,
+                 "y":432
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":27,
+         "locked":true,
+         "name":"PiranhaPlant",
+         "objects":[
+                {
+                 "height":0,
+                 "id":183,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":752,
+                 "y":396
+                }, 
+                {
+                 "height":0,
+                 "id":184,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1200,
+                 "y":396
+                }, 
+                {
+                 "height":0,
+                 "id":185,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1968,
+                 "y":396
+                }, 
+                {
+                 "height":0,
+                 "id":186,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2096,
+                 "y":380
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":25,
+         "locked":true,
+         "name":"KoopaTroopa",
+         "objects":[
+                {
+                 "height":16,
+                 "id":168,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":992,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":179,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2880,
+                 "y":432
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":26,
+         "locked":true,
+         "name":"HammerBro",
+         "objects":[
+                {
+                 "height":16,
+                 "id":169,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1136,
+                 "y":304
+                }, 
+                {
+                 "height":16,
+                 "id":170,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1376,
+                 "y":368
+                }, 
+                {
+                 "height":16,
+                 "id":175,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2032,
+                 "y":304
+                }, 
+                {
+                 "height":16,
+                 "id":176,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1504,
+                 "y":304
+                }, 
+                {
+                 "height":16,
+                 "id":177,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2672,
+                 "y":432
+                }, 
+                {
+                 "height":16,
+                 "id":178,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2656,
+                 "y":304
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "class":"Beanstalk",
+         "draworder":"topdown",
+         "id":21,
          "name":"Beanstalk",
-         "objects":[],
+         "objects":[
+                {
+                 "height":16,
+                 "id":188,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"destX",
+                         "type":"float",
+                         "value":1352
+                        }, 
+                        {
+                         "name":"destY",
+                         "type":"float",
+                         "value":240
+                        }, 
+                        {
+                         "name":"maxHeight",
+                         "type":"float",
+                         "value":96
+                        }],
+                 "rotation":0,
+                 "type":"Beanstalk",
+                 "visible":true,
+                 "width":16,
+                 "x":1328,
+                 "y":320
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -1153,6 +1522,17 @@
          "y":0
         }, 
         {
+         "id":3,
+         "image":"..\/..\/..\/..\/Tile\/NES - Super Mario Bros - World 2-1.png",
+         "locked":true,
+         "name":"Image Layer 1",
+         "opacity":0.42,
+         "type":"imagelayer",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
          "id":18,
          "layers":[
                 {
@@ -1325,17 +1705,6 @@
                          "visible":true,
                          "width":16,
                          "x":1312,
-                         "y":320
-                        }, 
-                        {
-                         "height":16,
-                         "id":99,
-                         "name":"",
-                         "rotation":0,
-                         "type":"",
-                         "visible":true,
-                         "width":16,
-                         "x":1328,
                          "y":320
                         }, 
                         {
@@ -1915,20 +2284,9 @@
          "visible":true,
          "x":0,
          "y":0
-        }, 
-        {
-         "id":3,
-         "image":"..\/..\/..\/..\/Tile\/NES - Super Mario Bros - World 2-1.png",
-         "locked":true,
-         "name":"Image Layer 1",
-         "opacity":0.42,
-         "type":"imagelayer",
-         "visible":true,
-         "x":0,
-         "y":0
         }],
- "nextlayerid":24,
- "nextobjectid":160,
+ "nextlayerid":29,
+ "nextobjectid":190,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.11.0",

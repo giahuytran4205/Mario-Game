@@ -11,6 +11,7 @@ private:
 	int m_inDirection;
 	int m_outDirection;
 	int m_destDepth;
+	bool m_isAutoEnter;
 
 public:
 	Portal();
@@ -26,4 +27,6 @@ public:
 	Vector2f getInDirection();
 	Vector2f getOutDirection();
 	int getDestDepth();
+	void setAutoEnter(bool isAutoEnter);
+	bool isAutoEnter() const;
 };

@@ -1,4 +1,6 @@
 #include "EnemiesHammerBro.hpp"
+#include "KoopaShell.hpp"
+#include "BuzzyShell.hpp"
 #include "GameManager.hpp"
 
 // TODO add 2 platform
@@ -22,8 +24,8 @@ EnemiesHammerBro::EnemiesHammerBro(Mario& mario, Object* parent) : Enemy(parent)
 
 	m_fireCD = 3000;
 	m_curFireCD = 0;
-
 	m_speed = 0.02f;
+	m_timeChangeDir = 3000;
 }
 
 EnemiesHammerBro::EnemiesHammerBro(Mario& mario, const Vector2f& pos, Object* parent) : EnemiesHammerBro(mario, parent) {
@@ -31,53 +33,86 @@ EnemiesHammerBro::EnemiesHammerBro(Mario& mario, const Vector2f& pos, Object* pa
 }
  
 void EnemiesHammerBro::onCollisionEnter(Collision& col, const Direction& side) {
-	if (col.m_entity->isType<Mario>()) {
-		if (side == Direction::UP) {
-			col.m_entity->getComponent<Physics2D>().setBaseVelocityY(-0.1f);
-			die();
-		}
-		else {
-
-		}
-	}
-
 	if (col.m_entity->isType<Fireball>()) {
 		die();
 	}
-}
 
-void EnemiesHammerBro::hit(bool isDestroy) {
+	if (col.m_entity->isType<Mario>()) {
+		Mario& mario = *col.m_entity->convertTo<Mario>();
+		Mario::Ability marioAbility = mario.getAbility();
 
+		if (side == Direction::UP) {
+			die();
+			mario.getComponent<Physics2D>().setBaseVelocityY(-0.1f);
+			return;
+		}
+
+		if (marioAbility == Mario::REGULAR) {
+			mario.damaged();
+		}
+		else if (marioAbility == Mario::SUPER) {
+			mario.setAbility(Mario::REGULAR);
+		}
+		else if (marioAbility == Mario::FIERY) {
+			mario.setAbility(Mario::REGULAR);
+		}
+		else if (marioAbility == Mario::INVINCIBLE) {
+			die();
+		}
+
+	}
+
+	if (col.m_entity->isDerivedFrom<Block>()) {
+		if (side == Direction::LEFT || side == Direction::RIGHT) {
+			m_direction = getOpposite(m_direction);
+		}
+	}
+
+	if (col.m_entity->isDerivedFrom<Enemy>() && !col.m_entity->isType<BuzzyShell>() && !col.m_entity->isType<KoopaShell>()) {
+		if (side == Direction::LEFT || side == Direction::RIGHT) {
+			m_direction = getOpposite(m_direction);
+		}
+	}
+
+	if (col.m_entity->isType<BuzzyShell>() || col.m_entity->isType<KoopaShell>()) {
+		die();
+	}
 }
 
 //TODO 2 platform
 void EnemiesHammerBro::update() {
 	float dist = distance(m_mario.getComponent<Transform2D>().getWorldCenter(), m_transform.getWorldCenter());
-	float dir = m_mario.getComponent<Transform2D>().getWorldCenter().x - m_transform.getWorldCenter().x;
-	
-	if (dir != 0)
-		dir /= abs(dir);
 
-	m_curFireCD -= deltaTime.asMilliseconds();
+	if (m_curFireCD > 0)
+		m_curFireCD -= deltaTime.asMilliseconds();
 
 	m_anim.play(State::WALK);
 
-	if (dist < 120) {
+	if (m_timeChangeDir > 0)
+		m_timeChangeDir -= deltaTime.asMilliseconds();
+
+	if (dist < 80) {
 		if (dist > 50)
 			fire();
 
-		m_physics.setBaseVelocityX(m_speed * dir);
+		if (m_mario.getComponent<Transform2D>().getWorldCenter().x < m_transform.getWorldCenter().x)
+			m_direction = Direction::LEFT;
+		else
+			m_direction = Direction::RIGHT;
+	}
+	else if (m_timeChangeDir <= 0) {
+		m_timeChangeDir = 3000;
+		m_direction = getOpposite(m_direction);
 	}
 
-	if (dir == -1)
-		m_direction = Direction::LEFT;
-	else if (dir == 1)
-		m_direction = Direction::RIGHT;
-
-	if (m_direction == Direction::LEFT)
+	if (m_direction == Direction::LEFT) {
 		m_sprite.setScale(1, 1);
-	else if (m_direction == Direction::RIGHT)
+		m_physics.setBaseVelocityX(-m_speed);
+	}
+	else if (m_direction == Direction::RIGHT) {
 		m_sprite.setScale(-1, 1);
+		m_physics.setBaseVelocityX(m_speed);
+	}
 }
 
 void EnemiesHammerBro::fire() {

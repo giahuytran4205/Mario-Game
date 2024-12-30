@@ -1,4 +1,5 @@
 #include "Hammer.hpp"
+#include "GameScene.hpp"
 
 Hammer::Hammer(Object* parent) : Projectile(parent) {
 	getComponent<Collision>().setTrigger(true);
@@ -16,25 +17,26 @@ Hammer::Hammer(Object* parent) : Projectile(parent) {
 
 	m_speed = 0.1f;
 	m_isLaunch = false;
+
+	m_age = 5000;
 }
 
 void Hammer::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>()) {
-		col.m_entity->convertTo<Mario>()->dead();
+		Mario& mario = *col.m_entity->convertTo<Mario>();
+
+		if (mario.getAbility() != Mario::INVINCIBLE)
+			mario.damaged();
+
 		destroy();
 	}
-
-	if (col.m_entity->isDerivedFrom<Block>()) {
-		destroy();
-	}
-}
-
-void Hammer::hit(bool isDestroy) {
-
 }
 
 void Hammer::update() {
-	
+	if (m_age > 0)
+		m_age -= deltaTime.asMilliseconds();
+	else
+		destroy();
 }
 
 void Hammer::setDestination(const Vector2f& dest) {

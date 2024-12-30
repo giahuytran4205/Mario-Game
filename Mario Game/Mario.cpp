@@ -128,7 +128,7 @@ void Mario::onCollisionEnter(Collision& col, const Direction& side) {
 		if (col.getCollider().intersects(m_transform) && col.getCollider().bottom <= m_transform.bottom) {
 			Portal* portal = col.m_entity->convertTo<Portal>();
 
-			if (Keyboard::isKeyPressed(portal->getEnterKey())) {
+			if (Keyboard::isKeyPressed(portal->getEnterKey()) || portal->isAutoEnter()) {
 				teleport(*portal);
 			}
 		}
@@ -321,6 +321,13 @@ void Mario::teleport(const Portal& portal) {
 
 void Mario::onGrabFlagPole() {
 
+}
+
+void Mario::damaged() {
+	if (m_ability == Ability::REGULAR)
+		dead();
+	else if (m_ability == Ability::SUPER || m_ability == Ability::FIERY)
+		setAbility(Ability::REGULAR);		
 }
 
 void Mario::dead() {

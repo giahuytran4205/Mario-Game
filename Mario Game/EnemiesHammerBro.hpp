@@ -17,6 +17,7 @@ private:
 	int m_minActiveX, m_maxActiveX;
 	int m_fireCD;
 	int m_curFireCD;
+	int m_timeChangeDir;
 
 	Coroutine spawnHammer();
 
@@ -25,7 +26,6 @@ public:
 	EnemiesHammerBro(Mario& mario, const Vector2f& pos, Object* parent = nullptr);
 
 	void onCollisionEnter(Collision& col, const Direction& side) override;
-	void hit(bool isDestroy);
 	void update();
 	void fire();
 	void die();

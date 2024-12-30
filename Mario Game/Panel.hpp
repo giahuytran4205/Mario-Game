@@ -28,7 +28,9 @@ private:
 	Button m_continue;
 	Button m_exit;
 	TextView m_title;
+	TextView m_totalVolumeText;
 	Slider<float> m_totalVolume;
+	TextView m_themeVolumeText;
 	Slider<float> m_themeVolume;
 	RectangleShape m_background;
 	RectangleShape m_background2;
@@ -37,5 +39,6 @@ public:
 	Panel(Object* parent = nullptr);
 	~Panel();
 
+	void update() override;
 	void render() override;
 };

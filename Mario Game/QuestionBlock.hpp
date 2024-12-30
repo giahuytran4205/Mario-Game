@@ -4,11 +4,12 @@
 #include "Collision.hpp"
 #include "EmptyBlock.hpp"
 #include "TextureManager.hpp"
+#include "Beanstalk.hpp"
 
 class QuestionBlock : public Block {
 private:
 	bool m_isEmpty;
-	bool m_containBeanstalk;
+	Beanstalk* m_beanstalk;
 
 public:
 	QuestionBlock(Environment environment = Environment::OVERWORLD, Object* parent = nullptr);
@@ -17,5 +18,5 @@ public:
 	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void hit();
 	void setHide(bool isHide);
-	void addBeanstalk();
+	void addBeanstalk(Beanstalk* beanstalk);
 };

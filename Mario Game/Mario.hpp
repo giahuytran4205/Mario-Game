@@ -76,6 +76,7 @@ public:
 	void setAbility(Ability ability);
 	void teleport(const Portal& portal);
 	void onGrabFlagPole();
+	void damaged();
 	void dead();
 	void revive();
 	void win();

@@ -7,7 +7,7 @@ QuestionBlock::QuestionBlock(Environment environment, Object* parent) : Block(pa
 	m_renderOrder = 4;
 	m_transform.setSize(16, 16);
 	m_isEmpty = false;
-	m_containBeanstalk = false;
+	m_beanstalk = nullptr;
 	m_environment = environment;
 
 	if (environment == Environment::OVERWORLD)
@@ -49,11 +49,12 @@ void QuestionBlock::hit() {
 	m_isEmpty = true;
 	setHide(false);
 
-	if (m_containBeanstalk) {
-				
+	if (m_beanstalk) {
+		m_beanstalk->growUp();
 	}
 	else {
 		Item* item = ItemFactory::getInstance()->getItem();
+		item->setParent(m_parent);
 		if (item) {
 			item->getComponent<Transform2D>().setWorldPosition(m_transform.getWorldCenter());
 			item->appear();
@@ -67,6 +68,6 @@ void QuestionBlock::setHide(bool isHide) {
 	getComponent<Collision>().setTrigger(isHide);
 }
 
-void QuestionBlock::addBeanstalk() {
-	m_containBeanstalk = true;
+void QuestionBlock::addBeanstalk(Beanstalk* beanstalk) {
+	m_beanstalk = beanstalk;
 }

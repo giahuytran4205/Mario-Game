@@ -21,6 +21,7 @@ public:
 	~CollisionManager();
 
 	static void addCollider(Collision* collider);
+	static void removeCollider(Collision* collider);
 	void update();
 	void refresh();
 	void resize(int width, int height, int gridSize = 16);
