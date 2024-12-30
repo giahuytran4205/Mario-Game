@@ -93,8 +93,8 @@ sf::Vector2f Panel::getThemeVolumePosition()
 
 Panel::Panel(Object* parent) : 
     Object(parent),
-	m_totalVolume(0, 100, 150, 0, {135, 90}, this),
-	m_themeVolume(0, 100, 150, 0, {135, 120}, this)
+	m_totalVolume(0, 100, 150, 0, {0, 0}, this),
+	m_themeVolume(0, 100, 150, 0, {0, 0}, this)
 {
     this->setEnable(false);
 
@@ -107,6 +107,9 @@ Panel::Panel(Object* parent) :
     m_background2.setFillColor(sf::Color::Cyan);
 	m_background2.setSize(sf::Vector2f(m_background.getSize().x - 10.0f * 2, m_background.getSize().y - 10.0f * 2));
     m_background2.setPosition(sf::Vector2f(m_background.getPosition().x + 10.0f, m_background.getPosition().y + 10.0f));
+
+	m_totalVolume.setPostion(getTotalVolumePosition());
+	m_themeVolume.setPostion(getThemeVolumePosition());
 
     m_continue.setParent(this);
     m_exit.setParent(this);
@@ -149,6 +152,18 @@ Panel::Panel(Object* parent) :
 
 Panel::~Panel()
 {
+}
+
+void Panel::update()
+{
+	sf::View view = GameManager::getInstance()->getRenderWindow().getView();
+    m_background.setPosition(sf::Vector2f(view.getCenter().x - m_background.getSize().x / 2.0f, view.getCenter().y - m_background.getSize().y / 2.0f));
+    m_background2.setPosition(sf::Vector2f(m_background.getPosition().x + 10.0f, m_background.getPosition().y + 10.0f));
+    m_continue.setPosition(getContinueButtonPosition());
+	m_exit.setPosition(getExitButtonPosition());
+	m_title.getComponent<Transform2D>().setPosition(getTitlePosition());
+    m_totalVolume.setPostion(getTotalVolumePosition());
+    m_themeVolume.setPostion(getThemeVolumePosition());
 }
 
 void Panel::render()

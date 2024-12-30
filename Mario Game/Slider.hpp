@@ -66,6 +66,13 @@ public:
 		m_fillArea.setFillColor(Color(50, 50, 50));
 	}
 
+	void setPostion(const sf::Vector2f position)
+	{
+		m_transform.setPosition(position);
+		m_background.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_background.getSize().y / 2));
+		m_fillArea.setPosition(m_transform.getWorldPosition() - Vector2f(0, m_fillArea.getSize().y / 2));
+	}
+
 	~Slider() {
 
 	}

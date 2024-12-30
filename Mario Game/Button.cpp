@@ -60,7 +60,7 @@ void Button::setAction(std::function<void()> action)
 void Button::setPosition(const sf::Vector2f& position)
 {
 	m_rectShape.setPosition(position);
-	m_textView.setTablePosition(position);
+	getComponent<Transform2D>().setPosition(position);
 }
 
 void Button::setSize(const sf::Vector2f& size)

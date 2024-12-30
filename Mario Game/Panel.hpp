@@ -37,5 +37,6 @@ public:
 	Panel(Object* parent = nullptr);
 	~Panel();
 
+	void update() override;
 	void render() override;
 };
