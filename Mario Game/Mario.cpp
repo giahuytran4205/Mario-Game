@@ -16,6 +16,7 @@
 #include "FlagPole.hpp"
 #include "QuestionBlock.hpp"
 #include "GameScene.hpp"
+#include "MapSelectionScene.hpp"
 #include <iostream>
 using namespace sf;
 
@@ -31,6 +32,13 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_sprite.setParent(this);
 	m_sprite.getComponent<Transform2D>().setAnchor(0.5, 0.5);
 	m_sprite.setRenderOrder(3);
+
+	m_backgroundSound.setParent(this);
+	m_backgroundSound.addComponent<SoundComponent>().setLoop(true);
+	m_backgroundSound.getComponent<SoundComponent>().play(SoundTrack::OVERWORLD);
+
+	m_fireSound.setParent(this);
+	m_fireSound.addComponent<SoundComponent>().setLoop(false);
 
 	Texture* texture = new Texture();
 	texture->loadFromFile("Goomba.png");
@@ -117,7 +125,7 @@ void Mario::onCollisionEnter(Collision& col, const Direction& side) {
 	}
 
 	if (col.m_entity->isType<Portal>()) {
-		if (col.getCollider().contains(m_transform.getPosition())) {
+		if (col.getCollider().intersects(m_transform) && col.getCollider().bottom <= m_transform.bottom) {
 			Portal* portal = col.m_entity->convertTo<Portal>();
 
 			if (Keyboard::isKeyPressed(portal->getEnterKey())) {
@@ -142,8 +150,8 @@ void Mario::onCollisionEnter(Collision& col, const Direction& side) {
 			m_autoControl.addMoveByDistance(Vector2f(16, 0), 0, { 0, 0 }, [&](int time) { m_direction = Direction::LEFT; });
 			m_autoControl.addWaitForMiliseconds(500, [&](int time) { m_anim->stop(); });
 			m_autoControl.addMoveByPoint(dest + Vector2f(16, 0), 0, { 0, 0 });
-			m_autoControl.addMoveByPoint(dest + Vector2f(64, 16), 200, { 0, m_physics2D.getGravity() });
-			m_autoControl.addMoveByDistance({ 64, 0 }, 1000, { 0, 0 },
+			m_autoControl.addMoveByPoint(dest + Vector2f(32, 16), 200, { 0, m_physics2D.getGravity() });
+			m_autoControl.addMoveByPoint(Vector2f(m_castleGate.x, dest.y + 16), 1000, { 0, 0 },
 				[&](int time) {
 					m_direction = Direction::RIGHT;
 					m_state = State::WALK; 
@@ -152,6 +160,7 @@ void Mario::onCollisionEnter(Collision& col, const Direction& side) {
 				[&]() {
 					m_physics2D.setEnableGravity(true);
 					m_collision.setTrigger(false);
+					setEnable(false);
 					win();
 				});
 		}
@@ -193,11 +202,6 @@ void Mario::render() {
 void Mario::handleMovement() {
 	if (m_autoControl.isControlled())
 		return;
-
-	/*if (isOnGround()) {
-		m_physics2D.setVelocityY(0);
-		m_physics2D.setBaseVelocityY(0);
-	}*/
 
 	m_state = State::NORMAL;
 
@@ -243,6 +247,9 @@ void Mario::jump(float velY) {
 }
 
 void Mario::fire() {
+	if (m_ability == Ability::REGULAR || m_ability == Ability::SUPER)
+		return;
+
 	if (m_curFireCD > 0)
 		return;
 
@@ -252,35 +259,17 @@ void Mario::fire() {
 	m_anim->getTrack(State::FIRE).setLoop(false);
 	m_anim->getTrack(State::FIRE).setEnableExitTime(true);
 
-	Coroutine coroutine = [](Mario* mario) -> Coroutine {
-		Fireball* fireball = new Fireball(mario->m_parent);
-		if (mario->m_direction == Direction::LEFT) {
-			fireball->getComponent<Transform2D>().setWorldPosition(mario->m_transform.left - fireball->getComponent<Transform2D>().width, mario->m_transform.top);
-			fireball->setDirection(Vector2f(-1, 0));
-		}
-		else if (mario->m_direction == Direction::RIGHT) {
-			fireball->getComponent<Transform2D>().setWorldPosition(mario->m_transform.right, mario->m_transform.top);
-			fireball->setDirection(Vector2f(1, 0));
-		}
-		
-		co_await WaitForMiliseconds(200);
-
-		Fireball* fireball2 = new Fireball(mario->m_parent);
-		if (mario->m_direction == Direction::LEFT) {
-			fireball2->getComponent<Transform2D>().setWorldPosition(mario->m_transform.left - fireball2->getComponent<Transform2D>().width, mario->m_transform.top);
-			fireball2->setDirection(Vector2f(-1, 0));
-		}
-		else if (mario->m_direction == Direction::RIGHT) {
-			fireball2->getComponent<Transform2D>().setWorldPosition(mario->m_transform.right, mario->m_transform.top);
-			fireball2->setDirection(Vector2f(1, 0));
-		}
-	}(this);
+	Coroutine coroutine = spawnFireball();
 }
 
 void Mario::setAbility(Ability ability) {
 	m_ability = ability;
 
-	if (ability == Ability::SUPER) {
+	if (ability == Ability::REGULAR) {
+		m_anim->loadFromJsonFile("Resources/Animations/Mario&Luigi.json");
+		m_transform.setHeight(16);
+	}
+	else if (ability == Ability::SUPER) {
 		m_anim->loadFromJsonFile("Resources/Animations/BigMario.json");
 		m_transform.setHeight(32);
 	}
@@ -313,12 +302,17 @@ void Mario::teleport(const Portal& portal) {
 	dist.y *= m_enteredPortal.getInDirection().y;
 
 	m_autoControl.addMoveByDistance(dist, 1000, {0, 0});
-	m_autoControl.addMoveByPoint(m_enteredPortal.getDestination(), 0, { 0, 0 },
-		[&](int time) {
+	m_autoControl.addMoveByPoint(m_enteredPortal.getDestination(), 0, { 0, 0 }, [&](int time) {
+			GameManager::getInstance()->getView().setCenter(m_transform.getPosition().x, m_enteredPortal.getDestDepth() * 240 + 120);
+		});
+
+	if (m_enteredPortal.getOutDirection() != Vector2f(0, 1))
+		m_autoControl.addMoveByDistance(m_enteredPortal.getOutDirection() * 16.0f, 1000, { 0, 0 });
+
+	m_autoControl.addAction([&]() {
 			m_collision.setTrigger(false);
 			m_physics2D.setEnableGravity(true);
 			m_sprite.setRenderOrder(3);
-			GameManager::getInstance()->getView().setCenter(m_transform.getPosition().x, m_enteredPortal.getDestDepth() * 240 + 120);
 			m_onTeleport = false;
 		});
 
@@ -332,7 +326,10 @@ void Mario::onGrabFlagPole() {
 void Mario::dead() {
 	if (m_lives == 0) {
 		// Game over
+		SceneManager::getInstance()->setCurrentScene<MapSelectionScene>();
 	}
+
+	setAbility(Ability::REGULAR);
 
 	m_isDead = true;
 	m_lives--;
@@ -340,12 +337,34 @@ void Mario::dead() {
 	m_physics2D.setVelocity({ 0, 0 });
 	m_physics2D.setBaseVelocityX(0);
 	m_physics2D.setBaseVelocityY(-0.2);
+	m_collision.setEnable(false);
 	m_autoControl.addWaitForMiliseconds(3000);
+	m_autoControl.addAction([&]() { revive(); });
 	m_sound.play(SoundTrack::DIE);
 }
 
+void Mario::revive() {
+
+}
+
 void Mario::win() {
-	
+	m_backgroundSound.getComponent<SoundComponent>().stop();
+	levelClear();
+}
+
+void Mario::levelClear() {
+	m_backgroundSound.getComponent<SoundComponent>().play(SoundTrack::LEVEL_CLEAR);
+	m_backgroundSound.getComponent<SoundComponent>().setLoop(false);
+	Coroutine coroutine = clear();
+}
+
+Coroutine Mario::clear() {
+	while (m_countdown > 0) {
+		m_countdown -= 1000;
+		addScore(10);
+		co_await WaitForMiliseconds(10);
+	}
+	launchFirework();
 }
 
 void Mario::earnCoins(int coins) {
@@ -354,6 +373,30 @@ void Mario::earnCoins(int coins) {
 
 void Mario::addScore(int score) {
 	m_score += score;
+}
+
+void Mario::launchFirework() {
+	FRect range(m_transform.getWorldPosition().x - 56, m_transform.bottom - 9 * 16, 7 * 16, 4 * 16);
+	
+	auto coroutine = [](Mario* mario, FRect range) -> Coroutine {
+		int numFirework = randRange(5, 10);
+		for (int i = 0; i < numFirework; i++) {
+			float x = randRange(range.left, range.right);
+			float y = randRange(range.top, range.bottom);
+
+			Object& firework = ParticleSystem::getInstance()->addParticle("Resources/Particles/Firework.json", Vector2f(x, y));
+			SceneManager::getInstance()->getCurrentScene().getComponent<SoundComponent>().play(SoundTrack::FIREWORK);
+			firework.getComponent<Physics2D>().setEnableGravity(false);
+
+			mario->addScore(500);
+
+			co_await WaitForMiliseconds(firework.getComponent<Animation>().getTrackLength(0));
+		}
+	}(this, range);
+}
+
+void Mario::setOutGate(const Vector2f& pos) {
+	m_castleGate = pos;
 }
 
 bool Mario::isOnGround() const {
@@ -390,4 +433,23 @@ Time Mario::getCountdownTime() const {
 
 Mario::Ability Mario::getAbility() const {
 	return m_ability;
+}
+
+Coroutine Mario::spawnFireball() {
+	auto spawnFunc = [&]() {
+		Fireball* fireball = new Fireball(m_parent);
+		if (m_direction == Direction::LEFT) {
+			fireball->getComponent<Transform2D>().setWorldPosition(m_transform.left - fireball->getComponent<Transform2D>().width, m_transform.top);
+			fireball->setDirection(Vector2f(-1, 0));
+		}
+		else if (m_direction == Direction::RIGHT) {
+			fireball->getComponent<Transform2D>().setWorldPosition(m_transform.right, m_transform.top);
+			fireball->setDirection(Vector2f(1, 0));
+		}
+		m_fireSound.getComponent<SoundComponent>().play(SoundTrack::FIREBALL);
+	};
+
+	spawnFunc();
+	co_await WaitForMiliseconds(200);
+	spawnFunc();
 }

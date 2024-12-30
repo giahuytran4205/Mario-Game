@@ -10,7 +10,7 @@ MapSelectionScene::MapSelectionScene()
 	m_curChosenMap = 0;
 
 	// SET BACKGROUND
-	m_background.setTexture(TextureManager::getTexture("Resources/Background/MarioBros-Background.png"));
+	m_background.setTexture(TextureManager::getTexture("Resources/Thumbnails/Worlds-1-1.png"));
 	this->fitBackground(&m_background, GameManager::getInstance()->getRenderWindow());
 
 	m_prevBtn.setParent(this);
@@ -20,16 +20,18 @@ MapSelectionScene::MapSelectionScene()
 	View& view = GameManager::getInstance()->getView();
 	view.setCenter(view.getSize() / 2.0f);
 
-	m_prevBtn.configure(Vector2f(0, view.getSize().y / 2), Vector2f(50, 20), "Previous", FontManager::getInstance()->getFont("ARIAL"));
-	m_nextBtn.configure(Vector2f(view.getSize().x - 70, view.getCenter().y), Vector2f(50, 20), "Next", FontManager::getInstance()->getFont("ARIAL"));
+	m_prevBtn.configure(Vector2f(0, view.getSize().y / 2), Vector2f(16, 16), "", FontManager::getInstance()->getFont("ARIAL"));
+	m_nextBtn.configure(Vector2f(view.getSize().x - 70, view.getCenter().y), Vector2f(16, 16), "", FontManager::getInstance()->getFont("ARIAL"));
 	m_confirmBtn.configure(Vector2f(view.getCenter().x, view.getSize().y - 30), Vector2f(50, 20), "Start!", FontManager::getInstance()->getFont("ARIAL"));
 
-	m_prevBtn.getComponent<Transform2D>().setRect(60, view.getCenter().y, 50, 20);
-	m_nextBtn.getComponent<Transform2D>().setRect(view.getSize().x - 60, view.getCenter().y, 50, 20);
+	m_prevBtn.getComponent<Transform2D>().setRect(60, view.getCenter().y, 16, 16);
+	m_nextBtn.getComponent<Transform2D>().setRect(view.getSize().x - 60, view.getCenter().y, 16, 16);
 	m_confirmBtn.getComponent<Transform2D>().setRect(view.getCenter().x, view.getSize().y - 20, 50, 20);
 
-	/*m_prevBtn.setTexture(TextureManager::getTexture("Resources/UI/prev_button.png"));
-	m_nextBtn.setTexture(TextureManager::getTexture("Resources/UI/next_button.png"));*/
+	m_prevBtn.setTexture(TextureManager::getTexture("Resources/UI/prev_button.png"));
+	m_nextBtn.setTexture(TextureManager::getTexture("Resources/UI/next_button.png"));
+	m_prevBtn.getBackground().scale(0.5, 0.5);
+	m_nextBtn.getBackground().scale(0.5, 0.5);
 
 	m_prevBtn.getText().setCharacterSize(12);
 	m_nextBtn.getText().setCharacterSize(12);

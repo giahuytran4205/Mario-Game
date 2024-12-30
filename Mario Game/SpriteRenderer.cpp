@@ -39,6 +39,7 @@ void SpriteRenderer::update() {
 }
 
 void SpriteRenderer::render() {
+	Sprite::setPosition(Object::m_transform.getWorldPosition());
 	GameManager::getInstance()->getRenderWindow().draw(*this);
 	if (m_outline.getOutlineThickness() != 0)
 		GameManager::getInstance()->getRenderWindow().draw(m_outline);

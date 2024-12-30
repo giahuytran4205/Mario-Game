@@ -9,6 +9,9 @@
 #include "Portal.hpp"
 #include "Brick.hpp"
 #include "QuestionBlock.hpp"
+#include "EnemiesGoomba.hpp"
+#include "EnemiesHammerBro.hpp"
+#include "EnemiesKoopaTroopa.hpp"
 #include <map>
 #include <fstream>
 #include <iostream>
@@ -24,7 +27,7 @@ const vector<MapInfo> Map::mapsInfo = {
 	{ "5-1", "Resources/Map/Worlds-5-1.json", "Resources/Thumbnails/Worlds-5-1.png" }
 };
 
-Map::Map() {
+Map::Map(Mario& mario) : m_mario(mario) {
 	m_width = m_height = 0;
 	m_row = m_col = 0;
 	m_tileWidth = m_tileHeight = 0;
@@ -35,7 +38,7 @@ Map::Map() {
 	m_renderOrder = 0;
 }
 
-Map::Map(const string& filename) : Map() {
+Map::Map(const string& filename, Mario& mario) : Map(mario) {
 	loadFromJsonFile(filename);
 }
 
@@ -233,11 +236,73 @@ void Map::loadFromJsonFile(const string& filename) {
 		}
 
 		if (layer["name"] == "Lift") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
 
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				Direction direction;
+				bool isCircular, isLoop, isLaunch;
+				float startOffset, endOffset;
+
+				for (auto& j : obj["properties"].as_array()) {
+					auto prop = j.as_object();
+					if (prop["name"] == "direction")
+						direction = (Direction)prop["value"].as_int64();
+					else if (prop["name"] == "isLaunch")
+						isLaunch = prop["value"].as_bool();
+					else if (prop["name"] == "isCircular")
+						isCircular = prop["value"].as_bool();
+					else if (prop["name"] == "isLoop")
+						isLoop = prop["value"].as_bool();
+					else if (prop["name"] == "startOffset")
+						startOffset = prop["value"].as_int64();
+					else if (prop["name"] == "endOffset")
+						endOffset = prop["value"].as_int64();
+
+				}
+
+				Lift* lift = new Lift(Vector2f(x + width / 2, y), startOffset, endOffset, direction, isLaunch);
+				lift->setParent(this);
+				lift->setCircular(isCircular);
+				lift->setLoop(isLoop);
+
+				m_objects.push_back(lift);
+			}
 		}
 
 		if (layer["name"] == "Beanstalk") {
+			/*for (auto& i : layer["objects"].as_array()) {
+				auto& portal = i.as_object();
 
+				int width = portal["width"].as_int64();
+				int height = portal["height"].as_int64();
+
+				float posX = portal["x"].as_int64();
+				float posY = portal["y"].as_int64();
+
+				float destX = 0, destY = 0, maxHeight = 0;
+				int destDepth = 0;
+
+				for (auto& j : portal["properties"].as_array()) {
+					auto prop = j.as_object();
+
+					if (prop["name"] == "destX")
+						destX = prop["value"].as_int64();
+					else if (prop["name"] == "destY")
+						destY = prop["value"].as_int64();
+					else if (prop["name"] == "destDepth")
+						destDepth = prop["value"].as_int64();
+					else if (prop["name"] == "maxHeight")
+						maxHeight = prop["value"].as_int64();
+				}
+
+				Beanstalk* beanstalk = new Beanstalk(Vector2f(posX, posY), maxHeight, Vector2f(destX, destY), this);
+				m_objects.push_back(beanstalk);
+			}*/
 		}
 
 		if (layer["name"] == "Dead Zone") {
@@ -254,7 +319,7 @@ void Map::loadFromJsonFile(const string& filename) {
 			}
 		}
 
-		if (layer["name"] == "Jumper") {
+;		if (layer["name"] == "Jumper") {
 			for (auto& i : layer["objects"].as_array()) {
 				auto& obj = i.as_object();
 
@@ -299,6 +364,47 @@ void Map::loadFromJsonFile(const string& filename) {
 				m_objects.push_back(coin);
 			}
 		}
+
+		if (layer["name"] == "Goomba") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
+
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+				int width = obj["width"].as_int64();
+				int height = obj["height"].as_int64();
+
+				EnemiesGoomba* goomba = new EnemiesGoomba(this);
+				goomba->getComponent<Transform2D>().setWorldPosition(x, y);
+				m_objects.push_back(goomba);
+			}
+		}
+
+		if (layer["name"] == "KoopaTroopa") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
+
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+
+				EnemiesKoopaTroopa* koopaTroopa = new EnemiesKoopaTroopa(this);
+				koopaTroopa->getComponent<Transform2D>().setWorldPosition(x, y);
+				m_objects.push_back(koopaTroopa);
+			}
+		}
+
+		if (layer["name"] == "HammerBro") {
+			for (auto& i : layer["objects"].as_array()) {
+				auto& obj = i.as_object();
+
+				int x = obj["x"].as_int64();
+				int y = obj["y"].as_int64();
+
+				EnemiesHammerBro* hammerBro = new EnemiesHammerBro(m_mario, this);
+				hammerBro->getComponent<Transform2D>().setWorldPosition(x, y);
+				m_objects.push_back(hammerBro);
+			}
+		}
 	}
 
 	CollisionManager::getInstance()->resize(m_width, m_height);
@@ -326,6 +432,10 @@ int Map::getStartDepth() const {
 
 Vector2f Map::getSpawnPos() const {
 	return m_spawnPos;
+}
+
+Vector2f Map::getCastleGate() const {
+	return m_castleGate;
 }
 
 void Map::render() {

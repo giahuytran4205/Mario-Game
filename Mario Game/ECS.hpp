@@ -56,10 +56,11 @@ protected:
 	bool m_active;
 	bool m_destroyed;
 	bool m_pause;
+	bool m_visible;
 	int m_renderOrder = 0;
 
 public:
-	Entity() : m_renderOrder(0), m_active(true), m_destroyed(false), m_pause(false) {}
+	Entity() : m_renderOrder(0), m_active(true), m_destroyed(false), m_pause(false), m_visible(false) {}
 	virtual ~Entity() {}
 
 	void _update() {
@@ -132,8 +133,8 @@ public:
 		return m_pause;
 	}
 
-	void pause() {
-		m_pause = true;
+	void setPause(bool isPause) {
+		m_pause = isPause;
 	}
 
 	void setRenderOrder(int order) {
@@ -142,6 +143,14 @@ public:
 
 	int getRenderOrder() const {
 		return m_renderOrder;
+	}
+
+	bool isVisible() const {
+		return m_visible;
+	}
+
+	void setVisible(bool isVisible) {
+		m_visible = isVisible;
 	}
 
 	Object* toObject() {

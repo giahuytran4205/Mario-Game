@@ -103,6 +103,14 @@ sf::Text& Button::getText() {
 	return m_textView;
 }
 
+TextView& Button::getTextView() {
+	return m_textView;
+}
+
+SpriteRenderer& Button::getBackground() {
+	return m_background;
+}
+
 void Button::onHovered()
 {
 	m_textView.setFillColor(darkenColor(m_textColor, 30));
@@ -117,11 +125,15 @@ void Button::onPressed()
 {
 	m_textView.setFillColor(darkenColor(m_textColor, 30));
 	m_textView.setScale(sf::Vector2f(0.8f, 0.8f));
+
+	m_background.scale(0.8f, 0.8f);
 }
 
 void Button::onDePressed() {
 	m_textView.setScale(sf::Vector2f(1.0f, 1.0f));
 	m_textView.setFillColor(m_textColor);
+
+	m_background.scale(1.25f, 1.25f);
 }
 
 void Button::onClick()

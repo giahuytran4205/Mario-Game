@@ -4,6 +4,8 @@ Coin::Coin(Object* parent) : Item(parent) {
 	m_transform.setSize(16, 16);
 	m_anim.loadFromJsonFile("Resources/Animations/Coin.json");
 	m_anim.play(0);
+
+	m_physics.setEnable(false);
 }
 
 Coin::Coin(float x, float y, Object* parent) : Coin(parent) {

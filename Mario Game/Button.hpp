@@ -33,6 +33,8 @@ public:
 	void setTextViewRenderOrder(int renderOrder);
 	void setTexture(const Texture& texture);
 	sf::Text& getText();
+	TextView& getTextView();
+	SpriteRenderer& getBackground();
 
 	void onHovered() override;
 	void onUnhovered() override;

@@ -4,6 +4,8 @@
 Lift::Lift(Object* parent) : m_physics(addComponent<Physics2D>()), m_sprite(this) {
 	addComponent<Collision>();
 	setParent(parent);
+
+	getComponent<Physics2D>().setEnableGravity(false);
 	
 	m_transform.setAnchor(0.5, 0);
 	m_sprite.setAnchor(0.5, 0);
@@ -16,7 +18,9 @@ Lift::Lift(Object* parent) : m_physics(addComponent<Physics2D>()), m_sprite(this
 	m_endOffset = 0;
 	m_phase = 0;
 	m_isCircular = false;
+	m_isLoop = false;
 	m_isLaunch = false;
+	m_finish = false;
 
 	m_sprite.setTexture(TextureManager::getTile("Resources/Animations/Items&Objects.png", IntRect(208, 128, 8, 8), true));
 	m_sprite.setTextureRect(IntRect(0, 0, 48, 8));
@@ -30,7 +34,7 @@ Lift::Lift(const Vector2f& pos, float startOffset, float endOffset, Direction di
 	m_startOffset = startOffset;
 	m_endOffset = endOffset;
 	m_direction = direction;
-	m_speed = speed;
+	m_speed = speed * 200 / (m_endOffset - m_startOffset);
 
 	if (m_direction == LEFT || m_direction == RIGHT)
 		m_phase = acos(1 - 2 * (pos.x - startOffset) / (endOffset - startOffset));
@@ -50,8 +54,11 @@ Lift::~Lift() {}
 void Lift::update() {
 	if (m_isLaunch) {
 		m_phase += deltaTime.asMilliseconds() * m_speed;
-
-		if (m_isCircular && m_phase > PI) {
+		if (!m_isLoop && m_phase > PI) {
+			stop();
+			m_finish = true;
+		}
+		else if (m_isCircular && m_phase > PI) {
 			m_phase -= PI;
 
 			if (m_direction == LEFT || m_direction == RIGHT)
@@ -59,8 +66,7 @@ void Lift::update() {
 			if (m_direction == UP || m_direction == DOWN)
 				m_transform.setWorldPosition(m_transform.getWorldPosition().x, m_startOffset);
 		}
-
-		if (m_phase > 2 * PI) {
+		else if (m_phase > 2 * PI) {
 			m_phase -= 2 * PI;
 		}
 
@@ -86,8 +92,11 @@ void Lift::update() {
 }
 
 void Lift::onCollisionEnter(Collision& col, const Direction& side) {
-	if (side == Direction::UP && col.m_entity->isType<Mario>()) {
+	if (side == Direction::UP && col.m_entity->isType<Mario>() && !m_finish) {
 		m_mario = col.m_entity->convertTo<Mario>();
+		if (!m_isLaunch) {
+			launch();
+		}
 	}
 }
 
@@ -106,6 +115,10 @@ void Lift::setSpeed(float speed) {
 
 void Lift::setCircular(bool isCircular) {
 	m_isCircular = true;
+}
+
+void Lift::setLoop(bool isLoop) {
+	m_isLoop = isLoop;
 }
 
 void Lift::launch() {

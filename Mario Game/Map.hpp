@@ -9,6 +9,8 @@
 #include "DeadZone.hpp"
 #include "Jumper.hpp"
 #include "Coin.hpp"
+#include "Lift.hpp"
+#include "Mario.hpp"
 #include <boost/json.hpp>
 using namespace sf;
 namespace json = boost::json;
@@ -39,6 +41,8 @@ private:
 	vector<Object*> m_objects;
 	vector<pair<int, TileSet&>> m_tilesets;
 
+	Mario& m_mario;
+
 	void loadTilesets(json::object& data);
 	const Texture& getTile(int id);
 	void loadObjectInGroup(Environment environment, json::object& group);
@@ -47,8 +51,8 @@ public:
 	static const vector<MapInfo> mapsInfo;
 
 public:
-	Map();
-	Map(const string& filename);
+	Map(Mario& mario);
+	Map(const string& filename, Mario& mario);
 	~Map();
 
 	void render() override;
@@ -59,6 +63,7 @@ public:
 	int colCount() const;
 	int getStartDepth() const;
 	Vector2f getSpawnPos() const;
+	Vector2f getCastleGate() const;
 	FRect getFireworkArea() const;
 	void launchFireworks();
 };

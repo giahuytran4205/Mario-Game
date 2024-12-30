@@ -19,7 +19,8 @@ public:
 	~Portal();
 
 	Portal& operator=(const Portal& portal);
-
+	
+	void onCollisionEnter(Collision& col, const Direction& side) override;
 	const Vector2f& getDestination();
 	Keyboard::Key getEnterKey();
 	Vector2f getInDirection();

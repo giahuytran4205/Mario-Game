@@ -1,10 +1,13 @@
 #include "QuestionBlock.hpp"
+#include "ItemFactory.hpp"
+#include "Beanstalk.hpp"
 
 QuestionBlock::QuestionBlock(Environment environment, Object* parent) : Block(parent) {
 	m_isHide = false;
 	m_renderOrder = 4;
 	m_transform.setSize(16, 16);
 	m_isEmpty = false;
+	m_containBeanstalk = false;
 	m_environment = environment;
 
 	if (environment == Environment::OVERWORLD)
@@ -45,10 +48,25 @@ void QuestionBlock::hit() {
 	m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(48, 0, 16, 16)));
 	m_isEmpty = true;
 	setHide(false);
+
+	if (m_containBeanstalk) {
+				
+	}
+	else {
+		Item* item = ItemFactory::getInstance()->getItem();
+		if (item) {
+			item->getComponent<Transform2D>().setWorldPosition(m_transform.getWorldCenter());
+			item->appear();
+		}
+	}
 }
 
 void QuestionBlock::setHide(bool isHide) {
 	m_isHide = isHide;
 	m_sprite.setEnable(!isHide);
 	getComponent<Collision>().setTrigger(isHide);
+}
+
+void QuestionBlock::addBeanstalk() {
+	m_containBeanstalk = true;
 }

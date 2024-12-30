@@ -55,6 +55,9 @@ void AutoControl::update() {
 				}
 			}
 			if (m_currentControl.isWait) {
+				m_physics->setVelocity({ 0, 0 });
+				m_physics->setBaseVelocity({ 0, 0 });
+
 				if (m_currentControl.action)
 					m_currentControl.action(m_elapsedTime);
 			}
@@ -62,8 +65,6 @@ void AutoControl::update() {
 		else {
 			if (m_isControlled) {
 				m_isControlled = false;
-				m_physics->setAcceleration({ 0, 0 });
-				m_physics->setBaseVelocity({ 0, 0 });
 			}
 		}
 	}

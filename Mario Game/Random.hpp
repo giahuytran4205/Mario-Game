@@ -17,4 +17,4 @@ T randRange(T min, T max) {
 	return dist(gen);
 }
 
-bool randByProbability(float rate);
+int randByProbability(const vector<int>& weights);

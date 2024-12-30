@@ -18,7 +18,9 @@ protected:
 	float m_endOffset;
 	float m_phase;
 	bool m_isCircular;
+	bool m_isLoop;
 	bool m_isLaunch;
+	bool m_finish;
 	Mario* m_mario = nullptr;
 
 public:
@@ -33,6 +35,7 @@ public:
 	void setMovementRange(float startOffset, float endOffset);
 	void setSpeed(float speed);
 	void setCircular(bool isCircular);
+	void setLoop(bool isLoop);
 	void launch();
 	void stop();
 };

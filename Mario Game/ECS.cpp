@@ -25,7 +25,7 @@ void EntitiesManager::render() {
 	m_renderQueue.assign(100, {});
 
 	for (auto& e : m_entities) {
-		if (e->isActive())
+		if (e->isActive() && !e->isVisible())
 			m_renderQueue[e->getRenderOrder()].push_back(e);
 	}
 

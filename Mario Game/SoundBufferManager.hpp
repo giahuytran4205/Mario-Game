@@ -25,12 +25,14 @@ enum class SoundTrack {
 	POWER_UP,
 	PAUSE,
 	STOMP,
+	LEVEL_CLEAR,
 	NUM_TRACK
 };
 
 class SoundBufferManager {
 private:
 	vector<pair<SoundTrack, string>> soundPath = {
+		{ SoundTrack::OVERWORLD,	"Resources/Sounds/overworld.mp3" },
 		{ SoundTrack::BACKGROUND,	"Resources/Sounds/overworld.mp3" },
 		{ SoundTrack::BIGJUMP,		"Resources/Sounds/jump-super.mp3" },
 		{ SoundTrack::ITEM,			"Resources/Sounds/powerup-appears.mp3" },
@@ -43,6 +45,7 @@ private:
 		{ SoundTrack::BUMP,			"Resources/Sounds/Bump.wav" },
 		{ SoundTrack::FIREWORK,		"Resources/Sounds/fireworks.mp3" },
 		{ SoundTrack::PAUSE,		"Resources/Sounds/pause.mp3" },
+		{ SoundTrack::LEVEL_CLEAR,	"Resources/Sounds/level-clear.mp3" }
 	};
 
 	vector<SoundBuffer> m_soundBufs;

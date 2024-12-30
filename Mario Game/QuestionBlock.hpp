@@ -8,6 +8,8 @@
 class QuestionBlock : public Block {
 private:
 	bool m_isEmpty;
+	bool m_containBeanstalk;
+
 public:
 	QuestionBlock(Environment environment = Environment::OVERWORLD, Object* parent = nullptr);
 	~QuestionBlock();
@@ -15,4 +17,5 @@ public:
 	void onCollisionEnter(Collision& col, const Direction& side) override;
 	void hit();
 	void setHide(bool isHide);
+	void addBeanstalk();
 };

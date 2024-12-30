@@ -9,7 +9,7 @@
 #include "GameManager.hpp"
 #include "Enemy.hpp"
 #include "AutoControl.hpp"
-
+#include "SoundComponent.hpp"
 class EnemiesGoomba : public Enemy
 {
 private:
@@ -17,13 +17,6 @@ private:
 		WALK,
 		DIE
 	};
-
-	AutoControl& m_autoControl;
-	float m_speed_Vy = 0.0f;
-	const float G = 0.001f;
-	bool m_onWall{ false };
-	float m_speed = -0.1;
-	int m_dir = 1;
 
 public:
 	EnemiesGoomba(Object* parent = nullptr);

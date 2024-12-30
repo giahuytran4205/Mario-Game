@@ -233,19 +233,14 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"destDepth",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
                          "name":"destX",
                          "type":"float",
-                         "value":1848
+                         "value":1856
                         }, 
                         {
                          "name":"destY",
                          "type":"float",
-                         "value":416
+                         "value":432
                         }, 
                         {
                          "name":"outDirection",
@@ -270,18 +265,7 @@
          "id":21,
          "locked":true,
          "name":"Beanstalk",
-         "objects":[
-                {
-                 "height":16,
-                 "id":154,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":1328,
-                 "y":304
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -1070,6 +1054,60 @@
         }, 
         {
          "draworder":"topdown",
+         "id":10,
+         "name":"Lift",
+         "objects":[
+                {
+                 "height":16,
+                 "id":8,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"direction",
+                         "propertytype":"Direction",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"endOffset",
+                         "type":"float",
+                         "value":2416
+                        }, 
+                        {
+                         "name":"isCircular",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"isLaunch",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"isLoop",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"startOffset",
+                         "type":"float",
+                         "value":1560
+                        }],
+                 "rotation":0,
+                 "type":"Lift",
+                 "visible":true,
+                 "width":48,
+                 "x":1536,
+                 "y":160
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":22,
          "locked":true,
          "name":"Jumper",
@@ -1117,29 +1155,6 @@
         {
          "id":18,
          "layers":[
-                {
-                 "draworder":"topdown",
-                 "id":10,
-                 "locked":true,
-                 "name":"Lift",
-                 "objects":[
-                        {
-                         "height":16,
-                         "id":8,
-                         "name":"",
-                         "rotation":0,
-                         "type":"",
-                         "visible":true,
-                         "width":48,
-                         "x":1536,
-                         "y":160
-                        }],
-                 "opacity":1,
-                 "type":"objectgroup",
-                 "visible":true,
-                 "x":0,
-                 "y":0
-                }, 
                 {
                  "draworder":"topdown",
                  "id":7,
@@ -1913,7 +1928,7 @@
          "y":0
         }],
  "nextlayerid":24,
- "nextobjectid":157,
+ "nextobjectid":160,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.11.0",

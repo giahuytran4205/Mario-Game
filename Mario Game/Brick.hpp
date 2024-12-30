@@ -8,6 +8,8 @@
 
 class Brick : public Block {
 private:
+	int m_numCoins;
+	bool m_isEmpty;
 
 public:
 	Brick(Environment environment = OVERWORLD, Object* parent = nullptr);

@@ -1,5 +1,6 @@
 #include "GUI.hpp"
 #include "Slider.hpp"
+#include "GameManager.hpp"
 #include <iostream>
 
 Handle::Handle(Object* parent) : GUI(parent) {

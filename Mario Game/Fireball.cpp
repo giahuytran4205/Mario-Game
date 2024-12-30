@@ -5,15 +5,13 @@
 #include "GameManager.hpp"
 #include "Enemy.hpp"
 
-Fireball::Fireball(Object* parent, const Vector2f& direction) : Projectile(parent), m_sound(addComponent<SoundComponent>()) {
+Fireball::Fireball(Object* parent, const Vector2f& direction) : Projectile(parent) {
 	m_transform.setSize(8, 8);
 	m_anim.loadFromJsonFile("Resources/Animations/Fireball.json");
 	m_anim.play(0);
 	m_speed = 0.25f;
 	setDirection(direction);
 	m_age = 5000;
-	m_sound.setSoundBuf(SoundBufferManager::getInstance()->getSoundBuf(SoundTrack::FIREBALL));
-	m_sound.play();
 }
 
 Fireball::~Fireball() {};

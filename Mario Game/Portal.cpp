@@ -1,4 +1,5 @@
 #include "Portal.hpp"
+#include "Mario.hpp"
 
 Portal::Portal() : m_collision(addComponent<Collision>(true)) {
 	m_transform.setPosition(0, 0);
@@ -31,6 +32,14 @@ Portal& Portal::operator=(const Portal& portal) {
 	m_destDepth = portal.m_destDepth;
 	m_transform.getRect() = portal.m_transform.getRect();
 	return *this;
+}
+
+void Portal::onCollisionEnter(Collision& col, const Direction& side) {
+	/*if (col.m_entity->isType<Mario>()) {
+		AutoControl& controller = col.m_entity->getComponent<AutoControl>();
+		Physics2D& physics = col.m_entity->getComponent<Physics2D>();
+
+	}*/
 }
 
 const Vector2f& Portal::getDestination() {

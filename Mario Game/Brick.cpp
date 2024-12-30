@@ -4,6 +4,7 @@
 Brick::Brick(Environment environment,Object* parent) : Block(parent) {
 	m_transform.setSize(16, 16);
 	m_environment = environment;
+	m_isEmpty = false;
 
 	if (environment == Environment::OVERWORLD)
 		m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(16, 0, 16, 16)));
@@ -15,14 +16,37 @@ Brick::Brick(Environment environment,Object* parent) : Block(parent) {
 		m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(16, 64, 16, 16)));
 	if (environment == Environment::UNDERWATER)
 		m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(16, 96, 16, 16)));
+
+	if (randByProbability(vector<int>{10, 90}) == 0)
+		m_numCoins = 10;
+	else
+		m_numCoins = 0;
 }
 
 Brick::~Brick() {}
 
 void Brick::onCollisionEnter(Collision& col, const Direction& side) {
-	if (col.m_entity->isType<Mario>()) {
+	if (!m_isEmpty && col.m_entity->isType<Mario>()) {
 		if (side == Direction::DOWN) {
-			hit(col.m_entity->convertTo<Mario>()->getAbility() != Mario::Ability::REGULAR);
+			if (m_numCoins > 0 && col.m_entity->convertTo<Mario>()->getAbility() != Mario::REGULAR) {
+				m_numCoins--;
+				col.m_entity->convertTo<Mario>()->earnCoins(1);
+				col.m_entity->convertTo<Mario>()->addScore(100);
+				
+				m_physics2D.bounce(-0.06);
+
+				Object& coin = ParticleSystem::getInstance()->addParticle("Resources/Particles/Coin.json", 500, m_transform.getWorldCenter() - Vector2f(0, 16));
+				coin.getComponent<Physics2D>().setEnableGravity(true);
+				coin.getComponent<Physics2D>().setBaseVelocityY(-0.2f);
+
+				SceneManager::getInstance()->getCurrentScene().getComponent<SoundComponent>().play(SoundTrack::COIN);
+
+				if (m_numCoins == 0) {
+					m_sprite.setTexture(TextureManager::getTile("Resources/Tilesets/Tileset-1.png", IntRect(48, 0, 16, 16)));
+					m_isEmpty = true;
+				}
+			}
+			else hit(col.m_entity->convertTo<Mario>()->getAbility() != Mario::Ability::REGULAR);
 		}
 	}
 }

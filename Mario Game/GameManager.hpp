@@ -9,6 +9,7 @@
 #include "FontManager.hpp"
 #include "ParticleSystem.hpp"
 #include "CoroutineManager.hpp"
+#include "ItemFactory.hpp"
 using namespace sf;
 
 #define deltaTime GameManager::getDeltaTime()
@@ -24,6 +25,7 @@ private:
 	ParticleSystem m_particle;
 	SceneManager m_sceneManager;
 	CoroutineManager m_coroutineManager;
+	ItemFactory m_itemfactory;
 	EventSystem m_eventSystem;
 	RenderWindow m_window;
 	View m_view;

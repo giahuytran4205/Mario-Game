@@ -52,6 +52,9 @@ private:
 	float m_fireCD;
 	float m_curFireCD;
 	Portal m_enteredPortal;
+	Vector2f m_castleGate;
+	Object m_backgroundSound;
+	Object m_fireSound;
 
 	int m_lives;
 	int m_coins;
@@ -74,9 +77,13 @@ public:
 	void teleport(const Portal& portal);
 	void onGrabFlagPole();
 	void dead();
+	void revive();
 	void win();
+	void levelClear();
 	void earnCoins(int coins);
 	void addScore(int score);
+	void launchFirework();
+	void setOutGate(const Vector2f& pos);
 	bool isOnGround() const;
 	bool isOnTeleport() const;
 	bool isOnGrabFlagPole() const;
@@ -86,4 +93,7 @@ public:
 	int getScore() const;
 	Time getCountdownTime() const;
 	Ability getAbility() const;
+
+	Coroutine spawnFireball();
+	Coroutine clear();
 };
