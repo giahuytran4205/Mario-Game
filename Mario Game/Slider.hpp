@@ -78,19 +78,21 @@ public:
 	}
 
 	void update() override {
-		Vector2f dragPos = m_handle.getDragPos();
-		if (dragPos.x < m_transform.left) dragPos.x = m_transform.left;
-		if (dragPos.x > m_transform.right) dragPos.x = m_transform.right;
+		if (m_handle.isOnDrag())
+		{
+			Vector2f dragPos = m_handle.getDragPos();
+			if (dragPos.x < m_transform.left) dragPos.x = m_transform.left;
+			if (dragPos.x > m_transform.right) dragPos.x = m_transform.right;
 
-		T tempVal = (dragPos.x - m_transform.left) / m_transform.width * (m_maxVal - m_minVal) + m_minVal;
+			T tempVal = (dragPos.x - m_transform.left) / m_transform.width * (m_maxVal - m_minVal) + m_minVal;
 
-		if (tempVal != m_value) {
-			m_value = tempVal;
-			for (auto& i : m_listeners)
-				i(m_value);
+			if (tempVal != m_value) {
+				m_value = tempVal;
+				for (auto& i : m_listeners)
+					i(m_value);
+			}
+			m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.left, 0 });
 		}
-
-		m_handle.getComponent<Transform2D>().setPosition({ dragPos.x - m_transform.left, 0 });
 		m_fillArea.setScale({ (T)m_value / (m_maxVal - m_minVal), 1 });
 	}
 

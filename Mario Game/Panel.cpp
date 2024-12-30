@@ -45,14 +45,14 @@ sf::Vector2f Panel::getContinueButtonPosition()
 {
     return sf::Vector2f(
         m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 1.5f,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 4.0f);
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 4.2f);
 }
 
 sf::Vector2f Panel::getExitButtonPosition()
 {
     return sf::Vector2f(
         m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 3.5f,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 4.0f);
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 4.2f);
 }
 
 sf::Vector2f Panel::getTitlePosition()
@@ -66,35 +66,35 @@ sf::Vector2f Panel::getTitlePosition()
 sf::Vector2f Panel::getTotalVolumeTextPosition()
 {
     return sf::Vector2f(
-        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 2.0f);
+        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 0.9f,
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 2.2f);
 }
 
 sf::Vector2f Panel::getTotalVolumePosition()
 {
     return sf::Vector2f(
-        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 2.5f);
+        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 1.5f,
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 2.2f);
 }
 
 sf::Vector2f Panel::getThemeVolumeTextPosition()
 {
     return sf::Vector2f(
-        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 3.0f);
+        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 0.9f,
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 3.2f);
 }
 
 sf::Vector2f Panel::getThemeVolumePosition()
 {
     return sf::Vector2f(
-        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO,
-        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 3.5f);
+        m_background.getPosition().x + m_background.getSize().x / WIDTH_RATIO * 1.5f,
+        m_background.getPosition().y + m_background.getSize().y / HEIGHT_RATIO * 3.2f);
 }
 
 Panel::Panel(Object* parent) : 
     Object(parent),
-	m_totalVolume(0, 100, 150, 0, {0, 0}, this),
-	m_themeVolume(0, 100, 150, 0, {0, 0}, this)
+	m_totalVolume(0, 100, 140, 0, {0, 0}, this),
+	m_themeVolume(0, 100, 140, 0, {0, 0}, this)
 {
     this->setEnable(false);
 
@@ -120,8 +120,8 @@ Panel::Panel(Object* parent) :
     m_continue.getComponent<Transform2D>().setRect(getContinueButtonPosition().x, getContinueButtonPosition().y, getContinueButtonSize().x, getContinueButtonSize().y);
     m_exit.getComponent<Transform2D>().setRect(getExitButtonPosition().x, getExitButtonPosition().y, getExitButtonSize().x, getExitButtonSize().y);
 
-    m_continue.getText().setCharacterSize(12);
-    m_exit.getText().setCharacterSize(12);
+    m_continue.getText().setCharacterSize(10);
+    m_exit.getText().setCharacterSize(10);
 
     m_continue.setAction([&]() {
         std::cout << "PANEL::Continue Button is Pressed" << std::endl;
@@ -132,18 +132,41 @@ Panel::Panel(Object* parent) :
 		std::cout << "PANEL::Exit Button is Pressed" << std::endl;
         });
 
+    m_continue.setButtonFillColor(sf::Color::Yellow);
+    m_continue.setTextViewFillColor(sf::Color::Red);
+	m_exit.setButtonFillColor(sf::Color::Yellow);
+	m_exit.setTextViewFillColor(sf::Color::Red);
+
     m_title.setParent(this);
-    m_title.setFont(FontManager::getInstance()->getFont("ARIAL"));
-	m_title.setCharacterSize(12);
+    m_title.setFont(FontManager::getInstance()->getFont("SUPERMARIO256"));
+	m_title.setCharacterSize(18);
 	m_title.getComponent<Transform2D>().setAnchor(0.5f, 0.5f);
 	m_title.getComponent<Transform2D>().setSize(getTitleSize());
     m_title.getComponent<Transform2D>().setPosition(getTitlePosition());
     m_title.setString("Settings");
 
+    m_totalVolumeText.setParent(this);
+	m_totalVolumeText.setFont(FontManager::getInstance()->getFont("ARIAL"));
+	m_totalVolumeText.setCharacterSize(9);
+	m_totalVolumeText.getComponent<Transform2D>().setAnchor(0.5f, 0.5f);
+	m_totalVolumeText.getComponent<Transform2D>().setSize(getTotalVolumeTextSize());
+	m_totalVolumeText.getComponent<Transform2D>().setPosition(getTotalVolumeTextPosition());
+    m_totalVolumeText.setString("Total Vol");
+
+    m_themeVolumeText.setParent(this);
+    m_themeVolumeText.setFont(FontManager::getInstance()->getFont("ARIAL"));
+    m_themeVolumeText.setCharacterSize(9);
+    m_themeVolumeText.getComponent<Transform2D>().setAnchor(0.5f, 0.5f);
+    m_themeVolumeText.getComponent<Transform2D>().setSize(getThemeVolumeTextSize());
+    m_themeVolumeText.getComponent<Transform2D>().setPosition(getThemeVolumeTextPosition());
+    m_themeVolumeText.setString("Theme Vol");
+
     setRenderOrder(20);
 	m_continue.setRenderOrder(21);
 	m_exit.setRenderOrder(30);
 	m_title.setRenderOrder(30);
+    m_totalVolumeText.setRenderOrder(30);
+	m_themeVolumeText.setRenderOrder(30);
     m_continue.getTextView().setRenderOrder(40);
     m_exit.getTextView().setRenderOrder(40);
     m_totalVolume.setRenderOrder(40);
@@ -164,6 +187,8 @@ void Panel::update()
 	m_title.getComponent<Transform2D>().setPosition(getTitlePosition());
     m_totalVolume.setPostion(getTotalVolumePosition());
     m_themeVolume.setPostion(getThemeVolumePosition());
+	m_totalVolumeText.getComponent<Transform2D>().setPosition(getTotalVolumeTextPosition());
+	m_themeVolumeText.getComponent<Transform2D>().setPosition(getThemeVolumeTextPosition());
 }
 
 void Panel::render()
