@@ -27,7 +27,9 @@ void CollisionManager::addCollider(Collision* collision) {
 }
 
 void CollisionManager::removeCollider(Collision* collision) {
-	m_colliders.erase(find(m_colliders.begin(), m_colliders.end(), collision));
+	auto it = find(m_colliders.begin(), m_colliders.end(), collision);
+	if (it != m_colliders.end())
+		m_colliders.erase(it);
 }
 
 void CollisionManager::update() {

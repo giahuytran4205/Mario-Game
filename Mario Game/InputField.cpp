@@ -45,15 +45,16 @@ InputField::InputField(Object* parent)
 InputField::InputField(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font, Object* parent)
 {
 	setParent(parent);
+	m_transform.setPosition(position);
 
-	this->setRenderOrder(INPUTFIELD_DEFAULT_RENDER_ORDER);
+	this->setRenderOrder(1);
 
 	this->configure(position, size, font);
 }
 
 void InputField::configure(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Font& font)
 {
-	m_box.setPosition(position);
+	m_box.setPosition(m_transform.getWorldPosition());
 	m_box.setSize(size);
 	m_box.setFillColor(sf::Color::White);
 	m_box.setOutlineThickness(1.0f);
@@ -62,8 +63,9 @@ void InputField::configure(const sf::Vector2f& position, const sf::Vector2f& siz
 	m_text.setFont(font);
 	this->adjustTextPosCharSizeInBox();
 	m_text.setFillColor(sf::Color::Black);
+	m_text.setScale(0.5, 0.5);
 
-	m_cursor.setSize(sf::Vector2f(2.f, m_text.getCharacterSize()));
+	m_cursor.setSize(sf::Vector2f(0.5, m_text.getCharacterSize()));
 	m_cursor.setFillColor(sf::Color::Black);
 	m_cursorVisible = true;
 	m_cursorBlinkClock.restart();
@@ -125,6 +127,7 @@ void InputField::render()
 
 	window.draw(m_box);
 	m_text.setString(m_content);
+	m_text.setOrigin(0, -m_text.getLocalBounds().height / 2);
 	window.draw(m_text);
 
 	if (m_isSelected)
@@ -137,7 +140,7 @@ void InputField::render()
 
 		if (m_cursorVisible)
 		{
-			sf::FloatRect textBounds = m_text.getLocalBounds();
+			sf::FloatRect textBounds = m_text.getGlobalBounds();
 
 			float cursorX = m_text.getPosition().x + textBounds.width + 1.f;
 			float cursorY = m_text.getPosition().y;

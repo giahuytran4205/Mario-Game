@@ -280,7 +280,7 @@
                         {
                          "name":"outDirection",
                          "type":"int",
-                         "value":0
+                         "value":3
                         }],
                  "rotation":0,
                  "type":"TeleportGate",
@@ -302,12 +302,12 @@
                         {
                          "name":"destX",
                          "type":"float",
-                         "value":1080
+                         "value":1088
                         }, 
                         {
                          "name":"destY",
                          "type":"float",
-                         "value":416
+                         "value":424
                         }, 
                         {
                          "name":"id",
@@ -2469,7 +2469,7 @@
          "y":0
         }],
  "nextlayerid":26,
- "nextobjectid":189,
+ "nextobjectid":190,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.11.0",

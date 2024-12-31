@@ -91,8 +91,8 @@ void EnemiesHammerBro::update() {
 	if (m_timeChangeDir > 0)
 		m_timeChangeDir -= deltaTime.asMilliseconds();
 
-	if (dist < 80) {
-		if (dist > 50)
+	if (dist < 120) {
+		if (dist > 80)
 			fire();
 
 		if (m_mario.getComponent<Transform2D>().getWorldCenter().x < m_transform.getWorldCenter().x)

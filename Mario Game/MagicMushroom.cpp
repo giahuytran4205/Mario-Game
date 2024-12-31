@@ -30,7 +30,9 @@ MagicMushroom::~MagicMushroom() {}
 
 void MagicMushroom::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>()) {
-		col.m_entity->convertTo<Mario>()->setAbility(Mario::SUPER);
+		Mario& mario = *col.m_entity->convertTo<Mario>();
+		if (mario.getAbility() != Mario::INVINCIBLE)
+			mario.setAbility(Mario::SUPER);
 		destroy();
 	}
 

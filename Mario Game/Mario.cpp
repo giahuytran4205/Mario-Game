@@ -68,7 +68,7 @@ Mario::Mario(Object* parent) : m_autoControl(addComponent<AutoControl>()), m_phy
 	m_curFireCD = 0;
 	m_coins = 0;
 	m_score = 0;
-	m_lives = 3;
+	m_lives = 1;
 	m_countdown = 400000;
 	m_ability = Ability::REGULAR;
 
@@ -331,11 +331,6 @@ void Mario::damaged() {
 }
 
 void Mario::dead() {
-	if (m_lives == 0) {
-		// Game over
-		SceneManager::getInstance()->setCurrentScene<MapSelectionScene>();
-	}
-
 	setAbility(Ability::REGULAR);
 
 	m_isDead = true;
@@ -346,7 +341,10 @@ void Mario::dead() {
 	m_physics2D.setBaseVelocityY(-0.2);
 	m_collision.setEnable(false);
 	m_autoControl.addWaitForMiliseconds(3000);
-	m_autoControl.addAction([&]() { revive(); });
+	m_autoControl.addAction(
+		[&]() {
+			SceneManager::getInstance()->setCurrentScene<MapSelectionScene>();
+		});
 	m_sound.play(SoundTrack::DIE);
 }
 
@@ -399,6 +397,8 @@ void Mario::launchFirework() {
 
 			co_await WaitForMiliseconds(firework.getComponent<Animation>().getTrackLength(0));
 		}
+		co_await WaitForMiliseconds(1000);
+		SceneManager::getInstance()->setCurrentScene<MapSelectionScene>();
 	}(this, range);
 }
 

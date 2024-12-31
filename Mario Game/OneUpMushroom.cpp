@@ -31,7 +31,8 @@ OneUpMushroom::~OneUpMushroom() {}
 
 void OneUpMushroom::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>()) {
-
+		Mario& mario = *col.m_entity->convertTo<Mario>();
+		mario.addScore(500);
 		destroy();
 	}
 

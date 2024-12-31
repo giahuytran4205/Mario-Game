@@ -104,7 +104,7 @@ LoginScene::LoginScene() :
 	view.setCenter(view.getSize() / 2.0f);
 
 	// SET BACKGROUND
-	m_background.setTexture(TextureManager::getTexture("Resources/Background/MarioBros-Background.png"));
+	m_background.setTexture(TextureManager::getTexture("Resources/Thumbnails/Worlds-1-1.png"));
 	m_background.scale(view.getSize().x / m_background.getGlobalBounds().width, view.getSize().y / m_background.getGlobalBounds().height);
 
 	m_confirm.setParent(this);
@@ -114,7 +114,7 @@ LoginScene::LoginScene() :
 	m_confirm.setAction([this, sceneManager = SceneManager::getInstance()]() {
 			std::cout << "LOGIN::Confirm Button Clicked\n";
 			bool isPasswordCorrect = false;
-			if (m_usernameInput.getContent() == "a" && m_passwordInput.getContent() == "1")
+			if (true)
 			{
 				std::cout << "Login Successfully" << std::endl;
 				isPasswordCorrect = true;
@@ -128,7 +128,7 @@ LoginScene::LoginScene() :
 
 			if (isPasswordCorrect)
 			{
-				/*sceneManager->setCurrentScene<MapSelectionScene>();*/
+				sceneManager->setCurrentScene<MapSelectionScene>();
 			}
 		});
 

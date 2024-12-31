@@ -23,7 +23,9 @@ FireFlower::~FireFlower() {}
 
 void FireFlower::onCollisionEnter(Collision& col, const Direction& side) {
 	if (col.m_entity->isType<Mario>()) {
-		col.m_entity->convertTo<Mario>()->setAbility(Mario::FIERY);
+		Mario& mario = *col.m_entity->convertTo<Mario>();
+		if (mario.getAbility() != Mario::INVINCIBLE)
+			mario.setAbility(Mario::FIERY);
 		destroy();
 	}
 }

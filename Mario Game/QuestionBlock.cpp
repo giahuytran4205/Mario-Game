@@ -54,8 +54,8 @@ void QuestionBlock::hit() {
 	}
 	else {
 		Item* item = ItemFactory::getInstance()->getItem();
-		item->setParent(m_parent);
 		if (item) {
+			item->setParent(m_parent);
 			item->getComponent<Transform2D>().setWorldPosition(m_transform.getWorldCenter());
 			item->appear();
 		}
